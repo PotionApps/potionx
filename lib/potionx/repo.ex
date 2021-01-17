@@ -12,13 +12,13 @@ defmodule Potionx.Repo do
         [org_id: Potionx.Repo.get_org_id(), user_id: Potionx.Repo.get_user_id()]
       end
 
-      def prepare_query(operation, %{from: %{source: {_, model}}} = query, opts) do
+      def prepare_query(_operation, %{from: %{source: {_, model}}} = query, opts) do
         cond do
           opts[:schema_migration] ->
             {query, opts}
-          Enum.member?(@scoped_by_organization, model) and not opts[:org_id] ->
+          Enum.member?(@scoped_by_organization, model) and is_nil(opts[:org_id]) ->
             raise "expected organization_id to be set"
-          Enum.member?(@scoped_by_user, model) and not opts[:user_id] ->
+          Enum.member?(@scoped_by_user, model) and is_nil(opts[:user_id]) ->
             raise "expected user_id to be set"
           true ->
             [
