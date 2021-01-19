@@ -1,0 +1,18 @@
+mutation <%= model_name_graphql_case %>Mutation(
+  $changes: <%= model_name %>Input,
+  $filters: <%= model_name %>FiltersSingle
+) {
+  <%= model_name_graphql_case %>Mutation(
+    changes: $changes,
+    filters: $filters
+  ) {
+    errors
+    errorsFields {
+      name
+      value
+    }
+    node {
+<%= graphql_fields %>
+    }
+  }
+}

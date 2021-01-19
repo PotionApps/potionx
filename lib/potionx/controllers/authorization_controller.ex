@@ -3,22 +3,7 @@ defmodule Potionx.AuthorizationController do
     quote do
       import Plug.Conn
       alias Plug.Conn
-      alias PowAssent.Plug
-
-      @spec new(Conn.t(), map()) :: Conn.t()
-      def new(conn, %{"provider" => provider}) do
-        conn
-        |> Plug.authorize_url(provider, redirect_uri(conn))
-        |> case do
-          {:ok, url, conn} ->
-            json(conn, %{data: %{url: url, session_params: conn.private[:pow_assent_session_params]}})
-
-          {:error, _error, conn} ->
-            conn
-            |> put_status(500)
-            |> json(%{error: %{status: 500, message: "An unexpected error occurred"}})
-        end
-      end
+      import Ecto.Query
 
       @spec callback(Conn.t(), map()) :: Conn.t()
       def callback(conn, %{"provider" => provider} = params) do
@@ -27,12 +12,28 @@ defmodule Potionx.AuthorizationController do
 
         conn
         |> Conn.put_private(:pow_assent_session_params, session_params)
-        |> Plug.callback_upsert(provider, params, redirect_uri(conn))
+        |> Conn.put_private(:pow_assent_registration, false) # disable registration
+        |> Potionx.Plug.PowAssent.callback_upsert(provider, params, redirect_uri(conn))
         |> case do
           {:ok, conn} ->
             json(conn, %{data: %{access_token: conn.private[:api_access_token], renewal_token: conn.private[:api_renewal_token]}})
 
           {:error, conn} ->
+            conn
+            |> put_status(500)
+            |> json(%{error: %{status: 500, message: "An unexpected error occurred"}})
+        end
+      end
+
+      @spec new(Conn.t(), map()) :: Conn.t()
+      def new(conn, %{"provider" => provider}) do
+        conn
+        |> Potionx.Plug.PowAssent.authorize_url(provider, redirect_uri(conn))
+        |> case do
+          {:ok, url, conn} ->
+            json(conn, %{data: %{url: url, session_params: conn.private[:pow_assent_session_params]}})
+
+          {:error, _error, conn} ->
             conn
             |> put_status(500)
             |> json(%{error: %{status: 500, message: "An unexpected error occurred"}})

@@ -6,6 +6,7 @@ defmodule Potionx.Context.Service do
     field :file, Plug.Upload.t()
     field :filters, map(), default: %{}
     field :organization, struct()
+    field :pagination, map(), default: %{}
     field :roles, [String.t()], default: []
     field :session_fingerprint, String.t()
     field :user, struct()

@@ -1,5 +1,4 @@
 defmodule Potionx.Middleware.ChangesetErrors do
-
   def call(res, _) do
     with %{errors: [%Ecto.Changeset{} = changeset]} <- res do
       %{res |

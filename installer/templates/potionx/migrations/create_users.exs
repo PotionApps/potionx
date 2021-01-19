@@ -1,0 +1,14 @@
+defmodule <%= @graphql_namespace %>.Repo.Migrations.CreateUsers do
+  use Ecto.Migration
+
+  def change do
+    create table(:users) do
+      add :deleted_at, :utc_datetime
+      add :name, :string
+      add :surname, :string
+      add :roles, {:array, :string}
+      timestamps()
+    end
+    create unique_index(:users, [:email])
+  end
+end

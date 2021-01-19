@@ -24,7 +24,7 @@ defmodule Potionx.ApiAuthPlug do
       DateTime.utc_now()
       |> DateTime.add(60 * 30, :second) # 30 minutes
       |> DateTime.to_unix
-    conn          =
+    conn =
       conn
       |> Conn.put_private(:api_access_token, sign_token(conn, access_token, config))
       |> Conn.put_private(:api_renewal_token, sign_token(conn, renewal_token, config))

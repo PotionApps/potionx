@@ -1,0 +1,16 @@
+mutation <%= model_name_graphql_case %>Delete(
+  $filters: <%= model_name %>FiltersSingle
+) {
+  <%= model_name_graphql_case %>Delete(
+    filters: $filters
+  ) {
+    errors
+    errorsFields {
+      name
+      value
+    }
+    node {
+<%= graphql_fields %>
+    }
+  }
+}

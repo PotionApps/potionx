@@ -1,0 +1,745 @@
+defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
+  alias __MODULE__
+  @shortdoc "Generates GraphQL mutations, queries and types for an Ecto model"
+  @task_name "potion.gen.gql_for_model"
+  @default_opts [schema: true, context: true]
+  @switches [binary_id: :boolean, table: :string, web: :string,
+             schema: :boolean, context: :boolean, context_app: :string]
+  defstruct app_otp: nil,
+            context_name: nil,
+            context_name_snakecase: nil,
+            module_name_data: nil,
+            module_name_graphql: nil,
+            dir_context: nil,
+            dir_graphql: nil,
+            dir_test: nil,
+            graphql_fields: nil,
+            lines: %{},
+            potion_name: "Potionx",
+            mock: nil,
+            mock_patch: nil,
+            model: nil,
+            model_name_atom: nil,
+            model_file_path: nil,
+            model_name: nil,
+            model_name_graphql_case: nil,
+            model_name_snakecase: nil,
+            validations: []
+
+  use Mix.Task
+  alias Mix.Phoenix.{Context, Schema}
+  alias Potionx.DocUtils
+
+  def add_lines_to_block(block, lines_to_add, start_line, indent_size) when is_binary(start_line) do
+    start_index = Enum.find_index(block, fn l ->
+      String.starts_with?(l, start_line)
+    end)
+    add_lines_to_block(block, lines_to_add, start_index, indent_size)
+  end
+  def add_lines_to_block(block, lines_to_add, start_index, indent_size) do
+    end_index =
+      Enum.slice(block, start_index..-1)
+      |> Enum.find_index(fn l ->
+        String.starts_with?(l, DocUtils.indent_to_string(indent_size) <> "end")
+      end)
+    end_index = end_index + start_index
+    Enum.concat(
+      [
+        Enum.slice(block, 0..(end_index - 1)),
+        lines_to_add,
+        Enum.slice(block, end_index..-1)
+      ]
+    )
+  end
+
+  @doc false
+  def build(args) do
+    {_opts, parsed, _} = parse_opts(args)
+    validate_args!(parsed)
+  end
+
+  def ensure_files_and_directories_exist(%GqlForModel{} = state) do
+    if (not File.dir?(state.dir_context)) do
+      Mix.raise """
+      Context directory #{state.dir_context} is missing
+      """
+    end
+    files_to_be_generated(state)
+    |> Enum.map(fn {k, path_enum} ->
+      File.mkdir_p!(Path.join(Enum.slice(path_enum, 0..-2)))
+      path = Path.join(path_enum)
+      file_name =
+        cond do
+        String.ends_with?(to_string(k), "_test") ->
+          to_string(k) <> ".exs"
+        String.ends_with?(to_string(k), "_json") ->
+          String.replace_trailing(to_string(k), "_json", "") <> ".json"
+        true ->
+          to_string(k) <> ".ex"
+        end
+      # if does not exist, create using templates
+      if not File.exists?(path) do
+        EEx.eval_string(
+          Application.app_dir(
+            :potionx,
+            "priv/templates/#{@task_name}/#{file_name}"
+          )
+          |> File.read!,
+          Enum.map(Map.from_struct(state), &(&1))
+        )
+        |> (fn res ->
+          File.write!(path, res)
+        end).()
+      end
+    end)
+
+    state
+  end
+
+  @doc false
+  def files_to_be_generated(%GqlForModel{} = state) do
+    %{
+      app_schema: [state.dir_graphql, "schema.ex"],
+      model_mock: [state.dir_context, "#{state.model_name_snakecase}_mock.ex"],
+      model_mock_json: [
+        "assets",
+        "ts",
+        state.context_name,
+        "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}",
+        "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}.mock.json"
+      ],
+      model_json: [
+        "assets",
+        "ts",
+        state.context_name,
+        "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}",
+        "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}.json"
+      ],
+      mutations: [state.dir_graphql, "schemas", state.model_name_snakecase, "#{state.model_name_snakecase}_mutations.ex"],
+      mutations_test: [state.dir_test, "mutations", "#{state.model_name_snakecase}_mutations_test.exs"],
+      queries: [state.dir_graphql, "schemas", state.model_name_snakecase, "#{state.model_name_snakecase}_queries.ex"],
+      queries_test: [state.dir_test, "queries", "#{state.model_name_snakecase}_queries_test.exs"],
+      resolver: [state.dir_graphql, "resolvers", "#{state.model_name_snakecase}_resolver.ex"],
+      service: [state.dir_context,  "#{state.model_name_snakecase}_service.ex"],
+      types: [state.dir_graphql, "schemas", state.model_name_snakecase, "#{state.model_name_snakecase}_types.ex"],
+    }
+  end
+
+  def keyword_list_to_map(list) do
+    if (Keyword.keyword?(list)) do
+      Enum.into(list, %{})
+    else
+      list
+    end
+  end
+
+  def load_lines(%GqlForModel{} = state) do
+    files_to_be_generated(state)
+    |> Enum.filter(fn {k, _} -> Enum.member?([:app_schema, :mutations, :types, :queries], k) end)
+    |> Enum.reduce(state, fn {k, path_enum}, state ->
+      lines =
+        File.read!(
+          Path.join(path_enum)
+        )
+        |> String.trim
+        |> String.split(~r{(\r?)\n})
+      %{
+        state |
+          lines: Map.put(state.lines, k, lines)
+      }
+    end)
+  end
+
+  def load_model(%GqlForModel{} = state) do
+     %{
+       state | model: [
+        "Elixir",
+        state.module_name_data,
+        state.context_name,
+        state.model_name
+      ]
+      |> Enum.join(".")
+      |> String.to_atom
+    }
+  end
+
+  def load_validations(%GqlForModel{} = state) do
+    %{
+      state | validations: validations(
+        state.model.changeset(struct(state.model, %{}), %{})
+      )
+    }
+  end
+
+  def maybe_add_default_types(%GqlForModel{} = state) do
+    [
+      {
+        "input_object :#{state.model_name_atom}_filters_single do",
+        [
+          "field :id, non_null(:id)"
+        ]
+      },
+      {
+        "object :#{state.model_name_snakecase}_mutation_result do",
+        [
+          "field :errors, list_of(:string)",
+          "field :errors_fields, list_of(:error)",
+          "field :node, :#{state.model_name_snakecase}",
+          "field :success_msg, :string"
+        ]
+      }
+      # {
+      #   "object #{state.model_name_snakecase}_collection_result do",
+      #   [
+      #     ":errors, list_of(:string)",
+      #     ":nodes, list_of(#{state.model_name_snakecase})",
+      #     ":query_info, :query_info"
+      #   ]
+      # },
+    ]
+    |> Enum.reduce(state, fn {head, lines}, acc ->
+      if Enum.find(acc.lines.types, fn l -> String.contains?(l, head) end) do
+        acc
+      else
+        block_to_add = Enum.concat([
+          [DocUtils.indent_to_string(2) <> head],
+          Enum.map(lines, fn l -> DocUtils.indent_to_string(4) <> l end),
+          [DocUtils.indent_to_string(2) <> "end"]
+        ])
+        %{
+          acc |
+            lines: Map.put(acc.lines, :types,
+              add_lines_to_block(acc.lines.types, block_to_add, Enum.at(acc.lines.types, 0), 0)
+            )
+        }
+      end
+    end)
+  end
+
+  def maybe_add_line(block, line, indent_size, close \\ false) do
+    lines_to_add =
+      block
+      |> Enum.find_index(fn l ->
+        String.contains?(l, line)
+      end)
+      |> case do
+        nil ->
+          [DocUtils.indent_to_string(indent_size) <> line]
+          |> (fn res ->
+            if close do
+              Enum.concat([res, [DocUtils.indent_to_string(indent_size) <> "end"]])
+            else
+              res
+            end
+          end).()
+        _ ->
+          []
+      end
+    add_lines_to_block(block, lines_to_add, Enum.at(block, 0), indent_size - 2)
+  end
+
+  def maybe_add_node_interface_type_resolve(%GqlForModel{} = state) do
+    # look for node interface, next line is resolve type
+    # insert into resolve_type block
+    interface_block_start_index = Enum.find_index(state.lines.app_schema, fn l ->
+      String.starts_with?(
+        l,
+        DocUtils.indent_to_string(2) <> "node interface"
+      )
+    end)
+    Enum.find(state.lines.app_schema, fn l ->
+      String.contains?(
+        l,
+        "#{state.module_name_data}.#{state.context_name}.#{state.model_name}{}, _ ->"
+      )
+    end)
+    |> if do
+      state
+    else
+      %{
+        state |
+          lines: Map.put(
+            state.lines,
+            :app_schema,
+            Enum.concat(
+              [
+                Enum.slice(state.lines.app_schema, 0..interface_block_start_index+1),
+                [
+                  DocUtils.indent_to_string(6) <> "%#{state.module_name_data}.#{state.context_name}.#{state.model_name}{}, _ ->",
+                  DocUtils.indent_to_string(8) <> ":#{state.model_name_atom}"
+                ],
+                Enum.slice(state.lines.app_schema, (interface_block_start_index+2)..-1)
+              ]
+            )
+          )
+      }
+    end
+  end
+
+  def maybe_init_types(%GqlForModel{} = state) do
+    Enum.map(types(state), fn line ->
+      {:types, line}
+    end)
+    |> Enum.reduce(state, fn {k, v}, acc ->
+      %{
+        acc |
+          lines:
+            Map.put(
+              acc.lines,
+              k,
+              maybe_add_line(Map.get(acc.lines, k), v, 2, true)
+              |> maybe_add_line(
+                "connection node_type: :#{state.model_name_atom}",
+                2,
+                false
+              )
+            )
+      }
+    end)
+  end
+
+  def maybe_update_main_schema(%GqlForModel{} = state) do
+    [
+      "import_types #{state.module_name_graphql}.Schema.#{state.model_name}Mutations",
+      "import_types #{state.module_name_graphql}.Schema.#{state.model_name}Queries",
+      "import_types #{state.module_name_graphql}.Schema.#{state.model_name}Types"
+    ]
+    |> Enum.reduce(state.lines.app_schema, fn line, acc ->
+      maybe_add_line(
+        acc,
+        line,
+        2
+      )
+    end)
+    |> (fn lines ->
+      [
+        {"mutation do", "import_fields :#{state.model_name_snakecase}_mutations"},
+        {"query do", "import_fields :#{state.model_name_snakecase}_queries"},
+        {
+          "def dataloader",
+          "|> Dataloader.add_source(#{state.module_name_graphql}.Resolver.#{state.model_name}, #{state.module_name_graphql}.Resolver.#{state.model_name}.data())"
+        }
+      ]
+      |> Enum.reduce(lines, fn {k, v}, acc ->
+        if Enum.find(acc, fn line -> String.contains?(line, v) end) do
+          acc
+        else
+          add_lines_to_block(
+            acc,
+            [DocUtils.indent_to_string(4) <> v],
+            DocUtils.indent_to_string(2) <> k,
+            2
+          )
+        end
+      end)
+    end).()
+    |> (fn lines ->
+      %{state | lines: Map.put(state.lines, :app_schema, lines)}
+    end).()
+  end
+
+  defp parse_opts(args) do
+    {opts, parsed, invalid} = OptionParser.parse(args, switches: @switches)
+    merged_opts =
+      @default_opts
+      |> Keyword.merge(opts)
+      |> put_context_app(opts[:context_app])
+
+    {merged_opts, parsed, invalid}
+  end
+
+  def pretty_print(m) do
+    inspect(m, pretty: true)
+    |> String.split(~r{(\r?)\n})
+    |> Enum.map(fn l -> "    " <> l end)
+    |> Enum.join("\r\n")
+  end
+
+  defp put_context_app(opts, nil), do: opts
+  defp put_context_app(opts, string) do
+    Keyword.put(opts, :context_app, String.to_atom(string))
+  end
+
+  @doc false
+  @spec raise_with_help(String.t) :: no_return()
+  def raise_with_help(msg) do
+    Mix.raise """
+    #{msg}
+
+    mix #{@task_name} expects a
+    context module name, followed by the singular module name
+
+        mix #{@task_name} Accounts User
+
+    The context serves as the API boundary for the given resource.
+    Multiple resources may belong to a context and a resource may be
+    split over distinct contexts (such as Accounts.User and Payments.User).
+    """
+  end
+
+  @doc false
+  def run(args) do
+    if Mix.Project.umbrella? do
+      Mix.raise "mix #{@task_name} can only be run inside an application directory"
+    end
+    Mix.Task.run("app.start")
+
+
+    [context, schema] = build(args)
+    this_app = Mix.Phoenix.otp_app()
+    dir_context = Path.join(["lib", "#{this_app}", Macro.underscore(context)])
+    %GqlForModel{
+      app_otp: this_app,
+      context_name: context,
+      context_name_snakecase: Macro.underscore(context),
+      dir_context: dir_context,
+      dir_graphql: Path.join(["lib", "#{this_app}_graphql"]),
+      dir_test: Path.join(["test", "#{this_app}_graphql"]),
+      model_file_path: Path.join([dir_context, Macro.underscore(schema) <> ".ex"]),
+      model_name: schema,
+      model_name_atom: Macro.underscore(schema) |> String.to_atom,
+      model_name_graphql_case: Macro.underscore(schema) |> Absinthe.Adapter.LanguageConventions.to_external_name(nil),
+      model_name_snakecase: Macro.underscore(schema),
+      module_name_data: Mix.Phoenix.context_base(
+        Mix.Phoenix.context_app()
+      ),
+      module_name_graphql: Mix.Phoenix.context_base(
+        Mix.Phoenix.context_app()
+      ) <> "GraphQl"
+    }
+    |> ensure_files_and_directories_exist
+    |> load_model
+    |> load_lines
+    |> load_validations
+    |> maybe_init_types
+    |> sync_mocks
+    |> sync_objects
+    |> sync_graphql_files
+    |> maybe_add_default_types
+    |> maybe_add_node_interface_type_resolve
+    |> maybe_update_main_schema
+    |> sync_json_schema
+    # |> Vite + package.json + urql
+    # |> Vue Routes (list, edit, form, graphql queries)
+    # release
+    # |> mutations_test
+    # |> queries_test
+    |> write_lines_to_files
+    # |> Vue Test ?
+  end
+
+  def sync_graphql_files(%GqlForModel{} = state) do
+    fields = Mix.Phoenix.Schema.params(
+      state.model.__changeset__
+    )
+    state = %{
+      state |
+        graphql_fields:
+          Map.keys(fields)
+          |> Enum.map(fn f ->
+            Absinthe.Adapter.LanguageConventions.to_external_name(to_string(f), nil)
+          end)
+          |> Enum.map(fn f ->
+            DocUtils.indent_to_string(8) <> f
+          end)
+          |> Enum.join("\r\n")
+    }
+    [
+      {
+        "priv/templates/#{@task_name}/collection.gql",
+        [
+          "assets",
+          "ts",
+          state.context_name,
+          Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil),
+          "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}Collection.gql"
+        ]
+      },
+      {
+        "priv/templates/#{@task_name}/delete.gql",
+        [
+          "assets",
+          "ts",
+          state.context_name,
+          Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil),
+          "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}Delete.gql"
+        ]
+      },
+      {
+        "priv/templates/#{@task_name}/mutation.gql",
+        [
+          "assets",
+          "ts",
+          state.context_name,
+          Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil),
+          "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}Mutation.gql"
+        ]
+      },
+      {
+        "priv/templates/#{@task_name}/single.gql",
+        [
+          "assets",
+          "ts",
+          state.context_name,
+          Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil),
+          "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}Single.gql"
+        ]
+      }
+    ]
+    |> Enum.each(
+      fn {template, path_parts} ->
+        EEx.eval_string(
+          Application.app_dir(
+            :potionx,
+            template
+          )
+          |> File.read!,
+          Enum.map(
+            Map.from_struct(state),
+            &(&1)
+          )
+        )
+        |> (fn res ->
+          File.write!(
+            Path.join(path_parts),
+            res
+          )
+        end).()
+      end
+    )
+
+    state
+  end
+
+  def sync_json_schema(%GqlForModel{} = state) do
+    model_json_raw = File.read!(
+      files_to_be_generated(state).model_json
+      |> Path.join
+    )
+    model_json = Jason.decode!(model_json_raw, keys: :atoms)
+    state.model.__changeset__
+    |> Enum.reduce(model_json, fn
+      {_, {:assoc, _}}, acc -> acc
+      {k, {:array, opts}}, acc ->
+        options =
+          case opts do
+            {_, _, %{values: values}} -> values
+            _ -> []
+          end
+        acc ++ [%{
+          name: to_string(k),
+          options: options,
+          type: "checkbox",
+          validations:
+            Enum.reduce(state.validations, [], fn {key, v}, acc ->
+              if (key === k) do
+                acc ++ [v]
+              else
+                acc
+              end
+            end)
+        }]
+      {k, v}, acc ->
+        cond do
+          Enum.member?([:inserted_at, :updated_at], k) ->
+            acc
+          not is_nil(Enum.find(acc, fn entry -> entry.name === to_string(k) end)) ->
+            acc
+          true ->
+            acc ++ [%{
+              name: to_string(k),
+              type: v,
+              validations:
+                Enum.reduce(state.validations, [], fn {key, v}, acc ->
+                  if (key === k) do
+                    acc ++ [v]
+                  else
+                    acc
+                  end
+                end)
+            }]
+        end
+    end)
+    |> Jason.encode!(pretty: true)
+    |> (fn res ->
+      File.write!(
+        files_to_be_generated(state).model_json
+        |> Path.join,
+        res
+      )
+    end).()
+
+    state
+  end
+
+  def sync_mocks(%GqlForModel{} = state) do
+    fields = Mix.Phoenix.Schema.params(
+      state.model.__changeset__
+    )
+    fields_patch = Mix.Phoenix.Schema.params(
+      state.model.__changeset__,
+      :update
+    )
+    EEx.eval_string(
+      Application.app_dir(
+        :potionx,
+        "priv/templates/#{@task_name}/model_mock.ex"
+      )
+      |> File.read!,
+      Enum.map(
+        Map.from_struct(state)
+        |> Map.put(:mock, pretty_print(fields))
+        |> Map.put(:mock_patch, pretty_print(fields_patch)),
+        &(&1)
+      )
+    )
+    |> (fn res ->
+      File.write!(
+        Path.join(files_to_be_generated(state).model_mock),
+        res
+      )
+    end).()
+
+    EEx.eval_string(
+      Application.app_dir(
+        :potionx,
+        "priv/templates/#{@task_name}/model_mock.json"
+      )
+      |> File.read!,
+      Enum.map(
+        Map.from_struct(state)
+        |> Map.put(:mock, Jason.encode!(fields, pretty: true)),
+        &(&1)
+      )
+    )
+    |> (fn res ->
+      File.write!(
+        Path.join(files_to_be_generated(state).model_mock_json),
+        res
+      )
+    end).()
+
+    state
+  end
+
+  def sync_objects(%GqlForModel{} = state) do
+    fields = state.model.__changeset__
+
+    types(state)
+    |> Enum.reduce(state, fn line, state ->
+      lines = state.lines.types
+      head_index =
+        lines
+        |> Enum.find_index(fn l -> String.contains?(l, line) end)
+      tail_index =
+        lines
+        |> Enum.slice(head_index..-1)
+        |> Enum.find_index(fn l -> String.contains?(l, DocUtils.indent_to_string(2) <> "end") end)
+        |> Kernel.+(head_index)
+
+      snippet =
+        Enum.slice(lines, head_index..tail_index)
+
+      Enum.reduce(fields, snippet, fn
+        {k, {:array, _}}, acc ->
+          acc ++ ["field :#{k}, list_of(:string)"]
+        {k, {:assoc, ass}}, acc ->
+          if String.starts_with?(line, "input_object") do
+            acc
+          else
+            model = ass.related |> to_string() |> String.split(".") |> Enum.at(-1) |> Macro.underscore()
+            result_type = ass.cardinality === :many && "list_of(:#{model})" || model
+            acc ++ ["field :#{to_string(k)}, #{result_type}, resolve: #{state.module_name_graphql}.Resolver.#{state.model_name}"]
+          end
+        {:id, _}, acc ->
+          acc
+        {k, v}, acc ->
+          acc ++ ["field :#{k}, :#{to_string(v)}"]
+      end)
+      |> Enum.reduce(snippet, fn line, acc ->
+        maybe_add_line(acc, line, 4)
+      end)
+      |> (fn snippet ->
+        head = Enum.slice(lines, 0..(head_index - 1))
+        tail = Enum.slice(lines, (tail_index + 1)..-1)
+        %{
+          state | lines:
+            Map.put(state.lines, :types, Enum.concat([head, snippet, tail]))
+        }
+      end).()
+    end)
+  end
+
+  def types(%GqlForModel{} = state) do
+    [
+      "node object :#{state.model_name_atom} do",
+      "input_object :#{state.model_name_atom}_filters do",
+      "input_object :#{state.model_name_atom}_input do"
+    ]
+  end
+
+  defp validate_args!([context, schema] = args) do
+    cond do
+      not Context.valid?(context) ->
+        raise_with_help "Expected the context, #{inspect context}, to be a valid module name"
+      not Schema.valid?(schema) ->
+        raise_with_help "Expected the schema, #{inspect schema}, to be a valid module name"
+      context == schema ->
+        raise_with_help "The context and schema should have different names"
+      true ->
+        args
+    end
+  end
+  defp validate_args!(_args) do
+    raise_with_help "Invalid arguments"
+  end
+
+  def validations(%Ecto.Changeset{} = cs) do
+    cs
+    |> Map.get(:required)
+    |> Enum.map(fn c -> {c, :required} end)
+    |> Kernel.++(
+      cs
+      |> Ecto.Changeset.validations()
+    )
+    |> Enum.map(fn
+      {k, :required = n} ->
+        {k, %{
+          name: to_string(n),
+        }}
+      {k, {:format = n, r}} ->
+        {k, %{
+          name: to_string(n),
+          params: %{
+            pattern: Regex.source(r)
+          }
+        }}
+      {k, {n, params}} when n == :length or n == :number ->
+        {k, %{
+          name: to_string(n),
+          params: keyword_list_to_map(params)
+        }}
+      {k, {n, values}} when n == :inclusion or n == :exclusion or n === :subset ->
+        {k, %{
+          name: to_string(n),
+          params: %{
+            values: keyword_list_to_map(values)
+          }
+        }}
+      {k, {n, _}} ->
+        {k, %{name: n}}
+    end)
+  end
+
+  def write_lines_to_files(%GqlForModel{} = state) do
+    files = files_to_be_generated(state)
+    Enum.each(state.lines, fn {k, lines} ->
+      File.write(
+        Path.join(Map.get(files, k)),
+        Enum.join(lines, "\r\n"),
+        [:write]
+      )
+    end)
+    state
+  end
+end

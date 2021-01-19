@@ -1,6 +1,9 @@
 defmodule Potionx.Schema do
   defmacro __using__(_) do
     quote do
+      use Absinthe.Schema
+      import_types Absinthe.Plug.Types
+
       def middleware(middleware, _field, %{identifier: :mutation}) do
         Enum.concat([
           [
