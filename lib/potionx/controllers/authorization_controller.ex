@@ -10,13 +10,32 @@ defmodule Potionx.AuthorizationController do
         session_params = Map.fetch!(params, "session_params")
         params         = Map.drop(params, ["provider", "session_params"])
 
+        config = Pow.Plug.fetch_config(conn)
+
         conn
         |> Conn.put_private(:pow_assent_session_params, session_params)
         |> Conn.put_private(:pow_assent_registration, false) # disable registration
-        |> Potionx.Plug.PowAssent.callback_upsert(provider, params, redirect_uri(conn))
+        |> Potionx.Plug.PowAssent.callback_upsert(
+          provider,
+          params,
+          redirect_uri(conn)
+        )
         |> case do
           {:ok, conn} ->
-            json(conn, %{data: %{access_token: conn.private[:api_access_token], renewal_token: conn.private[:api_renewal_token]}})
+
+            conn
+            |> Potionx.ApiAuthPlug.handle_cookies(
+              %{
+                access_token: conn.private[:api_access_token],
+                renewal_token: conn.private[:api_renewal_token]
+              },
+              config
+            )
+            |> json(%{
+              data: %{
+                access_token: conn.private[:api_access_token]
+              }
+            })
 
           {:error, conn} ->
             conn

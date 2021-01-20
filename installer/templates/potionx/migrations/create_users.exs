@@ -3,6 +3,7 @@ defmodule <%= @graphql_namespace %>.Repo.Migrations.CreateUsers do
 
   def change do
     create table(:users) do
+      add :email, :string, null: false
       add :deleted_at, :utc_datetime
       add :name, :string
       add :surname, :string

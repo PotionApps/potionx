@@ -182,7 +182,7 @@ defmodule Phx.New.Generator do
     # means creating a database like FoO is the same as foo in
     # some storages.
     {adapter_app, adapter_module, adapter_config} =
-      get_ecto_adapter(db, String.downcase(project.app), project.app_mod)
+      get_ecto_adapter(db, String.downcase(project.app), project.app_mod, project.local_postgres_password)
 
     pubsub_server = get_pubsub_server(project.app_mod)
 
@@ -198,6 +198,7 @@ defmodule Phx.New.Generator do
       elixir_version: elixir_version(),
       app_name: project.app,
       app_module: inspect(project.app_mod),
+      email: inspect(project.email),
       graphql_namespace: inspect(project.graphql_namespace),
       root_app_name: project.root_app,
       root_app_module: inspect(project.root_mod),
@@ -245,7 +246,7 @@ defmodule Phx.New.Generator do
   def gen_ecto_config(%Project{project_path: project_path, binding: binding}) do
     adapter_config = binding[:adapter_config]
 
-    config_inject(project_path, "config/dev.exs", """
+    config_inject(project_path, "config/dev.secret.exs", """
     # Configure your database
     config :#{binding[:app_name]}, #{binding[:app_module]}.Repo#{
       kw_to_config(adapter_config[:dev])
@@ -253,7 +254,7 @@ defmodule Phx.New.Generator do
       pool_size: 10
     """)
 
-    config_inject(project_path, "config/test.exs", """
+    config_inject(project_path, "config/test.secret.exs", """
     # Configure your database
     #
     # The MIX_TEST_PARTITION environment variable can be used
@@ -286,19 +287,19 @@ defmodule Phx.New.Generator do
     |> Module.concat(PubSub)
   end
 
-  defp get_ecto_adapter("mssql", app, module) do
+  defp get_ecto_adapter("mssql", app, module, _) do
     {:tds, Ecto.Adapters.Tds, db_config(app, module, "sa", "some!Password")}
   end
 
-  defp get_ecto_adapter("mysql", app, module) do
+  defp get_ecto_adapter("mysql", app, module, _) do
     {:myxql, Ecto.Adapters.MyXQL, db_config(app, module, "root", "")}
   end
 
-  defp get_ecto_adapter("postgres", app, module) do
-    {:postgrex, Ecto.Adapters.Postgres, db_config(app, module, "postgres", "postgres")}
+  defp get_ecto_adapter("postgres", app, module, password) do
+    {:postgrex, Ecto.Adapters.Postgres, db_config(app, module, "postgres", password)}
   end
 
-  defp get_ecto_adapter(db, _app, _mod) do
+  defp get_ecto_adapter(db, _app, _mod, _) do
     Mix.raise("Unknown database #{inspect(db)}")
   end
 

@@ -91,8 +91,28 @@ defmodule Mix.Tasks.Potionx.New do
              gettext: :boolean, umbrella: :boolean, verbose: :boolean,
              live: :boolean, dashboard: :boolean, install: :boolean]
 
+  def ask_for_email(%Project{} = project) do
+    email =
+      Mix.shell().prompt("\nWhat email should the default user have?")
+      |> String.trim
+
+    %{project | email: email}
+  end
+
+  def ask_for_local_postgres_password(%Project{} = project) do
+    email =
+      Mix.shell().prompt("\nWhat is the password to your local Postgres database?")
+      |> String.trim
+
+    %{project | local_postgres_password: email}
+  end
+
   def generate_default_graphql(%Project{} = project, path_key) do
     path = Map.fetch!(project, path_key)
+
+    maybe_cd(path, fn ->
+      cmd(project, "mix potionx.gen.gql_for_model UserIdentities UserIdentity --no-associations")
+    end)
 
     maybe_cd(path, fn ->
       cmd(project, "mix potionx.gen.gql_for_model Users User")
@@ -107,6 +127,8 @@ defmodule Mix.Tasks.Potionx.New do
     maybe_cd(path, fn ->
       cmd(project, "mix pow_assent.install")
     end)
+
+    project
   end
 
   def run([version]) when version in ~w(-v --version) do
@@ -135,13 +157,15 @@ defmodule Mix.Tasks.Potionx.New do
   def generate(base_path, generator, path, opts) do
     base_path
     |> Project.new(opts)
+    |> ask_for_local_postgres_password
     |> generator.prepare_project()
+    |> ask_for_email
     |> Generator.put_binding()
     |> validate_project(path)
     |> generator.generate()
     |> prompt_to_install_deps(generator, path)
-    |> generate_default_graphql(path)
     |> install_pow_assent(path)
+    |> generate_default_graphql(path)
   end
 
   defp validate_project(%Project{opts: opts} = project, path) do

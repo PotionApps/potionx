@@ -17,6 +17,11 @@ defmodule <%= @web_namespace %>.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Potionx.ApiAuthPlug, otp_app: :<%= @app_name %>
+  end
+
+  pipeline :api_protected do
+    plug Pow.Plug.RequireAuthenticated, error_handler: Potionx.APIAuthErrorHandler
   end<%= if @html do %>
 
   scope "/", <%= @web_namespace %> do

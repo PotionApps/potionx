@@ -10,7 +10,9 @@ defmodule Potionx.Endpoint do
         |> unquote(opts[:socket]).id
         |> broadcast("disconnect", %{})
       end
+
       defoverridable([disconnect_socket: 1])
     end
   end
+
 end

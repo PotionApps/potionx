@@ -37,7 +37,19 @@ defmodule Potionx.AuthController do
             |> json(%{error: %{status: 401, message: "Invalid token"}})
 
           {conn, _user} ->
-            json(conn, %{data: %{access_token: conn.private[:api_access_token], renewal_token: conn.private[:api_renewal_token]}})
+            conn
+            |> Potionx.ApiAuthPlug.handle_cookies(
+              %{
+                access_token: conn.private[:api_access_token],
+                renewal_token: conn.private[:api_renewal_token]
+              },
+              config
+            )
+            |> json(%{
+              data: %{
+                access_token: conn.private[:api_access_token]
+              }
+            })
         end
       end
 

@@ -39,6 +39,27 @@ defmodule Potionx.ApiAuthPlug do
     {conn, user}
   end
 
+  def cookie_names(config) do
+    Map.merge(
+      %{
+        access_token: "a_app",
+        renewal_token: "r_app"
+      },
+      Keyword.get(config, :cookie_names, %{})
+    )
+  end
+
+  def cookie_options(%Conn{} = conn, max_age \\ nil) do
+    max_age = max_age || 30 * 60 # default to 30 minutes
+    [
+      http_only: true,
+      domain: conn.host,
+      max_age: max_age,
+      secure: true,
+      same_site: "strict"
+    ]
+  end
+
   @doc """
   Delete the access token from the cache.
 
@@ -49,7 +70,7 @@ defmodule Potionx.ApiAuthPlug do
   def delete(conn, config) do
     store_config = store_config(config)
 
-    with {:ok, signed_token} <- fetch_access_token(conn),
+    with {:ok, signed_token} <- fetch_token(conn, config),
           {:ok, token}        <- verify_token(conn, signed_token, config),
           {_user, metadata}   <- CredentialsCache.get(store_config, token) do
 
@@ -69,7 +90,7 @@ defmodule Potionx.ApiAuthPlug do
   @impl true
   @spec fetch(Conn.t(), Config.t()) :: {Conn.t(), map() | nil}
   def fetch(conn, config) do
-    with {:ok, signed_token} <- fetch_access_token(conn),
+    with {:ok, signed_token} <- fetch_token(conn, config),
          {user, _metadata}   <- get_credentials(conn, signed_token, config) do
       {conn, user}
     else
@@ -77,10 +98,18 @@ defmodule Potionx.ApiAuthPlug do
     end
   end
 
-  defp fetch_access_token(conn) do
-    case Conn.get_req_header(conn, "authorization") do
-      [token | _rest] -> {:ok, token}
-      _any            -> :error
+  defp fetch_token(conn, config, token_name \\ :access_token) do
+    conn = Conn.fetch_cookies(conn)
+    auth_headers = Conn.get_req_header(conn, "authorization")
+    case auth_headers do
+      ["Bearer " <> token] ->
+        {:ok, token}
+      _ ->
+        Map.get(conn.cookies, cookie_names(config) |> Map.get(token_name))
+        |> case do
+          nil -> :error
+          val -> {:ok, val}
+        end
     end
   end
 
@@ -91,6 +120,28 @@ defmodule Potionx.ApiAuthPlug do
     else
       _any -> nil
     end
+  end
+
+  def handle_cookies(
+    conn,
+    %{access_token: a_t, renewal_token: r_t},
+    config
+  ) do
+    store_config = store_config(config)
+    opts_access_token = CredentialsCache.backend_config(store_config)
+    opts_renewal_token = PersistentSessionCache.backend_config(store_config)
+
+    conn
+    |> Conn.put_resp_cookie(
+      cookie_names(config)[:access_token],
+      a_t,
+      cookie_options(conn, opts_access_token[:ttl])
+    )
+    |> Conn.put_resp_cookie(
+      cookie_names(config)[:renewal_token],
+      r_t,
+      cookie_options(conn, opts_renewal_token[:ttl])
+    )
   end
 
   @doc """
@@ -104,7 +155,7 @@ defmodule Potionx.ApiAuthPlug do
   def renew(conn, config) do
     store_config = store_config(config)
 
-    with {:ok, signed_token} <- fetch_access_token(conn),
+    with {:ok, signed_token} <- fetch_token(conn, config, :renewal_token),
           {:ok, token}        <- verify_token(conn, signed_token, config),
           {user, metadata}    <- PersistentSessionCache.get(store_config, token) do
 

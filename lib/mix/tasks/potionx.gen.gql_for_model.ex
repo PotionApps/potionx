@@ -4,7 +4,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
   @task_name "potion.gen.gql_for_model"
   @default_opts [schema: true, context: true]
   @switches [binary_id: :boolean, table: :string, web: :string,
-             schema: :boolean, context: :boolean, context_app: :string]
+             schema: :boolean, context: :boolean, context_app: :string, no_associations: :boolean]
   defstruct app_otp: nil,
             context_name: nil,
             context_name_snakecase: nil,
@@ -24,6 +24,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
             model_name: nil,
             model_name_graphql_case: nil,
             model_name_snakecase: nil,
+            no_associations: false,
             validations: []
 
   use Mix.Task
@@ -54,8 +55,8 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
 
   @doc false
   def build(args) do
-    {_opts, parsed, _} = parse_opts(args)
-    validate_args!(parsed)
+    {opts, parsed, _} = parse_opts(args)
+    {opts, validate_args!(parsed)}
   end
 
   def ensure_files_and_directories_exist(%GqlForModel{} = state) do
@@ -276,6 +277,13 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
     end
   end
 
+  def maybe_convert_type(type) do
+    case type do
+      :utc_datetime -> :datetime
+      _ -> type
+    end
+  end
+
   def maybe_init_types(%GqlForModel{} = state) do
     Enum.map(types(state), fn line ->
       {:types, line}
@@ -383,9 +391,8 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
       Mix.raise "mix #{@task_name} can only be run inside an application directory"
     end
     Mix.Task.run("app.start")
+    {opts, [context, schema]} = build(args)
 
-
-    [context, schema] = build(args)
     this_app = Mix.Phoenix.otp_app()
     dir_context = Path.join(["lib", "#{this_app}", Macro.underscore(context)])
     %GqlForModel{
@@ -405,7 +412,8 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
       ),
       module_name_graphql: Mix.Phoenix.context_base(
         Mix.Phoenix.context_app()
-      ) <> "GraphQl"
+      ) <> "GraphQl",
+      no_associations: Keyword.get(opts, :no_associations, false)
     }
     |> ensure_files_and_directories_exist
     |> load_model
@@ -644,17 +652,17 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
         {k, {:array, _}}, acc ->
           acc ++ ["field :#{k}, list_of(:string)"]
         {k, {:assoc, ass}}, acc ->
-          if String.starts_with?(line, "input_object") do
+          if String.starts_with?(line, "input_object") or state.no_associations do
             acc
           else
             model = ass.related |> to_string() |> String.split(".") |> Enum.at(-1) |> Macro.underscore()
             result_type = ass.cardinality === :many && "list_of(:#{model})" || model
-            acc ++ ["field :#{to_string(k)}, #{result_type}, resolve: #{state.module_name_graphql}.Resolver.#{state.model_name}"]
+            acc ++ ["field :#{to_string(k)}, #{result_type}, resolve: dataloader(#{state.module_name_graphql}.Resolver.#{state.model_name})"]
           end
         {:id, _}, acc ->
           acc
         {k, v}, acc ->
-          acc ++ ["field :#{k}, :#{to_string(v)}"]
+          acc ++ ["field :#{k}, :#{to_string(maybe_convert_type(v))}"]
       end)
       |> Enum.reduce(snippet, fn line, acc ->
         maybe_add_line(acc, line, 4)

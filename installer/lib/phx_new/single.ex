@@ -6,6 +6,7 @@ defmodule Phx.New.Single do
   template :new, [
     {:eex,  "phx_single/config/config.exs",             :project, "config/config.exs"},
     {:eex,  "phx_single/config/dev.exs",                :project, "config/dev.exs"},
+    # {:eex,  "potionx/config/dev.secret.exs",            :project, "config/dev.secret.exs"},
     {:eex,  "phx_single/config/prod.exs",               :project, "config/prod.exs"},
     {:eex,  "phx_single/config/runtime.exs",            :project, "config/runtime.exs"},
     {:eex,  "phx_single/config/test.exs",               :project, "config/test.exs"},
@@ -94,7 +95,8 @@ defmodule Phx.New.Single do
     {:eex, "potionx/app_name_web/controllers/auth_controller.ex", :app, "lib/:lib_web_name/controllers/auth_controller.ex"},
     {:eex, "potionx/app_name_web/controllers/authorization_controller.ex", :app, "lib/:lib_web_name/controllers/authorization_controller.ex"},
     {:migration, "potionx/migrations/create_users.exs", :app, "priv/repo/migrations/{timestamp}_create_users.exs"},
-    {:eex, "potionx/test/app_name_web/controllers/authorization_controller_test.ex", :app, "test/:lib_web_name/controllers/authorization_controller_test.ex"}
+    {:eex, "potionx/test/app_name_web/controllers/authorization_controller_test.exs", :app, "test/:lib_web_name/controllers/authorization_controller_test.exs"},
+    {:eex, "potionx/priv/repo/potionx_seed.exs", :app, "priv/repo/potionx_seed.exs"}
   ]
 
   def prepare_project(%Project{app: app} = project) when not is_nil(app) do

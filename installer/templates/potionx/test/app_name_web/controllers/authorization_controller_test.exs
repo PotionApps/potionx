@@ -52,12 +52,24 @@ defmodule <%= @web_namespace %>.AuthorizationControllerTest do
     @valid_params   %{"code" => "valid", "session_params" => %{"a" => 1}}
     @invalid_params %{"code" => "invalid", "session_params" => %{"a" => 2}}
 
+    setup do
+      %<%= app_module %>.Users.User{
+        email: "test@example.com",
+        roles: [:admin]
+      }
+      |> <%= app_module %>.Users.User.changeset(%{})
+      |> <%= app_module %>.Repo.insert!
+      {:ok, []}
+    end
+
     test "with valid params", %{conn: conn} do
       conn = post conn, Routes.api_v1_authorization_path(conn, :callback, :test_provider, @valid_params)
 
+      assert Map.get(conn.cookies, Potionx.ApiAuthPlug.cookie_names([]).access_token)
+      assert Map.get(conn.cookies, Potionx.ApiAuthPlug.cookie_names([]).renewal_token)
+
       assert json = json_response(conn, 200)
       assert json["data"]["access_token"]
-      assert json["data"]["renewal_token"]
     end
 
     test "with invalid params", %{conn: conn} do

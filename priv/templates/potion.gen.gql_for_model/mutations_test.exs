@@ -1,5 +1,5 @@
 defmodule <%= module_name_graphql %>.Schema.<%= model_name %>MutationTest do
-  use <%= module_name_data %>.Case
+  use <%= module_name_data %>.DataCase
   alias <%= module_name_data %>.<%= context_name %>.<%= model_name %>Mock
   alias <%= module_name_data %>.<%= context_name %>.<%= model_name %>Service
 

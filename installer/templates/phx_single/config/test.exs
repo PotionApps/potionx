@@ -8,3 +8,6 @@ config :<%= @app_name %>, <%= @endpoint_module %>,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+# Finally import the config/dev.secret.exs
+import_config "dev.secret.exs"

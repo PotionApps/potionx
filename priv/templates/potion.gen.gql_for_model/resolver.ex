@@ -5,7 +5,7 @@ defmodule <%= module_name_graphql %>.Resolver.<%= model_name %> do
 
   def collection(%Service{} = ctx, _args) do
     <%= model_name %>Service.query(ctx)
-    |> Absinthe.Relay.Connection.from_query(&<%= module_name_data %>.all/1, ctx.pagination)
+    |> Absinthe.Relay.Connection.from_query(&<%= module_name_data %>.Repo.all/1, ctx.pagination)
   end
 
   def data do
