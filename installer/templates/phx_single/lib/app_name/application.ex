@@ -14,10 +14,18 @@ defmodule <%= @app_module %>.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: <%= @app_module %>.PubSub},
       # Start the Endpoint (http/https)
-      <%= @endpoint_module %>
+      <%= @endpoint_module %>,
       # Start a worker by calling: <%= @app_module %>.Worker.start_link(arg)
       # {<%= @app_module %>.Worker, arg}
-    ]
+    ] ++
+      if Mix.env() == :prod do
+        [
+          {Pow.Store.Backend.MnesiaCache, extra_db_nodes: Node.list()},
+          Pow.Store.Backend.MnesiaCache.Unsplit
+        ]
+      else
+        []
+      end
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options

@@ -5,12 +5,14 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>Mutations do
   object :<%= model_name_snakecase %>_mutations do
     field :<%= model_name_snakecase %>_delete, type: :<%= model_name_snakecase %>_mutation_result do
       arg :filters, :<%= model_name_snakecase %>_filters_single
+      middleware Potionx.Middleware.RolesAuthorization, [roles: [:admin]]
       resolve &Resolver.<%= model_name %>.delete/2
     end
 
     field :<%= model_name_snakecase %>_mutation, type: :<%= model_name_snakecase %>_mutation_result do
       arg :changes, :<%= model_name_snakecase %>_input
       arg :filters, :<%= model_name_snakecase %>_filters_single
+      middleware Potionx.Middleware.RolesAuthorization, [roles: [:admin]]
       resolve &Resolver.<%= model_name %>.mutation/2
     end
   end

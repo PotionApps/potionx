@@ -25,6 +25,8 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
             model_name_graphql_case: nil,
             model_name_snakecase: nil,
             no_associations: false,
+            no_mutations: false,
+            no_queries: false,
             validations: []
 
   use Mix.Task
@@ -124,6 +126,16 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
       service: [state.dir_context,  "#{state.model_name_snakecase}_service.ex"],
       types: [state.dir_graphql, "schemas", state.model_name_snakecase, "#{state.model_name_snakecase}_types.ex"],
     }
+    |> (fn res ->
+      [{:no_mutations, "mutations"}, {:no_queries, "queries"}]
+      |> Enum.reduce(res, fn {k, v}, acc ->
+        if (Map.get(state, k)) do
+          Map.drop(acc, [String.to_atom(v), String.to_atom(v <> "_test")])
+        else
+          acc
+        end
+      end)
+    end).()
   end
 
   def keyword_list_to_map(list) do
@@ -308,28 +320,37 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
 
   def maybe_update_main_schema(%GqlForModel{} = state) do
     [
-      "import_types #{state.module_name_graphql}.Schema.#{state.model_name}Mutations",
-      "import_types #{state.module_name_graphql}.Schema.#{state.model_name}Queries",
-      "import_types #{state.module_name_graphql}.Schema.#{state.model_name}Types"
+      {:no_mutations, "import_types #{state.module_name_graphql}.Schema.#{state.model_name}Mutations"},
+      {:no_queries, "import_types #{state.module_name_graphql}.Schema.#{state.model_name}Queries"},
+      {:no_types, "import_types #{state.module_name_graphql}.Schema.#{state.model_name}Types"}
     ]
-    |> Enum.reduce(state.lines.app_schema, fn line, acc ->
-      maybe_add_line(
-        acc,
-        line,
-        2
-      )
+    |> Enum.reduce(state.lines.app_schema, fn {k, line}, acc ->
+      if (Map.get(state, k)) do
+        acc
+      else
+        maybe_add_line(
+          acc,
+          line,
+          2
+        )
+      end
     end)
     |> (fn lines ->
       [
-        {"mutation do", "import_fields :#{state.model_name_snakecase}_mutations"},
-        {"query do", "import_fields :#{state.model_name_snakecase}_queries"},
+        {:no_mutations, "mutation do", "import_fields :#{state.model_name_snakecase}_mutations"},
+        {:no_queries, "query do", "import_fields :#{state.model_name_snakecase}_queries"},
         {
+          :no_mutations,
           "def dataloader",
           "|> Dataloader.add_source(#{state.module_name_graphql}.Resolver.#{state.model_name}, #{state.module_name_graphql}.Resolver.#{state.model_name}.data())"
         }
       ]
-      |> Enum.reduce(lines, fn {k, v}, acc ->
-        if Enum.find(acc, fn line -> String.contains?(line, v) end) do
+      |> Enum.reduce(lines, fn {flag, k, v}, acc ->
+        (
+          Map.get(state, flag) or
+          Enum.find(acc, fn line -> String.contains?(line, v) end)
+        )
+        |> if do
           acc
         else
           add_lines_to_block(
@@ -369,6 +390,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
       {k, v} ->
         {k, v}
     end)
+    |> Enum.into(%{})
   end
 
   def pretty_print(m) do
@@ -428,7 +450,9 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
       module_name_graphql: Mix.Phoenix.context_base(
         Mix.Phoenix.context_app()
       ) <> "GraphQl",
-      no_associations: Keyword.get(opts, :no_associations, false)
+      no_associations: Keyword.get(opts, :no_associations, false),
+      no_mutations: Keyword.get(opts, :no_mutations, false),
+      no_queries: Keyword.get(opts, :no_queries, false)
     }
     |> ensure_files_and_directories_exist
     |> load_model
@@ -445,8 +469,6 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
     # |> Vite + package.json + urql
     # |> Vue Routes (list, edit, form, graphql queries)
     # release
-    # |> mutations_test
-    # |> queries_test
     |> write_lines_to_files
     # |> Vue Test ?
   end
@@ -472,6 +494,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
     }
     [
       {
+        :no_queries,
         "priv/templates/#{@task_name}/collection.gql",
         [
           "assets",
@@ -482,6 +505,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
         ]
       },
       {
+        :no_mutations,
         "priv/templates/#{@task_name}/delete.gql",
         [
           "assets",
@@ -492,6 +516,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
         ]
       },
       {
+        :no_mutations,
         "priv/templates/#{@task_name}/mutation.gql",
         [
           "assets",
@@ -502,6 +527,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
         ]
       },
       {
+        :no_queries,
         "priv/templates/#{@task_name}/single.gql",
         [
           "assets",
@@ -513,24 +539,26 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
       }
     ]
     |> Enum.each(
-      fn {template, path_parts} ->
-        EEx.eval_string(
-          Application.app_dir(
-            :potionx,
-            template
+      fn {flag, template, path_parts} ->
+        unless Map.get(state, flag) do
+          EEx.eval_string(
+            Application.app_dir(
+              :potionx,
+              template
+            )
+            |> File.read!,
+            Enum.map(
+              Map.from_struct(state),
+              &(&1)
+            )
           )
-          |> File.read!,
-          Enum.map(
-            Map.from_struct(state),
-            &(&1)
-          )
-        )
-        |> (fn res ->
-          File.write!(
-            Path.join(path_parts),
-            res
-          )
-        end).()
+          |> (fn res ->
+            File.write!(
+              Path.join(path_parts),
+              res
+            )
+          end).()
+        end
       end
     )
 

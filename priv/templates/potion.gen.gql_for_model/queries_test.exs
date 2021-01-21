@@ -12,20 +12,34 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>QueryTest do
       {:ok, entry} = <%= model_name %>Service.mutation(ctx)
       {:ok, ctx: ctx, entry: entry}
     end
-    test "returns collection of <%= model_name_snakecase %>", %{ctx: ctx, entry: entry} do
-      File.read!("assets/<%= context_name %>/<%= model_name_graphql_case %>/<%= model_name_graphql_case %>Collection.gql")
+    test "returns collection of <%= model_name_snakecase %>", %{ctx: ctx} do
+      File.read!("assets/ts/<%= context_name %>/<%= model_name_graphql_case %>/<%= model_name_graphql_case %>Collection.gql")
       |> Absinthe.run(
-        [
-          context: ctx
-        ]
+        <%= module_name_graphql %>.Schema,
+        context: ctx,
+        variables: %{
+          "first" => 15
+        }
       )
+      |> (fn {:ok, res} ->
+        assert res.data["<%= model_name_graphql_case %>Collection"]["edges"] |> Enum.count === 1
+      end).()
     end
     test "returns single <%= model_name_snakecase %>", %{ctx: ctx, entry: entry} do
-      File.read!("assets/<%= context_name %>/<%= model_name_graphql_case %>/<%= model_name_graphql_case %>Single.gql")
+      File.read!("assets/ts/<%= context_name %>/<%= model_name_graphql_case %>/<%= model_name_graphql_case %>Single.gql")
       |> Absinthe.run(
-        ctx: ctx,
+        <%= module_name_graphql %>.Schema,
+        context: ctx,
         variables: %{"filters" => %{"id" => entry.id}}
       )
+      |> (fn {:ok, res} ->
+        assert res.data["<%= model_name_graphql_case %>Single"]["id"] ===
+          Absinthe.Relay.Node.to_global_id(
+            :<%= model_name_snakecase %>,
+            entry.id,
+            <%= module_name_graphql %>.Schema
+          )
+      end).()
     end
   end
 end

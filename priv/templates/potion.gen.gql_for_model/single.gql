@@ -1,16 +1,8 @@
-query <%= model_name_graphql_case %>Collection(
-  $after: String,
-  $before: String,
-  $first: Int,
-  $last: Int,
-  filters: <%= model_name %>Filters
+query <%= model_name_graphql_case %>Single(
+  $filters: <%= model_name %>FiltersSingle
 ) {
-  <%= model_name_graphql_case %>Collection(
-    after: $after,
-    before: $after,
-    first: $first,
-    filters: $filters,
-    last: $last
+  <%= model_name_graphql_case %>Single(
+    filters: $filters
   ) {
 <%= graphql_fields %>
   }

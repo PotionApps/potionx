@@ -111,7 +111,7 @@ defmodule Mix.Tasks.Potionx.New do
     path = Map.fetch!(project, path_key)
 
     maybe_cd(path, fn ->
-      cmd(project, "mix potionx.gen.gql_for_model UserIdentities UserIdentity --no-associations")
+      cmd(project, "mix potionx.gen.gql_for_model UserIdentities UserIdentity --no-associations --no-queries --no-mutations")
     end)
 
     maybe_cd(path, fn ->
@@ -131,29 +131,6 @@ defmodule Mix.Tasks.Potionx.New do
     project
   end
 
-  def run([version]) when version in ~w(-v --version) do
-    Mix.shell().info("Phoenix v#{@version}")
-  end
-
-  def run(argv) do
-    elixir_version_check!()
-    case parse_opts(argv) do
-      {_opts, []} ->
-        Mix.Tasks.Help.run(["potionx.new"])
-
-      {opts, [base_path | _]} ->
-        generate(base_path, Single, :project_path, opts)
-    end
-  end
-
-  def run(argv, generator, path) do
-    elixir_version_check!()
-    case parse_opts(argv) do
-      {_opts, []} -> Mix.Tasks.Help.run(["potionx.new"])
-      {opts, [base_path | _]} -> generate(base_path, generator, path, opts)
-    end
-  end
-
   def generate(base_path, generator, path, opts) do
     base_path
     |> Project.new(opts)
@@ -166,29 +143,17 @@ defmodule Mix.Tasks.Potionx.New do
     |> prompt_to_install_deps(generator, path)
     |> install_pow_assent(path)
     |> generate_default_graphql(path)
-  end
-
-  defp validate_project(%Project{opts: opts} = project, path) do
-    check_app_name!(project.app, !!opts[:app])
-    check_directory_existence!(Map.fetch!(project, path))
-    check_module_name_validity!(project.root_mod)
-    check_module_name_availability!(project.root_mod)
-
-    project
+    |> run_migrations(path)
+    |> run_seed(path)
   end
 
   defp prompt_to_install_deps(%Project{} = project, generator, path_key) do
     path = Map.fetch!(project, path_key)
 
-    install? =
-      Keyword.get_lazy(project.opts, :install, fn ->
-        Mix.shell().yes?("\nFetch and install dependencies?")
-      end)
-
     cd_step = ["$ cd #{relative_app_path(path)}"]
 
     maybe_cd(path, fn ->
-      mix_step = install_mix(project, install?)
+      mix_step = install_mix(project, true)
 
       compile =
         case mix_step do
@@ -204,11 +169,11 @@ defmodule Mix.Tasks.Potionx.New do
       # end
 
       # print_missing_steps(cd_step ++ mix_step ++ webpack_step)
-      print_missing_steps(cd_step ++ mix_step)
+      # print_missing_steps(cd_step ++ mix_step)
 
-      if Project.ecto?(project) do
-        print_ecto_info(generator)
-      end
+      # if Project.ecto?(project) do
+      #   print_ecto_info(generator)
+      # end
 
       if path_key == :web_path do
         Mix.shell().info("""
@@ -235,6 +200,47 @@ defmodule Mix.Tasks.Potionx.New do
         Mix.raise "Invalid option: " <> switch_to_string(switch)
     end
   end
+
+  def run([version]) when version in ~w(-v --version) do
+    Mix.shell().info("Phoenix v#{@version}")
+  end
+
+  def run(argv) do
+    elixir_version_check!()
+    case parse_opts(argv) do
+      {_opts, []} ->
+        Mix.Tasks.Help.run(["potionx.new"])
+
+      {opts, [base_path | _]} ->
+        generate(base_path, Single, :project_path, opts)
+    end
+  end
+
+  def run(argv, generator, path) do
+    elixir_version_check!()
+    case parse_opts(argv) do
+      {_opts, []} -> Mix.Tasks.Help.run(["potionx.new"])
+      {opts, [base_path | _]} -> generate(base_path, generator, path, opts)
+    end
+  end
+
+  def run_migrations(%Project{} = project, path_key) do
+    path = Map.fetch!(project, path_key)
+    maybe_cd(path, fn ->
+      cmd(project, "mix ecto.setup")
+    end)
+
+    project
+  end
+  def run_seed(%Project{} = project, path_key) do
+    path = Map.fetch!(project, path_key)
+    maybe_cd(path, fn ->
+      cmd(project, "mix run priv/repo/potionx_seed.exs")
+    end)
+
+    project
+  end
+
   defp switch_to_string({name, nil}), do: name
   defp switch_to_string({name, val}), do: name <> "=" <> val
 
@@ -312,6 +318,15 @@ defmodule Mix.Tasks.Potionx.New do
       ^path -> Path.basename(path)
       rel -> rel
     end
+  end
+
+  defp validate_project(%Project{opts: opts} = project, path) do
+    check_app_name!(project.app, !!opts[:app])
+    check_directory_existence!(Map.fetch!(project, path))
+    check_module_name_validity!(project.root_mod)
+    check_module_name_availability!(project.root_mod)
+
+    project
   end
 
   ## Helpers

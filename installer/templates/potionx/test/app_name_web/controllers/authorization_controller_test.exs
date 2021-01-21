@@ -53,12 +53,12 @@ defmodule <%= @web_namespace %>.AuthorizationControllerTest do
     @invalid_params %{"code" => "invalid", "session_params" => %{"a" => 2}}
 
     setup do
-      %<%= app_module %>.Users.User{
+      %<%= @app_module %>.Users.User{
         email: "test@example.com",
         roles: [:admin]
       }
-      |> <%= app_module %>.Users.User.changeset(%{})
-      |> <%= app_module %>.Repo.insert!
+      |> <%= @app_module %>.Users.User.changeset(%{})
+      |> <%= @app_module %>.Repo.insert!
       {:ok, []}
     end
 

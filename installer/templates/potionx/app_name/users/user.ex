@@ -1,8 +1,6 @@
 defmodule <%= @app_module %>.Users.User do
   import Ecto.Changeset
   use Ecto.Schema
-  use Pow.Ecto.Schema
-  use PowAssent.Ecto.Schema
   use Potionx.Users.User
 
   schema "users" do

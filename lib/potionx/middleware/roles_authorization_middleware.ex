@@ -12,4 +12,8 @@ defmodule Potionx.Middleware.RolesAuthorization do
       |> Absinthe.Resolution.put_result({:error, "unauthorized"})
     end
   end
+  def call(res, _) do
+    IO.inspect(res.context)
+    res
+  end
 end

@@ -13,7 +13,7 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>Queries do
     field :<%= model_name_snakecase %>_single, type: :<%= model_name_snakecase %> do
       arg :filters, :<%= model_name_snakecase %>_filters_single
       middleware Potionx.Middleware.RolesAuthorization, [roles: [:admin]]
-      resolve &<%= module_name_graphql %>.Resolver.<%= model_name %>.mutation/2
+      resolve &<%= module_name_graphql %>.Resolver.<%= model_name %>.one/2
     end
   end
 end

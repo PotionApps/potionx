@@ -3,11 +3,11 @@ query <%= model_name_graphql_case %>Collection(
   $before: String,
   $first: Int,
   $last: Int,
-  filters: <%= model_name %>Filters
+  $filters: <%= model_name %>Filters
 ) {
   <%= model_name_graphql_case %>Collection(
     after: $after,
-    before: $after,
+    before: $before,
     first: $first,
     filters: $filters,
     last: $last
