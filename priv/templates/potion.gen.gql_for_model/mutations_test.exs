@@ -15,9 +15,18 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>MutationTest do
     test "deletes <%= model_name_snakecase %>", %{ctx: ctx, entry: entry} do
       File.read!("assets/<%= context_name %>/<%= model_name_graphql_case %>/<%= model_name_graphql_case %>Delete.gql")
       |> Absinthe.run(
+        <%= module_name_graphql %>.Schema,
         context: ctx,
         variables: %{"filters" => %{"id" => entry.id}}
       )
+      |> (fn res ->
+        assert res.data["<%= model_name_graphql_case %>Delete"]["node"]["id"] ===
+          Absinthe.Relay.Node.to_global_id(
+            :<%= model_name_snakecase %>
+            entry.id,
+            <%= module_name_graphql %>.Schema
+          )
+       end).()
     end
   end
 
@@ -25,19 +34,26 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>MutationTest do
     setup do
       ctx =
         %Potionx.Context.Service{
-          changes: <%= model_name %>Mock.run(),
+          changes: <%= model_name %>Mock.run() |> Map.delete(:id),
           roles: [:admin]
         }
-      {:ok, entry} = <%= model_name %>Service.mutation(ctx)
-      {:ok, ctx: ctx, entry: entry}
+      {:ok, ctx: ctx}
     end
 
-    test "deletes <%= model_name_snakecase %>", %{ctx: ctx, entry: entry} do
-      File.read!("assets/<%= context_name %>/<%= model_name_graphql_case %>/<%= model_name_graphql_case %>Mutation.gql")
-      |> Absinthe.run([
-        context: ctx,
-        variables: %{"id" => entry.id}
-      ])
+    test "creates <%= model_name_snakecase %>", %{ctx: ctx, entry: entry} do
+      File.read!("assets/ts/<%= context_name %>/<%= model_name_graphql_case %>/<%= model_name_graphql_case %>Mutation.gql")
+      |> Absinthe.run(
+        <%= module_name_graphql %>.Schema,
+        [
+          context: ctx,
+          variables: %{
+            "changes" => Jason.decode!(Jason.encode!(ctx.changes))
+          }
+        ]
+      )
+      |> (fn {:ok, res} ->
+        assert res.data["<%= model_name_graphql_case %>Mutation"]["node"]["id"]
+      end).()
     end
   end
 
@@ -52,8 +68,9 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>MutationTest do
     end
 
     test "invalid <%= model_name_snakecase %> mutation", %{ctx: ctx} do
-      File.read!("assets/<%= context_name %>/<%= model_name_graphql_case %>/<%= model_name_graphql_case %>Mutation.gql")
+      File.read!("assets/ts/<%= context_name %>/<%= model_name_graphql_case %>/<%= model_name_graphql_case %>Mutation.gql")
       |> Absinthe.run(
+        <%= module_name_graphql %>.Schema,
         context: ctx,
         variables: %{}
       )
@@ -68,12 +85,13 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>MutationTest do
           roles: [:admin]
         }
       {:ok, entry} = <%= model_name %>Service.mutation(ctx)
-      {:ok, ctx, entry: entry}
+      {:ok, ctx: ctx, entry: entry}
     end
 
     test "patches <%= model_name_snakecase %>", %{ctx: ctx, entry: entry} do
-      File.read!("assets/<%= context_name %>/<%= model_name_graphql_case %>/<%= model_name_graphql_case %>Mutation.gql")
+      File.read!("assets/ts/<%= context_name %>/<%= model_name_graphql_case %>/<%= model_name_graphql_case %>Mutation.gql")
       |> Absinthe.run(
+        <%= module_name_graphql %>.Schema,
         context: ctx,
         variables: %{"filters" => %{"id" => entry.id}}
       )

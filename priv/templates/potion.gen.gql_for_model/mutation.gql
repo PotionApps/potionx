@@ -8,8 +8,8 @@ mutation <%= model_name_graphql_case %>Mutation(
   ) {
     errors
     errorsFields {
-      name
-      value
+      field
+      message
     }
     node {
 <%= graphql_fields %>

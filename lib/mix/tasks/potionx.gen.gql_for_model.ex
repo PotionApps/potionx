@@ -356,6 +356,21 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
     {merged_opts, parsed, invalid}
   end
 
+  def prepare_mock(params,  type \\ :create) do
+    params
+    |> Enum.filter(fn
+      {_, {:assoc, _}} -> false
+      _ -> true
+    end)
+    |> Mix.Phoenix.Schema.params(type)
+    |> Enum.map(fn
+      {:email, _} ->
+        {:email, type === :create && "test@example.com" || "test@example.com"}
+      {k, v} ->
+        {k, v}
+    end)
+  end
+
   def pretty_print(m) do
     inspect(m, pretty: true)
     |> String.split(~r{(\r?)\n})
@@ -437,18 +452,21 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
   end
 
   def sync_graphql_files(%GqlForModel{} = state) do
-    fields = Mix.Phoenix.Schema.params(
+    fields = prepare_mock(
       state.model.__changeset__
     )
     state = %{
       state |
         graphql_fields:
-          Map.keys(fields)
-          |> Enum.map(fn f ->
-            Absinthe.Adapter.LanguageConventions.to_external_name(to_string(f), nil)
+          fields
+          |> Enum.reduce([], fn
+            {_, {:assoc, _}}, acc ->
+              acc
+            {k, _}, acc ->
+              acc ++ [Absinthe.Adapter.LanguageConventions.to_external_name(to_string(k), nil)]
           end)
           |> Enum.map(fn f ->
-            DocUtils.indent_to_string(8) <> f
+            DocUtils.indent_to_string(6) <> f
           end)
           |> Enum.join("\r\n")
     }
@@ -581,10 +599,11 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
   end
 
   def sync_mocks(%GqlForModel{} = state) do
-    fields = Mix.Phoenix.Schema.params(
-      state.model.__changeset__
-    )
-    fields_patch = Mix.Phoenix.Schema.params(
+    fields =
+      prepare_mock(
+        state.model.__changeset__
+      )
+    fields_patch = prepare_mock(
       state.model.__changeset__,
       :update
     )

@@ -2,6 +2,7 @@ defmodule Potionx.Schema do
   defmacro __using__(_) do
     quote do
       use Absinthe.Schema
+      use Absinthe.Relay.Schema, :modern
       import_types Absinthe.Plug.Types
 
       def middleware(middleware, _field, %{identifier: :mutation}) do
@@ -13,6 +14,7 @@ defmodule Potionx.Schema do
           middleware,
           [
               Potionx.Middleware.ChangesetErrors,
+              Potionx.Middleware.Mutation
               # Potionx.Middleware.Error
           ]
         ])

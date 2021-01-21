@@ -90,6 +90,7 @@ defmodule Phx.New.Single do
 
   template :potionx, [
     {:keep, "potionx/app_name_graphql", :app, "lib/:lib_graphql_name"},
+    {:eex, "potionx/app_name_graphql/schema.ex", :app, "lib/:lib_graphql_name/schema.ex"},
     {:keep, "potionx/app_name/users", :app, "lib/:app/users"},
     {:eex, "potionx/app_name/users/user.ex", :app, "lib/:app/users/user.ex"},
     {:eex, "potionx/app_name_web/controllers/auth_controller.ex", :app, "lib/:lib_web_name/controllers/auth_controller.ex"},

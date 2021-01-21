@@ -6,8 +6,8 @@ mutation <%= model_name_graphql_case %>Delete(
   ) {
     errors
     errorsFields {
-      name
-      value
+      field
+      message
     }
     node {
 <%= graphql_fields %>
