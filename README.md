@@ -1,21 +1,47 @@
-# Potionx
+# Potionx ⚗️
 
-**TODO: Add description**
+## A Toolkit for rapidly building and deploying full-stack applications with Elixir and Vue
+Potionx is a set of generators and functions that speeds up the process of setting up and deploying a full-stack application that uses Elixir with GraphQL for the server-side component and Vue for the frontend component. 
 
-## Installation
+> **Warning:** Still in early stages of development. Not suitable for production use. 
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `potionx` to your list of dependencies in `mix.exs`:
+### Features
+- Uses opinionated defaults for naming and file structure.
+- Uses [Phoenix](https://github.com/phoenixframework/phoenix) as the base Elixir framework with some opinionated defaults.
+- GraphQL layer that uses [Absinthe](https://github.com/absinthe-graphql/absinthe).
+- Social login with Apple, Google, Github, Twitter enabled using [Pow and PowAssent](https://github.com/danschultzer/pow)
+- Uses [Pow and PowAssent](https://github.com/danschultzer/pow) for authentication/authorization
+- Recipes for deployment to [Gigalixir](https://www.gigalixir.com/), [Render.com](https://render.com/), [Digital Ocean Kubernetes Engine](https://www.digitalocean.com/products/kubernetes/), [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine)
+- Frontend components using [Vue 3](https://github.com/vuejs/vue) with JSX and Typescript.
+- Fast frontend development with [Vite](https://github.com/vitejs/vite)
 
-```elixir
-def deps do
-  [
-    {:potionx, "~> 0.1.0"}
-  ]
-end
+### Technologies
+- [Phoenix](https://github.com/phoenixframework/phoenix)
+- [Absinthe](https://github.com/absinthe-graphql/absinthe)
+- [Pow and PowAssent](https://github.com/danschultzer/pow)
+- [Vue 3](https://github.com/vuejs/vue)
+- [Vite](https://github.com/vitejs/vite)
+- [URQL](https://github.com/FormidableLabs/urql)
+
+### Deployment Targets
+- [Gigalixir](https://www.gigalixir.com/)
+- [Render.com](https://render.com/)
+- [Digital Ocean Kubernetes Engine](https://www.digitalocean.com/products/kubernetes/)
+- [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine)
+
+## Getting Started
+
+### Generating a project
+```sh
+mix potionx.new some_project_name
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/potionx](https://hexdocs.pm/potionx).
+### Generating backend (soon frontend as well) scaffold code for models
+Generates functions, tests and files required for basic creation and management of data models. Currently only generates backend code, but frontend file generation is coming soon.
+```sh
+mix potionx.gen.gql_for_model SomeContext SomeModel
+```
 
+---
+### License
+MIT
