@@ -31,7 +31,16 @@ Potionx is a set of generators and functions that speeds up the process of setti
 
 ## Getting Started
 
+### Prerequisites
+
+- [Node version 12 or above](https://nodejs.org/en/)
+- [Elixir version 1.11 or above](https://elixir-lang.org/install.html)
+- Familiarity with Elixir and Phoenix
+- Familiarity with Vue
+
+
 ### Generating a project
+
 ```sh
 mix potionx.new some_project_name
 ```
