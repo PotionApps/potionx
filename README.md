@@ -12,7 +12,7 @@ Potionx is a set of generators and functions that speeds up the process of setti
 - Social login with Apple, Google, Github, Twitter enabled using [Pow and PowAssent](https://github.com/danschultzer/pow)
 - Uses [Pow and PowAssent](https://github.com/danschultzer/pow) for authentication/authorization
 - Recipes for deployment to [Gigalixir](https://www.gigalixir.com/), [Render.com](https://render.com/), [Digital Ocean Kubernetes Engine](https://www.digitalocean.com/products/kubernetes/), [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine)
-- Frontend components using [Vue 3](https://github.com/vuejs/vue) with JSX and Typescript.
+- Frontend components using [Vue 3](https://github.com/vuejs/vue) with JSX, Typescript and [TailwindCSS](https://tailwindcss.com/).
 - Fast frontend development with [Vite](https://github.com/vitejs/vite)
 
 ### Technologies
@@ -22,6 +22,7 @@ Potionx is a set of generators and functions that speeds up the process of setti
 - [Vue 3](https://github.com/vuejs/vue)
 - [Vite](https://github.com/vitejs/vite)
 - [URQL](https://github.com/FormidableLabs/urql)
+- [TailwindCSS](https://tailwindcss.com/)
 
 ### Deployment Targets
 - [Gigalixir](https://www.gigalixir.com/)
