@@ -150,7 +150,7 @@ defmodule Mix.Tasks.Potionx.New do
   defp prompt_to_install_deps(%Project{} = project, generator, path_key) do
     path = Map.fetch!(project, path_key)
 
-    cd_step = ["$ cd #{relative_app_path(path)}"]
+    # cd_step = ["$ cd #{relative_app_path(path)}"]
 
     maybe_cd(path, fn ->
       mix_step = install_mix(project, true)

@@ -14,13 +14,36 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
+  host =
+    System.get_env("HOST") ||
+      raise """
+      environment variable URL is missing.
+      """
+
+ certfile =
+    System.get_env("SSL_CERT_PATH") ||
+      raise """
+      environment variable SSL_CERT_PATH is missing.
+      """
+
+ keyfile =
+    System.get_env("SSL_KEY_PATH") ||
+      raise """
+      environment variable SSL_KEY_PATH is missing.
+      """
+
   config :<%= @app_name %>, <%= @endpoint_module %>,
-    http: [
+    https: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
-      port: String.to_integer(System.get_env("PORT") || "4000")
+      port: String.to_integer(System.get_env("PORT") || "443"),
+      cipher_suite: :strong,
+      otp_app: :<%= @app_name %>,
+      keyfile: keyfile,
+      certfile: certfile
     ],
+    url: [host: host],
     secret_key_base: secret_key_base
 
   # ## Using releases

@@ -101,6 +101,7 @@ defmodule Potionx.ApiAuthPlug do
   defp fetch_token(conn, config, token_name \\ :access_token) do
     conn = Conn.fetch_cookies(conn)
     auth_headers = Conn.get_req_header(conn, "authorization")
+
     case auth_headers do
       ["Bearer " <> token] ->
         {:ok, token}

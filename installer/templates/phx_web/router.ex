@@ -12,6 +12,8 @@ defmodule <%= @web_namespace %>.Router do
   end<% end %>
 
   pipeline :graphql do
+    plug :accepts, ["json"]
+    plug Potionx.ApiAuthPlug, otp_app: :<%= @app_name %>
     plug Potionx.Plug.ServiceContext
   end
 

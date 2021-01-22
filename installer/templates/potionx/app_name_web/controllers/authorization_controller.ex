@@ -3,6 +3,6 @@ defmodule <%= @web_namespace %>.AuthorizationController do
   use Potionx.AuthorizationController, [endpoint: <%= @web_namespace %>.Endpoint]
 
   defp redirect_uri(conn) do
-    "https://client.example.com/auth/#{conn.params["provider"]}/callback"
+    "#{<%= @web_namespace %>.Endpoint.url()}/api/v1/auth/#{conn.params["provider"]}/callback"
   end
 end

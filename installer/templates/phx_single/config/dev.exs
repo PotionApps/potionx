@@ -9,11 +9,14 @@ import Config
 config :<%= @app_name %>, <%= @endpoint_module %>,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
-  http: [ip: {127, 0, 0, 1}, port: 4000],
+  http: [
+    ip: {127, 0, 0, 1},
+    port: 4000
+  ],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  watchers: <%= if @webpack do %>[
+  watchers: <%= if false do %>[
     node: [
       "node_modules/webpack/bin/webpack.js",
       "--mode",
@@ -57,6 +60,13 @@ config :<%= @app_name %>, <%= @endpoint_module %>,
       ~r"lib/<%= @lib_web_name %>/templates/.*(eex)$"
     ]
   ]<% end %>
+
+config :<%= @app_name %>, :pow_assent,
+  providers: [
+    dev: [
+      strategy: Potionx.Pow.Provider.Dev
+    ]
+  ]
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
