@@ -7,7 +7,7 @@ mix deps.get --only prod
 MIX_ENV=prod mix compile
 
 # Compile assets
-npm install --prefix ./frontend/admin
+npm ci --prefix ./frontend/admin
 npm run build --prefix ./frontend/admin
 
 # Build the release and overwrite the existing release directory
