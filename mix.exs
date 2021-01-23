@@ -6,8 +6,14 @@ defmodule Potionx.MixProject do
       app: :potionx,
       version: "0.1.0",
       elixir: "~> 1.11",
+      package: package(),
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      homepage_url: "https://www.potionapps.com",
+      source_url: "https://github.com/PotionApps/potionx",
+      description: """
+      Potionx is a set of generators and functions that speeds up the process of setting up and deploying a full-stack application that uses Elixir with GraphQL for the server-side component and Vue for the frontend component.
+      """
     ]
   end
 
@@ -30,6 +36,16 @@ defmodule Potionx.MixProject do
       {:typed_struct, "~> 0.2.1"},
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+    ]
+  end
+
+  defp package do
+    [
+      maintainers: ["Vince Roy"],
+      licenses: ["MIT"],
+      links: %{github: "https://github.com/PotionApps/potionx"},
+      files:
+        ~w(lib priv LICENSE.md mix.exs README.md .formatter.exs)
     ]
   end
 end
