@@ -105,6 +105,7 @@ defmodule Phx.New.Single do
     {:eex, "potionx/frontend/admin/package.json", :app, "frontend/admin/package.json"},
     {:eex, "potionx/frontend/admin/tsconfig.json", :app, "frontend/admin/tsconfig.json"},
     {:eex, "potionx/frontend/admin/vite.config.ts", :app, "frontend/admin/vite.config.ts"},
+    {:eex, "potionx/build.sh", :app, "build.sh"},
     {:eex, "potionx/Dockerfile", :app, "Dockerfile"}
   ]
 

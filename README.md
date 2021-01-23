@@ -25,7 +25,6 @@ Potionx is a set of generators and functions that speeds up the process of setti
 - [TailwindCSS](https://tailwindcss.com/)
 
 ### Deployment Targets
-- [Gigalixir](https://www.gigalixir.com/)
 - [Render.com](https://render.com/)
 - [Digital Ocean Kubernetes Engine](https://www.digitalocean.com/products/kubernetes/)
 - [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine)

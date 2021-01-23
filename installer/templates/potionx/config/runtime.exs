@@ -16,6 +16,7 @@ if config_env() == :prod do
 
   host =
     System.get_env("HOST") ||
+      System.get_env("RENDER_EXTERNAL_HOSTNAME") ||
       raise """
       environment variable URL is missing.
       """
@@ -33,16 +34,20 @@ if config_env() == :prod do
       """
 
   config :<%= @app_name %>, <%= @endpoint_module %>,
-    https: [
-      # Enable IPv6 and bind on all interfaces.
-      # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
-      ip: {0, 0, 0, 0, 0, 0, 0, 0},
-      port: String.to_integer(System.get_env("PORT") || "443"),
-      cipher_suite: :strong,
-      otp_app: :<%= @app_name %>,
-      keyfile: keyfile,
-      certfile: certfile
+    http: [
+      :inet6,
+      port: String.to_integer(System.get_env("PORT") || "80"),
     ],
+    # https: [
+    #   # Enable IPv6 and bind on all interfaces.
+    #   # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
+    #   ip: {0, 0, 0, 0, 0, 0, 0, 0},
+    #   port: String.to_integer(System.get_env("PORT") || "443"),
+    #   cipher_suite: :strong,
+    #   otp_app: :<%= @app_name %>,
+    #   keyfile: keyfile,
+    #   certfile: certfile
+    # ],
     url: [host: host],
     secret_key_base: secret_key_base
 
@@ -51,7 +56,8 @@ if config_env() == :prod do
   # If you are doing OTP releases, you need to instruct Phoenix
   # to start each relevant endpoint:
   #
-  #     config :<%= @web_app_name %>, <%= @endpoint_module %>, server: true
+
+  config :<%= @web_app_name %>, <%= @endpoint_module %>, server: true
   #
   # Then you can assemble a release by calling `mix release`.
   # See `mix help release` for more information.
