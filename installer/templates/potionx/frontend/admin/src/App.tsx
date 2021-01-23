@@ -1,4 +1,3 @@
-import 'vite/dynamic-import-polyfill'
 import { defineComponent } from 'vue'
 import HelloWorld from './components/HelloWorld'
 

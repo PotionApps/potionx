@@ -153,11 +153,11 @@ defmodule Phx.New.Single do
 
     if Project.gettext?(project), do: gen_gettext(project)
 
-    case {Project.webpack?(project), Project.html?(project)} do
-      {true, _}      -> gen_webpack(project)
-      {false, true}  -> gen_static(project)
-      {false, false} -> gen_bare(project)
-    end
+    # case {Project.webpack?(project), Project.html?(project)} do
+    #   {true, _}      -> gen_webpack(project)
+    #   {false, true}  -> gen_static(project)
+    #   {false, false} -> gen_bare(project)
+    # end
 
     project
   end
