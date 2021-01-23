@@ -16,7 +16,7 @@ defmodule Mix.Tasks.Phx.New.WebTest do
 
   test "new without args" do
     assert capture_io(fn -> Mix.Tasks.Phx.New.Web.run([]) end) =~
-           "Creates a new Phoenix web project within an umbrella project."
+           "Creates a new Potionx web project within an umbrella project."
   end
 
   test "new with barebones umbrella" do

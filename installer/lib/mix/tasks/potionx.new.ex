@@ -80,10 +80,10 @@ defmodule Mix.Tasks.Potionx.New do
       mix potionx.new -v
   """
   use Mix.Task
-  alias Phx.New.{Generator, Project, Single, Web, Ecto}
+  alias Phx.New.{Generator, Project, Single, Ecto}
 
   @version Mix.Project.config()[:version]
-  @shortdoc "Creates a new Phoenix v#{@version} application"
+  @shortdoc "Creates a new Potionx v#{@version} application"
 
   @switches [dev: :boolean, webpack: :boolean, ecto: :boolean,
              app: :string, module: :string, web_module: :string,
@@ -100,19 +100,22 @@ defmodule Mix.Tasks.Potionx.New do
   end
 
   def ask_for_local_postgres_password(%Project{} = project) do
-    email =
+    pw =
       Mix.shell().prompt("\nWhat is the password to your local Postgres database?")
       |> String.trim
 
-    %{project | local_postgres_password: email}
+    %{project | local_postgres_password: pw}
   end
 
   def copy_frontend_src(%Project{} = project) do
     target = Project.join_path(project, :app, "frontend/admin/src")
     build_dir = Project.join_path(project, :app, "priv/static")
+
     File.mkdir_p!(build_dir)
     File.mkdir_p!(target)
-    File.cp_r!("./templates/potionx/frontend/admin/src", target)
+
+    Path.expand("../../../templates/potionx/frontend/admin/src", __DIR__)
+    |> File.cp_r!(target)
 
     project
   end
@@ -279,23 +282,23 @@ defmodule Mix.Tasks.Potionx.New do
     """
   end
 
-  defp print_missing_steps(steps) do
-    Mix.shell().info """
+  # defp print_missing_steps(steps) do
+  #   Mix.shell().info """
 
-    We are almost there! The following steps are missing:
+  #   We are almost there! The following steps are missing:
 
-        #{Enum.join(steps, "\n    ")}
-    """
-  end
+  #       #{Enum.join(steps, "\n    ")}
+  #   """
+  # end
 
-  defp print_ecto_info(Web), do: :ok
-  defp print_ecto_info(_gen) do
-    Mix.shell().info """
-    Then configure your database in config/dev.exs and run:
+  # defp print_ecto_info(Web), do: :ok
+  # defp print_ecto_info(_gen) do
+  #   Mix.shell().info """
+  #   Then configure your database in config/dev.exs and run:
 
-        $ mix ecto.create
-    """
-  end
+  #       $ mix ecto.create
+  #   """
+  # end
 
   defp print_mix_info(Ecto) do
     Mix.shell().info """

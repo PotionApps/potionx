@@ -101,7 +101,6 @@ defmodule Phx.New.Single do
     {:eex, "potionx/test/app_name_web/controllers/authorization_controller_test.exs", :app, "test/:lib_web_name/controllers/authorization_controller_test.exs"},
     {:eex, "potionx/priv/repo/potionx_seed.exs", :app, "priv/repo/potionx_seed.exs"},
     {:eex, "potionx/frontend/admin/.gitignore", :app, "frontend/admin/.gitignore"},
-    {:eex, "potionx/frontend/admin/main.ts", :app, "frontend/admin/main.ts"},
     {:eex, "potionx/frontend/admin/package.json", :app, "frontend/admin/package.json"},
     {:eex, "potionx/frontend/admin/tsconfig.json", :app, "frontend/admin/tsconfig.json"},
     {:eex, "potionx/frontend/admin/vite.config.ts", :app, "frontend/admin/vite.config.ts"},

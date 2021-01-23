@@ -597,8 +597,6 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
         cond do
           Enum.member?([:inserted_at, :updated_at], k) ->
             acc
-          not is_nil(Enum.find(acc, fn entry -> entry.name === to_string(k) end)) ->
-            acc
           true ->
             acc ++ [%{
               name: to_string(k),
@@ -613,6 +611,9 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
                 end)
             }]
         end
+    end)
+    |> Enum.uniq_by(fn v ->
+      v.name
     end)
     |> Jason.encode!(pretty: true)
     |> (fn res ->

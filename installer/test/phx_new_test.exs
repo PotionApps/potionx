@@ -610,7 +610,7 @@ defmodule Mix.Tasks.Potionx.NewTest do
   test "new without args" do
     in_tmp "new without args", fn ->
       assert capture_io(fn -> Mix.Tasks.Potionx.New.run([]) end) =~
-             "Creates a new Phoenix project."
+             "Creates a new Potionx project."
     end
   end
 end

@@ -1,7 +1,3 @@
-alias <%= @app_module %>.Repo
-alias <%= @app_module %>.Users.User
+alias <%= @app_module %>.Release
 
-Repo.insert! %User{
-  email: <%= @email %>,
-  roles: [:admin]
-}
+Release.seed()

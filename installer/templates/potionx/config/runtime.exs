@@ -21,13 +21,13 @@ if config_env() == :prod do
       environment variable URL is missing.
       """
 
- certfile =
+ _certfile =
     System.get_env("SSL_CERT_PATH") ||
       raise """
       environment variable SSL_CERT_PATH is missing.
       """
 
- keyfile =
+ _keyfile =
     System.get_env("SSL_KEY_PATH") ||
       raise """
       environment variable SSL_KEY_PATH is missing.
