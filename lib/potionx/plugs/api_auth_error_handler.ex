@@ -1,4 +1,4 @@
-defmodule Potionx.APIAuthErrorHandler do
+defmodule Potionx.Plug.ApiAuthErrorHandler do
   alias Plug.Conn
 
   @spec call(Conn.t(), :not_authenticated) :: Conn.t()

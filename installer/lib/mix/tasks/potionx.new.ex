@@ -107,6 +107,16 @@ defmodule Mix.Tasks.Potionx.New do
     %{project | local_postgres_password: email}
   end
 
+  def copy_frontend_src(%Project{} = project) do
+    target = Project.join_path(project, :app, "frontend/admin/src")
+    build_dir = Project.join_path(project, :app, "priv/static")
+    File.mkdir_p!(build_dir)
+    File.mkdir_p!(target)
+    File.cp_r!("./templates/potionx/frontend/admin/src", target)
+
+    project
+  end
+
   def generate_default_graphql(%Project{} = project, path_key) do
     path = Map.fetch!(project, path_key)
 
@@ -140,6 +150,7 @@ defmodule Mix.Tasks.Potionx.New do
     |> Generator.put_binding()
     |> validate_project(path)
     |> generator.generate()
+    |> copy_frontend_src
     |> prompt_to_install_deps(generator, path)
     |> install_pow_assent(path)
     |> generate_default_graphql(path)
@@ -150,8 +161,6 @@ defmodule Mix.Tasks.Potionx.New do
   defp prompt_to_install_deps(%Project{} = project, generator, path_key) do
     path = Map.fetch!(project, path_key)
 
-    # cd_step = ["$ cd #{relative_app_path(path)}"]
-
     maybe_cd(path, fn ->
       mix_step = install_mix(project, true)
 
@@ -160,20 +169,13 @@ defmodule Mix.Tasks.Potionx.New do
           [] -> Task.async(fn -> rebar_available?() && cmd(project, "mix deps.compile") end)
           _  -> Task.async(fn -> :ok end)
         end
+      install_frontend(true, project)
 
-      # webpack_step = install_webpack(install?, project)
       Task.await(compile, :infinity)
 
-      # if Project.webpack?(project) and !System.find_executable("npm") do
-      #   print_webpack_info(project, generator)
-      # end
-
-      # print_missing_steps(cd_step ++ mix_step ++ webpack_step)
-      # print_missing_steps(cd_step ++ mix_step)
-
-      # if Project.ecto?(project) do
-      #   print_ecto_info(generator)
-      # end
+      if !System.find_executable("npm") do
+        print_frontend_info(project, generator)
+      end
 
       if path_key == :web_path do
         Mix.shell().info("""
@@ -244,12 +246,15 @@ defmodule Mix.Tasks.Potionx.New do
   defp switch_to_string({name, nil}), do: name
   defp switch_to_string({name, val}), do: name <> "=" <> val
 
-  defp install_webpack(install?, project) do
-    assets_path = Path.join(project.web_path || project.project_path, "assets")
-    webpack_config = Path.join(assets_path, "webpack.config.js")
+  defp install_frontend(install?, project) do
+    admin_path = Path.join(project.web_path || project.project_path, "frontend/admin")
 
-    maybe_cmd(project, "cd #{relative_app_path(assets_path)} && npm install && node node_modules/webpack/bin/webpack.js --mode development",
-              File.exists?(webpack_config), install? && System.find_executable("npm"))
+    maybe_cmd(
+      project,
+      "cd #{relative_app_path(admin_path)} && npm install",
+      true,
+      install? && System.find_executable("npm")
+    )
   end
 
   defp install_mix(project, install?) do
@@ -264,15 +269,13 @@ defmodule Mix.Tasks.Potionx.New do
     Mix.Rebar.rebar_cmd(:rebar) && Mix.Rebar.rebar_cmd(:rebar3)
   end
 
-  defp print_webpack_info(_project, _gen) do
+  defp print_frontend_info(_project, _gen) do
     Mix.shell().info """
-    Phoenix uses an optional assets build tool called webpack
+    Potionx uses an assets build tool called Vite
     that requires node.js and npm. Installation instructions for
     node.js, which includes npm, can be found at http://nodejs.org.
 
     The command listed next expect that you have npm available.
-    If you don't want webpack, you can re-run this generator
-    with the --no-webpack option.
     """
   end
 

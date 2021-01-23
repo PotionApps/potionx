@@ -26,12 +26,6 @@ defmodule <%= @web_namespace %>.Router do
     plug Pow.Plug.RequireAuthenticated, error_handler: Potionx.Plug.ApiAuthErrorHandler
   end<%= if @html do %>
 
-  scope "/", <%= @web_namespace %> do
-    pipe_through :browser
-
-    <%= if @live do %>live "/", PageLive, :index<% else %>get "/", PageController, :index<% end %>
-  end
-
   # Other scopes may use custom stacks.
   # scope "/api", <%= @web_namespace %> do
   #   pipe_through :api
@@ -72,5 +66,11 @@ defmodule <%= @web_namespace %>.Router do
     get "/auth/:provider/new", AuthorizationController, :new
     post "/auth/:provider/callback", AuthorizationController, :callback
     post "/session/renew", AuthController, :renew
+  end
+
+  scope "/", <%= @web_namespace %> do
+    pipe_through :browser
+
+    get "/*path", AppController, :index
   end
 end

@@ -7,7 +7,6 @@ defmodule Potionx.AuthController do
     end
 
     quote do
-      alias Potionx.ApiAuthPlug
       import Plug.Conn
       @spec create(Conn.t(), map()) :: Conn.t()
       def create(conn, %{"user" => user_params}) do
@@ -29,7 +28,7 @@ defmodule Potionx.AuthController do
         config = Pow.Plug.fetch_config(conn)
 
         conn
-        |> ApiAuthPlug.renew(config)
+        |> Potionx.Plug.ApiAuth.renew(config)
         |> case do
           {conn, nil} ->
             conn
@@ -38,7 +37,7 @@ defmodule Potionx.AuthController do
 
           {conn, _user} ->
             conn
-            |> Potionx.ApiAuthPlug.handle_cookies(
+            |> Potionx.Plug.ApiAuth.handle_cookies(
               %{
                 access_token: conn.private[:api_access_token],
                 renewal_token: conn.private[:api_renewal_token]

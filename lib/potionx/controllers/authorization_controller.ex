@@ -24,7 +24,7 @@ defmodule Potionx.AuthorizationController do
           {:ok, conn} ->
 
             conn
-            |> Potionx.ApiAuthPlug.handle_cookies(
+            |> Potionx.Plug.ApiAuth.handle_cookies(
               %{
                 access_token: conn.private[:api_access_token],
                 renewal_token: conn.private[:api_renewal_token]

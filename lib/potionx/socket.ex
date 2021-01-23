@@ -5,7 +5,7 @@ defmodule Potionx.Socket do
       def connect(%{"token" => token} = _params, socket, _) do
         {:ok, app_name} = :application.get_application(__MODULE__)
         %Plug.Conn{secret_key_base: socket.endpoint.config(:secret_key_base)}
-        |> Potionx.ApiAuthPlug.get_credentials(token, [otp_app: app_name])
+        |> Potionx.Plug.ApiAuth.get_credentials(token, [otp_app: app_name])
         |> case do
           nil -> :error
 

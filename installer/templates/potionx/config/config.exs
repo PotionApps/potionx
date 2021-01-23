@@ -7,6 +7,8 @@
 # General application configuration
 import Config<%= if @namespaced? || @ecto || @generators do %>
 
+config :<%= @app_name %>, env: config_env()
+
 config :<%= @app_name %><%= if @namespaced? do %>,
   namespace: <%= @app_module %><% end %><%= if @ecto do %>,
   ecto_repos: [<%= @app_module %>.Repo]<% end %><%= if @generators do %>,

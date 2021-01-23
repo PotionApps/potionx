@@ -1,4 +1,4 @@
-defmodule Potionx.ApiAuthPlug do
+defmodule Potionx.Plug.ApiAuth do
   @moduledoc false
   use Pow.Plug.Base
 

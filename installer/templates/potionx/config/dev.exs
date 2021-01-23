@@ -16,15 +16,12 @@ config :<%= @app_name %>, <%= @endpoint_module %>,
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  watchers: <%= if false do %>[
+  watchers: [
     node: [
-      "node_modules/webpack/bin/webpack.js",
-      "--mode",
-      "development",
-      "--watch-stdin",
-      cd: Path.expand("../assets", __DIR__)
+      "node_modules/vite/bin/vite.js",
+      cd: Path.expand("../frontend/admin", __DIR__)
     ]
-  ]<% else %>[]<% end %>
+  ]
 
 # ## SSL Support
 #

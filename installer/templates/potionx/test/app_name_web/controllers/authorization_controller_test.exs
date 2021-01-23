@@ -65,8 +65,8 @@ defmodule <%= @web_namespace %>.AuthorizationControllerTest do
     test "with valid params", %{conn: conn} do
       conn = post conn, Routes.api_v1_authorization_path(conn, :callback, :test_provider, @valid_params)
 
-      assert Map.get(conn.cookies, Potionx.ApiAuthPlug.cookie_names([]).access_token)
-      assert Map.get(conn.cookies, Potionx.ApiAuthPlug.cookie_names([]).renewal_token)
+      assert Map.get(conn.cookies, Potionx.Plug.ApiAuth.cookie_names([]).access_token)
+      assert Map.get(conn.cookies, Potionx.Plug.ApiAuth.cookie_names([]).renewal_token)
 
       assert json = json_response(conn, 200)
       assert json["data"]["access_token"]

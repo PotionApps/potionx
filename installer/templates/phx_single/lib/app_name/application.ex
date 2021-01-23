@@ -18,7 +18,7 @@ defmodule <%= @app_module %>.Application do
       # Start a worker by calling: <%= @app_module %>.Worker.start_link(arg)
       # {<%= @app_module %>.Worker, arg}
     ] ++
-      if Mix.env() == :prod do
+      if Application.get_env(:<%= @app_name %>, :env) == :prod do
         [
           {Pow.Store.Backend.MnesiaCache, extra_db_nodes: Node.list()},
           Pow.Store.Backend.MnesiaCache.Unsplit

@@ -4,20 +4,19 @@ defmodule Phx.New.Single do
   alias Phx.New.{Project}
 
   template :new, [
-    {:eex,  "phx_single/config/config.exs",             :project, "config/config.exs"},
-    {:eex,  "phx_single/config/dev.exs",                :project, "config/dev.exs"},
-    # {:eex,  "potionx/config/dev.secret.exs",            :project, "config/dev.secret.exs"},
-    {:eex,  "phx_single/config/prod.exs",               :project, "config/prod.exs"},
-    {:eex,  "phx_single/config/runtime.exs",            :project, "config/runtime.exs"},
-    {:eex,  "phx_single/config/test.exs",               :project, "config/test.exs"},
+    {:eex,  "potionx/config/config.exs",                :project, "config/config.exs"},
+    {:eex,  "potionx/config/dev.exs",                   :project, "config/dev.exs"},
+    {:eex,  "potionx/config/prod.exs",                  :project, "config/prod.exs"},
+    {:eex,  "potionx/config/test.exs",                  :project, "config/test.exs"},
+    {:eex,  "potionx/config/runtime.exs",               :project, "config/runtime.exs"},
     {:eex,  "phx_single/lib/app_name/application.ex",   :project, "lib/:app/application.ex"},
     {:eex,  "phx_single/lib/app_name.ex",               :project, "lib/:app.ex"},
     {:eex,  "phx_web/channels/user_socket.ex",          :project, "lib/:lib_web_name/channels/user_socket.ex"},
     {:keep, "phx_web/controllers",                      :project, "lib/:lib_web_name/controllers"},
     {:eex,  "phx_web/views/error_helpers.ex",           :project, "lib/:lib_web_name/views/error_helpers.ex"},
     {:eex,  "phx_web/views/error_view.ex",              :project, "lib/:lib_web_name/views/error_view.ex"},
-    {:eex,  "phx_web/endpoint.ex",                      :project, "lib/:lib_web_name/endpoint.ex"},
-    {:eex,  "phx_web/router.ex",                        :project, "lib/:lib_web_name/router.ex"},
+    {:eex,  "potionx/app_name_web/endpoint.ex",         :project, "lib/:lib_web_name/endpoint.ex"},
+    {:eex,  "potionx/app_name_web/router.ex",           :project, "lib/:lib_web_name/router.ex"},
     {:eex,  "phx_web/telemetry.ex",                     :project, "lib/:lib_web_name/telemetry.ex"},
     {:eex,  "phx_single/lib/app_name_web.ex",           :project, "lib/:lib_web_name.ex"},
     {:eex,  "phx_single/mix.exs",                       :project, "mix.exs"},
@@ -39,10 +38,13 @@ defmodule Phx.New.Single do
   ]
 
   template :html, [
+    {:eex, "potionx/app_name_web/controllers/app_controller.ex",         :project, "lib/:lib_web_name/controllers/app_controller.ex"},
     {:eex, "phx_web/controllers/page_controller.ex",         :project, "lib/:lib_web_name/controllers/page_controller.ex"},
-    {:eex, "phx_web/templates/layout/app.html.eex",          :project, "lib/:lib_web_name/templates/layout/app.html.eex"},
+    {:eex, "potionx/app_name_web/templates/layout/app.html.eex", :project, "lib/:lib_web_name/templates/layout/app.html.eex"},
+    {:eex, "potionx/app_name_web/templates/app/index.html.eex", :project, "lib/:lib_web_name/templates/app/index.html.eex"},
     {:eex, "phx_web/templates/page/index.html.eex",          :project, "lib/:lib_web_name/templates/page/index.html.eex"},
-    {:eex, "phx_web/views/layout_view.ex",                   :project, "lib/:lib_web_name/views/layout_view.ex"},
+    {:eex, "potionx/app_name_web/views/app_view.ex",         :project, "lib/:lib_web_name/views/app_view.ex"},
+    {:eex, "potionx/app_name_web/views/layout_view.ex",      :project, "lib/:lib_web_name/views/layout_view.ex"},
     {:eex, "phx_web/views/page_view.ex",                     :project, "lib/:lib_web_name/views/page_view.ex"},
     {:eex, "phx_test/controllers/page_controller_test.exs",  :project, "test/:lib_web_name/controllers/page_controller_test.exs"},
     {:eex, "phx_test/views/layout_view_test.exs",            :project, "test/:lib_web_name/views/layout_view_test.exs"},
@@ -97,7 +99,13 @@ defmodule Phx.New.Single do
     {:eex, "potionx/app_name_web/controllers/authorization_controller.ex", :app, "lib/:lib_web_name/controllers/authorization_controller.ex"},
     {:migration, "potionx/migrations/create_users.exs", :app, "priv/repo/migrations/{timestamp}_create_users.exs"},
     {:eex, "potionx/test/app_name_web/controllers/authorization_controller_test.exs", :app, "test/:lib_web_name/controllers/authorization_controller_test.exs"},
-    {:eex, "potionx/priv/repo/potionx_seed.exs", :app, "priv/repo/potionx_seed.exs"}
+    {:eex, "potionx/priv/repo/potionx_seed.exs", :app, "priv/repo/potionx_seed.exs"},
+    {:eex, "potionx/frontend/admin/.gitignore", :app, "frontend/admin/.gitignore"},
+    {:eex, "potionx/frontend/admin/main.ts", :app, "frontend/admin/main.ts"},
+    {:eex, "potionx/frontend/admin/package.json", :app, "frontend/admin/package.json"},
+    {:eex, "potionx/frontend/admin/tsconfig.json", :app, "frontend/admin/tsconfig.json"},
+    {:eex, "potionx/frontend/admin/vite.config.ts", :app, "frontend/admin/vite.config.ts"},
+    {:eex, "potionx/Dockerfile", :app, "Dockerfile"}
   ]
 
   def prepare_project(%Project{app: app} = project) when not is_nil(app) do
