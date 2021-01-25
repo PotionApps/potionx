@@ -1,6 +1,10 @@
 defmodule <%= @web_namespace %>.LayoutView do
   use <%= @web_namespace %>, :view
 
+  def metas do
+    []
+  end
+
   def scripts do
     if Application.get_env(:<%= @app_name %>, :env) == :prod do
       File.read!(

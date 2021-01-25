@@ -111,7 +111,7 @@ defmodule Potionx.Plug.PowAssent do
     |> check_if_authenticated()
   end
 
-  def check_if_authenticated({:error, conn}) do
+  def check_if_authenticated({:ok, conn}) do
     case Pow.Plug.current_user(conn) do
       nil ->
         {:error, conn}
@@ -119,10 +119,11 @@ defmodule Potionx.Plug.PowAssent do
         {:ok, Conn.put_private(conn, :pow_assent_callback_state, {:ok, :authenticated})}
     end
   end
-  def check_if_authenticated({:ok, conn}) do
+  def check_if_authenticated({_, conn}) do
     {:error, conn}
   end
 
+  @spec get_user_by_session_params(map, keyword) :: any
   @doc """
   Finds a user based on the provider and uid or by email if the user has no providers yet.
 
@@ -132,9 +133,11 @@ defmodule Potionx.Plug.PowAssent do
     user_mod = Pow.Config.user!(config)
     association = user_mod.__schema__(:association, :user_identities)
     user_identity_mod = association.queryable
+
     from(
       u in user_mod,
       left_join: i in ^user_identity_mod,
+      on: u.id == i.user_id,
       where: u.email == ^email and is_nil(i.id),
       or_where: i.provider == ^provider and i.uid == ^(to_string(uid)),
       select: u
@@ -194,11 +197,13 @@ defmodule Potionx.Plug.PowAssent do
   end
   defp maybe_upsert_user_identity(conn), do: conn
 
+  defp maybe_create_user(%{private: %{pow_assent_callback_error: err}} = conn) when not is_nil(err) do
+    conn
+  end
   defp maybe_create_user(%{private: %{pow_assent_registration: false}} = conn) do
     conn
-    |> Conn.put_private(:pow_assent_callback_state, {:error, :create_user})
-    |> Conn.put_private(:pow_assent_callback_error, nil)
   end
+
   defp maybe_create_user(%{private: %{pow_assent_callback_state: {:ok, :strategy}, pow_assent_callback_params: params}} = conn) do
     user_params          = Map.fetch!(params, :user)
     user_identity_params = Map.fetch!(params, :user_identity)

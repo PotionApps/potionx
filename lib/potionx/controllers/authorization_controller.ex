@@ -5,10 +5,9 @@ defmodule Potionx.AuthorizationController do
       alias Plug.Conn
       import Ecto.Query
 
-      @spec callback(Conn.t(), map()) :: Conn.t()
       def callback(conn, %{"provider" => provider} = params) do
-        session_params = Map.fetch!(params, "session_params")
-        params         = Map.drop(params, ["provider", "session_params"])
+        session_params = %{state: Map.fetch!(params, "state")}
+        params         = Map.drop(params, ["provider"])
 
         config = Pow.Plug.fetch_config(conn)
 
@@ -31,16 +30,15 @@ defmodule Potionx.AuthorizationController do
               },
               config
             )
-            |> json(%{
-              data: %{
-                access_token: conn.private[:api_access_token]
-              }
-            })
+            |> redirect(
+              to: "/"
+            )
 
           {:error, conn} ->
             conn
-            |> put_status(500)
-            |> json(%{error: %{status: 500, message: "An unexpected error occurred"}})
+            |> redirect(
+              to: "/sign-in/error"
+            )
         end
       end
 

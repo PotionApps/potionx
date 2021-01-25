@@ -22,6 +22,9 @@ config :<%= @app_name %>, <%= @endpoint_module %>,
   pubsub_server: <%= @app_module %>.PubSub,
   live_view: [signing_salt: "<%= @lv_signing_salt %>"]
 
+config :<%= @app_name %>, :pow_assent,
+  http_adapter: Assent.HTTPAdapter.Mint
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
