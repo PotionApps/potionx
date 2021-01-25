@@ -16,12 +16,14 @@ Potionx is a set of generators and functions that speeds up the process of setti
 - Fast frontend development with [Vite](https://github.com/vitejs/vite)
 
 ### Technologies
+- [Elixir](https://elixir-lang.org/)
 - [Phoenix](https://github.com/phoenixframework/phoenix)
 - [Absinthe](https://github.com/absinthe-graphql/absinthe)
 - [Pow and PowAssent](https://github.com/danschultzer/pow)
 - [Vue 3](https://github.com/vuejs/vue)
 - [Vite](https://github.com/vitejs/vite)
 - [URQL](https://github.com/FormidableLabs/urql)
+- [Typescript](https://www.typescriptlang.org/)
 - [TailwindCSS](https://tailwindcss.com/)
 
 ### Deployment Targets
@@ -65,7 +67,7 @@ mix potionx.gen.gql_for_model SomeContext SomeModel
 7. Create an environment variable called "ELIXIR_VERSION" and set the value to "1.11.3"
 8. Open a terminal in your local project and run "mix phx.gen.secret"
 9. Back in the environment area, paste the result of step #8 into a variable called "SECRET_KEY_BASE"
-10. Manually deploy your code click clicking the "Manual Deploy" button or make a change to your code and push
+10. Manually deploy your code by clicking the "Manual Deploy" button or make a change to your code and push
 
 Render.com's Instructions can be found here: (https://render.com/docs/deploy-phoenix)[https://render.com/docs/deploy-phoenix]
 
