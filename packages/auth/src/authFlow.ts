@@ -3,18 +3,13 @@ export type AuthFlowArgs = {
 }
 
 export default async (args: AuthFlowArgs) => {
-  try {
-    const {
-      data: {
-        session_params,
-        url
-      }
-    } = await fetch(
-        `/api/v1/auth/${args.provider}/new`
-      )
-      .then(res => res.json())
-    window.location = url;
-  } catch (e) {
-    console.log(e)
-  }
+  const {
+    data: {
+      url
+    }
+  } = await fetch(
+      `/api/v1/auth/${args.provider}/new`
+    )
+    .then(res => res.json())
+  window.location = url;
 }

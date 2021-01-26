@@ -46,7 +46,7 @@ defmodule <%= @app_module %>.MixProject do
       {:decimal, "~> 2.0", override: true},
       {:mint, "~> 1.0"},
       {:phoenix, "~> 1.5.7"},
-      {:potionx, path: "d:/potion/potionx"},
+      {:potionx, "~> 0.1"},
       {:pow, "~> 1.0.21"},
       {:pow_assent, "~> 0.4.10"},
       {:typed_struct, "~> 0.2.1"},
