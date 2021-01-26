@@ -5,6 +5,10 @@ export default defineComponent({
   components: {
   },
   setup () {
-    return () => <div><h1>Hello World</h1></div>
+    return () => <div class="text-center">
+      <img src="./logo.png" />
+      <h1>Hello World</h1>
+      <a href="https://potionapps.com">See docs to get started</a>
+    </div>
   }
 })
