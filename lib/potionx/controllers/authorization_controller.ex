@@ -30,10 +30,14 @@ defmodule Potionx.AuthorizationController do
               },
               config
             )
-            |> redirect(
-              to: "/"
+            |> render(
+              "refresh.html",
+              url:
+                URI.parse(Conn.request_url(conn))
+                |> Map.put(:query, nil)
+                |> Map.put(:path, "/")
+                |> to_string
             )
-
           {:error, conn} ->
             conn
             |> redirect(

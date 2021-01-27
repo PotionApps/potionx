@@ -16,7 +16,7 @@
     <%%= @inner_content %>
 
     <%%= for script <- scripts() do %>
-      <script type="module" src="<%%= script %>"></script>
+      <script async defer type="module" src="<%%= script %>"></script>
     <%% end %>
   </body>
 </html>

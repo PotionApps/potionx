@@ -5,12 +5,11 @@
         "dist",
         "src"
     ],
-    "main": "./dist/@potion-auth.umd.js",
-    "module": "./dist/@potion-auth.es.js",
+    "main": "./dist/potion-auth.esm.js",
+    "module": "./dist/potion-auth.esm.js",
     "exports": {
         ".": {
-            "import": "./dist/@potion-auth.es.js",
-            "require": "./dist/@potion-auth.umd.js"
+            "import": "./dist/potion-auth.esm.js"
         }
     },
     "typings": "dist/index.d.ts",

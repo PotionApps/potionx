@@ -5,12 +5,11 @@
         "dist",
         "src"
     ],
-    "main": "./dist/@potion-ui.umd.js",
-    "module": "./dist/@potion-ui.es.js",
+    "main": "./dist/potion-ui.esm.js",
+    "module": "./dist/potion-ui.esm.js",
     "exports": {
         ".": {
-            "import": "./dist/@potion-ui.es.js",
-            "require": "./dist/@potion-ui.umd.js"
+            "import": "./dist/potion-ui.esm.js"
         }
     },
     "typings": "dist/index.d.ts",
