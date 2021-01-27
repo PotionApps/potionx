@@ -1,6 +1,4 @@
 import { defineComponent } from 'vue'
-import googleLogo from './assets/google-logo.svg'
-import microsoftLogo from './assets/microsoft-logo.svg'
 
 export default defineComponent({
   name: 'App',
@@ -11,6 +9,8 @@ export default defineComponent({
     organization: String
   },
   setup () {
-    return () => <div></div>
+    return () => <div>
+      <router-view />
+    </div>
   }
 })
