@@ -1,1 +1,3 @@
-export * from './components/AuthGoogle/AuthGoogle'
+import authFlow from './authFlow'
+
+export { authFlow }
