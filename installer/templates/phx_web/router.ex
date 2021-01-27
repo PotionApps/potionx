@@ -9,6 +9,11 @@ defmodule <%= @web_namespace %>.Router do
     plug :fetch_flash<% end %>
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Potionx.Plug.ApiAuth, otp_app: :<%= @app_name %>
+    plug Potionx.Plug.MaybeRequireAuth, [
+      login_path: "/login",
+      public_urls: []
+    ]
   end<% end %>
 
   pipeline :graphql do
