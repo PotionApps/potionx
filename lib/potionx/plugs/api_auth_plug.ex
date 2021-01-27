@@ -49,15 +49,15 @@ defmodule Potionx.Plug.ApiAuth do
     )
   end
 
-  def cookie_options(%Conn{} = conn, max_age \\ nil) do
+  def cookie_options(%Conn{} = conn, config, max_age \\ nil) do
     max_age = max_age || 30 * 60 # default to 30 minutes
     [
       http_only: true,
       domain: conn.host,
       max_age: max_age,
-      secure: true,
+      secure: conn.scheme === :https,
       same_site: "strict"
-    ]
+    ] ++ (config[:cookie_options] || [])
   end
 
   @doc """
@@ -136,12 +136,12 @@ defmodule Potionx.Plug.ApiAuth do
     |> Conn.put_resp_cookie(
       cookie_names(config)[:access_token],
       a_t,
-      cookie_options(conn, opts_access_token[:ttl])
+      cookie_options(conn, config, opts_access_token[:ttl])
     )
     |> Conn.put_resp_cookie(
       cookie_names(config)[:renewal_token],
       r_t,
-      cookie_options(conn, opts_renewal_token[:ttl])
+      cookie_options(conn, config, opts_renewal_token[:ttl])
     )
   end
 

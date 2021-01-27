@@ -37,7 +37,7 @@ defmodule Potionx.AuthorizationController do
           {:error, conn} ->
             conn
             |> redirect(
-              to: "/sign-in/error"
+              to: "/login/error"
             )
         end
       end
