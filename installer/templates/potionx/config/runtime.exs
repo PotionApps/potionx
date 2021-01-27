@@ -14,24 +14,24 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  host =
-    System.get_env("HOST") ||
-      System.get_env("RENDER_EXTERNAL_HOSTNAME") ||
-      raise """
-      environment variable URL is missing.
-      """
+  _host =
+    # System.get_env("HOST") ||
+    #   System.get_env("RENDER_EXTERNAL_HOSTNAME") ||
+    #   raise """
+    #   environment variable URL is missing.
+    #   """
 
  _certfile =
-    System.get_env("SSL_CERT_PATH") ||
-      raise """
-      environment variable SSL_CERT_PATH is missing.
-      """
+    # System.get_env("SSL_CERT_PATH") ||
+    #   raise """
+    #   environment variable SSL_CERT_PATH is missing.
+    #   """
 
  _keyfile =
-    System.get_env("SSL_KEY_PATH") ||
-      raise """
-      environment variable SSL_KEY_PATH is missing.
-      """
+    # System.get_env("SSL_KEY_PATH") ||
+    #   raise """
+    #   environment variable SSL_KEY_PATH is missing.
+    #   """
 
   config :<%= @app_name %>, <%= @endpoint_module %>,
     http: [
@@ -48,7 +48,6 @@ if config_env() == :prod do
     #   keyfile: keyfile,
     #   certfile: certfile
     # ],
-    url: [host: host],
     secret_key_base: secret_key_base
 
   # ## Using releases

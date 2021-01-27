@@ -23,9 +23,9 @@ defmodule <%= @endpoint_module %> do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: :<%= @web_app_name %>,
-    gzip: false,
-    only: ~w(assets css fonts images js favicon.ico robots.txt)
+    from: Mix.env() === :prod && :potionx_one || "frontend/admin",
+    gzip: Mix.env() === :prod,
+    only: ~w(assets css fonts images js favicon.ico robots.txt src)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
