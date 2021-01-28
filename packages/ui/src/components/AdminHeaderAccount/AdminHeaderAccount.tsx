@@ -23,11 +23,11 @@ export default defineComponent({
     const events = ['touchstart', 'click']
   
     onBeforeUnmount(() => {
-      
+      events.map(e => document.body.removeEventListener(e, maybeClose))
     })
   
     onMounted(() => {
-      
+      events.map(e => document.body.addEventListener(e, maybeClose))
     })
 
     const toggleDropdown = (e: MouseEvent) => {
@@ -42,39 +42,28 @@ export default defineComponent({
       dropdown.value = false
     }
 
-    const user = computed(() => {
-      return true
-    })
-
     return () => {
       return (
         <div 
-          class={["flex", "items-center", "relative", "hover:bg-blue-600", "h-full", "px-2", "cursor-pointer"]}
+          class={["flex", "items-center", "relative", "hover:bg-blue-600", "h-full", "px-2", "cursor-pointer", dropdown.value && "bg-blue-600"]}
           onClick={toggleDropdown}
         >
-          <div class="">
-            {
-              user.value && props.image && 
-              <img class="" src={""} /> 
-            }
-            {
-              user.value && !props.image &&
-              <div class="items-center flex bg-gray-200 rounded-3xl justify-center h-6 w-6">
-                <div class={["text-gray-800", "text-xs", "uppercase"]}>{props.initials}</div>
-              </div>
-            }
-            {
-              !user.value &&
-              <div class={["text-gray-400", "text-sm"]}>Login</div>
-            }
-          </div>
+          {
+            props.image && 
+            <img class="h-6 w-6 rounded-3xl" src={props.image} /> 
+          }
+          {
+            !props.image &&
+            <div class="items-center flex bg-gray-200 rounded-3xl justify-center h-6 w-6">
+              <div class={["text-gray-800", "text-xs", "uppercase"]}>{props.initials}</div>
+            </div>
+          }
           {
             dropdown.value &&
             <div class="bg-white bottom-0 shadow-lg w-48 p-6 absolute right-0 z-5" style="transform: translate(0, 100%);">
-              hey
-            {/* {
-              props.btns.map(props => <Btn {...props} />)
-            } */}
+              {
+                props.btns.map(props => <Btn {...props} />)
+              }
             </div>
           }
         </div>
