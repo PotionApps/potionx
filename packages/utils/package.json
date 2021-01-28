@@ -1,0 +1,37 @@
+{
+    "name": "@potion/utils",
+    "version": "0.0.0",
+    "files": [
+        "dist",
+        "src"
+    ],
+    "main": "./dist/potion-utils.esm.js",
+    "module": "./dist/potion-utils.esm.js",
+    "exports": {
+        ".": {
+            "import": "./dist/potion-utils.esm.js"
+        }
+    },
+    "typings": "dist/index.d.ts",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsdx build --name @potion-utils --format 'cjs,esm,umd'"
+    },
+    "peerDependencies": {
+        "vue": "^3.0.5"
+    },
+    "devDependencies": {
+        "@rollup/plugin-image": "^2.0.6",
+        "@vitejs/plugin-vue-jsx": "^1.0.2",
+        "@vue/compiler-sfc": "^3.0.5",
+        "@vuedx/typecheck": "^0.4.1",
+        "@vuedx/typescript-plugin-vue": "^0.4.1",
+        "autoprefixer": "^10.2.3",
+        "postcss": "^8.2.4",
+        "tailwindcss": "^2.0.2",
+        "tsdx": "^0.14.1",
+        "typescript": "^4.1.3",
+        "vite": "^2.0.0-beta.50",
+        "vue": "^3.0.5"
+    }
+}
