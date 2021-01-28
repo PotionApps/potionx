@@ -17,9 +17,7 @@ export interface PropsBtn {
 export default defineComponent({
   name: "potion-button",
   props: {
-    click: {
-      type: Function as PropType<PropsBtn['click']>
-    },
+    click:  Function as PropType<PropsBtn['click']>,
     disabled: Boolean,
     icon: {} as any,
     label: String,
@@ -77,6 +75,7 @@ export default defineComponent({
       return <Parent class={classes.value} {...attrs}>
         {props.label && <span>{props.label}</span>}
         {props.icon && <img class="ml-1 h-3" src={props.icon} />}
+        {context.slots.default && context.slots.default()}
       </Parent>
     }
   }
