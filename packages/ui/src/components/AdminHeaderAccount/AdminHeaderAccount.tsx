@@ -14,13 +14,12 @@ export default defineComponent({
       type: Array as PropType<PropsBtn[]>,
       required: true
     },
-    image: Object,
+    image: String,
     initials: String
   },
   setup (props, context) {
     const dropdown = ref(false)
-      
-    const events = ['touchstart', 'click']
+    const events : (keyof HTMLElementEventMap)[] = ['touchstart', 'click']
   
     onBeforeUnmount(() => {
       events.map(e => document.body.removeEventListener(e, maybeClose))
@@ -30,13 +29,13 @@ export default defineComponent({
       events.map(e => document.body.addEventListener(e, maybeClose))
     })
 
-    const toggleDropdown = (e: MouseEvent) => {
+    const toggleDropdown = (e: Event) => {
       e.stopPropagation()
       if ((e.target as any).closest('[data-dropdown]')) return
       dropdown.value = !dropdown.value
     }
   
-    const maybeClose = (e: MouseEvent) => {
+    const maybeClose = (e: Event) => {
       const target = e.target as any
       if (target.closest('[data-dropdown]')) return
       dropdown.value = false
