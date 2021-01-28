@@ -1,8 +1,8 @@
-import { defineComponent, computed, PropType, Ref } from "vue";
+import { defineComponent, PropType, Ref } from "vue";
+import { routeNames } from "../../playground/routeNames";
 import AdminHeader from "../../components/AdminHeader/AdminHeader";
 import AdminHeaderAccount from "../../components/AdminHeaderAccount/AdminHeaderAccount";
 import AdminHeaderNav, { AdminBarNavItem } from "../../components/AdminHeaderNav/AdminHeaderNav";
-import { routeNames } from "../../playground/routeNames";
 
 export default defineComponent({
   name: "AdminLayout",
@@ -29,6 +29,7 @@ export default defineComponent({
       return (
         <div class="bg-white min-h-screen w-full">
           <AdminHeader class="s1050m:hidden">
+            {context.slots.logo && context.slots.logo()}
             <AdminHeaderNav nav={props.nav} />
             <AdminHeaderAccount 
               btns={btns}

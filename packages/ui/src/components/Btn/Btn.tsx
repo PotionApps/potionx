@@ -38,26 +38,25 @@ export default defineComponent({
     })
 
     const classes = computed(() => {
-      return [
-        {
-          "bg-gray-200": !props.noStyle,
-          "hover:bg-gray-300": !props.noStyle,
-          "text-gray-700": !props.noStyle,
-          "font-semibold": !props.noStyle,
-          "text-base": !props.noStyle,
-          "p-2": !props.noStyle,
-          "flex": true,
-          "items-center": true,
-          "justify-center": true,
-          "rounded-base": true,
-          "opacity-80": props.disabled,
-          "pointer-events-none": props.disabled,
-          "bg-red-400": props.status === "error",
-          "bg-blue-400": props.status === "loading",
-          "bg-green-400": props.status === "success",
-          "color-white": props.status === "error" || props.status === "loading" || props.status === "success"
-        }
-      ]
+      if (props.noStyle) return []
+      return {
+        "bg-gray-200": true,
+        "hover:bg-gray-300": true,
+        "text-gray-700": true,
+        "font-semibold": true,
+        "text-base": true,
+        "p-2": true,
+        "flex": true,
+        "items-center": true,
+        "justify-center": true,
+        "rounded-base": true,
+        "opacity-80": props.disabled,
+        "pointer-events-none": props.disabled,
+        "bg-red-400": props.status === "error",
+        "bg-blue-400": props.status === "loading",
+        "bg-green-400": props.status === "success",
+        "color-white": props.status === "error" || props.status === "loading" || props.status === "success"
+      }
     })
 
     return () => {

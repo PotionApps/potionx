@@ -1,5 +1,4 @@
-import { defineComponent, Ref, resolveComponent, PropType } from 'vue'
-import { RouteLocationRaw } from 'vue-router'
+import { defineComponent, Ref, PropType } from 'vue'
 
 export interface AdminBarNavItem {
   click?: () => void,
