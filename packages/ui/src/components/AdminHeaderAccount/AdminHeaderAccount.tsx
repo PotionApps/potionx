@@ -60,9 +60,12 @@ export default defineComponent({
           }
           {
             dropdown.value &&
-            <div class="bg-white bottom-0 shadow-lg w-48 p-6 absolute right-0 z-5" style="transform: translate(0, 100%);">
+            <div class="bg-white bottom-0 shadow-lg w-48 pt-6 px-6 pb-4 absolute right-0 z-5" style="transform: translate(0, 100%);">
               {
-                props.btns.map(props => <Btn {...props} />)
+                props.btns.map(props => <Btn
+                  class={["w-full", "mb-2"]}  
+                  {...props} />
+                )
               }
             </div>
           }
