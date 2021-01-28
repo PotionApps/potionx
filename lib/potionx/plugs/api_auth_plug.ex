@@ -43,6 +43,7 @@ defmodule Potionx.Plug.ApiAuth do
     Map.merge(
       %{
         access_token: "a_app",
+        frontend: "frontend",
         renewal_token: "r_app"
       },
       Keyword.get(config, :cookie_names, %{})
@@ -142,6 +143,12 @@ defmodule Potionx.Plug.ApiAuth do
       cookie_names(config)[:renewal_token],
       r_t,
       cookie_options(conn, config, opts_renewal_token[:ttl])
+    )
+    |> Conn.put_resp_cookie(
+      cookie_names(config)[:frontend],
+      "1",
+      cookie_options(conn, config, opts_access_token[:ttl])
+      |> Keyword.merge([http_only: false])
     )
   end
 
