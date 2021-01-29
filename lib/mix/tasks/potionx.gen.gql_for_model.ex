@@ -105,15 +105,19 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
       app_schema: [state.dir_graphql, "schema.ex"],
       model_mock: [state.dir_context, "#{state.model_name_snakecase}_mock.ex"],
       model_mock_json: [
-        "assets",
-        "ts",
+        "frontend",
+        "shared",
+        "src",
+        "models",
         state.context_name,
         "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}",
         "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}.mock.json"
       ],
       model_json: [
-        "assets",
-        "ts",
+        "frontend",
+        "shared",
+        "src",
+        "models",
         state.context_name,
         "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}",
         "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}.json"
@@ -495,10 +499,25 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
     [
       {
         :no_queries,
+        "priv/templates/#{@task_name}/collection.gql.ts",
+        [
+          "frontend",
+          "shared",
+          "src",
+          "models",
+          state.context_name,
+          Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil),
+          "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}Collection.gql.ts"
+        ]
+      },
+      {
+        :no_queries,
         "priv/templates/#{@task_name}/collection.gql",
         [
-          "assets",
-          "ts",
+          "frontend",
+          "shared",
+          "src",
+          "models",
           state.context_name,
           Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil),
           "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}Collection.gql"
@@ -506,10 +525,25 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
       },
       {
         :no_mutations,
+        "priv/templates/#{@task_name}/delete.gql.ts",
+        [
+          "frontend",
+          "shared",
+          "src",
+          "models",
+          state.context_name,
+          Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil),
+          "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}Delete.gql.ts"
+        ]
+      },
+      {
+        :no_mutations,
         "priv/templates/#{@task_name}/delete.gql",
         [
-          "assets",
-          "ts",
+          "frontend",
+          "shared",
+          "src",
+          "models",
           state.context_name,
           Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil),
           "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}Delete.gql"
@@ -517,10 +551,25 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
       },
       {
         :no_mutations,
+        "priv/templates/#{@task_name}/mutation.gql.ts",
+        [
+          "frontend",
+          "shared",
+          "src",
+          "models",
+          state.context_name,
+          Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil),
+          "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}Mutation.gql.ts"
+        ]
+      },
+      {
+        :no_mutations,
         "priv/templates/#{@task_name}/mutation.gql",
         [
-          "assets",
-          "ts",
+          "frontend",
+          "shared",
+          "src",
+          "models",
           state.context_name,
           Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil),
           "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}Mutation.gql"
@@ -528,10 +577,25 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
       },
       {
         :no_queries,
+        "priv/templates/#{@task_name}/single.gql.ts",
+        [
+          "frontend",
+          "shared",
+          "src",
+          "models",
+          state.context_name,
+          Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil),
+          "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}Single.gql.ts"
+        ]
+      },
+      {
+        :no_queries,
         "priv/templates/#{@task_name}/single.gql",
         [
-          "assets",
-          "ts",
+          "frontend",
+          "shared",
+          "src",
+          "models",
           state.context_name,
           Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil),
           "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}Single.gql"

@@ -80,6 +80,18 @@ Coming soon...
 ### Other Deployment targets
 AWS and Gigalixir are other popular deployment targets for Elixir we may cover if there is sufficient demand.
 
+## Generating GraphQL Typescript Definitions
+Make sure your server is started with ```mix phx.server```, open another terminal and navigate to the ```frontend/shared``` folder.
+
+From there run:
+```sh
+npm install
+npm run types
+```
+
+You should now have type definitions
+
+
 ---
 ### License
 MIT

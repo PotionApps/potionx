@@ -33,6 +33,33 @@ if config_env() == :prod do
     #   environment variable SSL_KEY_PATH is missing.
     #   """
 
+  config :<%= @app_name %>, :pow_assent,
+    providers: [
+      # github: [
+      #   strategy: Assent.Strategy.Github
+      # ],
+      azure_ad: [
+        client_id: System.get_env("ASSENT_AZURE_CLIENT_ID"),
+        client_secret: System.get_env("ASSENT_AZURE_CLIENT_SECRET"),
+        id_token_signed_response_alg: "RS256",
+        strategy: Assent.Strategy.AzureAD,
+        tenant_id: System.get_env("ASSENT_AZURE_TENANT_ID")
+      ],
+      google: [
+        strategy: Assent.Strategy.Google,
+        client_id: System.get_env("ASSENT_GOOGLE_CLIENT_ID"),
+        client_secret: System.get_env("ASSENT_GOOGLE_CLIENT_ID"),
+        authorization_params: [
+          access_type: "offline",
+          scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+        ]
+      ],
+      # twitter: [
+      #   strategy: Assent.Strategy.Twitter
+      # ]
+    ]
+
+
   config :<%= @app_name %>, <%= @endpoint_module %>,
     http: [
       :inet6,

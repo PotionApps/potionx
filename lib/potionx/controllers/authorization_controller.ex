@@ -30,6 +30,7 @@ defmodule Potionx.AuthorizationController do
               },
               config
             )
+            |> Phoenix.Controller.put_layout(false)
             |> render(
               "refresh.html",
               url:

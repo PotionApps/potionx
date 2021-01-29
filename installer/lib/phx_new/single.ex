@@ -6,6 +6,7 @@ defmodule Phx.New.Single do
   template :new, [
     {:eex,  "potionx/config/config.exs",                :project, "config/config.exs"},
     {:eex,  "potionx/config/dev.exs",                   :project, "config/dev.exs"},
+    {:eex,  "potionx/config/dev.secret.exs",            :project, "config/dev.secret.exs"},
     {:eex,  "potionx/config/prod.exs",                  :project, "config/prod.exs"},
     {:eex,  "potionx/config/test.exs",                  :project, "config/test.exs"},
     {:eex,  "potionx/config/runtime.exs",               :project, "config/runtime.exs"},
@@ -19,7 +20,6 @@ defmodule Phx.New.Single do
     {:eex,  "potionx/app_name_web/router.ex",           :project, "lib/:lib_web_name/router.ex"},
     {:eex,  "phx_web/telemetry.ex",                     :project, "lib/:lib_web_name/telemetry.ex"},
     {:eex,  "phx_single/lib/app_name_web.ex",           :project, "lib/:lib_web_name.ex"},
-    {:eex,  "phx_single/mix.exs",                       :project, "mix.exs"},
     {:eex,  "phx_single/README.md",                     :project, "README.md"},
     {:eex,  "phx_single/formatter.exs",                 :project, ".formatter.exs"},
     {:eex,  "phx_single/gitignore",                     :project, ".gitignore"},
@@ -42,8 +42,10 @@ defmodule Phx.New.Single do
     {:eex, "phx_web/controllers/page_controller.ex",         :project, "lib/:lib_web_name/controllers/page_controller.ex"},
     {:eex, "potionx/app_name_web/templates/layout/app.html.eex", :project, "lib/:lib_web_name/templates/layout/app.html.eex"},
     {:eex, "potionx/app_name_web/templates/app/index.html.eex", :project, "lib/:lib_web_name/templates/app/index.html.eex"},
+    {:eex, "potionx/app_name_web/templates/authorization/refresh.html.eex", :project, "lib/:lib_web_name/templates/authorization/refresh.html.eex"},
     {:eex, "phx_web/templates/page/index.html.eex",          :project, "lib/:lib_web_name/templates/page/index.html.eex"},
     {:eex, "potionx/app_name_web/views/app_view.ex",         :project, "lib/:lib_web_name/views/app_view.ex"},
+    {:eex, "potionx/app_name_web/views/authorization_view.ex",  :project, "lib/:lib_web_name/views/authorization_view.ex"},
     {:eex, "potionx/app_name_web/views/layout_view.ex",      :project, "lib/:lib_web_name/views/layout_view.ex"},
     {:eex, "phx_web/views/page_view.ex",                     :project, "lib/:lib_web_name/views/page_view.ex"},
     {:eex, "phx_test/controllers/page_controller_test.exs",  :project, "test/:lib_web_name/controllers/page_controller_test.exs"},
@@ -59,42 +61,23 @@ defmodule Phx.New.Single do
     {:eex,  "phx_ecto/data_case.ex",         :app, "test/support/data_case.ex"},
   ]
 
-  template :webpack, [
-    {:eex,  "phx_assets/webpack.config.js", :web, "assets/webpack.config.js"},
-    {:text, "phx_assets/babelrc",           :web, "assets/.babelrc"},
-    {:eex,  "phx_assets/app.js",            :web, "assets/js/app.js"},
-    {:eex,  "phx_assets/app.scss",          :web, "assets/css/app.scss"},
-    {:eex,  "phx_assets/socket.js",         :web, "assets/js/socket.js"},
-    {:eex,  "phx_assets/package.json",      :web, "assets/package.json"},
-    {:keep, "phx_assets/vendor",            :web, "assets/vendor"},
-  ]
+  template :webpack, []
 
-  template :webpack_live, [
-    {:eex,  "phx_assets/webpack.config.js", :web, "assets/webpack.config.js"},
-    {:text, "phx_assets/babelrc",           :web, "assets/.babelrc"},
-    {:eex,  "phx_assets/app.js",            :web, "assets/js/app.js"},
-    {:eex,  "phx_assets/app.scss",          :web, "assets/css/app.scss"},
-    {:eex,  "phx_assets/package.json",      :web, "assets/package.json"},
-    {:keep, "phx_assets/vendor",            :web, "assets/vendor"},
-  ]
-
+  template :webpack_live, []
   template :bare, []
 
   template :static, [
-    {:text, "phx_static/app.js",      :web, "priv/static/js/app.js"},
-    {:text, "phx_static/app.css",     :web, "priv/static/css/app.css"},
-    {:text, "phx_static/phoenix.css", :web, "priv/static/css/phoenix.css"},
     {:text, "phx_static/robots.txt",  :web, "priv/static/robots.txt"},
-    {:text, "phx_static/phoenix.js",  :web, "priv/static/js/phoenix.js"},
-    {:text, "phx_static/phoenix.png", :web, "priv/static/images/phoenix.png"},
     {:text, "phx_static/favicon.ico", :web, "priv/static/favicon.ico"}
   ]
 
   template :potionx, [
+    {:eex,  "potionx/mix.exs",  :project, "mix.exs"},
     {:keep, "potionx/app_name_graphql", :app, "lib/:lib_graphql_name"},
     {:eex, "potionx/app_name_graphql/schema.ex", :app, "lib/:lib_graphql_name/schema.ex"},
     {:keep, "potionx/app_name/users", :app, "lib/:app/users"},
     {:eex, "potionx/app_name/users/user.ex", :app, "lib/:app/users/user.ex"},
+    {:eex, "potionx/app_name/release.ex", :app, "lib/:app/release.ex"},
     {:eex, "potionx/app_name_web/controllers/auth_controller.ex", :app, "lib/:lib_web_name/controllers/auth_controller.ex"},
     {:eex, "potionx/app_name_web/controllers/authorization_controller.ex", :app, "lib/:lib_web_name/controllers/authorization_controller.ex"},
     {:migration, "potionx/migrations/create_users.exs", :app, "priv/repo/migrations/{timestamp}_create_users.exs"},
@@ -102,8 +85,15 @@ defmodule Phx.New.Single do
     {:eex, "potionx/priv/repo/potionx_seed.exs", :app, "priv/repo/potionx_seed.exs"},
     {:eex, "potionx/frontend/admin/.gitignore", :app, "frontend/admin/.gitignore"},
     {:eex, "potionx/frontend/admin/package.json", :app, "frontend/admin/package.json"},
+    {:eex, "potionx/frontend/admin/postcss.config.js", :app, "frontend/admin/postcss.config.js"},
+    {:eex, "potionx/frontend/admin/tailwind.config.js", :app, "frontend/admin/tailwind.config.js"},
     {:eex, "potionx/frontend/admin/tsconfig.json", :app, "frontend/admin/tsconfig.json"},
     {:eex, "potionx/frontend/admin/vite.config.ts", :app, "frontend/admin/vite.config.ts"},
+    {:eex, "potionx/frontend/shared/.gitignore", :app, "frontend/shared/.gitignore"},
+    {:eex, "potionx/frontend/shared/package.json", :app, "frontend/shared/package.json"},
+    {:eex, "potionx/frontend/shared/codegen.yml", :app, "frontend/shared/codegen.yml"},
+    {:eex, "potionx/frontend/shared/src/gql.ts", :app, "frontend/shared/src/gql.ts"},
+    {:eex, "potionx/frontend/shared/src/types.d.ts", :app, "frontend/shared/src/types.d.ts"},
     {:eex, "potionx/build.sh", :app, "build.sh"},
     {:eex, "potionx/Dockerfile", :app, "Dockerfile"}
   ]
@@ -153,12 +143,6 @@ defmodule Phx.New.Single do
 
     if Project.gettext?(project), do: gen_gettext(project)
 
-    # case {Project.webpack?(project), Project.html?(project)} do
-    #   {true, _}      -> gen_webpack(project)
-    #   {false, true}  -> gen_static(project)
-    #   {false, false} -> gen_bare(project)
-    # end
-
     project
   end
 
@@ -185,25 +169,6 @@ defmodule Phx.New.Single do
 
   def gen_static(%Project{} = project) do
     copy_from project, __MODULE__, :static
-  end
-
-  def gen_webpack(%Project{web_path: web_path} = project) do
-    if Project.live?(project) do
-      copy_from project, __MODULE__, :webpack_live
-    else
-      copy_from project, __MODULE__, :webpack
-    end
-
-    statics = %{
-      "phx_static/phoenix.css" => "assets/css/phoenix.css",
-      "phx_static/robots.txt" => "assets/static/robots.txt",
-      "phx_static/phoenix.png" => "assets/static/images/phoenix.png",
-      "phx_static/favicon.ico" => "assets/static/favicon.ico"
-    }
-
-    for {source, target} <- statics do
-      create_file Path.join(web_path, target), render(:static, source, project.binding)
-    end
   end
 
   def gen_bare(%Project{} = project) do

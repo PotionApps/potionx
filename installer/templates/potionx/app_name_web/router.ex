@@ -9,6 +9,11 @@ defmodule <%= @web_namespace %>.Router do
     plug :fetch_flash<% end %>
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Potionx.Plug.ApiAuth, otp_app: :<%= @app_name %>
+    plug Potionx.Plug.MaybeRequireAuth, [
+      login_path: "/login",
+      public_urls: []
+    ]
   end<% end %>
 
   pipeline :graphql do
@@ -64,6 +69,7 @@ defmodule <%= @web_namespace %>.Router do
     pipe_through :api
 
     get "/auth/:provider/new", AuthorizationController, :new
+    get "/auth/:provider/callback", AuthorizationController, :callback
     post "/auth/:provider/callback", AuthorizationController, :callback
     post "/session/renew", AuthController, :renew
   end

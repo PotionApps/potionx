@@ -75,6 +75,7 @@ defmodule <%= @web_namespace %>.Router do
     pipe_through :api
 
     get "/auth/:provider/new", AuthorizationController, :new
+    get "/auth/:provider/callback", AuthorizationController, :callback
     post "/auth/:provider/callback", AuthorizationController, :callback
     post "/session/renew", AuthController, :renew
   end

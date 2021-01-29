@@ -46,22 +46,21 @@ defmodule <%= @app_module %>.MixProject do
       {:decimal, "~> 2.0", override: true},
       {:mint, "~> 1.0"},
       {:phoenix, "~> 1.5.7"},
-      {:potionx, "~> 0.1"},
+      {:phoenix_ecto, "~> 4.1"},
+      {:potionx, path: "d:/potion/potionx"},
       {:pow, "~> 1.0.21"},
       {:pow_assent, "~> 0.4.10"},
       {:typed_struct, "~> 0.2.1"},
-      <%= if @ecto do %>
-      {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.5"},
-      {<%= inspect @adapter_app %>, ">= 0.0.0"},<% end %><%= if @html do %><%= if @live do %>
+      {<%= inspect @adapter_app %>, ">= 0.0.0"},
       {:phoenix_live_view, "~> 0.15.0"},
-      {:floki, ">= 0.27.0", only: :test},<% end %>
+      {:floki, ">= 0.27.0", only: :test},
       {:phoenix_html, "~> 2.11"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},<% end %><%= if @dashboard do %>
-      {:phoenix_live_dashboard, "~> 0.4"},<% end %>
+      {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:phoenix_live_dashboard, "~> 0.4"},
       {:telemetry_metrics, "~> 0.4"},
-      {:telemetry_poller, "~> 0.4"},<%= if @gettext do %>
-      {:gettext, "~> 0.11"},<% end %>
+      {:telemetry_poller, "~> 0.4"},
+      {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"}
     ]
@@ -76,10 +75,10 @@ defmodule <%= @app_module %>.MixProject do
   defp aliases do
     [
       "build.assets": ["cmd npm run build --prefix frontend/admin"],
-      setup: ["deps.get"<%= if @ecto do %>, "ecto.setup"<% end %><%= if @webpack do %>, "cmd npm install --prefix assets"<% end %>]<%= if @ecto do %>,
+      setup: ["deps.get", "ecto.setup"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]<% end %>
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
     ]
   end
 end

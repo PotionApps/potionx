@@ -108,14 +108,19 @@ defmodule Mix.Tasks.Potionx.New do
   end
 
   def copy_frontend_src(%Project{} = project) do
-    target = Project.join_path(project, :app, "frontend/admin/src")
+    admin = Project.join_path(project, :app, "frontend/admin/src")
+    shared = Project.join_path(project, :app, "frontend/shared/src")
     build_dir = Project.join_path(project, :app, "priv/static")
 
     File.mkdir_p!(build_dir)
-    File.mkdir_p!(target)
+    File.mkdir_p!(admin)
+    File.mkdir_p!(shared)
 
     Path.expand("../../../templates/potionx/frontend/admin/src", __DIR__)
-    |> File.cp_r!(target)
+    |> File.cp_r!(admin)
+
+    Path.expand("../../../templates/potionx/frontend/shared/src", __DIR__)
+    |> File.cp_r!(shared)
 
     project
   end

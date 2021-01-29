@@ -1,12 +1,13 @@
 import { defineComponent } from 'vue'
-import HelloWorld from './components/HelloWorld'
 
 export default defineComponent({
   name: 'App',
-  components: {
-    HelloWorld
-  },
+  components: {},
   setup () {
-    return () => <HelloWorld />
+    return () => {
+      return <div>
+        <router-view></router-view>
+      </div>
+    }
   }
 })

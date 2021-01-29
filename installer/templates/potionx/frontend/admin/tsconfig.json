@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
@@ -8,7 +9,17 @@
     "sourceMap": true,
     "lib": ["esnext", "dom"],
     "types": ["vite/client"],
+    "paths": {
+      "shared/*": ["../shared/src/*"]
+    },
     "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }]
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "../shared/**/*.gql",
+    "../shared/**/*.ts"
+]
 }
