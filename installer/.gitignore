@@ -1,2 +1,3 @@
-_build
+_build 
+deps
 installer_test*
