@@ -6,9 +6,7 @@
     "build": "vuedx-typecheck . && vite build"
   },
   "dependencies": {
-    "@potion/auth": "file:d:/potion/potionx/packages/auth",
     "@potion/ui": "file:d:/potion/potionx/packages/ui",
-    "@potion/utils": "file:d:/potion/potionx/packages/utils",
     "@urql/core": "^1.16.2",
     "@urql/exchange-auth": "^0.1.2",
     "@urql/exchange-graphcache": "^3.4.0",

@@ -6,7 +6,7 @@ end
 defmodule Phx.New.MixProject do
   use Mix.Project
 
-  @version "0.0.1"
+  @version "0.0.2"
   @github_path "potionapps/potionx"
   @url "https://github.com/#{@github_path}"
 
@@ -29,10 +29,10 @@ defmodule Phx.New.MixProject do
       docs: docs(),
       homepage_url: "https://www.potionapps.com",
       description: """
-      Phoenix framework project generator.
+      Potionx project generator.
 
       Provides a `mix potionx.new` task to bootstrap a new Elixir application
-      with Phoenix, Absinthe and Pow dependencies.
+      with Phoenix, Absinthe, Pow and Vue dependencies.
       """
     ]
   end
