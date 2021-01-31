@@ -1,7 +1,7 @@
-defmodule Phx.New.Single do
+defmodule Potionx.New.Single do
   @moduledoc false
-  use Phx.New.Generator
-  alias Phx.New.{Project}
+  use Potionx.New.Generator
+  alias Potionx.New.{Project}
 
   template :new, [
     {:eex,  "potionx/config/config.exs",                :project, "config/config.exs"},
@@ -89,10 +89,18 @@ defmodule Phx.New.Single do
     {:eex, "potionx/frontend/admin/tailwind.config.js", :app, "frontend/admin/tailwind.config.js"},
     {:eex, "potionx/frontend/admin/tsconfig.json", :app, "frontend/admin/tsconfig.json"},
     {:eex, "potionx/frontend/admin/vite.config.ts", :app, "frontend/admin/vite.config.ts"},
+    {:eex, "potionx/frontend/admin/src/App.tsx", :app, "frontend/admin/src/App.tsx"},
+    {:eex, "potionx/frontend/admin/src/main.css", :app, "frontend/admin/src/main.css"},
+    {:eex, "potionx/frontend/admin/src/main.ts", :app, "frontend/admin/src/main.ts"},
+    {:eex, "potionx/frontend/admin/src/routes/index.ts", :app, "frontend/admin/src/routes/index.ts"},
+    {:eex, "potionx/frontend/admin/src/routes/routeNames.ts", :app, "frontend/admin/src/routes/routeNames.ts"},
+    {:eex, "potionx/frontend/admin/src/routes/RouteLogin/RouteLogin.tsx", :app, "frontend/admin/src/routes/RouteLogin/RouteLogin.tsx"},
+    {:eex, "potionx/frontend/admin/src/routes/RouteUsers/RouteUsers.tsx", :app, "frontend/admin/src/routes/RouteUsers/RouteUsers.tsx"},
     {:eex, "potionx/frontend/shared/.gitignore", :app, "frontend/shared/.gitignore"},
     {:eex, "potionx/frontend/shared/package.json", :app, "frontend/shared/package.json"},
     {:eex, "potionx/frontend/shared/codegen.yml", :app, "frontend/shared/codegen.yml"},
     {:eex, "potionx/frontend/shared/src/gql.ts", :app, "frontend/shared/src/gql.ts"},
+    {:eex, "potionx/frontend/shared/src/signIn.ts", :app, "frontend/shared/src/signIn.ts"},
     {:eex, "potionx/frontend/shared/src/types.d.ts", :app, "frontend/shared/src/types.d.ts"},
     {:eex, "potionx/build.sh", :app, "build.sh"},
     {:eex, "potionx/Dockerfile", :app, "Dockerfile"}

@@ -26,8 +26,7 @@ defmodule Potionx.MixProject do
 
   defp package do
     [
-      maintainers: ["Vince Roy"],
-
+      maintainers: ["Vince Roy", "Michael Demchuk"],
       licenses: ["MIT"],
       links: %{github: "https://github.com/PotionApps/potionx"},
       files:
@@ -38,7 +37,7 @@ defmodule Potionx.MixProject do
   def project do
     [
       app: :potionx,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.11",
       package: package(),
       start_permanent: Mix.env() == :prod,

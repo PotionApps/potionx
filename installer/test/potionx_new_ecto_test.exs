@@ -1,6 +1,6 @@
 Code.require_file "mix_helper.exs", __DIR__
 
-defmodule Mix.Tasks.Phx.New.EctoTest do
+defmodule Mix.Tasks.Potionx.New.EctoTest do
   use ExUnit.Case
   import MixHelper
   import ExUnit.CaptureIO
@@ -12,10 +12,10 @@ defmodule Mix.Tasks.Phx.New.EctoTest do
     :ok
   end
 
-  @app_name "phx_ecto"
+  @app_name "Potionx_ecto"
 
   test "new without args" do
-    assert capture_io(fn -> Mix.Tasks.Phx.New.Ecto.run([]) end) =~
+    assert capture_io(fn -> Mix.Tasks.Potionx.New.Ecto.run([]) end) =~
            "Creates a new Ecto project within an umbrella project."
   end
 
@@ -25,7 +25,7 @@ defmodule Mix.Tasks.Phx.New.EctoTest do
       Enum.each(files, &File.rm/1)
 
       assert_file "../config/config.exs", &refute(&1 =~ ~S[import_config "#{config_env()}.exs"])
-      Mix.Tasks.Phx.New.Ecto.run([@app_name])
+      Mix.Tasks.Potionx.New.Ecto.run([@app_name])
       assert_file "../config/config.exs", &assert(&1 =~ ~S[import_config "#{config_env()}.exs"])
     end
   end
@@ -33,21 +33,21 @@ defmodule Mix.Tasks.Phx.New.EctoTest do
   test "new outside umbrella", config do
     in_tmp config.test, fn ->
       assert_raise Mix.Error, ~r"The ecto task can only be run within an umbrella's apps directory", fn ->
-        Mix.Tasks.Phx.New.Ecto.run ["007invalid"]
+        Mix.Tasks.Potionx.New.Ecto.run ["007invalid"]
       end
     end
   end
 
   test "new with defaults", config do
     in_tmp_umbrella_project config.test, fn ->
-      Mix.Tasks.Phx.New.Ecto.run([@app_name])
+      Mix.Tasks.Potionx.New.Ecto.run([@app_name])
 
       # Install dependencies?
       assert_received {:mix_shell, :yes?, ["\nFetch and install dependencies?"]}
 
       # Instructions
       assert_received {:mix_shell, :info, ["\nWe are almost there" <> _ = msg]}
-      assert msg =~ "$ cd phx_ecto"
+      assert msg =~ "$ cd Potionx_ecto"
       assert msg =~ "$ mix deps.get"
 
       assert_received {:mix_shell, :info, ["Then configure your database in config/dev.exs" <> _]}

@@ -1,6 +1,6 @@
-defmodule Phx.New.Project do
+defmodule Potionx.New.Project do
   @moduledoc false
-  alias Phx.New.Project
+  alias Potionx.New.Project
 
   defstruct base_path: nil,
             app: nil,

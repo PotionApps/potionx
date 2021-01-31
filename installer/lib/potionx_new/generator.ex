@@ -1,7 +1,7 @@
-defmodule Phx.New.Generator do
+defmodule Potionx.New.Generator do
   @moduledoc false
   import Mix.Generator
-  alias Phx.New.{Project}
+  alias Potionx.New.{Project}
 
   @phoenix Path.expand("../..", __DIR__)
   @phoenix_version Version.parse!(Mix.Project.config()[:version])
@@ -145,7 +145,7 @@ defmodule Phx.New.Generator do
       path = Project.join_path(project, :project, "config/config.exs")
 
       extra =
-        Phx.New.Umbrella.render(:new, "phx_umbrella/config/extra_config.exs", project.binding)
+        Potionx.New.Umbrella.render(:new, "phx_umbrella/config/extra_config.exs", project.binding)
 
       File.write(path, [File.read!(path), extra])
     end

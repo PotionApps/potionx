@@ -3,6 +3,9 @@ import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import App from './App'
 import routes from './routes'
+import "@fontsource/inter/400.css"
+import "@fontsource/inter/700.css"
+import "@fontsource/inter/variable.css"
 import './main.css'
 
 import { authExchange } from '@urql/exchange-auth'

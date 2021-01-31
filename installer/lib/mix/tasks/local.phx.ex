@@ -1,10 +1,10 @@
 defmodule Mix.Tasks.Local.Potionx do
   use Mix.Task
 
-  @shortdoc "Updates the Phoenix project generator locally"
+  @shortdoc "Updates the Potionx project generator locally"
 
   @moduledoc """
-  Updates the Phoenix project generator locally.
+  Updates the Potionx project generator locally.
 
       mix local.phx
 

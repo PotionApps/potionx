@@ -25,7 +25,7 @@ defmodule <%= @endpoint_module %> do
     at: "/",
     from: Mix.env() === :prod && :potionx_one || "frontend/admin",
     gzip: Mix.env() === :prod,
-    only: ~w(assets css fonts images js favicon.ico robots.txt src)
+    only: ~w(assets css fonts images js favicon.ico robots.txt node_modules src)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

@@ -1,11 +1,11 @@
 Code.require_file "mix_helper.exs", __DIR__
 
-defmodule Mix.Tasks.Phx.New.WebTest do
+defmodule Mix.Tasks.Potionx.New.WebTest do
   use ExUnit.Case
   import MixHelper
   import ExUnit.CaptureIO
 
-  @app_name "phx_web"
+  @app_name "Potionx_web"
 
   setup do
     # The shell asks to install deps.
@@ -15,7 +15,7 @@ defmodule Mix.Tasks.Phx.New.WebTest do
   end
 
   test "new without args" do
-    assert capture_io(fn -> Mix.Tasks.Phx.New.Web.run([]) end) =~
+    assert capture_io(fn -> Mix.Tasks.Potionx.New.Web.run([]) end) =~
            "Creates a new Potionx web project within an umbrella project."
   end
 
@@ -25,7 +25,7 @@ defmodule Mix.Tasks.Phx.New.WebTest do
       Enum.each(files, &File.rm/1)
 
       assert_file "../config/config.exs", &refute(&1 =~ ~S[import_config "#{config_env()}.exs"])
-      Mix.Tasks.Phx.New.Web.run([@app_name])
+      Mix.Tasks.Potionx.New.Web.run([@app_name])
       assert_file "../config/config.exs", &assert(&1 =~ ~S[import_config "#{config_env()}.exs"])
     end
   end
@@ -33,14 +33,14 @@ defmodule Mix.Tasks.Phx.New.WebTest do
   test "new outside umbrella", config do
     in_tmp config.test, fn ->
       assert_raise Mix.Error, ~r"The web task can only be run within an umbrella's apps directory", fn ->
-        Mix.Tasks.Phx.New.Web.run ["007invalid"]
+        Mix.Tasks.Potionx.New.Web.run ["007invalid"]
       end
     end
   end
 
   test "new with defaults" do
     in_tmp_umbrella_project "new with defaults", fn ->
-      Mix.Tasks.Phx.New.Web.run([@app_name])
+      Mix.Tasks.Potionx.New.Web.run([@app_name])
 
       assert_file "../config/config.exs", fn file ->
         assert file =~ "generators: [context_app: false]"
@@ -55,7 +55,7 @@ defmodule Mix.Tasks.Phx.New.WebTest do
 
       # Instructions
       assert_received {:mix_shell, :info, ["\nWe are almost there" <> _ = msg]}
-      assert msg =~ "$ cd phx_web"
+      assert msg =~ "$ cd Potionx_web"
       assert msg =~ "$ mix deps.get"
 
       assert_received {:mix_shell, :info, ["Your web app requires a PubSub server to be running." <> _]}

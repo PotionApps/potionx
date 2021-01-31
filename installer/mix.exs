@@ -1,9 +1,9 @@
 for path <- :code.get_path,
-    Regex.match?(~r/phx_new\-\d+\.\d+\.\d\/ebin$/, List.to_string(path)) do
+    Regex.match?(~r/potionx_new\-\d+\.\d+\.\d\/ebin$/, List.to_string(path)) do
   Code.delete_path(path)
 end
 
-defmodule Phx.New.MixProject do
+defmodule Potionx.New.MixProject do
   use Mix.Project
 
   @version "0.0.2"
@@ -45,7 +45,7 @@ defmodule Phx.New.MixProject do
 
   def deps do
     [
-      {:ex_doc, "~> 0.23", only: :docs}
+      {:ex_doc, "~> 0.23", only: :dev, runtime: false}
     ]
   end
 

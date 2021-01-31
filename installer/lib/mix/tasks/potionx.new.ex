@@ -80,7 +80,7 @@ defmodule Mix.Tasks.Potionx.New do
       mix potionx.new -v
   """
   use Mix.Task
-  alias Phx.New.{Generator, Project, Single, Ecto}
+  alias Potionx.New.{Generator, Project, Single, Ecto}
 
   @version Mix.Project.config()[:version]
   @shortdoc "Creates a new Potionx v#{@version} application"
@@ -105,24 +105,6 @@ defmodule Mix.Tasks.Potionx.New do
       |> String.trim
 
     %{project | local_postgres_password: pw}
-  end
-
-  def copy_frontend_src(%Project{} = project) do
-    admin = Project.join_path(project, :app, "frontend/admin/src")
-    shared = Project.join_path(project, :app, "frontend/shared/src")
-    build_dir = Project.join_path(project, :app, "priv/static")
-
-    File.mkdir_p!(build_dir)
-    File.mkdir_p!(admin)
-    File.mkdir_p!(shared)
-
-    Path.expand("../../../templates/potionx/frontend/admin/src", __DIR__)
-    |> File.cp_r!(admin)
-
-    Path.expand("../../../templates/potionx/frontend/shared/src", __DIR__)
-    |> File.cp_r!(shared)
-
-    project
   end
 
   def generate_default_graphql(%Project{} = project, path_key) do
@@ -158,7 +140,6 @@ defmodule Mix.Tasks.Potionx.New do
     |> Generator.put_binding()
     |> validate_project(path)
     |> generator.generate()
-    |> copy_frontend_src
     |> prompt_to_install_deps(generator, path)
     |> install_pow_assent(path)
     |> generate_default_graphql(path)
