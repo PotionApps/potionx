@@ -491,10 +491,6 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
             {k, _}, acc ->
               acc ++ [Absinthe.Adapter.LanguageConventions.to_external_name(to_string(k), nil)]
           end)
-          |> Enum.map(fn f ->
-            DocUtils.indent_to_string(6) <> f
-          end)
-          |> Enum.join("\r\n")
     }
     [
       {

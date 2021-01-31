@@ -21,7 +21,9 @@ export default gql`query <%= model_name_graphql_case %>Collection(
     }
     edges {
       node {
-<%= graphql_fields %>
+      <%= for field <- graphql_fields do %>
+        <%= field %>
+      <% end %>
       }
       cursor
     }

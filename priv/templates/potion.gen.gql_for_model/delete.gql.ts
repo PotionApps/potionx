@@ -11,7 +11,9 @@ export default gql`mutation <%= model_name_graphql_case %>Delete(
       message
     }
     node {
-<%= graphql_fields %>
+    <%= for field <- graphql_fields do %>
+      <%= field %>
+    <% end %>
     }
   }
 }`

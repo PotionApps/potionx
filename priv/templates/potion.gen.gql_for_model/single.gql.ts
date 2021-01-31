@@ -5,6 +5,8 @@ export default gql`query <%= model_name_graphql_case %>Single(
   <%= model_name_graphql_case %>Single(
     filters: $filters
   ) {
-<%= graphql_fields %>
+  <%= for field <- graphql_fields do %>
+    <%= field %>
+  <% end %>
   }
 }`
