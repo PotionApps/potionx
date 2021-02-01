@@ -17,7 +17,7 @@ export default defineComponent({
   setup (props, context) {
     return () => {
       return (
-        <div class="bg-gray-100 s1050m:pb-14">
+        <div class="bg-gray-100 flex-1 s1050m:pb-14">
           <AdminSubHeader />
           {context.slots.default && context.slots.default()}
           <AdminFooter btns={props.adminFooterBtns} />
