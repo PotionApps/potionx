@@ -71,7 +71,7 @@ defmodule <%= @web_namespace %>.Router do
     get "/auth/:provider/new", AuthorizationController, :new
     get "/auth/:provider/callback", AuthorizationController, :callback
     post "/auth/:provider/callback", AuthorizationController, :callback
-    post "/session/delete", AuthController, :delete
+    get "/session/delete", AuthController, :delete
     post "/session/renew", AuthController, :renew
   end
 
