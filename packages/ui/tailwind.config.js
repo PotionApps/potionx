@@ -18,6 +18,13 @@ module.exports = {
             '7xl': '3.5rem',
             '8xl': '4rem'
         },
+        flex: {
+            '1': '1 1 0%',
+            'auto': 'flex: 1 1 auto',
+            'fit': '1 0 auto',
+            'initial': '0 1 auto',
+            'none': 'none'
+        },
         fontSize: {
             '3xs': ['8px', '1.25'],
             '2xs': ['10px', '1.25'],
@@ -174,7 +181,8 @@ module.exports = {
             '6': '6',
             '7': '7',
             '8': '8',
-            '9': '9'
+            '9': '9',
+            '99': '99'
         },
         extend: {}
     },

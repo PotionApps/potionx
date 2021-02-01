@@ -8,6 +8,7 @@ export interface PropsBtn {
   id?: string
   label?: string
   noStyle?: boolean
+  reverse?: boolean
   status?: 'disabled' | 'error' | 'loading' | 'success' | null
   to?: RouteLocationRaw
   toExternal?: string
@@ -22,6 +23,7 @@ export default defineComponent({
     icon: {} as any,
     label: String,
     noStyle: Boolean,
+    reverse: Boolean,
     status: String as PropType<PropsBtn['status']>,
     to: Object as PropType<PropsBtn['to']>,
     toExternal: String,
@@ -38,25 +40,39 @@ export default defineComponent({
     })
 
     const classes = computed(() => {
-      if (props.noStyle) return []
-      return {
-        "bg-gray-200": true,
-        "hover:bg-gray-300": true,
-        "text-gray-700": true,
-        "font-semibold": true,
-        "text-base": true,
-        "p-2": true,
-        "flex": true,
-        "items-center": true,
-        "justify-center": true,
-        "rounded-base": true,
-        "opacity-80": props.disabled,
-        "pointer-events-none": props.disabled,
-        "bg-red-400": props.status === "error",
-        "bg-blue-400": props.status === "loading",
-        "bg-green-400": props.status === "success",
-        "color-white": props.status === "error" || props.status === "loading" || props.status === "success"
-      }
+      return [
+        {
+          "bg-gray-200": !props.noStyle,
+          "hover:bg-gray-300": !props.noStyle,
+          "text-gray-700": !props.noStyle,
+          "font-semibold": !props.noStyle,
+          "text-base": !props.noStyle,
+          "px-3": !props.noStyle,
+          "py-2": !props.noStyle,
+          "flex": true,
+          "items-center": true,
+          "justify-center": true,
+          "rounded-base": true,
+          "opacity-80": props.disabled,
+          "pointer-events-none": props.disabled,
+          "bg-red-400": props.status === "error",
+          "bg-blue-400": props.status === "loading",
+          "bg-green-400": props.status === "success",
+          "color-white": props.status === "error" || props.status === "loading" || props.status === "success",
+          "flex-row-reverse": props.reverse,
+          "transition": true
+        }
+      ]
+    })
+
+    const imgClasses = computed(() => {
+      return [
+        {
+          "ml-2": props.reverse && props.label,
+          "mr-2": !props.reverse && props.label,
+          "w-3": true
+        }
+      ]
     })
 
     return () => {
@@ -72,8 +88,8 @@ export default defineComponent({
         Parent = "a"
       }
       return <Parent class={classes.value} {...attrs}>
+        {props.icon && <img class={imgClasses.value} src={props.icon} />}
         {props.label && <span>{props.label}</span>}
-        {props.icon && <img class="ml-1 h-3" src={props.icon} />}
         {context.slots.default && context.slots.default()}
       </Parent>
     }

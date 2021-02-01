@@ -1,21 +1,16 @@
-import { defineComponent, computed } from "vue";
-import AdminLayout from "../../components/AdminLayout/AdminLayout";
+import { defineComponent } from "vue";
 import PotionLogo from '../../assets/potion-logo.svg'
+import AdminListLayout from "../../layouts/AdminListLayout/AdminListLayout";
 
 export default defineComponent({
   setup () {
-    const nav = computed(() => [
-      {
-        label: "Home"
-      }
-    ])
-    return () => <AdminLayout
-      nav={nav}
+
+    return () => <AdminListLayout
       v-slots={{
         logo: () => <img class="w-4" src={PotionLogo}/>
       }}
     >
       <h1 class="text-gray-800 text-2xl mb-8">admin</h1>
-    </AdminLayout>
+    </AdminListLayout>
   }
 })

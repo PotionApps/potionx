@@ -1,7 +1,7 @@
-import { defineComponent, computed, onBeforeUnmount, onMounted, PropType, ref } from "vue";
+import { defineComponent, onBeforeUnmount, onMounted, PropType, ref } from "vue";
 import Btn, { PropsBtn } from '../Btn/Btn'
 
-export interface PropsAccountMini {
+export interface PropsAdminHeaderAccount {
   btns: PropsBtn[]
   image?: {},
   initials: string
@@ -12,6 +12,7 @@ export default defineComponent({
   props: {
     btns: {
       type: Array as PropType<PropsBtn[]>,
+      required: true
     },
     image: String,
     initials: String
