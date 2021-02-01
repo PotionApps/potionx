@@ -18,6 +18,6 @@ export interface ModelTableProps {
 
 export default defineComponent({
   setup () {
-    return () => null
+    return () => <table></table>
   }
 })
