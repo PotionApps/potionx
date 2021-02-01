@@ -8,7 +8,7 @@ interface ModelRow {
   title?: string
 }
 
-interface ModelTable {
+export interface ModelTableProps {
   checkboxClick?: (row: ModelRow) => void,
   columnOrder?: string[]
   excludeTimestamps?: boolean

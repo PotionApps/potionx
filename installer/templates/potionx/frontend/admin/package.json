@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "@fontsource/inter": "^4.1.0",
-    "@potionapps/ui": "^0.0.1",
+    "@potionapps/ui": "^0.0.2",
     "@urql/core": "^1.16.2",
     "@urql/exchange-auth": "^0.1.2",
     "@urql/exchange-graphcache": "^3.4.0",

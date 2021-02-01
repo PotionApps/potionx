@@ -111,7 +111,7 @@ defmodule Mix.Tasks.Potionx.New do
     path = Map.fetch!(project, path_key)
 
     maybe_cd(path, fn ->
-      cmd(project, "mix potionx.gen.gql_for_model UserIdentities UserIdentity --no-associations --no-queries --no-mutations")
+      cmd(project, "mix potionx.gen.gql_for_model UserIdentities UserIdentity --no-associations --no-queries --no-mutations --no-frontend")
     end)
 
     maybe_cd(path, fn ->

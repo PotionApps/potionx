@@ -25,6 +25,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
             model_name_graphql_case: nil,
             model_name_snakecase: nil,
             no_associations: false,
+            no_frontend: false,
             no_mutations: false,
             no_queries: false,
             validations: []
@@ -55,10 +56,97 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
     )
   end
 
+
+  def add_to_frontend_routes(%GqlForModel{no_frontend: true} = state), do: state
+  def add_to_frontend_routes(%GqlForModel{} = state) do
+    index =
+      [
+        "frontend",
+        "admin",
+        "src",
+        "routes",
+        "index.ts"
+      ] |> Enum.join("/")
+    route_names =
+      [
+        "frontend",
+        "admin",
+        "src",
+        "routes",
+        "routeNames.ts"
+      ] |> Enum.join("/")
+    File.write!(
+      index,
+      Enum.join(
+        [
+          "import Route#{state.model_name}List from './Route#{state.model_name}List/Route#{state.model_name}List'",
+          File.read!(index),
+          """
+          routes.push(
+            {
+              name: routeNames.#{state.model_name_graphql_case},
+              path: '/#{String.replace(state.model_name_snakecase, "_", "-")}-list',
+              component: Route#{state.model_name}List
+            }
+          )
+          """
+        ],
+        "\r\n"
+      )
+    )
+
+    File.write!(
+      route_names,
+      File.read!(route_names)
+      |> String.replace(
+        "export enum routeNames {",
+        "export enum routeNames {\r\n  #{state.model_name_graphql_case}List = \"#{state.model_name_graphql_case}List\","
+      )
+    )
+
+    state
+  end
+
   @doc false
   def build(args) do
     {opts, parsed, _} = parse_opts(args)
     {opts, validate_args!(parsed)}
+  end
+
+  def create_frontend_routes(%GqlForModel{no_frontend: true} = state), do: state
+  def create_frontend_routes(%GqlForModel{} = state) do
+    ["Form", "List"]
+    |> Enum.each(fn k ->
+      template = "priv/templates/#{@task_name}/Route#{k}.tsx"
+      target =
+        [
+          "frontend",
+          "admin",
+          "src",
+          "routes",
+          "Route#{state.model_name}#{k}",
+          "Route#{state.model_name}#{k}.tsx"
+        ] |> Enum.join("/")
+      File.mkdir_p!(Path.dirname(target))
+      EEx.eval_string(
+        Application.app_dir(
+          :potionx,
+          template
+        )
+        |> File.read!,
+        Enum.map(
+          Map.from_struct(state),
+          &(&1)
+        )
+      )
+      |> (fn res ->
+        File.write!(
+          target,
+          res
+        )
+      end).()
+    end)
+    state
   end
 
   def ensure_files_and_directories_exist(%GqlForModel{} = state) do
@@ -110,8 +198,8 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
         "src",
         "models",
         state.context_name,
-        "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}",
-        "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}.mock.json"
+        state.model_name,
+        "#{state.model_name_graphql_case}.mock.json"
       ],
       model_json: [
         "frontend",
@@ -119,8 +207,8 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
         "src",
         "models",
         state.context_name,
-        "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}",
-        "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}.json"
+        state.model_name,
+        "#{state.model_name_graphql_case}.json"
       ],
       mutations: [state.dir_graphql, "schemas", state.model_name_snakecase, "#{state.model_name_snakecase}_mutations.ex"],
       mutations_test: [state.dir_test, "mutations", "#{state.model_name_snakecase}_mutations_test.exs"],
@@ -455,6 +543,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
         Mix.Phoenix.context_app()
       ) <> "GraphQl",
       no_associations: Keyword.get(opts, :no_associations, false),
+      no_frontend: Keyword.get(opts, :no_frontend, false),
       no_mutations: Keyword.get(opts, :no_mutations, false),
       no_queries: Keyword.get(opts, :no_queries, false)
     }
@@ -470,11 +559,9 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
     |> maybe_add_node_interface_type_resolve
     |> maybe_update_main_schema
     |> sync_json_schema
-    # |> Vite + package.json + urql
-    # |> Vue Routes (list, edit, form, graphql queries)
-    # release
+    |> create_frontend_routes
+    |> add_to_frontend_routes
     |> write_lines_to_files
-    # |> Vue Test ?
   end
 
   def sync_graphql_files(%GqlForModel{} = state) do
@@ -502,8 +589,8 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
           "src",
           "models",
           state.context_name,
-          Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil),
-          "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}Collection.gql.ts"
+          state.model_name,
+          "#{state.model_name_graphql_case}Collection.gql.ts"
         ]
       },
       {
@@ -515,8 +602,8 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
           "src",
           "models",
           state.context_name,
-          Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil),
-          "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}Collection.gql"
+          state.model_name,
+          "#{state.model_name_graphql_case}Collection.gql"
         ]
       },
       {
@@ -528,8 +615,8 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
           "src",
           "models",
           state.context_name,
-          Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil),
-          "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}Delete.gql.ts"
+          state.model_name,
+          "#{state.model_name_graphql_case}Delete.gql.ts"
         ]
       },
       {
@@ -541,8 +628,8 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
           "src",
           "models",
           state.context_name,
-          Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil),
-          "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}Delete.gql"
+          state.model_name,
+          "#{state.model_name_graphql_case}Delete.gql"
         ]
       },
       {
@@ -554,8 +641,8 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
           "src",
           "models",
           state.context_name,
-          Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil),
-          "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}Mutation.gql.ts"
+          state.model_name,
+          "#{state.model_name_graphql_case}Mutation.gql.ts"
         ]
       },
       {
@@ -567,8 +654,8 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
           "src",
           "models",
           state.context_name,
-          Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil),
-          "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}Mutation.gql"
+          state.model_name,
+          "#{state.model_name_graphql_case}Mutation.gql"
         ]
       },
       {
@@ -580,8 +667,8 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
           "src",
           "models",
           state.context_name,
-          Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil),
-          "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}Single.gql.ts"
+          state.model_name,
+          "#{state.model_name_graphql_case}Single.gql.ts"
         ]
       },
       {
@@ -593,8 +680,8 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
           "src",
           "models",
           state.context_name,
-          Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil),
-          "#{Absinthe.Adapter.LanguageConventions.to_external_name(state.model_name_snakecase, nil)}Single.gql"
+          state.model_name,
+          "#{state.model_name_graphql_case}Single.gql"
         ]
       }
     ]
@@ -775,9 +862,9 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
       |> (fn lines ->
         [:description, :title]
         |> Enum.reduce(lines, fn key, lines ->
-          if (function_exported?(state.model, key, 1)) do
+          if (function_exported?(state.model, key, 1) && not String.starts_with?(line, "input_object")) do
             lines ++ [
-              "field :#{to_string(key)}, :string, resolve: Potionx.Resolvers.resolve_computed(#{to_string(state.module_name_data)}.#{to_string(state.context_name)}.#{to_string(state.model_name)}, #{to_string(key)})"
+              "field :#{to_string(key)}, :string, resolve: Potionx.Resolvers.resolve_computed(#{to_string(state.module_name_data)}.#{to_string(state.context_name)}.#{to_string(state.model_name)}, :#{to_string(key)})"
             ]
           else
             lines

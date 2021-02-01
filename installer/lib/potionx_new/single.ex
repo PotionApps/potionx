@@ -95,7 +95,7 @@ defmodule Potionx.New.Single do
     {:eex, "potionx/frontend/admin/src/routes/index.ts", :app, "frontend/admin/src/routes/index.ts"},
     {:eex, "potionx/frontend/admin/src/routes/routeNames.ts", :app, "frontend/admin/src/routes/routeNames.ts"},
     {:eex, "potionx/frontend/admin/src/routes/RouteLogin/RouteLogin.tsx", :app, "frontend/admin/src/routes/RouteLogin/RouteLogin.tsx"},
-    {:eex, "potionx/frontend/admin/src/routes/RouteUsers/RouteUsers.tsx", :app, "frontend/admin/src/routes/RouteUsers/RouteUsers.tsx"},
+    # {:eex, "potionx/frontend/admin/src/routes/RouteUsers/RouteUsers.tsx", :app, "frontend/admin/src/routes/RouteUsers/RouteUsers.tsx"},
     {:eex, "potionx/frontend/shared/.gitignore", :app, "frontend/shared/.gitignore"},
     {:eex, "potionx/frontend/shared/package.json", :app, "frontend/shared/package.json"},
     {:eex, "potionx/frontend/shared/codegen.yml", :app, "frontend/shared/codegen.yml"},
