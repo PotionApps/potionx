@@ -47,7 +47,7 @@ defmodule <%= @app_module %>.MixProject do
       {:mint, "~> 1.0"},
       {:phoenix, "~> 1.5.7"},
       {:phoenix_ecto, "~> 4.1"},
-      {:potionx, "~0.2.3"},
+      {:potionx, "~> 0.2.3"},
       {:pow, "~> 1.0.21"},
       {:pow_assent, "~> 0.4.10"},
       {:typed_struct, "~> 0.2.1"},
