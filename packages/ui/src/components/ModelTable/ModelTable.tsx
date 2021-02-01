@@ -1,4 +1,4 @@
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 
 interface ModelRow {
   id: string
@@ -17,7 +17,17 @@ export interface ModelTableProps {
 }
 
 export default defineComponent({
-  setup () {
+  props: {
+    checkboxClick: Function as PropType<ModelTableProps['checkboxClick']>,
+    columnOrder: Array as PropType<ModelTableProps['columnOrder']>,
+    excludeTimestamps: Boolean,
+    headingLabels: Array as PropType<ModelTableProps['headingLabels']>,
+    rows: {
+      required: true,
+      type: Array as PropType<ModelTableProps['rows']>
+    }
+  },
+  setup (props: ModelTableProps) {
     return () => <table></table>
   }
 })
