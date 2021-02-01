@@ -75,6 +75,13 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
         "routes",
         "routeNames.ts"
       ] |> Enum.join("/")
+    admin_nav =
+      [
+        "frontend",
+        "admin",
+        "src",
+        "useAdminHeaderNav.ts"
+      ] |> Enum.join("/")
     File.write!(
       index,
       Enum.join(
@@ -118,6 +125,26 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
           ],
           "\r\n"
         )
+      )
+    )
+
+    File.write!(
+      admin_nav,
+      Enum.join(
+        [
+          File.read!(admin_nav),
+          """
+          nav.push(
+            {
+              label: "#{state.model_name}s",
+              to: {
+                name: routeNames.#{state.model_name_graphql_case}List
+              }
+            }
+          )
+          """,
+        ],
+        "\r\n"
       )
     )
 

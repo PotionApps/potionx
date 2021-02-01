@@ -23,7 +23,7 @@ export default defineComponent({
     const modelTableProps = computed<ModelTableProps>(() => {
       return {
         headerLabels,
-        rows: q.data.value?.userCollection.edges.map((edge: <%= model_name %>Edge) => edge.node)
+        rows: q.data.value?.userCollection.edges.map((edge: <%= model_name %>Edge) => edge.node) || []
       }
     })
 
