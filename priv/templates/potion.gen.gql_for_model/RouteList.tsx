@@ -1,6 +1,6 @@
 import { computed, defineComponent } from 'vue'
 import { <%= model_name %>Edge } from "shared/types";
-import { ModelTable, ModelTableProps } from '@potionapps/ui/ModelTable'
+import { ModelTable, ModelTableProps } from '@potionapps/ui'
 import { useQuery } from "@urql/vue";
 import collection from 'shared/models/<%= context_name %>/<%= model_name %>/<%= model_name_graphql_case %>Collection.gql.ts'
 import schema from 'shared/models/<%= context_name %>/<%= model_name %>/<%= model_name_graphql_case %>.json'

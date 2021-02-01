@@ -8,8 +8,7 @@ import { useAdminHeaderNav } from "./useAdminHeaderNav";
 
 export default defineComponent({
   name: 'App',
-  components: {
-  },
+  components: {},
   setup () {
 
     const { adminHeaderNav } = useAdminHeaderNav()
@@ -17,14 +16,14 @@ export default defineComponent({
 
     return () => <div class="flex flex-col justify-between min-h-screen">
       <AdminHeader class="s1050m:hidden">
-        <img class="w-4" src={PotionLogo}/>
-        <AdminHeaderNav nav={adminHeaderNav} />
+        <div class="font-bold text-white">Potion</div>
+        <AdminHeaderNav nav={adminHeaderNav.value} />
         <AdminHeaderAccount 
           btns={adminHeaderAccountNav.value}
           initials={adminHeaderAccountUser}
         />
       </AdminHeader>
-      <router-view class="flex-1" />
+      <router-view />
     </div>
   }
 })

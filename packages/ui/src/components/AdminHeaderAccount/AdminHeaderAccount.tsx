@@ -1,10 +1,10 @@
 import { defineComponent, onBeforeUnmount, onMounted, PropType, ref } from "vue";
 import Btn, { PropsBtn } from '../Btn/Btn'
 
-export interface PropsAdminHeaderAccount {
+export interface AdminHeaderAccountProps {
   btns: PropsBtn[]
-  image?: {},
-  initials: string
+  image?: string,
+  initials?: string
 }
 
 export default defineComponent({
@@ -17,7 +17,7 @@ export default defineComponent({
     image: String,
     initials: String
   },
-  setup (props, context) {
+  setup (props: AdminHeaderAccountProps, context) {
     const dropdown = ref(false)
     const events : (keyof HTMLElementEventMap)[] = ['touchstart', 'click']
   
