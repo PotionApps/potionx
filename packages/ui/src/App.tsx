@@ -14,7 +14,7 @@ export default defineComponent({
     const { adminHeaderNav } = useAdminHeaderNav()
     const { adminHeaderAccountNav, adminHeaderAccountUser } = useAdminHeaderAccountNav()
 
-    return () => <div class="flex flex-col justify-between min-h-screen">
+    return () => <div class="flex flex-col min-h-screen">
       <AdminHeader class="s1050m:hidden">
         <div class="font-bold text-white">Potion</div>
         <AdminHeaderNav nav={adminHeaderNav.value} />

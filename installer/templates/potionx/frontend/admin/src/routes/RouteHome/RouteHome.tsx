@@ -2,6 +2,6 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   setup () {
-    return () => <h1 class="pt-6 text-center">Welcome</h1>
+    return () => <div><h1 class="text-3xl pt-6 text-center">Welcome</h1></div>
   }
 })

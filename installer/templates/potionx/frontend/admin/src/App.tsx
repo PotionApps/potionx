@@ -18,7 +18,7 @@ export default defineComponent({
       return [routeNames.login, routeNames.loginError].includes(route.name as any)
     })
 
-    return () => <div class="flex flex-col justify-between min-h-screen">
+    return () => <div class="flex flex-col min-h-screen">
       { 
         !isLoginRoute.value && <AdminHeader class="s1050m:hidden">
           <div class="font-bold text-white"><%= @app_name %></div>
