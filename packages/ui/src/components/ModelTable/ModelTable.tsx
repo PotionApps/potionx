@@ -1,3 +1,5 @@
+import { defineComponent } from "vue";
+
 interface ModelRow {
   id: string
   description?: string
@@ -8,7 +10,14 @@ interface ModelRow {
 
 interface ModelTable {
   checkboxClick?: (row: ModelRow) => void,
+  columnOrder?: string[]
   excludeTimestamps?: boolean
-  headingConfig?: {key: string, label: string}[]
+  headingLabels?: {key: string, label: string}[]
   rows: ModelRow[]
 }
+
+export default defineComponent({
+  setup () {
+    return () => null
+  }
+})

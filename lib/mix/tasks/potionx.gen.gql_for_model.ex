@@ -772,6 +772,18 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
         {k, v}, acc ->
           acc ++ ["field :#{k}, :#{to_string(maybe_convert_type(v))}"]
       end)
+      |> (fn lines ->
+        [:description, :title]
+        |> Enum.reduce(lines, fn key, lines ->
+          if (function_exported?(state.model, key, 1)) do
+            lines ++ [
+              "field :#{to_string(key)}, :string, resolve: Potionx.Resolvers.resolve_computed(#{to_string(state.module_name_data)}.#{to_string(state.context_name)}.#{to_string(state.model_name)}, #{to_string(key)})"
+            ]
+          else
+            lines
+          end
+        end)
+      end).()
       |> Enum.reduce(snippet, fn line, acc ->
         maybe_add_line(acc, line, 4)
       end)

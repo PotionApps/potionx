@@ -8,7 +8,7 @@ export default defineComponent({
     const q = useQuery({
       query: userCollectionGql,
       variables: {
-        first: 15
+        first: 50
       }
     })
 
