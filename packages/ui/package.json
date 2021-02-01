@@ -1,6 +1,6 @@
 {
     "name": "@potionapps/ui",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "files": [
         "dist",
         "src"
@@ -15,7 +15,8 @@
     "typings": "dist/index.d.ts",
     "scripts": {
         "dev": "vite",
-        "build": "tsdx build --name @potion-ui --format 'cjs,esm,umd'"
+        "build": "tsdx build --name @potion-ui --format 'cjs,esm,umd'",
+        "prepublishOnly": "npm run build"
     },
     "peerDependencies": {
         "vue": "^3.0.5"

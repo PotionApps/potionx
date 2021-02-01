@@ -15,7 +15,8 @@
     "typings": "dist/index.d.ts",
     "scripts": {
         "dev": "vite",
-        "build": "tsdx build --name @potion-auth --format 'cjs,esm,umd'"
+        "build": "tsdx build --name @potion-auth --format 'cjs,esm,umd'",
+        "prepublishOnly": "npm run build"
     },
     "peerDependencies": {
         "vue": "^3.0.5"
