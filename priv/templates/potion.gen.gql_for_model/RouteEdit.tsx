@@ -13,7 +13,7 @@ export default defineComponent({
       query: single,
       variables: computed(() => {
         return { id: route.params.id }
-      }
+      })
     })
 
     return () => {
