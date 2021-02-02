@@ -17,7 +17,10 @@ defmodule <%= @graphql_namespace %>.Schema do
   end
 
   query do
-
+    field :me, type: :user do
+      middleware Potionx.Middleware.Me
+      resolve &<%= @graphql_namespace %>.Resolver.User.one/2
+    end
   end
   mutation do
 
