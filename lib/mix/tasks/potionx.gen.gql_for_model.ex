@@ -617,9 +617,9 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
     )
     fields_computed =
       common_fields()
-      |> Enum.reduce([], fn key, fields ->
-        if (function_exported?(state.model, key, 1) && not String.starts_with?(line, "input_object")) do
-          fields ++ [key]
+      |> Enum.reduce(%{}, fn key, fields ->
+        if (function_exported?(state.model, key, 1))  do
+          Map.put(fields, key, :string)
         else
           fields
         end
@@ -627,7 +627,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
     state = %{
       state |
         graphql_fields:
-          (fields ++ fields_computed)
+          Map.merge(fields_computed, fields)
           |> Enum.reduce([], fn
             {_, {:assoc, _}}, acc ->
               acc
