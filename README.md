@@ -48,8 +48,8 @@ mix archive.install hex potionx_new 0.1.0
 mix potionx.new some_project_name
 ```
 
-### Generating backend (soon frontend as well) scaffold code for models
-Generates functions, tests and files required for basic creation and management of data models. Currently only generates backend code, but frontend file generation is coming soon.
+### Generating backend and frontend scaffold code for models
+Generates functions, tests and files required for basic creation and management of data models.
 ```sh
 mix potionx.gen.gql_for_model SomeContext SomeModel
 ```
