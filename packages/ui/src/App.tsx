@@ -7,7 +7,7 @@ import { useAdminHeaderAccountNav } from "./useAdminHeaderAccountNav";
 import { useAdminHeaderNav } from "./useAdminHeaderNav";
 import { routeNames } from "./playground/routeNames";
 import { useRoute } from "vue-router"
-import * as Components from './index'
+import * as Stories from './stories'
 
 
 export default defineComponent({
@@ -28,8 +28,8 @@ export default defineComponent({
         showMenu.value &&
         <div class="bg-white fixed inset-y-0 left-0 py-4 shadow-2xl w-64 z-2">
           {
-            Object.keys(Components).map(k => {
-              return <router-link class="block px-6 py-1" to="/">{k}</router-link>
+            Object.keys(Stories).map(k => {
+              return <router-link class="block px-6 py-1" to={"/components/" + k}>{k}</router-link>
             })
           }
         </div>

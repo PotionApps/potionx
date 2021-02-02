@@ -1,9 +1,11 @@
+import * as Stories from '../stories'
 import { routeNames } from './routeNames'
 import { RouteRecordRaw } from 'vue-router'
 import RouteAdmin from './RouteAdmin/RouteAdmin'
 import RouteLogin from './RouteLogin/RouteLogin'
 import RouteMenu from './RouteMenu/RouteMenu'
 import RouteLoginError from './RouteLoginError/RouteLoginError'
+import RouteComponent from './RouteComponent/RouteComponent'
 
 const routes : RouteRecordRaw[] = [
   {
@@ -25,7 +27,18 @@ const routes : RouteRecordRaw[] = [
     name: routeNames.menu,
     path: '/menu',
     component: RouteMenu
+  },
+  {
+    path: "/components",
+    component: RouteComponent,
+    children:
+      Object.keys(Stories).map(key => {
+        return {
+          component: (Stories as any)[key],
+          name: key + "Component",
+          path: key
+        }
+      })
   }
 ]
-
 export default routes
