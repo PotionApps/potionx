@@ -25,7 +25,7 @@ export default defineComponent({
             <div class="font-bold text-white"><%= @app_module %></div>
             <AdminHeaderNav {...adminHeaderNavProps.value} />
             <AdminHeaderAccount 
-              {...adminHeaderAccountProps}
+              {...adminHeaderAccountProps.value}
             />
           </AdminHeader>
       }
