@@ -9,6 +9,7 @@ export interface PropsAdminListLayout {
   adminFooterMenuRoute: RouteLocationRaw
   adminSubHeaderBack?: ((e?: MouseEvent) => void | RouteLocationRaw)
   adminSubHeaderBtns?: PropsBtn[]
+  adminSubHeaderHideBtnsMobile?: boolean
   adminSubHeaderSubtitle?: string
   adminSubHeaderTabs?: PropsBtn[]
   adminSubHeaderTitle?: string
@@ -24,6 +25,7 @@ export default defineComponent({
     },
     adminSubHeaderBack: Function || Object,
     adminSubHeaderBtns: Object as PropType<Ref<PropsBtn[]>>,
+    adminSubHeaderHideBtnsMobile: Boolean,
     adminSubHeaderSubtitle: String,
     adminSubHeaderTabs: Object as PropType<Ref<PropsBtn[]>>,
     adminSubHeaderTitle: String
@@ -35,6 +37,7 @@ export default defineComponent({
           <AdminSubHeader 
             back={props.adminSubHeaderBack}
             btns={props.adminSubHeaderBtns}
+            hideBtnsMobile={props.adminSubHeaderHideBtnsMobile}
             subtitle={props.adminSubHeaderTitle}
             tabs={props.adminSubHeaderTabs}
             title={props.adminSubHeaderSubtitle}

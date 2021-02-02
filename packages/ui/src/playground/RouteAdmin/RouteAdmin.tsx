@@ -33,7 +33,14 @@ export default defineComponent({
         to: {
           name: routeNames.menu
         }
-      }
+      },
+      // {
+      //   icon: Back,
+      //   label: "In progress",
+      //   to: {
+      //     name: routeNames.menu
+      //   }
+      // }
     ])
 
     const subHeaderTabs = computed(() => [
@@ -84,6 +91,7 @@ export default defineComponent({
       adminFooterMenuRoute={{name: routeNames.menu}}
       adminSubHeaderBack={() => {}}
       adminSubHeaderBtns={subHeaderBtns}
+      adminSubHeaderHideBtnsMobile={false}
       adminSubHeaderSubtitle="Post - 5 days"
       adminSubHeaderTabs={subHeaderTabs}
       adminSubHeaderTitle="Some Article Title"
