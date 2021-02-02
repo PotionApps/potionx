@@ -56,7 +56,6 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
     )
   end
 
-
   def add_to_frontend_routes(%GqlForModel{no_frontend: true} = state), do: state
   def add_to_frontend_routes(%GqlForModel{} = state) do
     index =
@@ -155,6 +154,10 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
   def build(args) do
     {opts, parsed, _} = parse_opts(args)
     {opts, validate_args!(parsed)}
+  end
+
+  def common_fields do
+    [:description, :title]
   end
 
   def create_frontend_routes(%GqlForModel{no_frontend: true} = state), do: state
@@ -612,10 +615,19 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
     fields = prepare_mock(
       state.model.__changeset__
     )
+    fields_computed =
+      common_fields()
+      |> Enum.reduce([], fn key, fields ->
+        if (function_exported?(state.model, key, 1) && not String.starts_with?(line, "input_object")) do
+          fields ++ [key]
+        else
+          fields
+        end
+      end)
     state = %{
       state |
         graphql_fields:
-          fields
+          (fields ++ fields_computed)
           |> Enum.reduce([], fn
             {_, {:assoc, _}}, acc ->
               acc
@@ -904,7 +916,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
           acc ++ ["field :#{k}, :#{to_string(maybe_convert_type(v))}"]
       end)
       |> (fn lines ->
-        [:description, :title]
+        common_fields()
         |> Enum.reduce(lines, fn key, lines ->
           if (function_exported?(state.model, key, 1) && not String.starts_with?(line, "input_object")) do
             lines ++ [

@@ -51,6 +51,8 @@ export default defineComponent({
         fields.value!.reduce((acc: string[], field) => {
           if (defaults.concat(times).includes(field.key)) {
             return acc
+          } else if (field.key.includes("__")) {
+            return acc
           } else {
             return acc.concat([field.key])
           }
