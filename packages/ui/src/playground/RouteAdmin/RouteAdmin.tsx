@@ -2,7 +2,8 @@ import { defineComponent, computed } from "vue";
 import AdminListLayout from "../../layouts/AdminLayout/AdminLayout";
 import { routeNames } from "../../playground/routeNames";
 import Bars from "../../assets/bars.svg";
-import Back from "../../assets/back.svg"
+import Back from "../../assets/back.svg";
+import Search from '../../components/Search/Search'
 
 export default defineComponent({
   setup () {
@@ -85,6 +86,10 @@ export default defineComponent({
       }
     ])
 
+    const search = computed(() => {
+      return ""
+    })
+
     return () => <AdminListLayout
       class="bg-gray-200"
       adminFooterBtns={mobileBtns}
@@ -97,7 +102,12 @@ export default defineComponent({
       adminSubHeaderTitle="Some Article Title"
     >
       <div class="p-4">
-        <h1 class="text-gray-800 text-2xl mb-8">admin</h1>
+        <Search 
+          change={() => {}}
+          focusOnMount={false}
+          placeholder="Search..."
+          val={search}
+        />
       </div>
     </AdminListLayout>
   }

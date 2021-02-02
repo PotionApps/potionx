@@ -22,12 +22,12 @@ export default defineComponent({
       required: true
     }
   },
-  setup (props: AdminHeaderNavProps, ctx) {
+  setup (props, ctx) {
     return () => {
-    return <nav class="h-10 flex items-center justify-center absolute left-2/4 top-0" style="transform: translate(-50%, 0);">
+    return <nav class="absolute flex h-10 items-center justify-center left-2/4 top-0 transform -translate-x-1/2">
         {
           props.nav.map(n => <router-link
-            class="text-gray-300 hover:text-white mx-2 transition-colors"
+            class="hover:text-white mx-2 text-gray-300 transition-colors"
             exactActiveClass="text-white"
             to={n.to}
           >

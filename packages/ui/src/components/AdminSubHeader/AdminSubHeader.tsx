@@ -31,11 +31,11 @@ export default defineComponent({
   setup (props, context) {
     return () => {
       return (
-        <div class={["bg-white", "border-b-1", "border-gray-300", "flex", "desktopm:flex-col","desktop:items-center", "desktop:justify-between", "pl-2", "desktop:px-2", "desktop:h-16"]}>
-          <div class={["flex", "items-center", "order-1", props.tabs && "desktop:flex-quarter", !props.tabs && "desktop:flex-half", "desktopm:mb-2", "pr-2"]}>
+        <div class={["bg-white", "border-b-1", "border-gray-300", "flex", "pl-2", "desktop:items-center", "desktop:justify-between", "desktop:h-16", "desktop:px-2", "desktopm:flex-col"]}>
+          <div class={["flex", "items-center", "order-1", "pr-2", "desktopm:mb-2", props.tabs && "desktop:flex-quarter", !props.tabs && "desktop:flex-half"]}>
             {
               props.back && <Btn 
-                class="bg-gray-200 hover:bg-gray-300 mr-2 desktopm:hidden p-2 rounded-3xl"
+                class="bg-gray-200 hover:bg-gray-300 mr-2 rounded-3xl desktopm:hidden p-2 "
                 icon={Back}
                 noStyle={true}
               />
@@ -65,28 +65,25 @@ export default defineComponent({
               </div>
             </div>
           } 
-          {
-            !props.hideBtnsMobile &&
-            <div class={["flex", "order-2", "desktop:order-3", props.tabs && "desktopm:mb-1", "desktop:justify-end", props.tabs && "desktop:flex-quarter", !props.tabs && "desktop:flex-half"]}>
-              {context.slots.buttons && context.slots.buttons()}
-              <div class="desktopm:overflow-auto desktopm:h-12">
-                <div class="flex desktop:justify-end desktop:h-full">
-                  {
-                    props.btns?.value.map((btn: PropsBtn) => {
-                      return <Btn
-                        class="py-2 px-2 text-xs rounded-base font-semibold bg-gray-200 desktopm:mr-2 desktop:ml-2"
-                        click={btn.click}
-                        icon={btn.icon}
-                        label={btn.label}
-                        to={btn.to}
-                        noStyle={true}
-                      />
-                    })
-                  }
-                </div>
+          <div class={["flex", "order-2", "desktop:order-3", props.tabs && "desktopm:mb-1", "desktop:justify-end", props.tabs && "desktop:flex-quarter", !props.tabs && "desktop:flex-half", props.hideBtnsMobile && "desktopm:hidden"]}>
+            {context.slots.buttons && context.slots.buttons()}
+            <div class="desktopm:overflow-auto desktopm:h-12">
+              <div class="flex desktopm:flex-row-reverse desktop:justify-end desktop:h-full">
+                {
+                  props.btns?.value.map((btn: PropsBtn) => {
+                    return <Btn
+                      class="py-2 px-2 text-xs rounded-base font-semibold bg-gray-200 desktopm:mr-2 desktop:ml-2"
+                      click={btn.click}
+                      icon={btn.icon}
+                      label={btn.label}
+                      to={btn.to}
+                      noStyle={true}
+                    />
+                  })
+                }
               </div>
             </div>
-          }
+          </div>
         </div>
       )
     }
