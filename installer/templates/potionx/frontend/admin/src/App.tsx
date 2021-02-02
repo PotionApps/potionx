@@ -20,13 +20,14 @@ export default defineComponent({
 
     return () => <div class="flex flex-col min-h-screen">
       { 
-        !isLoginRoute.value && <AdminHeader class="s1050m:hidden">
-          <div class="font-bold text-white"><%= @app_module %></div>
-          <AdminHeaderNav {...adminHeaderNavProps.value} />
-          <AdminHeaderAccount 
-            {...adminHeaderAccountProps}
-          />
-        </AdminHeader>
+        !isLoginRoute.value &&
+          <AdminHeader class="s1050m:hidden">
+            <div class="font-bold text-white"><%= @app_module %></div>
+            <AdminHeaderNav {...adminHeaderNavProps.value} />
+            <AdminHeaderAccount 
+              {...adminHeaderAccountProps}
+            />
+          </AdminHeader>
       }
       <router-view />
     </div>
