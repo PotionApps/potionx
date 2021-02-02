@@ -49,10 +49,7 @@ export default defineComponent({
           "text-base": !props.noStyle,
           "px-3": !props.noStyle,
           "py-2": !props.noStyle,
-          "flex": true,
-          "items-center": true,
-          "justify-center": true,
-          "rounded-base": true,
+          "rounded-base": !props.noStyle,
           "opacity-80": props.disabled,
           "pointer-events-none": props.disabled,
           "bg-red-400": props.status === "error",
@@ -60,7 +57,10 @@ export default defineComponent({
           "bg-green-400": props.status === "success",
           "color-white": props.status === "error" || props.status === "loading" || props.status === "success",
           "flex-row-reverse": props.reverse,
-          "transition": true
+          "transition": true,
+          "flex": true,
+          "items-center": true,
+          "justify-center": true
         }
       ]
     })
@@ -89,7 +89,7 @@ export default defineComponent({
       }
       return <Parent class={classes.value} {...attrs}>
         {props.icon && <img class={imgClasses.value} src={props.icon} />}
-        {props.label && <span>{props.label}</span>}
+        {props.label && <span class="whitespace-nowrap">{props.label}</span>}
         {context.slots.default && context.slots.default()}
       </Parent>
     }

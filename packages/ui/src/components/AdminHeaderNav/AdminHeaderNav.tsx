@@ -28,6 +28,7 @@ export default defineComponent({
         {
           props.nav.map(n => <router-link
             class="text-gray-300 hover:text-white mx-2 transition-colors"
+            exactActiveClass="text-white"
             to={n.to}
           >
             <span>{n.label}</span>

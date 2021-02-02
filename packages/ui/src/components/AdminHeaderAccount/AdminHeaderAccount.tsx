@@ -54,7 +54,7 @@ export default defineComponent({
           {
             !props.image &&
             <div class="items-center flex bg-gray-200 rounded-3xl justify-center h-6 w-6">
-              <div class={["text-gray-800", "text-xs", "uppercase"]}>{props.initials}</div>
+              <div class={["text-gray-800", "text-2xs", "uppercase", "font-semibold"]}>{props.initials}</div>
             </div>
           }
           {

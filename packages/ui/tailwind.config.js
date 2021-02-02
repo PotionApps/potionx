@@ -18,21 +18,34 @@ module.exports = {
             '7xl': '3.5rem',
             '8xl': '4rem'
         },
+        borderWidth: {
+            '1': '1px',
+            '2': '2px',
+            '3': '3px',
+            '4': '4px',
+            '6': '6px',
+            '8': '8px',
+            '10': '10px',
+            '12': '12px'
+        },
         flex: {
             '1': '1 1 0%',
             'auto': 'flex: 1 1 auto',
-            'fit': '1 0 auto',
+            'fit': '0 0 auto',
+            'full': '1 1 auto',
+            'half': '0 0 50%',
             'initial': '0 1 auto',
-            'none': 'none'
+            'none': 'none',
+            'quarter': '0 0 25%'
         },
         fontSize: {
-            '3xs': ['8px', '1.25'],
-            '2xs': ['10px', '1.25'],
-            xs: ['12px', '1.25'],
-            sm: ['14px', '1.25'],
-            base: ['16px', '1.4'],
-            lg: ['18px', '1.4'],
-            xl: ['20px', '1.4'],
+            '3xs': ['8px', '0.85'],
+            '2xs': ['10px', '0.9'],
+            xs: ['12px', '1'],
+            sm: ['14px', '1'],
+            base: ['16px', '1.15'],
+            lg: ['18px', '1.25'],
+            xl: ['20px', '1.3'],
             '2xl': ['24px', '1.3'],
             '3xl': ['30px', '1.3'],
             '4xl': ['32px', '1.3'],
@@ -102,6 +115,7 @@ module.exports = {
             's2350': '2350px',
             's2450': '2450px',
             's2550': '2550px',
+            'desktop': '1050px',
             's350m': {
                 'max': '349px'
             },
@@ -170,6 +184,9 @@ module.exports = {
             },
             's2550m': {
                 'max': '2549px'
+            },
+            'desktopm': {
+                'max': '1049px'
             }
         },
         zIndex: {
