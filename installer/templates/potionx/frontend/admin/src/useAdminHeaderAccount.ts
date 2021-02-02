@@ -13,7 +13,7 @@ export default () : Ref<AdminHeaderAccountProps> => {
         me {
           __typename
           id
-          emaila
+          email
           name
           surname
           title
