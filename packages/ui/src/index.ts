@@ -6,15 +6,18 @@ import LoginButton from './components/LoginButton/LoginButton'
 import LoginError from './components/LoginError/LoginError'
 import ModelTable, { ModelTableProps } from './components/ModelTable/ModelTable'
 
+export type {
+  AdminHeaderAccountProps,
+  AdminHeaderNavProps,
+  ModelTableProps
+}
+
 export {
   AdminHeader,
   AdminHeaderAccount,
-  AdminHeaderAccountProps,
   AdminHeaderNav,
-  AdminHeaderNavProps,
   Login,
   LoginButton,
   LoginError,
-  ModelTable,
-  ModelTableProps
+  ModelTable
 }

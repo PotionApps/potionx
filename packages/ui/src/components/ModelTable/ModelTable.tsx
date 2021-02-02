@@ -1,6 +1,6 @@
 import { defineComponent, PropType } from "vue";
 
-interface ModelRow {
+export interface ModelRow {
   id: string
   description?: string
   image?: string

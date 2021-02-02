@@ -1,7 +1,7 @@
 import { defineComponent, Ref, PropType } from 'vue'
 import { RouteLocationRaw } from 'vue-router'
 
-interface AdminHeaderNavItem { 
+export interface AdminHeaderNavItem { 
   click?: () => void,
   icon?: any,
   isActive?: Ref<boolean>
