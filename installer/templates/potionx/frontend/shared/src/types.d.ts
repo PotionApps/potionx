@@ -68,6 +68,7 @@ export type PageInfo = {
 
 export type RootQueryType = {
   __typename?: 'RootQueryType';
+  me?: Maybe<User>;
   userCollection?: Maybe<UserConnection>;
   userSingle?: Maybe<User>;
 };
@@ -106,6 +107,7 @@ export type User = Node & {
   name?: Maybe<Scalars['String']>;
   roles?: Maybe<Array<Maybe<Scalars['String']>>>;
   surname?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['NaiveDateTime']>;
   userIdentities?: Maybe<Array<Maybe<UserIdentity>>>;
 };
