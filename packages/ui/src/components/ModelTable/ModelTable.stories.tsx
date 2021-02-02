@@ -1,6 +1,6 @@
 import { defineComponent } from "vue";
 import Cat from '../../assets/cat.jpg'
-import ModelTable from "./ModelTable";
+import ModelTable, { ModelRow } from "./ModelTable";
 
 export default defineComponent(
   () => () => <ModelTable
@@ -11,10 +11,11 @@ export default defineComponent(
           description: "Creates an async component that will be loaded only when it's necessary.",
           image: Cat,
           subtitle: "Developer and Cofounder",
-          title: "John Smith",
+          roles: ["admin", "test"],
+          title: "Vince Roy",
           insertedAt: (new Date()).toISOString(),
           updatedAt: (new Date()).toISOString()
-        } 
+        } as ModelRow
       ]
     }
   />

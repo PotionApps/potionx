@@ -111,7 +111,12 @@ export default defineComponent({
                       rowData = row[key] && new Date(row[key]!).toLocaleString() 
                       break;
                     default:
-                      rowData = row[key]
+                      const val = row[key]
+                      if (Array.isArray(val)) {
+                        rowData = val.join(", ")
+                      } else {
+                        rowData = val
+                      }
                   }
                   return <td class="px-4"><span class="hidden">{field.label}</span>{rowData}</td>
                 })
