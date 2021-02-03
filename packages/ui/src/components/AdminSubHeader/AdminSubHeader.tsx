@@ -35,8 +35,8 @@ export default defineComponent({
           <div class={["flex", "items-center", "order-1", "pr-2", "desktopm:mb-2", props.tabs && "desktop:flex-quarter", !props.tabs && "desktop:flex-half"]}>
             {
               props.back && <Btn 
-                class="bg-gray-200 hover:bg-gray-300 mr-2 rounded-3xl desktopm:hidden p-2 "
-                icon={Back}
+                class="bg-gray-200 hover:bg-gray-300 mr-2 rounded-full desktopm:hidden p-2 "
+                image={Back}
                 noStyle={true}
               />
             }
@@ -74,7 +74,7 @@ export default defineComponent({
                     return <Btn
                       class="py-2 px-2 text-xs rounded-base font-semibold bg-gray-200 desktopm:mr-2 desktop:ml-2"
                       click={btn.click}
-                      icon={btn.icon}
+                      image={btn.image}
                       label={btn.label}
                       to={btn.to}
                       noStyle={true}

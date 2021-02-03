@@ -1,5 +1,5 @@
 import { defineComponent } from "vue";
-
+import "./StateLoading.css";
 
 export default defineComponent({
   name: "StateLoading",
@@ -10,8 +10,8 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class="text-center">
-          Loading
+        <div>
+          <div class="mx-auto lds-ellipsis"><div></div><div></div><div></div><div></div></div>
         </div>
       )
     }

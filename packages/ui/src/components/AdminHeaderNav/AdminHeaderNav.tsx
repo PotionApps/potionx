@@ -3,7 +3,7 @@ import { RouteLocationRaw } from 'vue-router'
 
 export interface AdminHeaderNavItem { 
   click?: () => void,
-  icon?: any,
+  image?: any,
   isActive?: Ref<boolean>
   notification?: number,
   label: string,

@@ -49,11 +49,11 @@ export default defineComponent({
         >
           {
             props.image && 
-            <img class="h-6 w-6 rounded-3xl" src={props.image} /> 
+            <img class="h-6 w-6 rounded-full" src={props.image} /> 
           }
           {
             !props.image &&
-            <div class="items-center flex bg-gray-200 rounded-3xl justify-center h-6 w-6">
+            <div class="items-center flex bg-gray-200 rounded-full justify-center h-6 w-6">
               <div class={["text-gray-800", "text-2xs", "uppercase", "font-semibold"]}>{props.initials}</div>
             </div>
           }

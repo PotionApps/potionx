@@ -17,7 +17,7 @@ export default defineComponent({
         }
       },
       {
-        icon: Back,
+        image: Back,
         label: "Delete",
         to: {
           name: routeNames.menu
@@ -39,7 +39,7 @@ export default defineComponent({
         }
       },
       {
-        icon: Back,
+        image: Back,
         label: "Entries",
         to: {
           name: routeNames.menu
@@ -62,7 +62,7 @@ export default defineComponent({
     const mobileBtns = computed(() => [
       {
         click: () => {},
-        icon: Bars,
+        image: Bars,
         label: "Back"
       },
       {

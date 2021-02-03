@@ -28,7 +28,7 @@ export default defineComponent({
            props.btns && props.btns.value.map(btn => {
               return <Btn
                 class="bg-gray-700 text-base text-gray-300 hover:bg-gray-600 mr-2 w-full font-semibold"
-                icon={btn.icon}
+                image={btn.image}
                 label={btn.label}
                 noStyle={true}
               />
@@ -38,7 +38,7 @@ export default defineComponent({
           {
             !props.hideMenu && <Btn
               class={["bg-gray-700", "hover:bg-gray-600", props.btns ? "flex-fit" : "flex-full"]}
-              icon={Bars}
+              image={Bars}
               to={props.menuRoute}
             />
           }
