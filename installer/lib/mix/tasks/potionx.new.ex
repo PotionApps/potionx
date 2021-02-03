@@ -107,6 +107,35 @@ defmodule Mix.Tasks.Potionx.New do
     %{project | local_postgres_password: pw}
   end
 
+  def add_me_query(%Project{} = project) do
+    schema_path = Path.join(
+      [
+        project.base_path,
+        "lib",
+        to_string(project.app) <> "_graphql",
+        "schema.ex"
+      ]
+    )
+    File.write!(
+      schema_path,
+      File.read!(schema_path)
+      |> String.replace(
+        "query do",
+        Enum.join(
+          [
+            "query do",
+            "    field :me, type: :user do",
+            "      middleware Potionx.Middleware.Me",
+            "      resolve &#{project.graphql_namespace}.Resolver.User.one/2",
+            "    end"
+          ],
+          "\r\n"
+        )
+      )
+    )
+    project
+  end
+
   def generate_default_graphql(%Project{} = project, path_key) do
     path = Map.fetch!(project, path_key)
 
@@ -145,6 +174,7 @@ defmodule Mix.Tasks.Potionx.New do
     |> generate_default_graphql(path)
     |> run_migrations(path)
     |> run_seed(path)
+    |> add_me_query
   end
 
   defp prompt_to_install_deps(%Project{} = project, generator, path_key) do
@@ -267,24 +297,6 @@ defmodule Mix.Tasks.Potionx.New do
     The command listed next expect that you have npm available.
     """
   end
-
-  # defp print_missing_steps(steps) do
-  #   Mix.shell().info """
-
-  #   We are almost there! The following steps are missing:
-
-  #       #{Enum.join(steps, "\n    ")}
-  #   """
-  # end
-
-  # defp print_ecto_info(Web), do: :ok
-  # defp print_ecto_info(_gen) do
-  #   Mix.shell().info """
-  #   Then configure your database in config/dev.exs and run:
-
-  #       $ mix ecto.create
-  #   """
-  # end
 
   defp print_mix_info(Ecto) do
     Mix.shell().info """
