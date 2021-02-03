@@ -49,8 +49,8 @@ export default defineComponent({
           "text-base": !props.noStyle,
           "px-3": !props.noStyle,
           "py-2": !props.noStyle,
-          "rounded-base": !props.noStyle,
-          "opacity-80": props.disabled,
+          "rounded": !props.noStyle,
+          "opacity-50": props.disabled,
           "pointer-events-none": props.disabled,
           "bg-red-400": props.status === "error",
           "bg-blue-400": props.status === "loading",
@@ -70,6 +70,7 @@ export default defineComponent({
         {
           "ml-2": props.reverse && props.label,
           "mr-2": !props.reverse && props.label,
+          "h-3": true,
           "w-3": true
         }
       ]

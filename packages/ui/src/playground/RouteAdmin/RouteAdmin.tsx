@@ -1,9 +1,10 @@
-import { defineComponent, computed } from "vue";
-import AdminListLayout from "../../layouts/AdminLayout/AdminLayout";
-import { routeNames } from "../../playground/routeNames";
+import AdminCard from '../../components/AdminCard/AdminCard'
+import AdminListLayout from '../../layouts/AdminListLayout/AdminListLayout'
+import AdminLayout from "../../layouts/AdminLayout/AdminLayout";
 import Bars from "../../assets/bars.svg";
 import Back from "../../assets/back.svg";
-import Search from '../../components/Search/Search'
+import { defineComponent, computed } from "vue";
+import { routeNames } from "../../playground/routeNames";
 
 export default defineComponent({
   setup () {
@@ -27,21 +28,7 @@ export default defineComponent({
         to: {
           name: routeNames.menu
         }
-      },
-      {
-        icon: Back,
-        label: "In progress",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      // {
-      //   icon: Back,
-      //   label: "In progress",
-      //   to: {
-      //     name: routeNames.menu
-      //   }
-      // }
+      }
     ])
 
     const subHeaderTabs = computed(() => [
@@ -90,7 +77,7 @@ export default defineComponent({
       return ""
     })
 
-    return () => <AdminListLayout
+    return () => <AdminLayout
       class="bg-gray-200"
       adminFooterBtns={mobileBtns}
       adminFooterMenuRoute={{name: routeNames.menu}}
@@ -101,14 +88,17 @@ export default defineComponent({
       adminSubHeaderTabs={subHeaderTabs}
       adminSubHeaderTitle="Some Article Title"
     >
-      <div class="p-4">
-        <Search 
-          change={() => {}}
-          focusOnMount={false}
-          placeholder="Search..."
-          val={search}
-        />
-      </div>
-    </AdminListLayout>
+      <AdminListLayout searchValue={search}>
+          <AdminCard>
+            Test
+          </AdminCard>
+          <AdminCard>
+            Test
+          </AdminCard>
+          <AdminCard>
+            Test
+          </AdminCard>
+      </AdminListLayout>
+    </AdminLayout>
   }
 })
