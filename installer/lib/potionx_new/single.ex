@@ -48,7 +48,7 @@ defmodule Potionx.New.Single do
     {:eex, "potionx/app_name_web/views/authorization_view.ex",  :project, "lib/:lib_web_name/views/authorization_view.ex"},
     {:eex, "potionx/app_name_web/views/layout_view.ex",      :project, "lib/:lib_web_name/views/layout_view.ex"},
     {:eex, "phx_web/views/page_view.ex",                     :project, "lib/:lib_web_name/views/page_view.ex"},
-    {:eex, "phx_test/controllers/page_controller_test.exs",  :project, "test/:lib_web_name/controllers/page_controller_test.exs"},
+    # {:eex, "phx_test/controllers/page_controller_test.exs",  :project, "test/:lib_web_name/controllers/page_controller_test.exs"},
     {:eex, "phx_test/views/layout_view_test.exs",            :project, "test/:lib_web_name/views/layout_view_test.exs"},
     {:eex, "phx_test/views/page_view_test.exs",              :project, "test/:lib_web_name/views/page_view_test.exs"},
   ]
@@ -81,7 +81,7 @@ defmodule Potionx.New.Single do
     {:eex, "potionx/app_name_web/controllers/auth_controller.ex", :app, "lib/:lib_web_name/controllers/auth_controller.ex"},
     {:eex, "potionx/app_name_web/controllers/authorization_controller.ex", :app, "lib/:lib_web_name/controllers/authorization_controller.ex"},
     {:migration, "potionx/migrations/create_users.exs", :app, "priv/repo/migrations/{timestamp}_create_users.exs"},
-    {:eex, "potionx/test/app_name_web/controllers/authorization_controller_test.exs", :app, "test/:lib_web_name/controllers/authorization_controller_test.exs"},
+    # {:eex, "potionx/test/app_name_web/controllers/authorization_controller_test.exs", :app, "test/:lib_web_name/controllers/authorization_controller_test.exs"},
     {:eex, "potionx/priv/repo/potionx_seed.exs", :app, "priv/repo/potionx_seed.exs"},
     {:eex, "potionx/frontend/admin/.gitignore", :app, "frontend/admin/.gitignore"},
     {:eex, "potionx/frontend/admin/package.json", :app, "frontend/admin/package.json"},
