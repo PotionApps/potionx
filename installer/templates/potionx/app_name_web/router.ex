@@ -20,6 +20,7 @@ defmodule <%= @web_namespace %>.Router do
     plug :accepts, ["json"]
     plug Potionx.Plug.ApiAuth, otp_app: :<%= @app_name %>
     plug Potionx.Plug.ServiceContext
+    plug Potionx.Plug.MaybeDisableIntrospection, [roles: [:admin]]
   end
 
   pipeline :api do
