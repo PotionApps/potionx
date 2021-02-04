@@ -14,7 +14,7 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>MutationTest do
       {:ok, ctx: ctx, entry: entry}
     end
     test "deletes <%= model_name_snakecase %>", %{ctx: ctx, entry: entry} do
-      File.read!("assets/ts/<%= context_name %>/<%= model_name_graphql_case %>/<%= model_name_graphql_case %>Delete.gql")
+      File.read!("frontend/shared/src/models/<%= context_name %>/<%= model_name_graphql_case %>/<%= model_name_graphql_case %>Delete.gql")
       |> Absinthe.run(
         <%= module_name_graphql %>.Schema,
         context: ctx,
@@ -42,7 +42,7 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>MutationTest do
     end
 
     test "creates <%= model_name_snakecase %>", %{ctx: ctx} do
-      File.read!("assets/ts/<%= context_name %>/<%= model_name_graphql_case %>/<%= model_name_graphql_case %>Mutation.gql")
+      File.read!("frontend/shared/src/models/<%= context_name %>/<%= model_name_graphql_case %>/<%= model_name_graphql_case %>Mutation.gql")
       |> Absinthe.run(
         <%= module_name_graphql %>.Schema,
         [
@@ -69,7 +69,7 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>MutationTest do
     end
 
     test "invalid <%= model_name_snakecase %> mutation", %{ctx: ctx} do
-      File.read!("assets/ts/<%= context_name %>/<%= model_name_graphql_case %>/<%= model_name_graphql_case %>Mutation.gql")
+      File.read!("frontend/shared/src/models/<%= context_name %>/<%= model_name_graphql_case %>/<%= model_name_graphql_case %>Mutation.gql")
       |> Absinthe.run(
         <%= module_name_graphql %>.Schema,
         context: ctx,
@@ -101,7 +101,7 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>MutationTest do
     end
 
     test "patches <%= model_name_snakecase %>", %{ctx: ctx, entry: entry, required_field: required_field} do
-      File.read!("assets/ts/<%= context_name %>/<%= model_name_graphql_case %>/<%= model_name_graphql_case %>Mutation.gql")
+      File.read!("frontend/shared/src/models/<%= context_name %>/<%= model_name_graphql_case %>/<%= model_name_graphql_case %>Mutation.gql")
       |> Absinthe.run(
         <%= module_name_graphql %>.Schema,
         context: ctx,
