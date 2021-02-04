@@ -18,19 +18,20 @@ export default defineComponent({
           <AdminAside class="desktopm:hidden">
             {context.slots.aside && context.slots.aside()}
           </AdminAside>
-          <div class="mx-auto max-w-900 w-full">
+          <div class="mx-auto w-full">
             <Search 
               change={() => {}}
+              class="mb-2"
               focusOnMount={false}
               placeholder="Search..."
               val={props.searchValue}
             />
-            <div class="pb-2 pt-6">
-              <StateEmpty />
-            </div>
-            <div class="pb-2 pt-6">
-              <StateLoading />
-            </div>
+            {
+              false && <StateEmpty class="pb-2 pt-4" />
+            }
+            {
+              false && <StateLoading class="pb-2 pt-4"/>
+            }
             <div class="border-gray-300 border-t-1 overflow-hidden s750:border-l-1 s750:border-r-1 s750m:-mx-4 s750:rounded-md s750:shadow-md">
               {context.slots.default && context.slots.default()}
             </div>

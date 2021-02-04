@@ -1,6 +1,6 @@
 import { defineComponent, PropType, Ref } from "vue";
 import Back from '../../assets/back.svg'
-import Btn, { PropsBtn } from "../Btn/Btn";
+import Btn, { BtnProps } from "../Btn/Btn";
 import { RouteLocationRaw } from "vue-router";
 
 export type PropsAdminSubHeaderBreadcrumb = {
@@ -11,10 +11,10 @@ export type PropsAdminSubHeaderBreadcrumb = {
 export interface PropsAdminSubHeader {
   back?: ((e?: MouseEvent) => void | RouteLocationRaw),
   breadcrumbs?: PropsAdminSubHeaderBreadcrumb[]
-  btns?: PropsBtn[]
+  btns?: BtnProps[]
   hideBtnsMobile?: boolean
   subtitle?: String
-  tabs?: PropsBtn[]
+  tabs?: BtnProps[]
   title?: string
 }
 
@@ -22,10 +22,10 @@ export default defineComponent({
   name: "AdminSubHeader",
   props: {
     back: Function || Object,
-    btns: Object as PropType<Ref<PropsBtn[]>>,
+    btns: Object as PropType<Ref<BtnProps[]>>,
     hideBtnsMobile: Boolean,
     subtitle: String,
-    tabs: Object as PropType<Ref<PropsBtn[]>>,
+    tabs: Object as PropType<Ref<BtnProps[]>>,
     title: String
   },
   setup (props, context) {
@@ -50,7 +50,7 @@ export default defineComponent({
             <div class="desktopm:overflow-auto order-3 desktop:order-2 desktop:flex-half desktopm:h-14 desktopm:-mb-6 relative desktop:h-full">
               <div class="flex desktop:justify-center h-full">
                 {
-                  props.tabs.value.map((tab: PropsBtn) => {
+                  props.tabs.value.map((tab: BtnProps) => {
                     return <div class="desktop:h-full">
                       <router-link 
                         class="flex items-center text-center mr-3 desktop:h-full desktop:mx-2 px-1 desktopm:pb-1 text-gray-600 hover:text-gray-900 border-b-3 border-transparent transition"
@@ -70,7 +70,7 @@ export default defineComponent({
             <div class="desktopm:overflow-auto desktopm:h-12">
               <div class="flex desktopm:flex-row-reverse desktop:justify-end desktop:h-full">
                 {
-                  props.btns?.value.map((btn: PropsBtn) => {
+                  props.btns?.value.map((btn: BtnProps) => {
                     return <Btn
                       class="py-2 px-2 text-xs rounded-base font-semibold bg-gray-200 desktopm:mr-2 desktop:ml-2"
                       click={btn.click}

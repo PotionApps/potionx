@@ -1,10 +1,10 @@
 import Bars from "../../assets/bars.svg";
-import Btn, { PropsBtn } from "../Btn/Btn";
+import Btn, { BtnProps } from "../Btn/Btn";
 import { defineComponent, PropType, Ref } from "vue";
 import { RouteLocationRaw } from "vue-router";
 
 export interface PropsAdminFooter {
-  btns?: PropsBtn[],
+  btns?: BtnProps[],
   hideMenu?: boolean,
   menuRoute: RouteLocationRaw
 }
@@ -12,7 +12,7 @@ export interface PropsAdminFooter {
 export default defineComponent({
   name: "AdminFooter",
   props: {
-    btns: Object as PropType<Ref<PropsBtn[]>>,
+    btns: Object as PropType<Ref<BtnProps[]>>,
     hideMenu: Boolean,
     menuRoute: {
       type: Object,

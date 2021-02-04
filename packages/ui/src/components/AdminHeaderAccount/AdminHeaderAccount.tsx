@@ -1,8 +1,8 @@
 import { defineComponent, onBeforeUnmount, onMounted, PropType, ref } from "vue";
-import Btn, { PropsBtn } from '../Btn/Btn'
+import Btn, { BtnProps } from '../Btn/Btn'
 
 export interface AdminHeaderAccountProps {
-  btns: PropsBtn[]
+  btns: BtnProps[]
   image?: string,
   initials?: string
 }
@@ -11,7 +11,7 @@ export default defineComponent({
   name: "AdminHeaderAccount",
   props: {
     btns: {
-      type: Array as PropType<PropsBtn[]>,
+      type: Array as PropType<BtnProps[]>,
       required: true
     },
     image: String,

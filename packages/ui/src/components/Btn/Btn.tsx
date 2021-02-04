@@ -1,7 +1,7 @@
 import { defineComponent, computed, PropType, resolveComponent } from "vue";
 import { RouteLocationRaw } from "vue-router";
 
-export interface PropsBtn {
+export interface BtnProps {
   click?: (e?: MouseEvent) => void
   disabled?: boolean
   image?: {}
@@ -16,16 +16,16 @@ export interface PropsBtn {
 }
 
 export default defineComponent({
-  name: "potion-button",
+  name: "Btn",
   props: {
-    click:  Function as PropType<PropsBtn['click']>,
+    click:  Function as PropType<BtnProps['click']>,
     disabled: Boolean,
     image: {} as any,
     label: String,
     noStyle: Boolean,
     reverse: Boolean,
-    status: String as PropType<PropsBtn['status']>,
-    to: Object as PropType<PropsBtn['to']>,
+    status: String as PropType<BtnProps['status']>,
+    to: Object as PropType<BtnProps['to']>,
     toExternal: String,
     type: String
   },

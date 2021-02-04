@@ -1,33 +1,33 @@
 import AdminFooter from "../../components/AdminFooter/AdminFooter";
 import AdminSubHeader from "../../components/AdminSubHeader/AdminSubHeader";
 import { defineComponent, PropType, Ref } from "vue";
-import { PropsBtn } from "../../components/Btn/Btn";
+import { BtnProps } from "../../components/Btn/Btn";
 import { RouteLocationRaw } from "vue-router";
 
 export interface PropsAdminListLayout {
-  adminFooterBtns?: PropsBtn[]
+  adminFooterBtns?: BtnProps[]
   adminFooterMenuRoute: RouteLocationRaw
   adminSubHeaderBack?: ((e?: MouseEvent) => void | RouteLocationRaw)
-  adminSubHeaderBtns?: PropsBtn[]
+  adminSubHeaderBtns?: BtnProps[]
   adminSubHeaderHideBtnsMobile?: boolean
   adminSubHeaderSubtitle?: string
-  adminSubHeaderTabs?: PropsBtn[]
+  adminSubHeaderTabs?: BtnProps[]
   adminSubHeaderTitle?: string
 }
 
 export default defineComponent({
   name: "AdminLayout",
   props: {
-    adminFooterBtns: Object as PropType<Ref<PropsBtn[]>>,
+    adminFooterBtns: Object as PropType<Ref<BtnProps[]>>,
     adminFooterMenuRoute: {
       type: Object,
       required: true
     },
     adminSubHeaderBack: Function || Object,
-    adminSubHeaderBtns: Object as PropType<Ref<PropsBtn[]>>,
+    adminSubHeaderBtns: Object as PropType<Ref<BtnProps[]>>,
     adminSubHeaderHideBtnsMobile: Boolean,
     adminSubHeaderSubtitle: String,
-    adminSubHeaderTabs: Object as PropType<Ref<PropsBtn[]>>,
+    adminSubHeaderTabs: Object as PropType<Ref<BtnProps[]>>,
     adminSubHeaderTitle: String
   },
   setup (props, context) {

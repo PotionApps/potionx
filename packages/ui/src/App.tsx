@@ -1,10 +1,9 @@
-import AdminHeader from "./components/AdminHeader/AdminHeader";
-import AdminHeaderAccount from "./components/AdminHeaderAccount/AdminHeaderAccount";
-import AdminHeaderNav from "./components/AdminHeaderNav/AdminHeaderNav";
+import AdminNav from "./components/AdminNav/AdminNav";
+import AdminSidebar from "./components/AdminSidebar/AdminSidebar";
 import { defineComponent, computed, ref } from 'vue'
 import PotionLogo from './assets/potion-logo.svg'
-import { useAdminHeaderAccountNav } from "./useAdminHeaderAccountNav";
-import { useAdminHeaderNav } from "./useAdminHeaderNav";
+import { useAdminNavAccount } from "./useAdminNavAccount";
+import { useAdminNavModules } from "./useAdminNavModules";
 import { routeNames } from "./playground/routeNames";
 import { useRoute } from "vue-router"
 import * as Stories from './stories'
@@ -14,16 +13,17 @@ export default defineComponent({
   name: 'App',
   components: {},
   setup () {
-    const { adminHeaderNav } = useAdminHeaderNav()
-    const { adminHeaderAccountNav, adminHeaderAccountUser } = useAdminHeaderAccountNav()
+    
+    const { adminNavAccount } = useAdminNavAccount()
+    const { adminNavModules } = useAdminNavModules()
 
-    const showHeader = computed(() => {
+    const showSidebar = computed(() => {
       return useRoute().name != routeNames.login && routeNames.loginError
     })
 
     const showMenu = ref(false)
 
-    return () => <div class="flex flex-col justify-between min-h-screen">
+    return () => <div class="flex min-h-screen">
       {
         showMenu.value &&
         <div class="bg-white fixed inset-y-0 left-0 py-4 shadow-2xl w-64 z-2">
@@ -35,19 +35,27 @@ export default defineComponent({
         </div>
       }
       {
-        showHeader.value && 
-        <AdminHeader class="desktopm:hidden relative z-1">
-          <img class="w-4" src={PotionLogo}/>
-          <AdminHeaderNav nav={adminHeaderNav.value} />
-          <AdminHeaderAccount 
-            btns={adminHeaderAccountNav.value}
-            initials={adminHeaderAccountUser}
-          />
-        </AdminHeader>
+        showSidebar.value && 
+        <AdminSidebar
+          class="desktopm:hidden relative z-1"
+          v-slots={{
+            navPrimary: () => {
+              return <AdminNav nav={adminNavModules.value} />
+            },
+            navSecondary: () => {
+              return <AdminNav nav={adminNavAccount.value} />
+            }
+          }}
+        >
+          <div class="flex items-center mb-6">
+            <img class="mr-2 w-4" src={PotionLogo}/>
+            <p class="text-2xl text-gray-100">Potion</p>
+          </div>
+        </AdminSidebar>
       }
       <router-view class="flex-1" />
       <button
-        class="bg-black fixed bottom-0 mb-4 mr-4 px-4 py-1 right-0 rounded-full text-white"
+        class="bg-black fixed bottom-0 mb-4 mr-4 px-4 py-1 right-0 rounded-fulll text-white"
         onClick={() => showMenu.value = !showMenu.value}
       >Menu</button>
     </div>
