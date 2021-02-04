@@ -613,7 +613,6 @@ defmodule Potionx.Plug.PowAssent do
   @spec put_session(Conn.t(), atom(), any()) :: Conn.t()
   def put_session(%{private: %{@private_session_key => session}} = conn, key, value) do
     session = Map.put(session, key, value)
-
     conn
     |> Conn.put_private(@private_session_key, session)
     |> Conn.put_private(@private_session_info_key, :write)
