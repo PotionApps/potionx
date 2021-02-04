@@ -58,6 +58,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
 
   def add_to_frontend_routes(%GqlForModel{no_frontend: true} = state), do: state
   def add_to_frontend_routes(%GqlForModel{} = state) do
+
     index =
       [
         "frontend",
@@ -81,71 +82,76 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
         "src",
         "useAdminHeaderNav.ts"
       ] |> Enum.join("/")
-    File.write!(
-      index,
-      Enum.join(
-        [
-          "import Route#{state.model_name}Edit from './Route#{state.model_name}Edit/Route#{state.model_name}Edit'",
-          "import Route#{state.model_name}List from './Route#{state.model_name}List/Route#{state.model_name}List'",
-          File.read!(index),
-          """
-          routes.push(
-            {
-              name: routeNames.#{state.model_name_graphql_case}Edit,
-              path: '/#{String.replace(state.model_name_snakecase, "_", "-")}-list/:id',
-              component: Route#{state.model_name}Edit
-            }
-          )
-          """,
-          """
-          routes.push(
-            {
-              name: routeNames.#{state.model_name_graphql_case}List,
-              path: '/#{String.replace(state.model_name_snakecase, "_", "-")}-list',
-              component: Route#{state.model_name}List
-            }
-          )
-          """
-        ],
-        "\r\n"
-      )
-    )
 
-    File.write!(
-      route_names,
-      File.read!(route_names)
-      |> String.replace(
-        "export enum routeNames {",
+    route_names_content = File.read!(route_names)
+
+    unless String.contains?(route_names_content, "#{state.model_name_graphql_case}Edit") do
+      File.write!(
+        index,
         Enum.join(
           [
-            "export enum routeNames {",
-            "  #{state.model_name_graphql_case}Edit = \"#{state.model_name}Edit\",",
-            "  #{state.model_name_graphql_case}List = \"#{state.model_name}List\","
+            "import Route#{state.model_name}Edit from './Route#{state.model_name}Edit/Route#{state.model_name}Edit'",
+            "import Route#{state.model_name}List from './Route#{state.model_name}List/Route#{state.model_name}List'",
+            File.read!(index),
+            """
+            routes.push(
+              {
+                name: routeNames.#{state.model_name_graphql_case}Edit,
+                path: '/#{String.replace(state.model_name_snakecase, "_", "-")}-list/:id',
+                component: Route#{state.model_name}Edit
+              }
+            )
+            """,
+            """
+            routes.push(
+              {
+                name: routeNames.#{state.model_name_graphql_case}List,
+                path: '/#{String.replace(state.model_name_snakecase, "_", "-")}-list',
+                component: Route#{state.model_name}List
+              }
+            )
+            """
           ],
           "\r\n"
         )
       )
-    )
 
-    File.write!(
-      admin_nav,
-      Enum.join(
-        [
-          File.read!(admin_nav),
-          """
-          nav.push(
-            {
-              label: "#{state.model_name}s",
-              to: {
-                name: routeNames.#{state.model_name_graphql_case}List
-              }
-            }
+      File.write!(
+        route_names,
+        route_names_content
+        |> String.replace(
+          "export enum routeNames {",
+          Enum.join(
+            [
+              "export enum routeNames {",
+              "  #{state.model_name_graphql_case}Edit = \"#{state.model_name}Edit\",",
+              "  #{state.model_name_graphql_case}List = \"#{state.model_name}List\","
+            ],
+            "\r\n"
           )
-          """,
-        ],
-        "\r\n"
+        )
       )
-    )
+
+      File.write!(
+        admin_nav,
+        Enum.join(
+          [
+            File.read!(admin_nav),
+            """
+            nav.push(
+              {
+                label: "#{state.model_name}s",
+                to: {
+                  name: routeNames.#{state.model_name_graphql_case}List
+                }
+              }
+            )
+            """,
+          ],
+          "\r\n"
+        )
+      )
+    end
 
     state
   end
