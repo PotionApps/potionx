@@ -8,10 +8,11 @@ defmodule Potionx.AuthorizationController do
       def callback(conn, %{"provider" => provider} = params) do
         session_params = %{state: Map.fetch!(params, "state")}
         params         = Map.drop(params, ["provider"])
-
         config = Pow.Plug.fetch_config(conn)
 
         conn
+        |> Potionx.Plug.PowAssent.init_session
+        # |> load_session_params
         |> Conn.put_private(:pow_assent_session_params, session_params)
         |> Conn.put_private(:pow_assent_registration, false) # disable registration
         |> Potionx.Plug.PowAssent.callback_upsert(
@@ -47,13 +48,27 @@ defmodule Potionx.AuthorizationController do
         end
       end
 
+      defp load_session_params(%{private: %{pow_assent_session: %{session_params: params}}} = conn) do
+        conn
+        |> Conn.put_private(:pow_assent_session_params, params)
+        |> Potionx.Plug.PowAssent.delete_session(:session_params)
+      end
+      defp load_session_params(conn), do: conn
+
+      defp maybe_store_session_params(%{private: %{pow_assent_session_params: params}} = conn),
+      do: Potionx.Plug.PowAssent.put_session(conn, :session_params, params)
+      defp maybe_store_session_params(conn), do: conn
+
       @spec new(Conn.t(), map()) :: Conn.t()
       def new(conn, %{"provider" => provider}) do
         conn
+        |> Potionx.Plug.PowAssent.init_session
         |> Potionx.Plug.PowAssent.authorize_url(provider, redirect_uri(conn))
         |> case do
           {:ok, url, conn} ->
-            json(conn, %{data: %{url: url, session_params: conn.private[:pow_assent_session_params]}})
+            conn
+            |> maybe_store_session_params
+            |> json(%{data: %{url: url, session_params: conn.private[:pow_assent_session_params]}})
 
           {:error, _error, conn} ->
             conn
