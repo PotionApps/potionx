@@ -25,7 +25,7 @@ export default defineComponent({
             image={ChevronLeft}
             label="Prev"
           />
-          <span class={"font-bold text-gray-900 text-sm s450:text-base s750:text-xl"}>80/107</span>
+          <span class={"font-bold text-gray-700 text-sm s450:text-base s750:text-xl"}>80/107</span>
           <Btn 
             class={["bg-gray-300", "hover:bg-gray-400", "ml-4", "mr-2", "s750:text-lg"]}
             click={() => {}}

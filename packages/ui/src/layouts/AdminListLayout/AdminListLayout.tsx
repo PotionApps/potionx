@@ -14,7 +14,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class="flex justify-center p-4">
+        <div class="flex justify-center px-4 py-6">
           <AdminAside class="desktopm:hidden">
             {context.slots.aside && context.slots.aside()}
           </AdminAside>
