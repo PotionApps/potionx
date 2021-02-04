@@ -15,6 +15,9 @@ config :<%= @web_app_name %>, <%= @endpoint_module %>,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :<%= @app_name %>, :pow,
+  cache_store_backend: Potionx.Pow.RedisCache
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

@@ -20,8 +20,7 @@ defmodule <%= @app_module %>.Application do
     ] ++
       if Application.get_env(:<%= @app_name %>, :env) == :prod do
         [
-          {Pow.Store.Backend.MnesiaCache, extra_db_nodes: Node.list()},
-          Pow.Store.Backend.MnesiaCache.Unsplit
+          {Redix, {Application.get_env(:<%= @app_name %>, :redix)[:url], [name: :redix]}}
         ]
       else
         []

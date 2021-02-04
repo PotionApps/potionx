@@ -84,6 +84,14 @@ if config_env() == :prod do
   #
 
   config :<%= @web_app_name %>, <%= @endpoint_module %>, server: true
+
+  redis_url = System.get_env("REDIS_URL") ||
+    raise """
+    REDIS_URL environment variable is missing.
+    """
+
+  config :<%= @app_name %>, :redix,
+    url: redis_url
   #
   # Then you can assemble a release by calling `mix release`.
   # See `mix help release` for more information.

@@ -10,7 +10,7 @@ defmodule Potionx.New.Single do
     {:eex,  "potionx/config/prod.exs",                  :project, "config/prod.exs"},
     {:eex,  "potionx/config/test.exs",                  :project, "config/test.exs"},
     {:eex,  "potionx/config/runtime.exs",               :project, "config/runtime.exs"},
-    {:eex,  "phx_single/lib/app_name/application.ex",   :project, "lib/:app/application.ex"},
+    {:eex,  "potionx/app_name/application.ex",      :project, "lib/:app/application.ex"},
     {:eex,  "phx_single/lib/app_name.ex",               :project, "lib/:app.ex"},
     {:eex,  "phx_web/channels/user_socket.ex",          :project, "lib/:lib_web_name/channels/user_socket.ex"},
     {:keep, "phx_web/controllers",                      :project, "lib/:lib_web_name/controllers"},

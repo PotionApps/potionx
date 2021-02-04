@@ -50,6 +50,7 @@ defmodule <%= @app_module %>.MixProject do
       {:potionx, "~> 0.2.3"},
       {:pow, "~> 1.0.21"},
       {:pow_assent, "~> 0.4.10"},
+      {:redix, "~> 1.0.0"},
       {:typed_struct, "~> 0.2.1"},
       {:ecto_sql, "~> 3.5"},
       {<%= inspect @adapter_app %>, ">= 0.0.0"},
