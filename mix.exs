@@ -38,7 +38,7 @@ defmodule Potionx.MixProject do
   def project do
     [
       app: :potionx,
-      version: "0.2.8",
+      version: "0.2.9",
       elixir: "~> 1.11",
       package: package(),
       start_permanent: Mix.env() == :prod,
