@@ -3,7 +3,7 @@ import { RouteLocationRaw } from "vue-router";
 
 export interface AdminNavItemProps {
   click?: (e?: MouseEvent) => void
-  image?: {}
+  icon?: {}
   id?: string
   label?: string
   notification?: number
@@ -14,7 +14,7 @@ export default defineComponent({
   name: "AdminNavItem",
   props: {
     click: Function as PropType<AdminNavItemProps['click']>,
-    image: {} as any,
+    icon: {} as any,
     label: String,
     notification: Number,
     to: Object as PropType<AdminNavItemProps['to']>,
@@ -39,7 +39,7 @@ export default defineComponent({
 
       return <Parent class="flex items-center justify-between opacity-70 hover:opacity-100 transition-opacity" {...attrs}>
         <div class="flex items-center">
-          {props.image && <img class="mr-2 w-4" src={props.image} />}
+          {props.icon && <img class="mr-2 w-4" src={props.icon} />}
           <span class="text-gray-100">{props.label}</span>
         </div>
         {

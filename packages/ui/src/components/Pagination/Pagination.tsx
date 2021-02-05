@@ -26,14 +26,14 @@ export default defineComponent({
             class={["bg-gray-300", "hover:bg-gray-400", "ml-2", "mr-4", "s750:text-lg"]}
             click={() => {}}
             disabled={true}
-            image={ChevronLeft}
+            icon={ChevronLeft}
             label="Prev"
           />
-          <span class={"font-bold text-gray-700 text-sm s450:text-base s750:text-lg"}>80/107</span>
+          <span class={"font-bold text-gray-700 text-sm s450:text-base"}>80/107</span>
           <Btn 
             class={["bg-gray-300", "hover:bg-gray-400", "ml-4", "mr-2", "s750:text-lg"]}
             click={() => {}}
-            image={ChevronRight}
+            icon={ChevronRight}
             label="Next"
             reverse={true}
           />

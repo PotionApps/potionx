@@ -9,7 +9,7 @@ export default defineComponent(
         {
           id: "1",
           description: "Creates an async component that will be loaded only when it's necessary.",
-          image: Cat,
+          icon: Cat,
           subtitle: "Developer and Cofounder",
           roles: ["admin", "test"],
           title: "Vince Roy",

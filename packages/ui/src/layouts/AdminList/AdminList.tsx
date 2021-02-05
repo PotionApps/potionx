@@ -1,8 +1,12 @@
 import { defineComponent } from "vue";
 import Pagination from '../../components/Pagination/Pagination'
+import Pill from '../../components/Pill/Pill'
 import Search from '../../components/Search/Search'
 import StateEmpty from "../../components/StateEmpty/StateEmpty";
 import StateLoading from "../../components/StateLoading/StateLoading";
+import FolderOpen from '../../assets/folder-open.svg'
+import Filter from '../../assets/filter.svg'
+import Sort from '../../assets/sort.svg'
 
 export interface AdminListProps {
   
@@ -18,13 +22,35 @@ export default defineComponent({
     return () => {
       return (
         <div class="px-4 py-6 s1050:px-8 s1450:px-12">
-          <Search 
-            change={() => {}}
-            class="mb-2"
-            focusOnMount={false}
-            placeholder="Search..."
-            val={props.searchValue}
-          />
+          <div class="flex s650m:flex-wrap mb-2">
+            <Search 
+              change={() => {}}
+              class="mb-2"
+              focusOnMount={false}
+              placeholder="Search..."
+              val={props.searchValue}
+            />
+            <div class="flex-fit s650m:pr-1 s650m:w-1/2 s650:ml-2">
+              <div class="bg-white border-1 border-gray-300 cursor-pointer flex items-center p-2 rounded-md  transition hover:border-blue-400">
+                <img class="mr-1 w-4" src={Sort} />
+                <span>Oldest</span>
+              </div>
+            </div>
+            <div class="flex-fit mb-2 s650m:pl-1 s650m:w-1/2 s650:ml-2">
+              <div class="bg-white border-1 border-gray-300 cursor-pointer flex items-center p-2 rounded-md  transition hover:border-blue-400">
+                <img class="mr-1 w-4" src={Filter} />
+                <span>Sort</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex">
+            <Pill 
+              class="mb-2 mr-2"
+              icon={FolderOpen}
+              label="Category"
+              remove={() => {}}
+            />
+          </div>
           {
             false && <StateEmpty class="pb-2 pt-4" />
           }

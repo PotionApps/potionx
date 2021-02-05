@@ -17,7 +17,7 @@ export default defineComponent({
         }
       },
       {
-        image: Back,
+        icon: Back,
         label: "Delete",
         to: {
           name: routeNames.menu
@@ -25,24 +25,6 @@ export default defineComponent({
       },
       {
         label: "Compose",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      {
-        label: "Some button",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      {
-        label: "Some button",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      {
-        label: "Some button",
         to: {
           name: routeNames.menu
         }
@@ -63,7 +45,7 @@ export default defineComponent({
         }
       },
       {
-        image: Back,
+        icon: Back,
         label: "Entries",
         to: {
           name: routeNames.menu
@@ -74,103 +56,13 @@ export default defineComponent({
         to: {
           name: routeNames.menu
         }
-      },
-      {
-        label: "Categories",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      {
-        label: "Categories",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      {
-        label: "Categories",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      {
-        label: "Categories",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      {
-        label: "Categories",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      {
-        label: "Categories",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      {
-        label: "Categories",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      {
-        label: "Categories",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      {
-        label: "Categories",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      {
-        label: "Categories",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      {
-        label: "Categories",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      {
-        label: "Categories",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      {
-        label: "Categories",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      {
-        label: "Categories",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      {
-        label: "Categories",
-        to: {
-          name: routeNames.menu
-        }
       }
     ])
 
     const mobileBtns = computed(() => [
       {
         click: () => {},
-        image: Bars,
+        icon: Bars,
         label: "Back"
       },
       {

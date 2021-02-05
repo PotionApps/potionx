@@ -31,10 +31,10 @@ export default defineComponent({
             <div class={["flex", "flex-full", "items-center", "mb-2"]}>
               {props.back && <Btn 
                 class="bg-gray-200 flex-fit mr-2 rounded-full p-2 s1050m:hidden hover:bg-gray-300"
-                image={Back}
+                icon={Back}
                 noStyle={true}
               />}
-              <div class="max-w-500">
+              <div class="s1050:max-w-500 s1450:max-w-600">
                 <p class="font-semibold text-gray-900 text-xl">{props.title || "Untitled"}</p>
                 <span class="text-gray-600 text-sm">{props.subtitle}</span>
               </div>
@@ -48,7 +48,7 @@ export default defineComponent({
                   return <Btn
                     class="bg-gray-200 font-semibold mb-2 p-2 rounded text-xs s1050m:mr-2 s1050:ml-2"
                     click={btn.click}
-                    image={btn.image}
+                    icon={btn.icon}
                     label={btn.label}
                     to={btn.to}
                     noStyle={true}

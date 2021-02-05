@@ -4,7 +4,7 @@ import { RouteLocationRaw } from "vue-router";
 export interface BtnProps {
   click?: (e?: MouseEvent) => void
   disabled?: boolean
-  image?: {}
+  icon?: {}
   id?: string
   label?: string
   noStyle?: boolean
@@ -20,7 +20,7 @@ export default defineComponent({
   props: {
     click:  Function as PropType<BtnProps['click']>,
     disabled: Boolean,
-    image: {} as any,
+    icon: {} as any,
     label: String,
     noStyle: Boolean,
     reverse: Boolean,
@@ -89,7 +89,7 @@ export default defineComponent({
         Parent = "a"
       }
       return <Parent class={classes.value} {...attrs}>
-        {props.image && <img class={imgClasses.value} src={props.image} />}
+        {props.icon && <img class={imgClasses.value} src={props.icon} />}
         {props.label && <span class="whitespace-nowrap">{props.label}</span>}
         {context.slots.default && context.slots.default()}
       </Parent>
