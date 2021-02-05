@@ -43,7 +43,7 @@ Potionx is a set of generators and functions that speeds up the process of setti
 ### Generating a project
 
 ```sh
-mix archive.install hex potionx_new 0.0.12
+mix archive.install hex potionx_new 0.0.13
 mix potionx.new some_project_name
 ```
 
