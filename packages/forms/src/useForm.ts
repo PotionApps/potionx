@@ -1,5 +1,5 @@
-import { reactive, computed, ref, Ref } from "vue";
-import isEqual from 'lodash.isequal'
+import { isEqual } from 'lodash'
+import { reactive, computed, ref, Ref, watch, provide } from "vue";
 
 export interface Changeset<Model extends object = {}> {
   changes: Partial<{[k in keyof Model]: string[]}>,
@@ -9,8 +9,8 @@ export interface Changeset<Model extends object = {}> {
   numberOfChanges: number
 }
 
-export enum FormStatus {
-  default = "default",
+export enum FormSubmitStatus {
+  empty = "empty",
   error = "error",
   loading = "loading",
   success = "success"
@@ -25,20 +25,21 @@ export interface UseFormArgs<Model extends object> {
 
 export default function useForm<Model extends object = {}>(args: UseFormArgs<Model>) {
   let changes = reactive<any>({})
-  const data = reactive<any>({})
   let errors = reactive<{[key: string]: string[]}>({})
   const hasSubmitted = ref(false)
   let serverErrors = reactive<Partial<{[key: string]: string[]}>>({})
-  const status = ref<FormStatus>(FormStatus.default)
+  const submitStatus = ref<FormSubmitStatus>(FormSubmitStatus.empty)
 
   const change = (key: string, value: any) => {
+    submitStatus.value = FormSubmitStatus.empty
     changes[key] = value
     return changes
   }
 
   const consolidated = computed(() => {
     return Object.assign(
-      data,
+      {},
+      data.value,
       Object.keys(changes).reduce((acc: any, k) => {
         if (changes[k] !== undefined) {
           acc[k] = changes[k]
@@ -49,7 +50,7 @@ export default function useForm<Model extends object = {}>(args: UseFormArgs<Mod
   })
 
   const consolidatedErrors = computed(() => {
-    [
+    return [
       ...new Set(
         Object.keys(errors).concat(
           Object.keys(serverErrors)
@@ -59,6 +60,10 @@ export default function useForm<Model extends object = {}>(args: UseFormArgs<Mod
       acc[key] = (errors[key] || []).concat((serverErrors[key] || []))
       return acc
     }, {})
+  })
+
+  const data = computed<any>(() => {
+    return args.data || {}
   })
 
   const isValid = computed(() => {
@@ -71,7 +76,7 @@ export default function useForm<Model extends object = {}>(args: UseFormArgs<Mod
   const numberOfChanges = computed(() => {
     return Object.keys(changes).reduce(
       (acc: any, k: string) => {
-        if (changes[k] !== undefined && !isEqual(changes[k], data[k])) {
+        if (changes[k] !== undefined && !isEqual(changes[k], data.value[k])) {
           acc += 1
         }
         return acc
@@ -81,9 +86,15 @@ export default function useForm<Model extends object = {}>(args: UseFormArgs<Mod
   })
   
   const reset = () => {
-    changes = reactive({})
-    errors = reactive({})
-    serverErrors = reactive({})
+    for (const prop of Object.getOwnPropertyNames(changes)) {
+      delete changes[prop];
+    }
+    for (const prop of Object.getOwnPropertyNames(errors)) {
+      delete errors[prop];
+    }
+    for (const prop of Object.getOwnPropertyNames(serverErrors)) {
+      delete serverErrors[prop];
+    }
     hasSubmitted.value = false
   }
 
@@ -100,11 +111,16 @@ export default function useForm<Model extends object = {}>(args: UseFormArgs<Mod
   }
 
   const submit = () => {
+    if (!numberOfChanges.value) return
     hasSubmitted.value = true
+    submitStatus.value = FormSubmitStatus.loading
     args.onSubmit(toChangeset())
       .then((res: boolean) => {
-        if (true) {
+        if (res) {
+          submitStatus.value = FormSubmitStatus.success
           reset()
+        } else {
+          submitStatus.value = FormSubmitStatus.error
         }
       })
   }
@@ -112,12 +128,19 @@ export default function useForm<Model extends object = {}>(args: UseFormArgs<Mod
   const toChangeset = () : Changeset<Model> => {
     return {
       changes,
-      data: Object.assign({}, data),
+      data: Object.assign({}, data.value),
       errors: Object.assign({}, errors),
       isValid: false,
       numberOfChanges: numberOfChanges.value
     }
   }
+
+  provide('formChange', change)
+  provide('formData', consolidated)
+  provide('formErrors', consolidatedErrors)
+  provide('formStatus', submitStatus)
+  provide('formSubmitted', hasSubmitted)
+  provide('formValid', isValid)
 
   return {
     change,
@@ -134,7 +157,7 @@ export default function useForm<Model extends object = {}>(args: UseFormArgs<Mod
     serverErrors,
     setError,
     setServerError,
-    status,
-    submit
+    submit,
+    submitStatus
   }
 }
