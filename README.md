@@ -28,8 +28,7 @@ Potionx is a set of generators and functions that speeds up the process of setti
 
 ### Deployment Targets
 - [Render.com](https://render.com/)
-- [Digital Ocean Kubernetes Engine](https://www.digitalocean.com/products/kubernetes/)
-- [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine)
+- Kubernetes Using [Pulumi](https://www.pulumi.com/)
 
 ## Getting Started
 
@@ -44,7 +43,7 @@ Potionx is a set of generators and functions that speeds up the process of setti
 ### Generating a project
 
 ```sh
-mix archive.install hex potionx_new 0.1.0
+mix archive.install hex potionx_new 0.0.12
 mix potionx.new some_project_name
 ```
 
@@ -71,14 +70,8 @@ mix potionx.gen.gql_for_model SomeContext SomeModel
 
 Render.com's Instructions can be found here: (https://render.com/docs/deploy-phoenix)[https://render.com/docs/deploy-phoenix]
 
-### Digital Ocean
+### Kubernetes
 Coming soon...
-
-### Google Kubernetes Engine
-Coming soon...
-
-### Other Deployment targets
-AWS and Gigalixir are other popular deployment targets for Elixir we may cover if there is sufficient demand.
 
 ## Generating GraphQL Typescript Definitions
 Make sure your server is started with ```mix phx.server```, open another terminal and navigate to the ```frontend/shared``` folder.
