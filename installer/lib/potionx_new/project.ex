@@ -11,6 +11,7 @@ defmodule Potionx.New.Project do
             lib_graphql_name: nil,
             lib_web_name: nil,
             local_postgres_password: nil,
+            local_postgres_user: nil,
             root_app: nil,
             root_mod: nil,
             project_path: nil,

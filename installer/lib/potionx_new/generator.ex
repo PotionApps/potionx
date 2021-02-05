@@ -182,7 +182,15 @@ defmodule Potionx.New.Generator do
     # means creating a database like FoO is the same as foo in
     # some storages.
     {adapter_app, adapter_module, adapter_config} =
-      get_ecto_adapter(db, String.downcase(project.app), project.app_mod, project.local_postgres_password)
+      get_ecto_adapter(
+        db,
+        String.downcase(project.app),
+        project.app_mod,
+        %{
+          password: project.local_postgres_password,
+          user: project.local_postgres_user
+        }
+      )
 
     pubsub_server = get_pubsub_server(project.app_mod)
 
@@ -295,8 +303,8 @@ defmodule Potionx.New.Generator do
     {:myxql, Ecto.Adapters.MyXQL, db_config(app, module, "root", "")}
   end
 
-  defp get_ecto_adapter("postgres", app, module, password) do
-    {:postgrex, Ecto.Adapters.Postgres, db_config(app, module, "postgres", password)}
+  defp get_ecto_adapter("postgres", app, module, %{password: password, user: user}) do
+    {:postgrex, Ecto.Adapters.Postgres, db_config(app, module, user, password)}
   end
 
   defp get_ecto_adapter(db, _app, _mod, _) do

@@ -98,6 +98,7 @@ defmodule Potionx.New.Single do
     {:eex, "potionx/frontend/admin/src/routes/routeNames.ts", :app, "frontend/admin/src/routes/routeNames.ts"},
     {:eex, "potionx/frontend/admin/src/routes/RouteHome/RouteHome.tsx", :app, "frontend/admin/src/routes/RouteHome/RouteHome.tsx"},
     {:eex, "potionx/frontend/admin/src/routes/RouteLogin/RouteLogin.tsx", :app, "frontend/admin/src/routes/RouteLogin/RouteLogin.tsx"},
+    {:eex, "potionx/frontend/admin/src/routes/RouteLoginError/RouteLoginError.tsx", :app, "frontend/admin/src/routes/RouteLoginError/RouteLoginError.tsx"},
     {:eex, "potionx/frontend/shared/.gitignore", :app, "frontend/shared/.gitignore"},
     {:eex, "potionx/frontend/shared/package.json", :app, "frontend/shared/package.json"},
     {:eex, "potionx/frontend/shared/codegen.yml", :app, "frontend/shared/codegen.yml"},

@@ -99,6 +99,14 @@ defmodule Mix.Tasks.Potionx.New do
     %{project | email: email}
   end
 
+  def ask_for_local_postgres_user(%Project{} = project) do
+    user =
+      Mix.shell().prompt("\nWhat is the user for your local Postgres database? (defaults to: postgres)")
+      |> String.trim
+
+    %{project | local_postgres_user: user !== "" && user || "postgres"}
+  end
+
   def ask_for_local_postgres_password(%Project{} = project) do
     pw =
       Mix.shell().prompt("\nWhat is the password to your local Postgres database?")
@@ -163,6 +171,7 @@ defmodule Mix.Tasks.Potionx.New do
   def generate(base_path, generator, path, opts) do
     base_path
     |> Project.new(opts)
+    |> ask_for_local_postgres_user
     |> ask_for_local_postgres_password
     |> generator.prepare_project()
     |> ask_for_email
