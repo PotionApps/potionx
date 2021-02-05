@@ -4,7 +4,7 @@ import isEqual from 'lodash.isequal'
 export interface Changeset<Model extends object = {}> {
   changes: Partial<{[k in keyof Model]: string[]}>,
   data: Partial<Model>
-  errors: Partial<{[k in keyof Model]: string[]}>,
+  errors: {[key: string]: string[]},
   isValid: boolean,
   numberOfChanges: number
 }
@@ -26,9 +26,9 @@ export interface UseFormArgs<Model extends object> {
 export default function useForm<Model extends object = {}>(args: UseFormArgs<Model>) {
   let changes = reactive<any>({})
   const data = reactive<any>({})
-  let errors = reactive<Partial<{[key: string]: string[]}>>({})
-  let serverErrors = reactive<Partial<{[key: string]: string[]}>>({})
+  let errors = reactive<{[key: string]: string[]}>({})
   const hasSubmitted = ref(false)
+  let serverErrors = reactive<Partial<{[key: string]: string[]}>>({})
   const status = ref<FormStatus>(FormStatus.default)
 
   const change = (key: string, value: any) => {
