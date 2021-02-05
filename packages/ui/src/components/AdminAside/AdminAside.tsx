@@ -10,7 +10,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class="w-full desktop:max-w-200 desktopm:bg-white">
+        <div class="w-full s1050:max-w-200 s1050m:bg-white">
           {context.slots.default && context.slots.default()}
         </div>
       )

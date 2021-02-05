@@ -14,10 +14,29 @@ export const useAdminNavModules = () => {
       },
       {
         label: "Inbox",
+        notification: 14,
         to: {
           name: routeNames.login
         }
-      }
+      },
+      {
+        label: "Websites",
+        to: {
+          name: routeNames.login
+        }
+      },
+      {
+        label: "Forms",
+        to: {
+          name: routeNames.login
+        }
+      },
+      {
+        label: "People",
+        to: {
+          name: routeNames.login
+        }
+      },
     ] as AdminNavItemProps[])
   })
 

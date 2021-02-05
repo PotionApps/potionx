@@ -5,6 +5,10 @@ import ChevronLeftDouble from "../../assets/chevron-left-double.svg"
 import ChevronRightDouble from "../../assets/chevron-right-double.svg"
 import { defineComponent } from "vue";
 
+export interface PaginationProps {
+
+}
+
 export default defineComponent({
   name: "Pagination",
   props: {
@@ -14,7 +18,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class="flex items-center justify-center">
+        <div class="flex items-center justify-center sticky bottom-0">
           <div class={["cursor-pointer", "mx-1", "opacity-40", "px-1", "pointer-events-none", "transition-opacity", "hover:opacity-100"]}>
             <img class="h-4" src={ChevronLeftDouble} />
           </div>

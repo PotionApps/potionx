@@ -1,7 +1,7 @@
 import { defineComponent } from "vue";
 import FolderOpen from "../../assets/folder-open.svg"
 
-export interface PropsStateEmpty {
+export interface StateEmptyProps {
   image?: string | undefined
   label?: string | undefined
 }

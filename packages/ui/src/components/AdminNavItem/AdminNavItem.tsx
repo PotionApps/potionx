@@ -44,8 +44,8 @@ export default defineComponent({
         </div>
         {
           props.notification &&
-          <div class="bg-blue-500 rounded-t-full">
-            <span class="text-gray-100 text-sm">{props.notification}</span>
+          <div class="bg-blue-500 ml-1 px-2 rounded-full">
+            <span class="font-semibold text-gray-100 text-sm">{props.notification}</span>
           </div>
         }
       </Parent>

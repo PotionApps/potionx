@@ -23,7 +23,7 @@ export default defineComponent({
 
     const showMenu = ref(false)
 
-    return () => <div class="flex min-h-screen">
+    return () => <div class="flex min-h-screen max-w-screen overflow-x-hidden">
       {
         showMenu.value &&
         <div class="bg-white fixed inset-y-0 left-0 py-4 shadow-2xl w-64 z-2">
@@ -37,7 +37,7 @@ export default defineComponent({
       {
         showSidebar.value && 
         <AdminSidebar
-          class="desktopm:hidden relative z-1"
+          class="s1050m:hidden relative z-1"
           v-slots={{
             navPrimary: () => {
               return <AdminNav nav={adminNavModules.value} />
@@ -55,7 +55,7 @@ export default defineComponent({
       }
       <router-view class="flex-1" />
       <button
-        class="bg-black fixed bottom-0 mb-4 mr-4 px-4 py-1 right-0 rounded-fulll text-white"
+        class="bg-black fixed bottom-0 mb-4 mr-4 px-4 py-1 right-0 rounded-full text-white"
         onClick={() => showMenu.value = !showMenu.value}
       >Menu</button>
     </div>

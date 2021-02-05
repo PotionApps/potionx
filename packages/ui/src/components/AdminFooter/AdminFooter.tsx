@@ -23,7 +23,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class="bg-gray-900 bottom-0 justify-end h-14 left-0 fixed w-full z-99 py-2 px-2 flex shadow desktop:hidden">
+        <div class="bg-gray-900 bottom-0 justify-end h-14 left-0 fixed w-full z-99 py-2 px-2 flex shadow s1050:hidden">
           {
            props.btns && props.btns.value.map(btn => {
               return <Btn

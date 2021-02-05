@@ -1,6 +1,6 @@
 import AdminCard from '../../components/AdminCard/AdminCard'
-import AdminListLayout from '../../layouts/AdminListLayout/AdminListLayout'
-import AdminLayout from "../../layouts/AdminLayout/AdminLayout";
+import AdminList from '../../layouts/AdminList/AdminList'
+import AdminShell from "../../layouts/AdminShell/AdminShell";
 import Bars from "../../assets/bars.svg";
 import Back from "../../assets/back.svg";
 import { defineComponent, computed } from "vue";
@@ -9,7 +9,7 @@ import { routeNames } from "../../playground/routeNames";
 export default defineComponent({
   setup () {
 
-    const subHeaderBtns = computed(() => [
+    const HeaderBtns = computed(() => [
       {
         label: "Publish",
         to: {
@@ -28,14 +28,38 @@ export default defineComponent({
         to: {
           name: routeNames.menu
         }
+      },
+      {
+        label: "Some button",
+        to: {
+          name: routeNames.menu
+        }
+      },
+      {
+        label: "Some button",
+        to: {
+          name: routeNames.menu
+        }
+      },
+      {
+        label: "Some button",
+        to: {
+          name: routeNames.menu
+        }
+      },
+      {
+        label: "Some button",
+        to: {
+          name: routeNames.menu
+        }
       }
     ])
 
-    const subHeaderTabs = computed(() => [
+    const HeaderTabs = computed(() => [
       {
         label: "Categories",
         to: {
-          name: routeNames.menu
+          name: routeNames.admin
         }
       },
       {
@@ -54,7 +78,91 @@ export default defineComponent({
       {
         label: "Categories",
         to: {
-          name: routeNames.admin
+          name: routeNames.menu
+        }
+      },
+      {
+        label: "Categories",
+        to: {
+          name: routeNames.menu
+        }
+      },
+      {
+        label: "Categories",
+        to: {
+          name: routeNames.menu
+        }
+      },
+      {
+        label: "Categories",
+        to: {
+          name: routeNames.menu
+        }
+      },
+      {
+        label: "Categories",
+        to: {
+          name: routeNames.menu
+        }
+      },
+      {
+        label: "Categories",
+        to: {
+          name: routeNames.menu
+        }
+      },
+      {
+        label: "Categories",
+        to: {
+          name: routeNames.menu
+        }
+      },
+      {
+        label: "Categories",
+        to: {
+          name: routeNames.menu
+        }
+      },
+      {
+        label: "Categories",
+        to: {
+          name: routeNames.menu
+        }
+      },
+      {
+        label: "Categories",
+        to: {
+          name: routeNames.menu
+        }
+      },
+      {
+        label: "Categories",
+        to: {
+          name: routeNames.menu
+        }
+      },
+      {
+        label: "Categories",
+        to: {
+          name: routeNames.menu
+        }
+      },
+      {
+        label: "Categories",
+        to: {
+          name: routeNames.menu
+        }
+      },
+      {
+        label: "Categories",
+        to: {
+          name: routeNames.menu
+        }
+      },
+      {
+        label: "Categories",
+        to: {
+          name: routeNames.menu
         }
       }
     ])
@@ -77,18 +185,18 @@ export default defineComponent({
       return ""
     })
 
-    return () => <AdminLayout
+    return () => <AdminShell
       class="bg-gray-200"
       adminFooterBtns={mobileBtns}
       adminFooterMenuRoute={{name: routeNames.menu}}
-      adminSubHeaderBack={() => {}}
-      adminSubHeaderBtns={subHeaderBtns}
-      adminSubHeaderHideBtnsMobile={false}
-      adminSubHeaderSubtitle="Post - 5 days"
-      adminSubHeaderTabs={subHeaderTabs}
-      adminSubHeaderTitle="Some Article Title"
+      adminHeaderBack={() => {}}
+      adminHeaderBtns={HeaderBtns}
+      adminHeaderHideBtnsMobile={false}
+      adminHeaderSubtitle="Post - 5 days"
+      adminHeaderTabs={HeaderTabs}
+      adminHeaderTitle="Some Article Title that is longer than a usual title"
     >
-      <AdminListLayout searchValue={search}>
+      <AdminList searchValue={search}>
           <AdminCard>
             Test
           </AdminCard>
@@ -98,7 +206,7 @@ export default defineComponent({
           <AdminCard>
             Test
           </AdminCard>
-      </AdminListLayout>
-    </AdminLayout>
+      </AdminList>
+    </AdminShell>
   }
 })
