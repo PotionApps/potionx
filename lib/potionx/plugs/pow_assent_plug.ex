@@ -350,7 +350,7 @@ defmodule Potionx.Plug.PowAssent do
     user   = Plug.current_user(conn)
 
     user
-    |> Operations.upsert(user_identity_params, config)
+    |> Potionx.PowAssent.Context.upsert(user_identity_params, config)
     |> case do
       {:ok, user_identity} -> {:ok, user_identity, create_session(conn, user, user_identity_params, config)}
       {:error, error}      -> {:error, error, conn}

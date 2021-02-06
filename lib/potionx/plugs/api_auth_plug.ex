@@ -79,7 +79,7 @@ defmodule Potionx.Plug.ApiAuth do
       CredentialsCache.delete(store_config, token)
 
       conn
-      |> Plug.Conn.put_private(:session_fingerprint, metadata[:fingerprint])
+      |> Conn.put_private(:session_fingerprint, metadata[:fingerprint])
     else
       _any -> conn
     end

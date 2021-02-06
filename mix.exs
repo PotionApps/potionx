@@ -15,7 +15,7 @@ defmodule Potionx.MixProject do
       {:absinthe_plug, "~> 1.5.4"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.0"},
-      {:pow, "~> 1.0.21"},
+      {:pow, "~> 1.0.22"},
       {:pow_assent, "~> 0.4.10"},
       {:redix, "~> 1.0.0"},
       {:typed_struct, "~> 0.2.1"},

@@ -1013,7 +1013,8 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
         Absinthe.Adapter.LanguageConventions.to_external_name(
           to_string(
             field.name
-          )
+          ),
+          nil
         )
       )
     end)
