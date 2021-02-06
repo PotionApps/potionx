@@ -1,5 +1,6 @@
 import { isEqual } from 'lodash'
 import { reactive, computed, ref, Ref, watch, provide } from "vue";
+import { Validator } from './validators/Validator';
 
 export interface Changeset<Model extends object = {}> {
   changes: Partial<{[k in keyof Model]: string[]}>,
@@ -9,6 +10,8 @@ export interface Changeset<Model extends object = {}> {
   numberOfChanges: number
 }
 
+export type FormData = {[key: string]: any}
+export type FormErrors = {[key: string]: string[]}
 export enum FormSubmitStatus {
   empty = "empty",
   error = "error",
@@ -21,6 +24,7 @@ export interface UseFormArgs<Model extends object> {
   data?: Ref<Readonly<Partial<Model>>>
   defaultValues?: Partial<{[k in keyof Model]: string[]}>
   onSubmit: (cs: Changeset<Model>) => Promise<boolean>
+  validator?: Validator
 }
 
 export default function useForm<Model extends object = {}>(args: UseFormArgs<Model>) {
@@ -138,6 +142,7 @@ export default function useForm<Model extends object = {}>(args: UseFormArgs<Mod
   provide('formChange', change)
   provide('formData', consolidated)
   provide('formErrors', consolidatedErrors)
+  provide('formNumberOfChanges', numberOfChanges)
   provide('formStatus', submitStatus)
   provide('formSubmitted', hasSubmitted)
   provide('formValid', isValid)
