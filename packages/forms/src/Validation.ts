@@ -1,6 +1,6 @@
 export interface Validation {
   name: string,
-  params?: object,
+  params?: {[key: string]: any},
   fn?: ValidationFn
 }
-export type ValidationFn = (value: string, params: any, cs: any) => boolean
+export type ValidationFn = (validation: Validation, params: any, data: any) => boolean

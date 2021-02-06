@@ -6,6 +6,9 @@ import validatorMessages from './validatorMessages'
 
 const checkValidation = (validation: Validation, value: any, data: any) => {
   const name = validation.name as keyof typeof validatorFunctions
+  if (validation.fn) {
+    return [validation.fn(validation, value, data)]
+  }
   if (!validatorFunctions[name](validation, value, data)) {
     return [validatorMessages[name]]
   }
