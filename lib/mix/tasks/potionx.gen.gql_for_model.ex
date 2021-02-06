@@ -982,29 +982,40 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
     |> Enum.map(fn
       {k, :required = n} ->
         {k, %{
-          name: to_string(n),
+          name: n,
         }}
       {k, {:format = n, r}} ->
         {k, %{
-          name: to_string(n),
+          name: n,
           params: %{
             pattern: Regex.source(r)
           }
         }}
       {k, {n, params}} when n == :length or n == :number ->
         {k, %{
-          name: to_string(n),
+          name: n,
           params: keyword_list_to_map(params)
         }}
       {k, {n, values}} when n == :inclusion or n == :exclusion or n === :subset ->
         {k, %{
-          name: to_string(n),
+          name: n,
           params: %{
             values: keyword_list_to_map(values)
           }
         }}
       {k, {n, _}} ->
         {k, %{name: n}}
+    end)
+    |> Enum.map(fn field ->
+      Map.put(
+        field,
+        :name,
+        Absinthe.Adapter.LanguageConventions.to_external_name(
+          to_string(
+            field.name
+          )
+        )
+      )
     end)
   end
 

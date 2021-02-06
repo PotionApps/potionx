@@ -140,17 +140,6 @@ defmodule Potionx.New.Generator do
     File.write!(file, [formatted, ?\n])
   end
 
-  def inject_umbrella_config_defaults(project) do
-    unless File.exists?(Project.join_path(project, :project, "config/dev.exs")) do
-      path = Project.join_path(project, :project, "config/config.exs")
-
-      extra =
-        Potionx.New.Umbrella.render(:new, "phx_umbrella/config/extra_config.exs", project.binding)
-
-      File.write(path, [File.read!(path), extra])
-    end
-  end
-
   defp split_with_self(contents, text) do
     case :binary.split(contents, text) do
       [left, right] -> [left, text, right]
