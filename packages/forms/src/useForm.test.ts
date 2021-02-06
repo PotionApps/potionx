@@ -12,6 +12,7 @@ test('Properly tracks changes made to form with existing data', () => {
       })
       const formHooks = useForm({
         data,
+        fields: [],
         onSubmit: (cs) => Promise.resolve(true)
       })
       formHooks.change('name', 'updatedName')
@@ -31,6 +32,7 @@ test('Properly updates errors and serverErrors', () => {
   defineComponent({
     setup () {
       const formHooks = useForm({
+        fields: [],
         onSubmit: (cs) => Promise.resolve(false)
       })
       formHooks.setError('name', 'error')
@@ -51,6 +53,7 @@ test('Properly updates submitStatus', () => {
     setup () {
       let result = false
       const formHooks = useForm({
+        fields: [],
         onSubmit: (cs) => Promise.resolve(result)
       })
       formHooks.change('name', 'updatedName')

@@ -7,7 +7,7 @@ export const exclusion : ValidatorFunction = (validation, value, data) => {
 
 export const format : ValidatorFunction = (validation, value, data) => {
   if (typeof value !== "string") return false
-  return (new RegExp(validation.params!.format)).test(value)
+  return (new RegExp(validation.params!.pattern)).test(value)
 }
 
 export const inclusion : ValidatorFunction = (validation, value, data) => {
@@ -21,11 +21,11 @@ export const length : ValidatorFunction = (validation, value, data) => {
     .reduce((valid: boolean, key) => {
       switch (key) {
         case "is":
-          return value.length === validation.params![key]
+          return value.length === validation.params![key] && valid
         case "max":
-          return value.length <= validation.params![key]
+          return value.length <= validation.params![key] && valid
         case "min":
-          return value.length >= validation.params![key]
+          return value.length >= validation.params![key] && valid
       }
       return valid
     }, true)

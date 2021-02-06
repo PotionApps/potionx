@@ -4,13 +4,13 @@ import { Validator } from '../Validator'
 import * as validatorFunctions from './validatorFunctions'
 import validatorMessages from './validatorMessages'
 
-const checkValidation = (validation: Validation, value: any, data: any) => {
+const checkValidation = (validation: Validation, value: any, data: any) : string[] => {
   const name = validation.name as keyof typeof validatorFunctions
   if (validation.fn) {
-    return [validation.fn(validation, value, data)]
+    return validation.fn(validation, value, data)
   }
   if (!validatorFunctions[name](validation, value, data)) {
-    return [validatorMessages[name]]
+    return [validatorMessages[name](validation)]
   }
   return []
 }

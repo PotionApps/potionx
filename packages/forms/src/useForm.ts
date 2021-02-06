@@ -1,6 +1,8 @@
 import { isEqual } from 'lodash'
 import { reactive, computed, ref, Ref, watch, provide } from "vue";
+import { Field } from './Field';
 import { Validator } from './validators/Validator';
+import validatorEcto from './validators/validatorEcto/validatorEcto';
 
 export interface Changeset<Model extends object = {}> {
   changes: Partial<{[k in keyof Model]: string[]}>,
@@ -10,6 +12,7 @@ export interface Changeset<Model extends object = {}> {
   numberOfChanges: number
 }
 
+export type FormBlurred = {[key: string]: boolean}
 export type FormData = {[key: string]: any}
 export type FormErrors = {[key: string]: string[]}
 export enum FormSubmitStatus {
@@ -23,21 +26,42 @@ export interface UseFormArgs<Model extends object> {
   clearAfterSuccess?: boolean
   data?: Ref<Readonly<Partial<Model>>>
   defaultValues?: Partial<{[k in keyof Model]: string[]}>
+  fields: Field[]
   onSubmit: (cs: Changeset<Model>) => Promise<boolean>
   validator?: Validator
 }
 
 export default function useForm<Model extends object = {}>(args: UseFormArgs<Model>) {
+  let blurred = reactive<FormBlurred>({})
   let changes = reactive<any>({})
   let errors = reactive<{[key: string]: string[]}>({})
   const hasSubmitted = ref(false)
   let serverErrors = reactive<Partial<{[key: string]: string[]}>>({})
   const submitStatus = ref<FormSubmitStatus>(FormSubmitStatus.empty)
+  const validator = args.validator || validatorEcto
+
+  const blur = (key: string) => {
+    blurred[key] = true
+  }
 
   const change = (key: string, value: any) => {
     submitStatus.value = FormSubmitStatus.empty
     changes[key] = value
+    clearErrors()
+    Object.assign(errors, validator(consolidated.value, args.fields))
     return changes
+  }
+
+  const clearBlurred = () => {
+    for (const prop of Object.getOwnPropertyNames(blurred)) {
+      delete blurred[prop];
+    }
+  }
+
+  const clearErrors = () => {
+    for (const prop of Object.getOwnPropertyNames(errors)) {
+      delete errors[prop];
+    }
   }
 
   const consolidated = computed(() => {
@@ -90,11 +114,10 @@ export default function useForm<Model extends object = {}>(args: UseFormArgs<Mod
   })
   
   const reset = () => {
+    clearBlurred()
+    clearErrors()
     for (const prop of Object.getOwnPropertyNames(changes)) {
       delete changes[prop];
-    }
-    for (const prop of Object.getOwnPropertyNames(errors)) {
-      delete errors[prop];
     }
     for (const prop of Object.getOwnPropertyNames(serverErrors)) {
       delete serverErrors[prop];
@@ -139,6 +162,8 @@ export default function useForm<Model extends object = {}>(args: UseFormArgs<Mod
     }
   }
 
+  provide('formBlur', blur)
+  provide('formBlurred', blurred)
   provide('formChange', change)
   provide('formData', consolidated)
   provide('formErrors', consolidatedErrors)
