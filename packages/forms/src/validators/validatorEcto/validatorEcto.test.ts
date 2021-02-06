@@ -104,7 +104,7 @@ test('Properly outputs errors for fields', () => {
   )
 })
 
-test('Properly outputs errors for fields', () => {
+test('Properly passes tests for fields', () => {
   const data = {
     exclusion: "good",
     format: "test@example.com",
