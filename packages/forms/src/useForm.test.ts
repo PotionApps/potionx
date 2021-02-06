@@ -32,12 +32,19 @@ test('Properly updates errors and serverErrors', () => {
   defineComponent({
     setup () {
       const formHooks = useForm({
-        fields: [],
+        fields: [{
+          name: "name",
+          type: "text",
+          validations: [{
+            name: "required"
+          }]
+        }],
         onSubmit: (cs) => Promise.resolve(false)
       })
-      formHooks.setError('name', 'error')
-      formHooks.setServerError('name', 'server error')
-      expect(formHooks.consolidatedErrors.value.name).toEqual(["error", "server error"])
+      formHooks.setError('error', 'error')
+      formHooks.setServerError('error', 'server error')
+      expect(formHooks.consolidatedErrors.value.error).toEqual(["error", "server error"])
+      expect(formHooks.consolidatedErrors.value.name).toEqual(["This field is required22"])
       expect(formHooks.isValid.value).toEqual(false)
       formHooks.reset()
       expect(formHooks.consolidatedErrors.value).toEqual({})
