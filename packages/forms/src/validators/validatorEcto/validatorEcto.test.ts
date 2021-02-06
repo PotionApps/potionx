@@ -22,7 +22,7 @@ const fields : Field[] = [
       {
         name: "format",
         params: {
-          pattern: "^[\w.!#$%&’*+\-\/=?\^`{|}~]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*$"
+          pattern: "^[A-Za-z0-9\._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$"
         }
       }
     ]
@@ -99,6 +99,26 @@ test('Properly outputs errors for fields', () => {
   ).toEqual(
     fields.reduce((acc: any, field) => {
       acc[field.name] = [validatorMessages[field.name as keyof typeof validatorMessages](field.validations![0])]
+      return acc
+    }, {})
+  )
+})
+
+test('Properly outputs errors for fields', () => {
+  const data = {
+    exclusion: "good",
+    format: "test@example.com",
+    inclusion: "good",
+    length: "good",
+    number: 10,
+    required: "good",
+    subset: ["good"]
+  }
+  expect(
+    validatorEcto(data, fields)
+  ).toEqual(
+    fields.reduce((acc: any, field) => {
+      acc[field.name] = []
       return acc
     }, {})
   )

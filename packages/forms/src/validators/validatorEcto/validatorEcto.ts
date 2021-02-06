@@ -1,7 +1,7 @@
 import { Field } from '../../Field'
 import { Validation } from '../../Validation'
 import { Validator } from '../Validator'
-import * as validatorFunctions from './validatorFunctions'
+import * as validatorFunctions from './validatorEctoFunctions'
 import validatorMessages from './validatorMessages'
 
 const checkValidation = (validation: Validation, value: any, data: any) : string[] => {

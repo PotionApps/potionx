@@ -11,7 +11,7 @@ export const format : ValidatorFunction = (validation, value, data) => {
 }
 
 export const inclusion : ValidatorFunction = (validation, value, data) => {
-  return Array.isArray(value) && value.every(v => validation.params!.values.includes(v))
+  return validation.params!.values.includes(value)
 }
 
 export const length : ValidatorFunction = (validation, value, data) => {
