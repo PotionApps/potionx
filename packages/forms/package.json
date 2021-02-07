@@ -16,7 +16,8 @@
     "scripts": {
         "dev": "vite",
         "build": "tsdx build --name @potion-forms --format 'cjs,esm,umd'",
-        "prepublishOnly": "npm run build"
+        "prepublishOnly": "npm run build",
+        "test": "jest"
     },
     "peerDependencies": {
         "vue": "^3.0.5"
