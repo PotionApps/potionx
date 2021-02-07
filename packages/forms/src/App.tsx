@@ -5,6 +5,7 @@ import FieldRadio from './fields/FieldRadio'
 import FieldSelect from './fields/FieldSelect'
 import useForm from './useForm'
 import FieldTextarea from './fields/FieldTextarea'
+import FormSubmit from './FormSubmit'
 
 export default defineComponent({
   name: 'App',
@@ -86,6 +87,7 @@ export default defineComponent({
           name="textarea"
         >
         </FieldTextarea>
+        <FormSubmit />
       </form>
     }
   }

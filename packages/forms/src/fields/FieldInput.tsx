@@ -30,6 +30,12 @@ export default defineComponent({
     } = useField({
       name: computed(() => props.name)
     })
+
+    const classes = computed(() => {
+      if (props.unstyled) return ""
+      const base = "rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full "
+      return base + (errors.value.length ? "border-red-300" : "border-gray-300")
+    })
     
     const onBlur = (e: Event) => {
       focused.value = false
@@ -51,10 +57,7 @@ export default defineComponent({
         <FieldLabel class="block mb-1">{props.label}</FieldLabel>
       }
       <input
-        class={
-          !props.unstyled &&
-          "rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full"
-        }
+        class={classes.value}
         onBlur={onBlur}
         onInput={onInput}
         name={props.name}

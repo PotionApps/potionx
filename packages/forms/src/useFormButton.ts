@@ -2,13 +2,13 @@ import { inject, Ref } from "vue"
 import { FormSubmitStatus } from "./useForm"
 
 export default function useFormButton () {
-  const numberOfChanges = inject<Ref<boolean>>('numberOfChanges')
+  const formNumberOfChanges = inject<Ref<boolean>>('formNumberOfChanges')
   const formValid = inject<Ref<boolean>>('formValid')
-  const submitStatus = inject<Ref<FormSubmitStatus>>('formStatus')
+  const formSubmitStatus = inject<Ref<FormSubmitStatus>>('formStatus')
 
   return {
     formValid,
-    numberOfChanges,
-    submitStatus
+    formNumberOfChanges,
+    formSubmitStatus
   }
 }

@@ -2,7 +2,7 @@ import { Validation } from "../../Validation";
 
 export default {
   exclusion: (validation: Validation) => `This field should not be one of: ${validation.params!.values.join(', ')}`,
-  format: (validation: Validation) => `This field should match the pattern: ${validation.params!.pattern}`,
+  format: (validation: Validation) => `This field has an invalid format`,
   inclusion: (validation: Validation) => `This field should be one of: ${validation.params!.values.join(', ')}`,
   length: (validation: Validation) => {
     if (validation.params!.is) {
