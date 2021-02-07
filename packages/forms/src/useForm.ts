@@ -12,9 +12,11 @@ export interface Changeset<Model extends object = {}> {
   numberOfChanges: number
 }
 
+export type FormBlur = (key: string) => void
 export type FormBlurred = {[key: string]: boolean}
-export type FormData = {[key: string]: any}
-export type FormErrors = {[key: string]: string[]}
+export type FormChange = (key: string, value: any) => void
+export type FormData = Ref<{[key: string]: any}>
+export type FormErrors = Ref<{[key: string]: string[]}>
 export enum FormSubmitStatus {
   empty = "empty",
   error = "error",
@@ -40,15 +42,13 @@ export default function useForm<Model extends object = {}>(args: UseFormArgs<Mod
   const submitStatus = ref<FormSubmitStatus>(FormSubmitStatus.empty)
   const validator = args.validator || validatorEcto
 
-  const blur = (key: string) => {
+  const blur : FormBlur = (key: string) => {
     blurred[key] = true
   }
 
-  const change = (key: string, value: any) => {
+  const change : FormChange = (key: string, value: any) => {
     submitStatus.value = FormSubmitStatus.empty
     changes[key] = value
-    clearErrors()
-    Object.assign(errors, validator(consolidated.value, args.fields))
     return changes
   }
 
@@ -91,7 +91,7 @@ export default function useForm<Model extends object = {}>(args: UseFormArgs<Mod
   })
 
   const data = computed<any>(() => {
-    return args.data || {}
+    return args.data?.value || {}
   })
 
   const isValid = computed(() => {
@@ -130,6 +130,11 @@ export default function useForm<Model extends object = {}>(args: UseFormArgs<Mod
     return changes
   }
 
+  const runValidation = () => {
+    clearErrors()
+    Object.assign(errors, validator(consolidated.value, args.fields))
+  }
+
   const setError = (key: string, value: string) => {
     errors[key] = (errors[key] || []).concat([value])
   }
@@ -137,7 +142,7 @@ export default function useForm<Model extends object = {}>(args: UseFormArgs<Mod
     serverErrors[key] = (serverErrors[key] || []).concat([value])
   }
 
-  const submit = () => {
+  const submit = (e?: Event) => {
     if (!numberOfChanges.value) return
     hasSubmitted.value = true
     submitStatus.value = FormSubmitStatus.loading
@@ -171,6 +176,11 @@ export default function useForm<Model extends object = {}>(args: UseFormArgs<Mod
   provide('formStatus', submitStatus)
   provide('formSubmitted', hasSubmitted)
   provide('formValid', isValid)
+  
+
+  watch(consolidated, () => {
+    runValidation()
+  }, {deep: true, immediate: true})
 
   return {
     change,
