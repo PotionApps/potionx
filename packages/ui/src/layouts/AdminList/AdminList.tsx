@@ -46,7 +46,7 @@ export default defineComponent({
           <div class="flex">
             <Pill 
               class="mb-2 mr-2"
-              icon={FolderOpen}
+              image={FolderOpen}
               label="Category"
               remove={() => {}}
             />

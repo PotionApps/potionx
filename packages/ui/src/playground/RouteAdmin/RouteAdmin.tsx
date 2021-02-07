@@ -11,13 +11,18 @@ export default defineComponent({
 
     const HeaderBtns = computed(() => [
       {
+        bg: "bg-blue-300",
+        bgHover: "bg-blue-600",
+        color: "text-gray-100",
+        colorHover: "text-white",
+        image: Back,
         label: "Publish",
         to: {
           name: routeNames.menu
         }
       },
       {
-        icon: Back,
+        image: Back,
         label: "Delete",
         to: {
           name: routeNames.menu
@@ -45,7 +50,7 @@ export default defineComponent({
         }
       },
       {
-        icon: Back,
+        image: Back,
         label: "Entries",
         to: {
           name: routeNames.menu
@@ -62,7 +67,7 @@ export default defineComponent({
     const mobileBtns = computed(() => [
       {
         click: () => {},
-        icon: Bars,
+        image: Bars,
         label: "Back"
       },
       {

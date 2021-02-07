@@ -27,18 +27,25 @@ export default defineComponent({
           {
            props.btns && props.btns.value.map(btn => {
               return <Btn
-                class="bg-gray-700 text-base text-gray-300 hover:bg-gray-600 mr-2 w-full font-semibold"
-                icon={btn.icon}
+                bg="bg-gray-700"
+                bgHover="bg-gray-600"
+                color="text-gray-300"
+                class="mr-2 w-full"
+                image={btn.image}
                 label={btn.label}
-                noStyle={true}
               />
             })
           }
           {context.slots.default && context.slots.default()}
           {
             !props.hideMenu && <Btn
-              class={["bg-gray-700", "hover:bg-gray-600", props.btns ? "flex-fit" : "flex-full"]}
-              icon={Bars}
+              bg="bg-gray-700"
+              bgHover="bg-gray-600"
+              color="text-gray-300"
+              class={["h-auto w-auto", props.btns ? "flex-fit" : "flex-full"]}
+              image={Bars}
+              padding="px-3 py-2"
+              radius="rounded"
               to={props.menuRoute}
             />
           }

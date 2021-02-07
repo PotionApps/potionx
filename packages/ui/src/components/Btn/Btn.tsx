@@ -1,13 +1,21 @@
 import { defineComponent, computed, PropType, resolveComponent } from "vue";
 import { RouteLocationRaw } from "vue-router";
+import './Btn.css';
 
 export interface BtnProps {
+  bg?: string
+  color?: string
+  bgHover?: string
+  colorHover?: string
   click?: (e?: MouseEvent) => void
   disabled?: boolean
-  icon?: {}
+  fontSize?: string
+  image?: {}
+  imageSize: string
   id?: string
   label?: string
-  noStyle?: boolean
+  padding?: string
+  radius?: string
   reverse?: boolean
   status?: 'disabled' | 'error' | 'loading' | 'success' | null
   to?: RouteLocationRaw
@@ -18,11 +26,18 @@ export interface BtnProps {
 export default defineComponent({
   name: "Btn",
   props: {
+    bg: String,
+    color: String,
+    bgHover: String,
+    colorHover: String,
     click:  Function as PropType<BtnProps['click']>,
     disabled: Boolean,
-    icon: {} as any,
+    fontSize: String,
+    image: {} as any,
+    imageSize: String,
     label: String,
-    noStyle: Boolean,
+    padding: String,
+    radius: String,
     reverse: Boolean,
     status: String as PropType<BtnProps['status']>,
     to: Object as PropType<BtnProps['to']>,
@@ -40,40 +55,33 @@ export default defineComponent({
     })
 
     const classes = computed(() => {
-      return [
-        {
-          "bg-gray-200": !props.noStyle,
-          "hover:bg-gray-300": !props.noStyle,
-          "text-gray-700": !props.noStyle,
-          "font-semibold": !props.noStyle,
-          "text-base": !props.noStyle,
-          "px-3": !props.noStyle,
-          "py-2": !props.noStyle,
-          "rounded": !props.noStyle,
-          "opacity-50": props.disabled,
-          "pointer-events-none": props.disabled,
-          "bg-red-400": props.status === "error",
-          "bg-blue-400": props.status === "loading",
-          "bg-green-400": props.status === "success",
-          "color-white": props.status === "error" || props.status === "loading" || props.status === "success",
-          "flex-row-reverse": props.reverse,
-          "transition": true,
-          "flex": true,
-          "items-center": true,
-          "justify-center": true
-        }
-      ]
+      return {
+        "flex font-semibold items-center justify-center transition btnComponent": true,
+        "flex-fit p-0 h-8 w-8": !props.label,
+        "rounded-full": !props.label && !props.radius,
+        [props.bg || "bg-gray-200"]: props.bg || !props.bg,
+        ["hover:" + props.bgHover || "hover:bg-gray-300"]: props.bgHover || !props.bgHover,
+        [props.color || "text-gray-700"]: props.color || !props.color,
+        ["hover:" + props.colorHover || "hover:text-gray-700"]: props.colorHover || !props.colorHover,
+        [props.fontSize || 'text-base']: props.fontSize || !props.fontSize,
+        [props.padding || "px-3 py-2"]: props.padding || (!props.padding && props.label),
+        [props.radius || 'rounded']: props.radius || (!props.radius && props.label),
+        "flex-row-reverse": props.reverse,
+        "bg-red-400": props.status === "error",
+        "bg-blue-400": props.status === "loading",
+        "bg-green-400": props.status === "success",
+        "color-white": props.status === "error" || props.status === "loading" || props.status === "success",
+        "opacity-50 pointer-events-none": props.disabled,
+      }
     })
 
     const imgClasses = computed(() => {
-      return [
-        {
-          "ml-2": props.reverse && props.label,
-          "mr-2": !props.reverse && props.label,
-          "h-3": true,
-          "w-3": true
-        }
-      ]
+      return {
+        "ml-2": props.reverse && props.label,
+        "mr-2": !props.reverse && props.label,
+        "h-4 w-4": !props.label && !props.imageSize,
+        [props.imageSize || "h-3 w-3"]: props.imageSize || props.label && !props.imageSize
+      }
     })
 
     return () => {
@@ -89,7 +97,7 @@ export default defineComponent({
         Parent = "a"
       }
       return <Parent class={classes.value} {...attrs}>
-        {props.icon && <img class={imgClasses.value} src={props.icon} />}
+        {props.image && <img class={imgClasses.value} src={props.image} />}
         {props.label && <span class="whitespace-nowrap">{props.label}</span>}
         {context.slots.default && context.slots.default()}
       </Parent>

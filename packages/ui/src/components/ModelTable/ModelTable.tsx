@@ -8,7 +8,7 @@ type HeadingLabel = {
 export interface ModelRow {
   id: string
   description?: string
-  icon?: string
+  image?: string
   insertedAt?: string
   subtitle?: string
   title?: string

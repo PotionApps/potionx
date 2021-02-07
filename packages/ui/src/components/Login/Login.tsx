@@ -18,7 +18,7 @@ export default defineComponent({
           props.authSelect('google')
         },
         label: "Google",
-        icon: googleLogo,
+        image: googleLogo,
         provider: 'google'
       },
       {
@@ -26,7 +26,7 @@ export default defineComponent({
           props.authSelect('azure_ad')
         },
         label: "Microsoft",
-        icon: microsoftLogo,
+        image: microsoftLogo,
       }
     ]
 

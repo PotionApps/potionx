@@ -23,17 +23,23 @@ export default defineComponent({
             <img class="h-4" src={ChevronLeftDouble} />
           </div>
           <Btn 
-            class={["bg-gray-300", "hover:bg-gray-400", "ml-2", "mr-4", "s750:text-lg"]}
+            bg="bg-gray-300"
+            bgHover="bg-gray-400"
+            class={["ml-2", "mr-4"]}
             click={() => {}}
             disabled={true}
-            icon={ChevronLeft}
+            fontSize="text-base s750:text-lg"
+            image={ChevronLeft}
             label="Prev"
           />
           <span class={"font-bold text-gray-700 text-sm s450:text-base"}>80/107</span>
           <Btn 
-            class={["bg-gray-300", "hover:bg-gray-400", "ml-4", "mr-2", "s750:text-lg"]}
+            bg="bg-gray-300"
+            bgHover="bg-gray-400"
+            class={["ml-4", "mr-2"]}
             click={() => {}}
-            icon={ChevronRight}
+            fontSize="text-base s750:text-lg"
+            image={ChevronRight}
             label="Next"
             reverse={true}
           />

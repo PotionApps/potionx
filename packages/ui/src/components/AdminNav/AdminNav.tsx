@@ -20,7 +20,7 @@ export default defineComponent({
           props.nav.map(n => <AdminNavItem
             class="mb-2"
             click={n.click}
-            icon={n.icon}
+            image={n.image}
             key={n.id}
             label={n.label}
             notification={n.notification}

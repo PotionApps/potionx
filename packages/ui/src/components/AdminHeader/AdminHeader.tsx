@@ -30,9 +30,8 @@ export default defineComponent({
 
             <div class={["flex", "flex-full", "items-center", "mb-2"]}>
               {props.back && <Btn 
-                class="bg-gray-200 flex-fit mr-2 rounded-full p-2 s1050m:hidden hover:bg-gray-300"
-                icon={Back}
-                noStyle={true}
+                class="mr-2 s1050m:hidden"
+                image={Back}
               />}
               <div class="s1050:max-w-500 s1450:max-w-600">
                 <p class="font-semibold text-gray-900 text-xl">{props.title || "Untitled"}</p>
@@ -46,12 +45,17 @@ export default defineComponent({
               <div class="flex flex-wrap s1050:justify-end">
                 {props.btns?.value.map((btn: BtnProps) => {
                   return <Btn
-                    class="bg-gray-200 font-semibold mb-2 p-2 rounded text-xs s1050m:mr-2 s1050:ml-2"
+                    bg={btn.bg}
+                    bgHover={btn.bgHover}
+                    color={btn.color}
+                    colorHover={btn.colorHover}
+                    class="mb-2 s1050m:mr-2 s1050:ml-2"
                     click={btn.click}
-                    icon={btn.icon}
+                    fontSize="text-xs"
+                    image={btn.image}
                     label={btn.label}
+                    padding="p-2"
                     to={btn.to}
-                    noStyle={true}
                 />})}
               </div>
             </div>

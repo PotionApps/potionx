@@ -6,7 +6,7 @@ export default defineComponent({
       required: true,
       type: Function as PropType<(e?: MouseEvent) => void>
     },
-    icon: {
+    image: {
       required: true,
       type: String
     },
@@ -21,7 +21,7 @@ export default defineComponent({
       onClick={props.click}
     >
       <span class="text-lg font-medium text-gray-800 pr-2">{props.label}</span>
-      <img class="h-8" src={props.icon} />
+      <img class="h-8" src={props.image} />
     </button>
   }
 })

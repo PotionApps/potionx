@@ -10,6 +10,7 @@ import LoginButton from './components/LoginButton/LoginButton'
 import LoginError from './components/LoginError/LoginError'
 import ModelTable, { ModelTableProps } from './components/ModelTable/ModelTable'
 import Pagination, { PaginationProps } from './components/Pagination/Pagination'
+import Pill, { PillProps } from './components/Pill/Pill'
 import Search from './components/Search/Search'
 import StateEmpty, { StateEmptyProps } from './components/StateEmpty/StateEmpty'
 import StateLoading from './components/StateLoading/StateLoading'
@@ -23,6 +24,7 @@ export type {
   BtnProps,
   ModelTableProps,
   PaginationProps,
+  PillProps,
   StateEmptyProps
 }
 
@@ -39,6 +41,7 @@ export {
   LoginError,
   ModelTable,
   Pagination,
+  Pill,
   Search,
   StateEmpty,
   StateLoading
