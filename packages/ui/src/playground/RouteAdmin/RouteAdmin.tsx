@@ -15,27 +15,9 @@ export default defineComponent({
         bgHover: "bg-blue-600",
         color: "text-gray-100",
         colorHover: "text-white",
+        hideBtnMobile: true,
         image: Back,
-        label: "Publish",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      {
-        image: Back,
-        label: "Delete",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      {
         label: "Compose",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      {
-        label: "Some button",
         to: {
           name: routeNames.menu
         }
@@ -88,7 +70,6 @@ export default defineComponent({
       adminFooterMenuRoute={{name: routeNames.menu}}
       adminHeaderBack={() => {}}
       adminHeaderBtns={HeaderBtns}
-      adminHeaderHideBtnsMobile={false}
       adminHeaderSubtitle="Post - 5 days"
       adminHeaderTabs={HeaderTabs}
       adminHeaderTitle="Some Article Title that is longer than a usual title"

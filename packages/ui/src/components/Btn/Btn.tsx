@@ -11,7 +11,7 @@ export interface BtnProps {
   disabled?: boolean
   fontSize?: string
   image?: {}
-  imageSize: string
+  imageSize?: string
   id?: string
   label?: string
   padding?: string

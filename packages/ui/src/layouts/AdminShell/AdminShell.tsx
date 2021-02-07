@@ -1,5 +1,5 @@
 import AdminFooter from "../../components/AdminFooter/AdminFooter";
-import AdminHeader from "../../components/AdminHeader/AdminHeader";
+import AdminHeader, { AdminHeaderBtnProps, AdminHeaderTabProps } from "../../components/AdminHeader/AdminHeader";
 import { defineComponent, PropType, Ref } from "vue";
 import { BtnProps } from "../../components/Btn/Btn";
 import { RouteLocationRaw } from "vue-router";
@@ -8,10 +8,9 @@ export interface AdminShellProps{
   adminFooterBtns?: BtnProps[]
   adminFooterMenuRoute: RouteLocationRaw
   adminHeaderBack?: ((e?: MouseEvent) => void | RouteLocationRaw)
-  adminHeaderBtns?: BtnProps[]
-  adminHeaderHideBtnsMobile?: boolean
+  adminHeaderBtns?: AdminHeaderBtnProps[]
   adminHeaderSubtitle?: string
-  adminHeaderTabs?: BtnProps[]
+  adminHeaderTabs?: AdminHeaderTabProps[]
   adminHeaderTitle?: string
 }
 
@@ -24,10 +23,9 @@ export default defineComponent({
       required: true
     },
     adminHeaderBack: Function || Object,
-    adminHeaderBtns: Object as PropType<Ref<BtnProps[]>>,
-    adminHeaderHideBtnsMobile: Boolean,
+    adminHeaderBtns: Object as PropType<Ref<AdminHeaderBtnProps[]>>,
     adminHeaderSubtitle: String,
-    adminHeaderTabs: Object as PropType<Ref<BtnProps[]>>,
+    adminHeaderTabs: Object as PropType<Ref<AdminHeaderTabProps[]>>,
     adminHeaderTitle: String
   },
   setup (props, context) {
@@ -37,7 +35,6 @@ export default defineComponent({
           <AdminHeader 
             back={props.adminHeaderBack}
             btns={props.adminHeaderBtns}
-            hideBtnsMobile={props.adminHeaderHideBtnsMobile}
             subtitle={props.adminHeaderSubtitle}
             tabs={props.adminHeaderTabs}
             title={props.adminHeaderTitle}
