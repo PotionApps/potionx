@@ -4,6 +4,7 @@ import FieldInput from './fields/FieldInput'
 import FieldRadio from './fields/FieldRadio'
 import FieldSelect from './fields/FieldSelect'
 import useForm from './useForm'
+import FieldTextarea from './fields/FieldTextarea'
 
 export default defineComponent({
   name: 'App',
@@ -38,38 +39,53 @@ export default defineComponent({
       }
     })
     return () => {
-      return <form  onSubmit={form.submit}>
+      return <form class="m-auto max-w-500 pt-10" onSubmit={form.submit}>
+        <div class="mb-2">
         <FieldInput label="An Input" name="input" type="text"></FieldInput>
-        <FieldSelect name="select">
-          <option value="test">Test</option>
-          <option value="select2">Test 2</option>
-        </FieldSelect>
-        <FieldCheckbox
-          name="checkbox"
-          options={[
-            {
-              label: "Option 1",
-              value: "checked"
-            },
-            {
-              label: "Option 2",
-              value: "checked2"
-            }
-          ]}
-        ></FieldCheckbox>
-        <FieldRadio
-          name="radio"
-          options={[
-            {
-              label: "Option 1",
-              value: "checked"
-            },
-            {
-              label: "Option 2",
-              value: "checked2"
-            }
-          ]}
-        ></FieldRadio>
+        </div>
+        <div class="mb-2">
+          <FieldSelect label="A Select" name="select">
+            <option value="test">Test</option>
+            <option value="select2">Test 2</option>
+          </FieldSelect>
+        </div>
+        <div class="mb-2">
+          <FieldCheckbox
+            label="Checkboxes"
+            name="checkbox"
+            options={[
+              {
+                label: "Option 1",
+                value: "checked"
+              },
+              {
+                label: "Option 2",
+                value: "checked2"
+              }
+            ]}
+          ></FieldCheckbox>
+        </div>
+        <div class="mb-2">
+          <FieldRadio
+            label="A Radio"
+            name="radio"
+            options={[
+              {
+                label: "Option 1",
+                value: "checked"
+              },
+              {
+                label: "Option 2",
+                value: "checked2"
+              }
+            ]}
+          ></FieldRadio>
+        </div>
+        <FieldTextarea
+          label="Textarea"
+          name="textarea"
+        >
+        </FieldTextarea>
       </form>
     }
   }

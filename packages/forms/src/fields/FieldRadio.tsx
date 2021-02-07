@@ -18,10 +18,10 @@ export default defineComponent({
       type: String
     },
     options: {
-      required: true,
       type: Array as PropType<FieldCheckboxOption[]>
     },
-    type: String
+    type: String,
+    unstyled: Boolean
   },
   setup (props, ctx) {
     const focused = ref(false)
@@ -54,25 +54,33 @@ export default defineComponent({
         props.label &&
         <FieldLabel>{props.label}</FieldLabel>
       }
-      {ctx.slots.default && ctx.slots.default()}
+      {ctx.slots.default && ctx.slots.default({
+        onBlur,
+        onChange,
+        value: internalValue.value
+      })}
       {
-        props.options.map(opt => {
-          return <label>
+        props.options?.map(opt => {
+          return <label class="block">
             <input
+             class={
+                !props.unstyled &&
+                "border-gray-300 text-blue-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              }
               onBlur={onBlur}
               checked={opt.value === internalValue.value}
               onChange={onChange}
               type="radio"
               value={opt.value}
             />
-            <span>{opt.label}</span>
+            <span class="ml-2">{opt.label}</span>
           </label>
         })
       }
       {
         (hasBlurred.value || hasSubmitted.value) &&
         !props.disableErrors &&
-        errors.value.length &&
+        !!errors.value.length &&
         <FieldError>{errors.value.join(", ")}</FieldError>
       }
     </>

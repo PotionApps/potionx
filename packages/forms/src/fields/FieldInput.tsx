@@ -48,12 +48,12 @@ export default defineComponent({
     return () => <>
       {
         props.label &&
-        <FieldLabel>{props.label}</FieldLabel>
+        <FieldLabel class="block mb-1">{props.label}</FieldLabel>
       }
       <input
         class={
           !props.unstyled &&
-          "rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          "rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full"
         }
         onBlur={onBlur}
         onInput={onInput}
@@ -65,7 +65,7 @@ export default defineComponent({
       {
         (hasBlurred.value || hasSubmitted.value) &&
         !props.disableErrors &&
-        errors.value.length !== 0 &&
+        !!errors.value.length &&
         <FieldError>{errors.value.join(", ")}</FieldError>
       }
     </>
