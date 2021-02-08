@@ -1,6 +1,6 @@
 {
-    "name": "@potion/forms",
-    "version": "0.0.0",
+    "name": "@potionapps/forms",
+    "version": "0.0.1",
     "files": [
         "dist",
         "src"

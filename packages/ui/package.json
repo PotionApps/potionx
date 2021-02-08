@@ -19,9 +19,13 @@
         "prepublishOnly": "npm run build"
     },
     "peerDependencies": {
-        "vue": "^3.0.5"
+        "vue": "^3.0.5",
+        "@fortawesome/free-regular-svg-icons": "^5.15.2",
+        "@fortawesome/vue-fontawesome": "^3.0.0-3"
     },
     "devDependencies": {
+        "@fortawesome/free-regular-svg-icons": "^5.15.2",
+        "@fortawesome/vue-fontawesome": "^3.0.0-3",
         "@rollup/plugin-image": "^2.0.6",
         "@vitejs/plugin-vue-jsx": "^1.0.2",
         "@vue/compiler-sfc": "^3.0.5",

@@ -2,6 +2,8 @@ const images = require('@rollup/plugin-image');
 
 const globals = {
   'vue-router': "VueRouter",
+  '@fortawesome/free-regular-svg-icons': "FontAwesomeFreeRegular",
+  '@fortawesome/vue-fontawesome': "VueFontAwesome",
   vue: 'Vue'
 }
 
