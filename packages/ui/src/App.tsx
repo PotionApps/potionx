@@ -46,14 +46,14 @@ export default defineComponent({
             <nav>
               {
                 adminNavModules.value.map(nav => {
-                  return <SidebarNavItem class="mb-2" to={nav.to}>{nav.label}</SidebarNavItem>
+                  return <SidebarNavItem class="mb-2" {...nav} />
                 })
               }
             </nav>
             <nav>
               {
                 adminNavAccount.value.map(nav => {
-                  return <SidebarNavItem class="mb-2" to={nav.to}>{nav.label}</SidebarNavItem>
+                  return <SidebarNavItem class="mb-2" {...nav} />
                 })
               }
             </nav>

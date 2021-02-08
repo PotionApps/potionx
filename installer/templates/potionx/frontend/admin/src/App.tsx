@@ -1,4 +1,4 @@
-import { AdminHeader, AdminHeaderAccount, AdminHeaderNav } from "@potionapps/ui";
+import { AdminNav } from "@potionapps/ui";
 import { computed, defineComponent } from 'vue'
 import { useRoute } from 'vue-router'
 import { routeNames } from './routes/routeNames'
@@ -21,15 +21,24 @@ export default defineComponent({
     return () => <div class="flex flex-col min-h-screen">
       { 
         !isLoginRoute.value &&
-          <AdminHeader class="s1050m:hidden">
-            <div class="font-bold text-white"><%= @app_module %></div>
-            <AdminHeaderNav {...adminHeaderNavProps.value} />
-            <AdminHeaderAccount 
-              {...adminHeaderAccountProps.value}
-            />
-          </AdminHeader>
+        <AdminSidebar
+          class="s1050m:hidden relative z-1"
+          v-slots={{
+            nav: () => {
+              return <>
+                <AdminNav nav={adminNavModules.value} />
+                <AdminNav nav={adminNavAccount.value} />
+              </>
+            }
+          }}
+        >
+          <div class="flex items-center mb-6">
+            <img class="mr-2 w-4" src={PotionLogo}/>
+            <p class="text-2xl text-gray-100">Potion</p>
+          </div>
+        </AdminSidebar>
       }
-      <router-view />
+      <router-view class="flex-1" />
     </div>
   }
 })

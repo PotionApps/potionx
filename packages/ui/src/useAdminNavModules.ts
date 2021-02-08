@@ -1,14 +1,9 @@
-import { AdminNavItemProps } from "./components/AdminNavItem/AdminNavItem";
 import { computed } from 'vue'
 import { routeNames } from "./playground/routeNames";
-<<<<<<< HEAD
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
-=======
 import { RouteLocationRaw } from "vue-router";
->>>>>>> Simplify AdminSidebar
 
 export const useAdminNavModules = () => {
- 
   const adminNavModules = computed<{label: string, to: RouteLocationRaw}[]>(() => {
     return [
       {
