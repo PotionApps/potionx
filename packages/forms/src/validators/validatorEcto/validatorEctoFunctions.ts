@@ -55,6 +55,7 @@ export const number : ValidatorFunction = (validation, value, data) => {
 }
 
 export const required : ValidatorFunction = (validation, value, data) => {
+  if (Array.isArray(value)) return !!value.length
   return value !== undefined && value !== null
 }
 

@@ -1,7 +1,7 @@
-import { Validation } from "./validators/Validator";
+import { Validation } from "./Validation";
 
 export interface Field {
   name: string,
-  type: string,
+  type?: string,
   validations?: Validation[]
 }

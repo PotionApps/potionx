@@ -1,17 +1,21 @@
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
 import useFormButton from "./useFormButton";
 import { FormSubmitStatus } from "./useForm";
 
 export default defineComponent({
   setup () {
     const {
-      formNumberOfChanges,
       formSubmitStatus
     } = useFormButton()
+
+    const disabled = computed(() => {
+     return formSubmitStatus?.value === FormSubmitStatus.loading
+    })
+
     return () => {
       return <button
-        class="bg-gray-600 text-white rounded"
-        disabled={!formNumberOfChanges?.value || formSubmitStatus?.value === FormSubmitStatus.loading}
+        class={"bg-gray-600 px-6 py-2 text-white rounded"}
+        disabled={disabled.value}
       >
         Submit
       </button>

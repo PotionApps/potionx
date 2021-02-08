@@ -17,6 +17,7 @@ export type FormBlurred = {[key: string]: boolean}
 export type FormChange = (key: string, value: any) => void
 export type FormData = Ref<{[key: string]: any}>
 export type FormErrors = Ref<{[key: string]: string[]}>
+export type FormSubmit = (e?: Event) => void
 export enum FormSubmitStatus {
   empty = "empty",
   error = "error",
@@ -142,9 +143,10 @@ export default function useForm<Model extends object = {}>(args: UseFormArgs<Mod
     serverErrors[key] = (serverErrors[key] || []).concat([value])
   }
 
-  const submit = (e?: Event) => {
-    if (!numberOfChanges.value) return
+  const submit : FormSubmit = (e?: Event) => {
+    if (e) e.preventDefault()
     hasSubmitted.value = true
+    if (!numberOfChanges.value || submitStatus.value === FormSubmitStatus.loading) return
     submitStatus.value = FormSubmitStatus.loading
     args.onSubmit(toChangeset())
       .then((res: boolean) => {
@@ -157,7 +159,7 @@ export default function useForm<Model extends object = {}>(args: UseFormArgs<Mod
       })
   }
 
-  const toChangeset = () : Changeset<Model> => {
+  const toChangeset = () : Changeset => {
     return {
       changes,
       data: Object.assign({}, data.value),
@@ -174,6 +176,7 @@ export default function useForm<Model extends object = {}>(args: UseFormArgs<Mod
   provide('formErrors', consolidatedErrors)
   provide('formNumberOfChanges', numberOfChanges)
   provide('formStatus', submitStatus)
+  provide('formSubmit', submit)
   provide('formSubmitted', hasSubmitted)
   provide('formValid', isValid)
   

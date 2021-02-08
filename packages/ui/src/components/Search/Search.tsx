@@ -37,7 +37,7 @@ export default defineComponent({
     }
 
     const $input = ref<any>(null)
-    const onChange = (e: KeyboardEvent) => {
+    const onChange = (e: Event) => {
       searchText.value = (e.target as HTMLInputElement).value
       props.change(searchText.value)
     }

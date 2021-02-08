@@ -15,7 +15,7 @@ export default defineComponent({
     const form = useForm<{checkbox: string[], input: string, radio: string, test: string}>({
       data: computed(() => {
         return {
-          checkbox: ["checked"],
+          checkbox: [],
           input: "vince",
           radio: "checked2",
           select: "select2"
@@ -31,6 +31,14 @@ export default defineComponent({
               params: {
                 pattern: "^[A-Za-z0-9\._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$"
               }
+            }
+          ]
+        },
+        {
+          name: 'checkbox',
+          validations: [
+            {
+              name: "required"
             }
           ]
         }
@@ -87,7 +95,7 @@ export default defineComponent({
           name="textarea"
         >
         </FieldTextarea>
-        <FormSubmit />
+        <FormSubmit class="mt-4" />
       </form>
     }
   }

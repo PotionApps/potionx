@@ -36,10 +36,18 @@ export default defineComponent({
     } = useField({
       name: computed(() => props.name)
     })
+
+    const classes = computed(() => {
+      if (props.unstyled) return ""
+      const base = "rounded text-blue-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
+      return base + (showErrors.value ? "border-red-300 text-red-800" : "border-gray-300")
+    })
+
     const onBlur = (e: Event) => {
       focused.value = false
       blur?.(props.name)
     }
+
     const onChange = (e: Event) => {
       const value = (e.target as HTMLInputElement).value
       const index = internalValue.value.findIndex(v => isEqual(v, value)) 
@@ -50,11 +58,19 @@ export default defineComponent({
       }
       change?.(props.name, internalValue.value)
     }
+
+    const showErrors = computed(() => {
+      return (hasBlurred.value || hasSubmitted.value) &&
+      !props.disableErrors &&
+      !!errors.value.length
+    })
+
     watch(val, (updatedVal) => {
       if (updatedVal !== internalValue.value && !focused.value) {
         internalValue.value = updatedVal
       }
     }, { immediate: true})
+    
     return () => <>
       {
         props.label &&
@@ -70,10 +86,7 @@ export default defineComponent({
           return <label class="block">
             <input
               checked={internalValue.value.includes(opt.value)}
-              class={
-                !props.unstyled &&
-                "rounded border-gray-300 text-blue-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              }
+              class={classes.value}
               name={props.name}
               onBlur={onBlur}
               onChange={onChange}
@@ -85,9 +98,7 @@ export default defineComponent({
         })
       }
       {
-        (hasBlurred.value || hasSubmitted.value) &&
-        !props.disableErrors &&
-        !!errors.value.length &&
+        showErrors.value &&
         <FieldError>{errors.value.join(", ")}</FieldError>
       }
     </>

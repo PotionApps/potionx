@@ -31,7 +31,7 @@ export default defineComponent({
     const classes = computed(() => {
       if (props.unstyled) return ""
       const base = "block rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full "
-      return base + (errors.value.length ? "border-red-300" : "border-gray-300")
+      return base + (showErrors.value ? "border-red-300 text-red-800" : "border-gray-300")
     })
 
     const onBlur = (e: Event) => {
@@ -42,6 +42,13 @@ export default defineComponent({
       internalValue.value = (e.target as HTMLInputElement).value
       change?.(props.name, internalValue.value)
     }
+
+    const showErrors = computed(() => {
+      return (hasBlurred.value || hasSubmitted.value) &&
+      !props.disableErrors &&
+      !!errors.value.length
+    })
+
     watch(val, (updatedVal) => {
       if (updatedVal !== internalValue.value && !focused.value) {
         internalValue.value = updatedVal
@@ -63,9 +70,7 @@ export default defineComponent({
         {ctx.slots.default && ctx.slots.default()}
       </select>
       {
-        (hasBlurred.value || hasSubmitted.value) &&
-        !props.disableErrors &&
-        !!errors.value.length &&
+        showErrors.value &&
         <FieldError>{errors.value.join(", ")}</FieldError>
       }
     </>
