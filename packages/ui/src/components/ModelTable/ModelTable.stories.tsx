@@ -1,5 +1,5 @@
 import { defineComponent } from "vue";
-import Cat from '../../assets/cat.jpg'
+import PotionLogo from '../../assets/potion-logo.svg'
 import ModelTable, { ModelRow } from "./ModelTable";
 
 export default defineComponent(
@@ -9,7 +9,7 @@ export default defineComponent(
         {
           id: "1",
           description: "Creates an async component that will be loaded only when it's necessary.",
-          icon: Cat,
+          icon: PotionLogo,
           subtitle: "Developer and Cofounder",
           roles: ["admin", "test"],
           title: "Vince Roy",
