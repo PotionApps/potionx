@@ -1,6 +1,7 @@
-import { defineComponent, computed, PropType, resolveComponent } from "vue";
-import { RouteLocationRaw } from "vue-router";
 import './Btn.css';
+import { defineComponent, computed, PropType, resolveComponent } from "vue";
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { RouteLocationRaw } from "vue-router";
 
 export interface BtnProps {
   bg?: string
@@ -10,8 +11,7 @@ export interface BtnProps {
   click?: (e?: MouseEvent) => void
   disabled?: boolean
   fontSize?: string
-  image?: {}
-  imageSize?: string
+  icon?: {}
   id?: string
   label?: string
   padding?: string
@@ -33,8 +33,7 @@ export default defineComponent({
     click:  Function as PropType<BtnProps['click']>,
     disabled: Boolean,
     fontSize: String,
-    image: {} as any,
-    imageSize: String,
+    icon: {} as any,
     label: String,
     padding: String,
     radius: String,
@@ -57,7 +56,7 @@ export default defineComponent({
     const classes = computed(() => {
       return {
         "flex font-semibold items-center justify-center transition btnComponent": true,
-        "flex-fit p-0 h-8 w-8": !props.label,
+        "flex-fit h-8 p-0 w-8": !props.label,
         "rounded-full": !props.label && !props.radius,
         [props.bg || "bg-gray-200"]: props.bg || !props.bg,
         ["hover:" + props.bgHover || "hover:bg-gray-300"]: props.bgHover || !props.bgHover,
@@ -78,9 +77,7 @@ export default defineComponent({
     const imgClasses = computed(() => {
       return {
         "ml-2": props.reverse && props.label,
-        "mr-2": !props.reverse && props.label,
-        "h-4 w-4": !props.label && !props.imageSize,
-        [props.imageSize || "h-3 w-3"]: props.imageSize || props.label && !props.imageSize
+        "mr-2": !props.reverse && props.label
       }
     })
 
@@ -97,7 +94,7 @@ export default defineComponent({
         Parent = "a"
       }
       return <Parent class={classes.value} {...attrs}>
-        {props.image && <img class={imgClasses.value} src={props.image} />}
+        <FontAwesomeIcon class={imgClasses.value} icon={props.icon} />
         {props.label && <span class="whitespace-nowrap">{props.label}</span>}
         {context.slots.default && context.slots.default()}
       </Parent>

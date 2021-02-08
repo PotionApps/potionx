@@ -1,8 +1,7 @@
 import AdminCard from '../../components/AdminCard/AdminCard'
 import AdminList from '../../layouts/AdminList/AdminList'
 import AdminShell from "../../layouts/AdminShell/AdminShell";
-import Bars from "../../assets/bars.svg";
-import Back from "../../assets/back.svg";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { defineComponent, computed } from "vue";
 import { routeNames } from "../../playground/routeNames";
 
@@ -16,8 +15,9 @@ export default defineComponent({
         color: "text-gray-100",
         colorHover: "text-white",
         hideBtnMobile: true,
-        image: Back,
+        icon: faArrowRight,
         label: "Compose",
+        reverse: true,
         to: {
           name: routeNames.menu
         }
@@ -32,7 +32,7 @@ export default defineComponent({
         }
       },
       {
-        image: Back,
+        icon: faArrowRight,
         label: "Entries",
         to: {
           name: routeNames.menu
@@ -49,7 +49,7 @@ export default defineComponent({
     const mobileBtns = computed(() => [
       {
         click: () => {},
-        image: Bars,
+        icon: faArrowRight,
         label: "Back"
       },
       {

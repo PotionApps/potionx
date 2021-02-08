@@ -39,6 +39,7 @@ export default defineComponent({
             tabs={props.adminHeaderTabs}
             title={props.adminHeaderTitle}
           />
+          {context.slots.default && context.slots.default()}
           <AdminFooter
             btns={props.adminFooterBtns}
             menuRoute={props.adminFooterMenuRoute}

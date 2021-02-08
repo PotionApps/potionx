@@ -1,6 +1,6 @@
-import Bars from "../../assets/bars.svg";
 import Btn, { BtnProps } from "../Btn/Btn";
 import { defineComponent, PropType, Ref } from "vue";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { RouteLocationRaw } from "vue-router";
 
 export interface PropsAdminFooter {
@@ -31,8 +31,7 @@ export default defineComponent({
                 bgHover="bg-gray-600"
                 color="text-gray-300"
                 class="mr-2 w-full"
-                image={btn.image}
-                label={btn.label}
+                {...btn}
               />
             })
           }
@@ -43,7 +42,7 @@ export default defineComponent({
               bgHover="bg-gray-600"
               color="text-gray-300"
               class={["h-auto w-auto", props.btns ? "flex-fit" : "flex-full"]}
-              image={Bars}
+              icon={faBars}
               padding="px-3 py-2"
               radius="rounded"
               to={props.menuRoute}

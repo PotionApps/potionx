@@ -1,15 +1,16 @@
-import { defineComponent } from "vue";
-import FolderOpen from "../../assets/folder-open.svg"
+import { defineComponent } from "vue"
+import { faFolderOpen } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 export interface StateEmptyProps {
-  image?: string | undefined
+  icon?: string | undefined
   label?: string | undefined
 }
 
 export default defineComponent({
   name: "StateEmpty",
   props: {
-    image: String || undefined,
+    icon: String || undefined,
     label: String || undefined
   },
   setup (props, context) {
@@ -17,7 +18,7 @@ export default defineComponent({
       return (
         <div class="text-center">
           <div class="bg-white flex h-20 items-center justify-center mx-auto relative rounded-full w-20">
-            <img class="opacity-40 w-12" src={props.image ? props.image : FolderOpen} />
+            <FontAwesomeIcon class="text-gray-400 text-5xl" icon={props.icon ? props.icon : faFolderOpen} />
           </div>
           <p class="mt-2 text-gray-500 text-xl">{props.label ? props.label : "No Results"}</p>
         </div>

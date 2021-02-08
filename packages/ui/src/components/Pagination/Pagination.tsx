@@ -1,9 +1,7 @@
-import Btn, { BtnProps } from "../../components/Btn/Btn"
-import ChevronLeft from "../../assets/chevron-left.svg"
-import ChevronRight from "../../assets/chevron-right.svg"
-import ChevronLeftDouble from "../../assets/chevron-left-double.svg"
-import ChevronRightDouble from "../../assets/chevron-right-double.svg"
-import { defineComponent } from "vue";
+import Btn from "../../components/Btn/Btn"
+import { defineComponent } from "vue"
+import { faAngleDoubleLeft, faAngleDoubleRight, faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 export interface PaginationProps {
 
@@ -20,7 +18,7 @@ export default defineComponent({
       return (
         <div class="flex items-center justify-center sticky bottom-0">
           <div class={["cursor-pointer", "mx-1", "opacity-40", "px-1", "pointer-events-none", "transition-opacity", "hover:opacity-100"]}>
-            <img class="h-4" src={ChevronLeftDouble} />
+            <FontAwesomeIcon class="h-4" icon={faAngleDoubleLeft} />
           </div>
           <Btn 
             bg="bg-gray-300"
@@ -29,7 +27,7 @@ export default defineComponent({
             click={() => {}}
             disabled={true}
             fontSize="text-base s750:text-lg"
-            image={ChevronLeft}
+            icon={faAngleLeft}
             label="Prev"
           />
           <span class={"font-bold text-gray-700 text-sm s450:text-base"}>80/107</span>
@@ -39,12 +37,12 @@ export default defineComponent({
             class={["ml-4", "mr-2"]}
             click={() => {}}
             fontSize="text-base s750:text-lg"
-            image={ChevronRight}
+            icon={faAngleRight}
             label="Next"
             reverse={true}
           />
           <div class={["cursor-pointer", "opacity-80", "px-1", "transition-opacity", "hover:opacity-100"]}>
-            <img class="h-4" src={ChevronRightDouble} />
+            <FontAwesomeIcon class="h-4" icon={faAngleDoubleRight} />
           </div>
         </div>
       )

@@ -1,6 +1,6 @@
 import { defineComponent, computed, Ref, ref, onMounted, watch } from "vue";
-import Search from "../../assets/Search.svg";
-import Times from "../../assets/Times.svg";
+import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 export interface PropsSearch {
   change: (s: string) => void
@@ -64,7 +64,7 @@ export default defineComponent({
       return (
         <div class={["relative", "w-full"]}>
           <div class={["absolute", "right-3", "top-2/4", "transform", "-translate-y-1/2", searchText.value && "cursor-pointer"]} onClick={clear}>
-            <img class={["opacity-50", searchText.value ? "w-4" : "w-5"]} src={searchText.value ? Times : Search} />
+            <FontAwesomeIcon class={["opacity-50", searchText.value ? "w-4" : "w-5"]} icon={searchText.value ? faTimes : faSearch} />
           </div>
           <input 
             class="bg-white border-1 border-gray-300 focus:border-blue-400 focus:bg-gray-100 outline-none py-2 pl-3 pr-10 rounded-md transition w-full"

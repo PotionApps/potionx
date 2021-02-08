@@ -1,12 +1,11 @@
-import { defineComponent } from "vue";
+import { defineComponent } from "vue"
+import { faFilter, faSortAmountDown, faTag } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Pagination from '../../components/Pagination/Pagination'
 import Pill from '../../components/Pill/Pill'
 import Search from '../../components/Search/Search'
-import StateEmpty from "../../components/StateEmpty/StateEmpty";
-import StateLoading from "../../components/StateLoading/StateLoading";
-import FolderOpen from '../../assets/folder-open.svg'
-import Filter from '../../assets/filter.svg'
-import Sort from '../../assets/sort.svg'
+import StateEmpty from "../../components/StateEmpty/StateEmpty"
+import StateLoading from "../../components/StateLoading/StateLoading"
 
 export interface AdminListProps {
   
@@ -32,13 +31,13 @@ export default defineComponent({
             />
             <div class="flex-fit s650m:pr-1 s650m:w-1/2 s650:ml-2">
               <div class="bg-white border-1 border-gray-300 cursor-pointer flex items-center p-2 rounded-md  transition hover:border-blue-400">
-                <img class="mr-1 w-4" src={Sort} />
+                <FontAwesomeIcon class="mr-1 text-gray-400 text-base" icon={faSortAmountDown} />
                 <span>Oldest</span>
               </div>
             </div>
             <div class="flex-fit mb-2 s650m:pl-1 s650m:w-1/2 s650:ml-2">
               <div class="bg-white border-1 border-gray-300 cursor-pointer flex items-center p-2 rounded-md  transition hover:border-blue-400">
-                <img class="mr-1 w-4" src={Filter} />
+                <FontAwesomeIcon class="mr-1 text-gray-400 text-base" icon={faFilter} />
                 <span>Sort</span>
               </div>
             </div>
@@ -46,7 +45,7 @@ export default defineComponent({
           <div class="flex">
             <Pill 
               class="mb-2 mr-2"
-              image={FolderOpen}
+              icon={faTag}
               label="Category"
               remove={() => {}}
             />

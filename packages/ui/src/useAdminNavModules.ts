@@ -1,6 +1,7 @@
 import { AdminNavItemProps } from "./components/AdminNavItem/AdminNavItem";
 import { computed } from 'vue'
 import { routeNames } from "./playground/routeNames";
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
 
 export const useAdminNavModules = () => {
  
@@ -32,6 +33,7 @@ export const useAdminNavModules = () => {
         }
       },
       {
+        icon: faUsers,
         label: "People",
         to: {
           name: routeNames.login

@@ -1,6 +1,6 @@
-import Back from '../../assets/back.svg'
 import Btn, { BtnProps } from "../Btn/Btn";
 import { defineComponent, PropType, Ref } from "vue";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { RouteLocationRaw } from "vue-router";
 
 export interface AdminHeaderBtnProps extends BtnProps {
@@ -37,7 +37,7 @@ export default defineComponent({
             <div class={["flex", "flex-full", "items-center", "mb-2"]}>
               {props.back && <Btn 
                 class="mr-2 s1050m:hidden"
-                image={Back}
+                icon={faArrowLeft}
               />}
               <div class="s1050:max-w-500 s1450:max-w-600">
                 <p class="font-semibold text-gray-900 text-xl">{props.title || "Untitled"}</p>
@@ -51,17 +51,10 @@ export default defineComponent({
               <div class="flex flex-wrap s1050:justify-end">
                 {props.btns?.value.map(btn => {
                   return <Btn
-                    bg={btn.bg}
-                    bgHover={btn.bgHover}
-                    color={btn.color}
-                    colorHover={btn.colorHover}
+                    {...btn}
                     class={["mb-2 s1050m:mr-2 s1050:ml-2", btn.hideBtnMobile && "s1050m:hidden"]}
-                    click={btn.click}
                     fontSize="text-xs"
-                    image={btn.image}
-                    label={btn.label}
                     padding="p-2"
-                    to={btn.to}
                 />})}
               </div>
             </div>
