@@ -16,7 +16,7 @@ export const useAdminNavAccount = () => {
         click: () => {},
         label: "Log Out"
       }
-    ] as AdminNavItemProps[])
+    ])
   })
 
   return { adminNavAccount }

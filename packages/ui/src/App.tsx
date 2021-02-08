@@ -1,11 +1,11 @@
-import AdminNav from "./components/AdminNav/AdminNav";
-import AdminSidebar from "./components/AdminSidebar/AdminSidebar";
 import { defineComponent, computed, ref } from 'vue'
-import PotionLogo from './assets/potion-logo.svg'
 import { useAdminNavAccount } from "./useAdminNavAccount";
 import { useAdminNavModules } from "./useAdminNavModules";
 import { routeNames } from "./playground/routeNames";
 import { useRoute } from "vue-router"
+import AdminSidebar from "./components/AdminSidebar/AdminSidebar";
+import PotionLogo from './assets/potion-logo.svg'
+import SidebarNavItem from "./componentTemplates/SidebarNavItem/SidebarNavItem";
 import * as Stories from './stories'
 
 export default defineComponent({
@@ -37,18 +37,26 @@ export default defineComponent({
         showSidebar.value && 
         <AdminSidebar
           class="s1050m:hidden relative z-1"
-          v-slots={{
-            navPrimary: () => {
-              return <AdminNav nav={adminNavModules.value} />
-            },
-            navSecondary: () => {
-              return <AdminNav nav={adminNavAccount.value} />
-            }
-          }}
         >
           <div class="flex items-center mb-6">
             <img class="mr-2 w-4" src={PotionLogo}/>
             <p class="text-2xl text-gray-100">Potion</p>
+          </div>
+          <div class="flex flex-1 flex-col justify-between">
+            <nav>
+              {
+                adminNavModules.value.map(nav => {
+                  return <SidebarNavItem class="mb-2" to={nav.to}>{nav.label}</SidebarNavItem>
+                })
+              }
+            </nav>
+            <nav>
+              {
+                adminNavAccount.value.map(nav => {
+                  return <SidebarNavItem class="mb-2" to={nav.to}>{nav.label}</SidebarNavItem>
+                })
+              }
+            </nav>
           </div>
         </AdminSidebar>
       }
