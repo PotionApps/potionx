@@ -12,6 +12,8 @@ defmodule Potionx.New.Project do
             lib_web_name: nil,
             local_postgres_password: nil,
             local_postgres_user: nil,
+            no_install_deps: false,
+            no_migrations: true,
             root_app: nil,
             root_mod: nil,
             project_path: nil,

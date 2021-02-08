@@ -89,7 +89,7 @@ defmodule Mix.Tasks.Potionx.New do
              app: :string, module: :string, web_module: :string,
              database: :string, binary_id: :boolean, html: :boolean,
              gettext: :boolean, umbrella: :boolean, verbose: :boolean,
-             live: :boolean, dashboard: :boolean, install: :boolean]
+             live: :boolean, dashboard: :boolean, install: :boolean, no_migrations: :boolean, no_install_deps: :boolean]
 
   def ask_for_email(%Project{} = project) do
     email =
@@ -158,35 +158,10 @@ defmodule Mix.Tasks.Potionx.New do
     project
   end
 
-  def install_pow_assent(%Project{} = project, path_key) do
-    path = Map.fetch!(project, path_key)
-
-    maybe_cd(path, fn ->
-      cmd(project, "mix pow_assent.install")
-    end)
-
+  defp install_deps(%Project{no_install_deps: true} = project, _generator, _path_key) do
     project
   end
-
-  def generate(base_path, generator, path, opts) do
-    base_path
-    |> Project.new(opts)
-    |> ask_for_local_postgres_user
-    |> ask_for_local_postgres_password
-    |> generator.prepare_project()
-    |> ask_for_email
-    |> Generator.put_binding()
-    |> validate_project(path)
-    |> generator.generate()
-    |> prompt_to_install_deps(generator, path)
-    |> install_pow_assent(path)
-    |> generate_default_graphql(path)
-    |> run_migrations(path)
-    |> run_seed(path)
-    |> add_me_query
-  end
-
-  defp prompt_to_install_deps(%Project{} = project, generator, path_key) do
+  defp install_deps(%Project{} = project, generator, path_key) do
     path = Map.fetch!(project, path_key)
 
     maybe_cd(path, fn ->
@@ -220,6 +195,37 @@ defmodule Mix.Tasks.Potionx.New do
     end)
     project
   end
+
+  def install_pow_assent(%Project{} = project, path_key) do
+    path = Map.fetch!(project, path_key)
+
+    maybe_cd(path, fn ->
+      cmd(project, "mix pow_assent.install")
+    end)
+
+    project
+  end
+
+  def generate(base_path, generator, path, opts) do
+    base_path
+    |> Project.new(opts)
+    |> Map.replace(:no_install_deps, !!Keyword.get(opts, :no_install_deps, true))
+    |> Map.replace(:no_migrations, !!Keyword.get(opts, :no_migrations, true))
+    |> ask_for_local_postgres_user
+    |> ask_for_local_postgres_password
+    |> generator.prepare_project()
+    |> ask_for_email
+    |> Generator.put_binding()
+    |> validate_project(path)
+    |> generator.generate()
+    |> install_deps(generator, path)
+    |> install_pow_assent(path)
+    |> generate_default_graphql(path)
+    |> run_migrations(path)
+    |> run_seed(path)
+    |> add_me_query
+  end
+
   defp maybe_cd(path, func), do: path && File.cd!(path, func)
 
   defp parse_opts(argv) do
@@ -232,7 +238,7 @@ defmodule Mix.Tasks.Potionx.New do
   end
 
   def run([version]) when version in ~w(-v --version) do
-    Mix.shell().info("Phoenix v#{@version}")
+    Mix.shell().info("Potionx v#{@version}")
   end
 
   def run(argv) do
@@ -254,12 +260,18 @@ defmodule Mix.Tasks.Potionx.New do
     end
   end
 
+  def run_migrations(%Project{no_migrations: true} = project, _path_key) do
+    project
+  end
   def run_migrations(%Project{} = project, path_key) do
     path = Map.fetch!(project, path_key)
     maybe_cd(path, fn ->
       cmd(project, "mix ecto.setup")
     end)
 
+    project
+  end
+  def run_seed(%Project{no_migrations: true} = project, _path_key) do
     project
   end
   def run_seed(%Project{} = project, path_key) do
