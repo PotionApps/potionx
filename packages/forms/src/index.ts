@@ -12,7 +12,6 @@ import useFormButton from './useFormButton'
 
 export type {
   Field,
-  FormSubmitStatus,
   Validation,
   ValidationFn,
   ValidationFnCustom,
@@ -25,6 +24,7 @@ export {
   FieldRadio,
   FieldSelect,
   FieldTextarea,
+  FormSubmitStatus,
   useField,
   useForm,
   useFormButton
