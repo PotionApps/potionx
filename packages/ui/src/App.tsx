@@ -8,6 +8,9 @@ import { routeNames } from "./playground/routeNames";
 import { useRoute } from "vue-router"
 import * as Stories from './stories'
 
+import { faAddressBook, faCalendar } from '@fortawesome/free-regular-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 
 export default defineComponent({
   name: 'App',
@@ -24,6 +27,7 @@ export default defineComponent({
     const showMenu = ref(false)
 
     return () => <div class="flex min-h-screen max-w-screen overflow-x-hidden">
+      <FontAwesomeIcon icon={faCalendar} />
       {
         showMenu.value &&
         <div class="bg-white fixed inset-y-0 left-0 py-4 shadow-2xl w-64 z-2">
