@@ -7,11 +7,12 @@ import FieldInput from './fields/FieldInput'
 import FieldRadio from './fields/FieldRadio'
 import FieldTextarea from './fields/FieldTextarea'
 import useField from './useField'
-import useForm from './useForm'
+import useForm, { FormSubmitStatus } from './useForm'
 import useFormButton from './useFormButton'
 
 export type {
   Field,
+  FormSubmitStatus,
   Validation,
   ValidationFn,
   ValidationFnCustom,
