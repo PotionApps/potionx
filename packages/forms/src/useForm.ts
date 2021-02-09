@@ -139,7 +139,8 @@ export default function useForm(args: UseFormArgs) {
   const setError = (key: string, value: string) => {
     errors[key] = (errors[key] || []).concat([value])
   }
-  const setServerError = (key: string, value: string) => {
+  const setServerError = (key?: string | null, value?: string | null) => {
+    if (!key || !value) return
     serverErrors[key] = (serverErrors[key] || []).concat([value])
   }
 
