@@ -1,4 +1,6 @@
 import AdminCard from '../../components/AdminCard/AdminCard'
+import AdminFooter from "../../components/AdminFooter/AdminFooter";
+import AdminHeader from "../../components/AdminHeader/AdminHeader";
 import AdminList from '../../layouts/AdminList/AdminList'
 import AdminShell from "../../layouts/AdminShell/AdminShell";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
@@ -10,10 +12,6 @@ export default defineComponent({
 
     const HeaderBtns = computed(() => [
       {
-        bg: "bg-blue-300",
-        bgHover: "bg-blue-600",
-        color: "text-gray-100",
-        colorHover: "text-white",
         hideBtnMobile: true,
         icon: faArrowRight,
         label: "Compose",
@@ -64,27 +62,21 @@ export default defineComponent({
       return ""
     })
 
-    return () => <AdminShell
-      class="bg-gray-200"
-      adminFooterBtns={mobileBtns}
-      adminFooterMenuRoute={{name: routeNames.menu}}
-      adminHeaderBack={() => {}}
-      adminHeaderBtns={HeaderBtns}
-      adminHeaderSubtitle="Post - 5 days"
-      adminHeaderTabs={HeaderTabs}
-      adminHeaderTitle="Some Article Title that is longer than a usual title"
-    >
+    return () => <AdminShell>
+      <AdminHeader 
+        back={() => {}}
+        btns={HeaderBtns}
+        subtitle="Post - 5 days"
+        tabs={HeaderTabs}
+        title="Some Article Title that is longer than a usual title"
+      />
       <AdminList searchValue={search}>
-        <AdminCard>
-          Test
-        </AdminCard>
-        <AdminCard>
-          Test
-        </AdminCard>
-        <AdminCard>
-          Test
-        </AdminCard>
+        {[1,2,3,4].map(i => <AdminCard>Test</AdminCard>)}
       </AdminList>
+      <AdminFooter
+        btns={mobileBtns}
+        menuRoute={{name: routeNames.menu}}
+      />
     </AdminShell>
   }
 })

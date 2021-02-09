@@ -3,6 +3,10 @@ import { defineComponent } from "vue"
 import { faAngleDoubleLeft, faAngleDoubleRight, faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "../../fontawesomeTypeFix"
 
+export interface PaginationProps {
+  
+}
+
 export default defineComponent({
   name: "Pagination",
   props: {

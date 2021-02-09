@@ -2,9 +2,8 @@ import { SidebarNavItemProps } from './componentTemplates/SidebarNavItem/Sidebar
 import AdminHeader, { AdminHeaderProps } from './components/AdminHeader/AdminHeader'
 import AdminList, { AdminListProps } from './layouts/AdminList/AdminList'
 import AdminNav, { AdminNavProps } from './components/AdminNav/AdminNav'
-import AdminShell, { AdminShellProps } from './layouts/AdminShell/AdminShell'
+import AdminShell from './layouts/AdminShell/AdminShell'
 import AdminSidebar from './components/AdminSidebar/AdminSidebar'
-import Btn, { BtnProps } from './components/Btn/Btn'
 import Login from './components/Login/Login'
 import LoginButton from './components/LoginButton/LoginButton'
 import LoginError from './components/LoginError/LoginError'
@@ -19,8 +18,6 @@ export type {
   AdminHeaderProps,
   AdminListProps,
   AdminNavProps,
-  AdminShellProps,
-  BtnProps,
   ModelTableProps,
   PaginationProps,
   PillProps,
@@ -34,7 +31,6 @@ export {
   AdminNav,
   AdminShell,
   AdminSidebar,
-  Btn,
   Login,
   LoginButton,
   LoginError,
