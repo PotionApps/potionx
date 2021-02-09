@@ -79,13 +79,13 @@ export default function useForm(args: UseFormArgs) {
   })
 
   const consolidatedErrors = computed(() => {
-    return [
-      ...new Set(
-        Object.keys(errors).concat(
-          Object.keys(serverErrors)
-        )
+    const uniqueKeys = new Set(
+      Object.keys(errors)
+      .concat(
+        Object.keys(serverErrors)
       )
-    ].reduce((acc: {[key: string]: string[]}, key) => {
+    )
+    return Array.from(uniqueKeys).reduce((acc: {[key: string]: string[]}, key) => {
       acc[key] = (errors[key] || []).concat((serverErrors[key] || []))
       return acc
     }, {})
