@@ -1,7 +1,6 @@
 import { SidebarNavItemProps } from './componentTemplates/SidebarNavItem/SidebarNavItem'
-import AdminHeader from './components/AdminHeader/AdminHeader'
+import AdminHeader, { AdminHeaderProps, AdminHeaderTabProps } from './components/AdminHeader/AdminHeader'
 import AdminList, { AdminListProps } from './layouts/AdminList/AdminList'
-import AdminNav, { AdminNavProps } from './components/AdminNav/AdminNav'
 import AdminShell from './layouts/AdminShell/AdminShell'
 import AdminSidebar from './components/AdminSidebar/AdminSidebar'
 import Login from './components/Login/Login'
@@ -15,8 +14,9 @@ import StateEmpty, { StateEmptyProps } from './components/StateEmpty/StateEmpty'
 import StateLoading from './components/StateLoading/StateLoading'
 
 export type {
+  AdminHeaderProps,
+  AdminHeaderTabProps,
   AdminListProps,
-  AdminNavProps,
   ModelTableProps,
   PillProps,
   SidebarNavItemProps,
@@ -26,7 +26,6 @@ export type {
 export {
   AdminHeader,
   AdminList,
-  AdminNav,
   AdminShell,
   AdminSidebar,
   Login,
