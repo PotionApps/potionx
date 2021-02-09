@@ -1,64 +1,26 @@
-import Btn, { BtnProps } from "../../componentTemplates/Btn/Btn";
-import BtnIcon from "../../componentTemplates/Btn/BtnIcon";
 import { defineComponent, PropType, Ref } from "vue";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { RouteLocationRaw } from "vue-router";
 
-export interface AdminHeaderBtnProps extends BtnProps {
-  hideBtnMobile?: boolean
-}
-
-export interface AdminHeaderTabProps extends BtnProps {
-
+export interface AdminHeaderTabProps {
+  label: string
+  to: RouteLocationRaw
 }
 
 export interface AdminHeaderProps {
-  back?: ((e?: MouseEvent) => void | RouteLocationRaw),
-  btns?: AdminHeaderBtnProps[]
-  subtitle?: String
   tabs?: AdminHeaderTabProps[]
-  title?: string
 }
 
 export default defineComponent({
   name: "AdminHeader",
   props: {
-    back: Function || Object,
-    btns: Object as PropType<Ref<AdminHeaderBtnProps[]>>,
-    subtitle: String,
-    tabs: Object as PropType<Ref<AdminHeaderTabProps[]>>,
-    title: String
+    tabs: Object as PropType<Ref<AdminHeaderTabProps[]>>
   },
   setup (props, context) {
     return () => {
       return (
-        <div class="bg-white border-b-1 border-gray-300 px-4 pt-4 s850:pt-6 s1050:px-8 s1450:px-12">
-          <div class="flex items-start justify-between pr-4 s1050m:flex-wrap s1050:pr-0">
+        <div class="bg-white border-b-1 border-gray-300 px-4 pt-3 s850:pt-4 s1050:px-8 s1450:px-12">
 
-            <div class={["flex", "flex-full", "items-center", "mb-2"]}>
-              {props.back && <BtnIcon
-                class="mr-2 s1050m:hidden"
-                icon={faArrowLeft}
-                to={props.back}
-              />}
-              <div class="s1050:max-w-500 s1450:max-w-600">
-                <p class="font-semibold text-gray-900 text-xl">{props.title || "Untitled"}</p>
-                <span class="text-gray-600 text-sm">{props.subtitle}</span>
-              </div>
-              {context.slots.content && context.slots.content()}
-            </div>
-
-            <div class="flex s1050m:flex-wrap">
-              {context.slots.buttons && context.slots.buttons()}
-              <div class="flex flex-wrap s1050:justify-end">
-                {props.btns?.value.map(btn => {
-                  return <Btn
-                    {...btn}
-                    class={["bg-gray-200 mb-2 p-2 text-gray-900 text-xs s1050m:mr-2 s1050:ml-2", btn.hideBtnMobile && "s1050m:hidden"]}
-                />})}
-              </div>
-            </div>
-          </div>
+           {context.slots.default && context.slots.default()}
 
           {
             props.tabs && 

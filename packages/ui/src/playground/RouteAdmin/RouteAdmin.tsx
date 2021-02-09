@@ -64,13 +64,21 @@ export default defineComponent({
     })
 
     return () => <AdminShell>
-      <AdminHeader 
-        back={() => {}}
-        btns={HeaderBtns}
-        subtitle="Post - 5 days"
-        tabs={HeaderTabs}
-        title="Some Article Title that is longer than a usual title"
-      />
+      <AdminHeader>
+        <div class="flex items-center justify-between pr-4 s1050m:flex-wrap s1050:pr-0">
+          <div class="flex flex-full items-center mb-2">
+            <div class="s1050:max-w-500 s1450:max-w-600">
+              <p class="font-semibold text-gray-900 text-xl">Some Article Title</p>
+              <span class="text-gray-600 text-sm">Post - 5 days ago</span>
+            </div>
+          </div>
+          {HeaderBtns.value.map(btn => {
+            return <Btn
+              {...btn}
+              class={["bg-gray-200 mb-2 p-2 rounded text-gray-900 text-xs s1050m:mr-2 s1050:ml-2", btn.hideBtnMobile && "s1050m:hidden"]}
+          />})}
+        </div>
+      </AdminHeader>
       <AdminList searchValue={search}>
         {[1,2,3,4].map(i => <AdminCard>Test</AdminCard>)}
       </AdminList>
