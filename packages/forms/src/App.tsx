@@ -1,10 +1,10 @@
 import { computed, defineComponent } from 'vue'
-import FieldCheckbox from './fields/FieldCheckbox'
-import FieldInput from './fields/FieldInput'
-import FieldRadio from './fields/FieldRadio'
-import FieldSelect from './fields/FieldSelect'
+import FieldCheckbox from './fields/FieldCheckbox/FieldCheckbox'
+import FieldInput from './fields/FieldInput/FieldInput'
+import FieldRadio from './fields/FieldRadio/FieldRadio'
+import FieldSelect from './fields/FieldSelect/FieldSelect'
 import useForm from './useForm'
-import FieldTextarea from './fields/FieldTextarea'
+import FieldTextarea from './fields/FieldTextarea/FieldTextarea'
 import FormSubmit from './FormSubmit'
 
 export default defineComponent({
