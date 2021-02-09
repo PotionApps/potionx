@@ -1,11 +1,11 @@
 import { defineComponent } from "vue"
 import { faFilter, faSortAmountDown, faTag } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Pagination from '../../components/Pagination/Pagination'
 import Pill from '../../components/Pill/Pill'
 import Search from '../../components/Search/Search'
 import StateEmpty from "../../components/StateEmpty/StateEmpty"
 import StateLoading from "../../components/StateLoading/StateLoading"
+import { FontAwesomeIcon } from "../../fontawesomeTypeFix"
 
 export interface AdminListProps {
   

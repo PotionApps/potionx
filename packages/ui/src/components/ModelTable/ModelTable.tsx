@@ -9,6 +9,7 @@ export interface ModelRow {
   id: string
   description?: string
   icon?: string
+  image?: string
   insertedAt?: string
   subtitle?: string
   title?: string
@@ -95,7 +96,6 @@ export default defineComponent({
       <tbody>
         {
           props.rows.map(row => {
-
             return <tr>
               {
                 fieldsOrdered.value!.map((field) => {

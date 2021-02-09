@@ -1,11 +1,7 @@
 import Btn from "../../components/Btn/Btn"
 import { defineComponent } from "vue"
 import { faAngleDoubleLeft, faAngleDoubleRight, faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
-export interface PaginationProps {
-
-}
+import { FontAwesomeIcon } from "../../fontawesomeTypeFix"
 
 export default defineComponent({
   name: "Pagination",

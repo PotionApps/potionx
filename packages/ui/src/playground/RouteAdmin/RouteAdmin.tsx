@@ -75,15 +75,15 @@ export default defineComponent({
       adminHeaderTitle="Some Article Title that is longer than a usual title"
     >
       <AdminList searchValue={search}>
-          <AdminCard>
-            Test
-          </AdminCard>
-          <AdminCard>
-            Test
-          </AdminCard>
-          <AdminCard>
-            Test
-          </AdminCard>
+        <AdminCard>
+          Test
+        </AdminCard>
+        <AdminCard>
+          Test
+        </AdminCard>
+        <AdminCard>
+          Test
+        </AdminCard>
       </AdminList>
     </AdminShell>
   }

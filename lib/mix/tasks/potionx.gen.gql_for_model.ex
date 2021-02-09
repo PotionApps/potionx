@@ -239,6 +239,17 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
 
     state
   end
+  def field_type_from_validations(type, validations) do
+    Enum.find(validations, fn
+      %{name: :inclusion} -> true
+      _ -> false
+    end)
+    |> case do
+      nil -> type
+      type -> type
+    end
+  end
+
 
   @doc false
   def files_to_be_generated(%GqlForModel{} = state) do
@@ -807,17 +818,18 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
           Enum.member?([:inserted_at, :updated_at], k) ->
             acc
           true ->
+            validations =
+              Enum.reduce(state.validations, [], fn {key, v}, acc ->
+                if (key === k) do
+                  acc ++ [v]
+                else
+                  acc
+                end
+              end)
             acc ++ [%{
               name: to_string(k),
-              type: v,
-              validations:
-                Enum.reduce(state.validations, [], fn {key, v}, acc ->
-                  if (key === k) do
-                    acc ++ [v]
-                  else
-                    acc
-                  end
-                end)
+              type: field_type_from_validations(v, validations),
+              validations: validations
             }]
         end
     end)

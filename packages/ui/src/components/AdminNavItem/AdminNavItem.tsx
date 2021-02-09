@@ -1,6 +1,6 @@
 import { defineComponent, computed, PropType, resolveComponent } from "vue";
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { RouteLocationRaw } from "vue-router";
+import { FontAwesomeIcon } from "../../fontawesomeTypeFix";
 
 export interface AdminNavItemProps {
   click?: (e?: MouseEvent) => void

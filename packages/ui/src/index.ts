@@ -1,3 +1,4 @@
+import { SidebarNavItemProps } from './componentTemplates/SidebarNavItem/SidebarNavItem'
 import AdminHeader, { AdminHeaderProps } from './components/AdminHeader/AdminHeader'
 import AdminList, { AdminListProps } from './layouts/AdminList/AdminList'
 import AdminNav, { AdminNavProps } from './components/AdminNav/AdminNav'
@@ -25,6 +26,7 @@ export type {
   ModelTableProps,
   PaginationProps,
   PillProps,
+  SidebarNavItemProps,
   StateEmptyProps
 }
 

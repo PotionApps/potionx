@@ -15,7 +15,7 @@ export interface AdminShellProps{
 }
 
 export default defineComponent({
-  name: "AdminLayout",
+  name: "AdminShell",
   props: {
     adminFooterBtns: Object as PropType<Ref<BtnProps[]>>,
     adminFooterMenuRoute: {

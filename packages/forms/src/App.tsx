@@ -12,7 +12,7 @@ export default defineComponent({
   components: {
   },
   setup () {
-    const form = useForm<{checkbox: string[], input: string, radio: string, test: string}>({
+    const form = useForm({
       data: computed(() => {
         return {
           checkbox: [],

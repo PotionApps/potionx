@@ -1,7 +1,7 @@
 import './Btn.css';
 import { defineComponent, computed, PropType, resolveComponent } from "vue";
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { RouteLocationRaw } from "vue-router";
+import { FontAwesomeIcon } from '../../fontawesomeTypeFix';
 
 export interface BtnProps {
   bg?: string

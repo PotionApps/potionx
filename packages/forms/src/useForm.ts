@@ -1,5 +1,5 @@
 import { isEqual } from 'lodash'
-import { reactive, computed, ref, Ref, watch, provide } from "vue";
+import { reactive, computed, ref, Ref, watch, provide, ComputedRef } from "vue";
 import { Field } from './Field';
 import { Validator } from './validators/Validator';
 import validatorEcto from './validators/validatorEcto/validatorEcto';
@@ -25,16 +25,16 @@ export enum FormSubmitStatus {
   success = "success"
 }
 
-export interface UseFormArgs<Model extends object> {
+export interface UseFormArgs {
   clearAfterSuccess?: boolean
-  data?: Ref<Readonly<Partial<Model>>>
-  defaultValues?: Partial<{[k in keyof Model]: string[]}>
+  data?: ComputedRef<any>
+  defaultValues?: Partial<{[key: string]: string[]}>
   fields: Field[]
-  onSubmit: (cs: Changeset<Model>) => Promise<boolean>
+  onSubmit: (cs: Changeset<any>) => Promise<boolean>
   validator?: Validator
 }
 
-export default function useForm<Model extends object = {}>(args: UseFormArgs<Model>) {
+export default function useForm(args: UseFormArgs) {
   let blurred = reactive<FormBlurred>({})
   let changes = reactive<any>({})
   let errors = reactive<{[key: string]: string[]}>({})
