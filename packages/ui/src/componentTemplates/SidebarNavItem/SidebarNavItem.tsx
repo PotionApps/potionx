@@ -23,17 +23,22 @@ export default defineComponent({
   },
   setup (props: SidebarNavItemProps, ctx) {
     const classes = computed(() => {
-      return "flex items-center justify-between opacity-70 hover:opacity-100 transition-opacity text-gray-100 w-full"
+      return "block opacity-70 text-gray-100 transition-opacity w-full hover:opacity-100"
     })
     return () => {
-      const slot = <div class="flex items-center">
-        {props.icon && <FontAwesomeIcon class="text-gray-100 mr-2 w-4" icon={props.icon} />}
-        {props.label}
-        {ctx.slots.default && ctx.slots.default()}
+      const slot = <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          {props.icon && <div class="flex items-center justify-center mr-2 w-5">
+              <FontAwesomeIcon icon={props.icon} />
+            </div>
+          }
+          {props.label}
+          {ctx.slots.default && ctx.slots.default()}
+        </div>
         {
           props.notification &&
           <div class="bg-blue-500 flex ml-2 px-2 py-1 rounded-full">
-            <span class="font-semibold text-gray-100 text-sm">{props.notification}</span>
+            <span class="font-semibold text-white text-sm">{props.notification}</span>
           </div>
         }
       </div>

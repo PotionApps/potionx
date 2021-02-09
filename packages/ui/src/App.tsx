@@ -1,6 +1,6 @@
 import { defineComponent, computed, ref } from 'vue'
-import { useAdminNavAccount } from "./useAdminNavAccount";
-import { useAdminNavModules } from "./useAdminNavModules";
+import { useAdminNavPrimary } from "./useAdminNavPrimary";
+import { useAdminNavSecondary } from "./useAdminNavSecondary";
 import { routeNames } from "./playground/routeNames";
 import { useRoute } from "vue-router"
 import AdminSidebar from "./components/AdminSidebar/AdminSidebar";
@@ -13,8 +13,8 @@ export default defineComponent({
   components: {},
   setup () {
     
-    const { adminNavAccount } = useAdminNavAccount()
-    const { adminNavModules } = useAdminNavModules()
+    const { adminNavPrimary } = useAdminNavPrimary()
+    const { adminNavSecondary } = useAdminNavSecondary()
 
     const showSidebar = computed(() => {
       return useRoute().name != routeNames.login && routeNames.loginError
@@ -45,14 +45,14 @@ export default defineComponent({
           <div class="flex flex-1 flex-col justify-between">
             <nav>
               {
-                adminNavModules.value.map(nav => {
+                adminNavPrimary.value.map(nav => {
                   return <SidebarNavItem class="mb-2" {...nav} />
                 })
               }
             </nav>
             <nav>
               {
-                adminNavAccount.value.map(nav => {
+                adminNavSecondary.value.map(nav => {
                   return <SidebarNavItem class="mb-2" {...nav} />
                 })
               }

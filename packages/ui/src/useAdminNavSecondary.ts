@@ -2,9 +2,9 @@ import { AdminNavItemProps } from "./components/AdminNavItem/AdminNavItem";
 import { computed } from 'vue'
 import { routeNames } from "./playground/routeNames";
 
-export const useAdminNavAccount = () => {
+export const useAdminNavSecondary = () => {
 
-  const adminNavAccount = computed<AdminNavItemProps[]>(() => {
+  const adminNavSecondary = computed<AdminNavItemProps[]>(() => {
     return ([
       {
         label: "Account",
@@ -19,5 +19,5 @@ export const useAdminNavAccount = () => {
     ])
   })
 
-  return { adminNavAccount }
+  return { adminNavSecondary }
 }

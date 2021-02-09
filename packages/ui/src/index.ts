@@ -2,7 +2,6 @@ import { SidebarNavItemProps } from './componentTemplates/SidebarNavItem/Sidebar
 import AdminHeader, { AdminHeaderProps } from './components/AdminHeader/AdminHeader'
 import AdminList, { AdminListProps } from './layouts/AdminList/AdminList'
 import AdminNav, { AdminNavProps } from './components/AdminNav/AdminNav'
-import AdminNavItem, { AdminNavItemProps } from './components/AdminNavItem/AdminNavItem'
 import AdminShell, { AdminShellProps } from './layouts/AdminShell/AdminShell'
 import AdminSidebar from './components/AdminSidebar/AdminSidebar'
 import Btn, { BtnProps } from './components/Btn/Btn'
@@ -19,7 +18,6 @@ import StateLoading from './components/StateLoading/StateLoading'
 export type {
   AdminHeaderProps,
   AdminListProps,
-  AdminNavItemProps,
   AdminNavProps,
   AdminShellProps,
   BtnProps,
@@ -34,7 +32,6 @@ export {
   AdminHeader,
   AdminList,
   AdminNav,
-  AdminNavItem,
   AdminShell,
   AdminSidebar,
   Btn,
