@@ -1,4 +1,5 @@
-import Btn, { BtnProps } from "../Btn/Btn";
+import Btn, { BtnProps } from "../../componentTemplates/Btn/Btn";
+import BtnIcon from "../../componentTemplates/Btn/BtnIcon";
 import { defineComponent, PropType, Ref } from "vue";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { RouteLocationRaw } from "vue-router";
@@ -35,9 +36,10 @@ export default defineComponent({
           <div class="flex items-start justify-between pr-4 s1050m:flex-wrap s1050:pr-0">
 
             <div class={["flex", "flex-full", "items-center", "mb-2"]}>
-              {props.back && <Btn 
+              {props.back && <BtnIcon
                 class="mr-2 s1050m:hidden"
                 icon={faArrowLeft}
+                to={props.back}
               />}
               <div class="s1050:max-w-500 s1450:max-w-600">
                 <p class="font-semibold text-gray-900 text-xl">{props.title || "Untitled"}</p>
@@ -52,9 +54,7 @@ export default defineComponent({
                 {props.btns?.value.map(btn => {
                   return <Btn
                     {...btn}
-                    class={["mb-2 s1050m:mr-2 s1050:ml-2", btn.hideBtnMobile && "s1050m:hidden"]}
-                    fontSize="text-xs"
-                    padding="p-2"
+                    class={["bg-gray-200 mb-2 p-2 text-gray-900 text-xs s1050m:mr-2 s1050:ml-2", btn.hideBtnMobile && "s1050m:hidden"]}
                 />})}
               </div>
             </div>

@@ -1,4 +1,4 @@
-import Btn, { BtnProps } from "../Btn/Btn";
+import Btn, { BtnProps } from "../../componentTemplates/Btn/Btn";
 import { defineComponent, PropType, Ref } from "vue";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { RouteLocationRaw } from "vue-router";
@@ -27,10 +27,7 @@ export default defineComponent({
           {
            props.btns && props.btns.value.map(btn => {
               return <Btn
-                bg="bg-gray-700"
-                bgHover="bg-gray-600"
-                color="text-gray-300"
-                class="mr-2 w-full"
+                class="bg-gray-700 hover:bg-gray-600 mr-2 text-gray-300 w-full"
                 {...btn}
               />
             })
@@ -38,13 +35,8 @@ export default defineComponent({
           {context.slots.default && context.slots.default()}
           {
             !props.hideMenu && <Btn
-              bg="bg-gray-700"
-              bgHover="bg-gray-600"
-              color="text-gray-300"
-              class={["h-auto w-auto", props.btns ? "flex-fit" : "flex-full"]}
+              class={["bg-gray-700 h-auto px-3 py-2 rounded text-gray-300 w-auto hover:bg-gray-600", props.btns ? "flex-fit" : "flex-full"]}
               icon={faBars}
-              padding="px-3 py-2"
-              radius="rounded"
               to={props.menuRoute}
             />
           }

@@ -1,7 +1,7 @@
 import AdminFooter from "../../components/AdminFooter/AdminFooter";
 import AdminHeader, { AdminHeaderBtnProps, AdminHeaderTabProps } from "../../components/AdminHeader/AdminHeader";
 import { defineComponent, PropType, Ref } from "vue";
-import { BtnProps } from "../../components/Btn/Btn";
+import { BtnProps } from "../../componentTemplates/Btn/Btn";
 import { RouteLocationRaw } from "vue-router";
 
 export interface AdminShellProps{
