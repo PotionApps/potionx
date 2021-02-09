@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '../../fontawesomeTypeFix';
 import { RouteLocationRaw } from "vue-router";
 
 export interface BtnProps {
-  click?: (e?: MouseEvent) => void
+  click?: (e?: MouseEvent) => any
   disabled?: boolean
   icon?: {}
   id?: string
@@ -16,7 +16,7 @@ export interface BtnProps {
 
 export default defineComponent({
   props: {
-    click: Function as PropType<(e?: MouseEvent) => void>,
+    click: Function as PropType<(e?: MouseEvent) => any>,
     disabled: Boolean,
     icon: Object,
     label: String,
