@@ -67,7 +67,8 @@ export default defineComponent({
 
     watch(val, (updatedVal) => {
       if (updatedVal !== internalValue.value && !focused.value) {
-        internalValue.value = updatedVal
+        internalValue.value.splice(0, internalValue.value.length)
+        internalValue.value.push(...(updatedVal || []))
       }
     }, { immediate: true})
     

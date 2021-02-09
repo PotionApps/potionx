@@ -345,7 +345,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
       {
         "input_object :#{state.model_name_atom}_filters_single do",
         [
-          "field :id, non_null(:id)"
+          "field :id, non_null(:global_id)"
         ]
       },
       {
