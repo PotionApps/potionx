@@ -105,7 +105,15 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>MutationTest do
       |> Absinthe.run(
         <%= module_name_graphql %>.Schema,
         context: ctx,
-        variables: %{"filters" => %{"id" => entry.id}}
+        variables: %{
+          "filters" => %{
+            "id" => Absinthe.Relay.Node.to_global_id(
+              :<%= model_name_snakecase %>,
+              entry.id,
+              <%= module_name_graphql %>.Schema
+            )
+          }
+        }
       )
       |> (fn {:ok, res} ->
         assert res.data["<%= model_name_graphql_case %>Mutation"]["node"]["id"]
