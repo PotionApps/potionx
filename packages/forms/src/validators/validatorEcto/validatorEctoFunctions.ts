@@ -1,5 +1,9 @@
 import { ValidatorFunction } from "../Validator";
 
+export const emailFormat : ValidatorFunction = (validation, value, data) => {
+  if (typeof value !== "string") return false
+  return (new RegExp("^[A-Za-z0-9\._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$")).test(value)
+}
 
 export const exclusion : ValidatorFunction = (validation, value, data) => {
   return !validation.params!.values.includes(value)

@@ -1,6 +1,6 @@
 import { defineComponent } from "vue"
 import { faFolderOpen } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { FontAwesomeIcon } from "../../fontawesomeTypeFix"
 
 export interface StateEmptyProps {
   icon?: string | undefined

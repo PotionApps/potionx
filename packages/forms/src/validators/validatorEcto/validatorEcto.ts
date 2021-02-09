@@ -9,8 +9,8 @@ const checkValidation = (validation: Validation, value: any, data: any) : string
   if (validation.fn) {
     return validation.fn(validation, value, data)
   }
-  if (!validatorFunctions[name](validation, value, data)) {
-    return [validatorMessages[name](validation)]
+  if (validatorFunctions[name] && !validatorFunctions[name](validation, value, data)) {
+    return [validatorMessages[name]?.(validation)]
   }
   return []
 }

@@ -8,7 +8,7 @@ import Login from './components/Login/Login'
 import LoginButton from './components/LoginButton/LoginButton'
 import LoginError from './components/LoginError/LoginError'
 import ModelTable, { ModelTableProps } from './components/ModelTable/ModelTable'
-import Pagination, { PaginationProps } from './components/Pagination/Pagination'
+import Pagination from './components/Pagination/Pagination'
 import Pill, { PillProps } from './components/Pill/Pill'
 import Search from './components/Search/Search'
 import StateEmpty, { StateEmptyProps } from './components/StateEmpty/StateEmpty'
@@ -19,7 +19,6 @@ export type {
   AdminListProps,
   AdminNavProps,
   ModelTableProps,
-  PaginationProps,
   PillProps,
   SidebarNavItemProps,
   StateEmptyProps

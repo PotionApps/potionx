@@ -1018,13 +1018,13 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
       {k, {n, _}} ->
         {k, %{name: n}}
     end)
-    |> Enum.map(fn field ->
+    |> Enum.map(fn validation ->
       Map.put(
-        field,
+        validation,
         :name,
         Absinthe.Adapter.LanguageConventions.to_external_name(
           to_string(
-            field.name
+            validation.name
           ),
           nil
         )
