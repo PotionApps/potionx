@@ -11,7 +11,6 @@ export interface AdminHeaderProps {
 }
 
 export default defineComponent({
-  name: "AdminHeader",
   props: {
     tabs: Object as PropType<Ref<AdminHeaderTabProps[]>>
   },

@@ -8,12 +8,7 @@ export interface PaginationProps {
 }
 
 export default defineComponent({
-  name: "Pagination",
-  props: {
-
-  },
-  setup (props, context) {
-
+  setup () {
     return () => {
       return (
         <div class="flex items-center justify-center sticky bottom-0">

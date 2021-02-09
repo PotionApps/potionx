@@ -1,12 +1,11 @@
-import { defineComponent } from "vue"
+import { defineComponent } from "vue";
 
 export default defineComponent({
   props: {},
   setup (props, context) {
-
     return () => {
       return (
-        <div class="border-gray-300 border-t-1 overflow-hidden s750:border-l-1 s750:border-r-1 s750m:-mx-4 s750:rounded-md s750:shadow-md">
+        <div class="px-4 py-6 s1050:px-8 s1450:px-12">
           {context.slots.default && context.slots.default()}
         </div>
       )

@@ -2,6 +2,19 @@ import { defineComponent, computed, PropType } from "vue";
 import { FontAwesomeIcon } from '../../fontawesomeTypeFix';
 import { RouteLocationRaw } from "vue-router";
 
+export const btnProps : any = {
+  click: Function as PropType<(e?: MouseEvent) => any>,
+  disabled: Boolean,
+  icon: Object,
+  label: String,
+  reverse: Boolean,
+  to: {
+    type: [Object, String] as PropType<RouteLocationRaw>
+  },
+  toExternal: String,
+  type: String
+}
+
 export interface BtnProps {
   click?: (e?: MouseEvent) => any
   disabled?: boolean
@@ -15,18 +28,7 @@ export interface BtnProps {
 }
 
 export default defineComponent({
-  props: {
-    click: Function as PropType<(e?: MouseEvent) => any>,
-    disabled: Boolean,
-    icon: Object,
-    label: String,
-    reverse: Boolean,
-    to: {
-      type: [Object, String] as PropType<RouteLocationRaw>
-    },
-    toExternal: String,
-    type: String
-  },
+  props: btnProps,
   setup (props, context) {
     const classes = computed(() => [
       "flex items-center justify-center transition",
