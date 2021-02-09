@@ -3,7 +3,8 @@ import AdminFooter from "../../components/AdminFooter/AdminFooter";
 import AdminHeader from "../../components/AdminHeader/AdminHeader";
 import AdminList from '../../layouts/AdminList/AdminList'
 import AdminShell from "../../layouts/AdminShell/AdminShell";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import Btn from "../../componentTemplates/Btn/Btn";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { defineComponent, computed } from "vue";
 import { routeNames } from "../../playground/routeNames";
 
@@ -30,7 +31,7 @@ export default defineComponent({
         }
       },
       {
-        icon: faArrowRight,
+        icon: faArrowLeft,
         label: "Entries",
         to: {
           name: routeNames.menu
@@ -47,7 +48,7 @@ export default defineComponent({
     const mobileBtns = computed(() => [
       {
         click: () => {},
-        icon: faArrowRight,
+        icon: faArrowLeft,
         label: "Back"
       },
       {
@@ -73,10 +74,16 @@ export default defineComponent({
       <AdminList searchValue={search}>
         {[1,2,3,4].map(i => <AdminCard>Test</AdminCard>)}
       </AdminList>
-      <AdminFooter
-        btns={mobileBtns}
-        menuRoute={{name: routeNames.menu}}
-      />
+      <AdminFooter menuRoute={{name: routeNames.menu}}>
+        {
+          mobileBtns.value.map(btn => {
+            return <Btn
+              class="bg-gray-700 hover:bg-gray-600 mr-2 font-semibold text-gray-300 w-full"
+              {...btn}
+            />
+          })
+        }
+      </AdminFooter>
     </AdminShell>
   }
 })

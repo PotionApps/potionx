@@ -1,10 +1,9 @@
-import Btn, { BtnProps } from "../../componentTemplates/Btn/Btn";
-import { defineComponent, PropType, Ref } from "vue";
+import { defineComponent } from "vue";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { RouteLocationRaw } from "vue-router";
 
 export interface PropsAdminFooter {
-  btns?: BtnProps[],
   hideMenu?: boolean,
   menuRoute: RouteLocationRaw
 }
@@ -12,7 +11,6 @@ export interface PropsAdminFooter {
 export default defineComponent({
   name: "AdminFooter",
   props: {
-    btns: Object as PropType<Ref<BtnProps[]>>,
     hideMenu: Boolean,
     menuRoute: {
       type: Object,
@@ -24,21 +22,14 @@ export default defineComponent({
     return () => {
       return (
         <div class="bg-gray-900 bottom-0 justify-end h-14 left-0 fixed w-full z-99 py-2 px-2 flex shadow s1050:hidden">
-          {
-           props.btns && props.btns.value.map(btn => {
-              return <Btn
-                class="bg-gray-700 hover:bg-gray-600 mr-2 text-gray-300 w-full"
-                {...btn}
-              />
-            })
-          }
           {context.slots.default && context.slots.default()}
           {
-            !props.hideMenu && <Btn
-              class={["bg-gray-700 h-auto px-3 py-2 rounded text-gray-300 w-auto hover:bg-gray-600", props.btns ? "flex-fit" : "flex-full"]}
-              icon={faBars}
+            !props.hideMenu && <router-link
+              class="bg-gray-700 flex flex-fit h-auto items-center justify-center px-3 py-2 rounded text-gray-300 w-auto hover:bg-gray-600"
               to={props.menuRoute}
-            />
+            >
+              <FontAwesomeIcon icon={faBars} />
+            </router-link>
           }
         </div>
       )
