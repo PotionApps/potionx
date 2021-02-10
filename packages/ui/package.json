@@ -3,8 +3,11 @@
     "version": "0.0.7",
     "files": [
         "dist",
-        "src"
+        "templates"
     ],
+    "bin": {
+        "potionapps-ui": "./cli.mjs"
+    },
     "main": "./dist/potion-ui.esm.js",
     "module": "./dist/potion-ui.esm.js",
     "exports": {
@@ -29,6 +32,7 @@
         "@fortawesome/free-regular-svg-icons": "^5.15.2",
         "@fortawesome/free-solid-svg-icons": "^5.15.2",
         "@fortawesome/vue-fontawesome": "^3.0.0-3",
+        "@potionapps/forms": "file:../forms",
         "@rollup/plugin-image": "^2.0.6",
         "@vitejs/plugin-vue-jsx": "^1.0.2",
         "@vue/compiler-sfc": "^3.0.5",
@@ -45,5 +49,8 @@
         "vue": "^3.0.5",
         "vue-router": "^4.0.3"
     },
-    "dependencies": {}
+    "dependencies": {
+        "fs-extra": "^9.1.0",
+        "yargs": "^16.2.0"
+    }
 }
