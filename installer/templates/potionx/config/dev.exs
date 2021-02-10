@@ -17,10 +17,10 @@ config :<%= @app_name %>, <%= @endpoint_module %>,
   code_reloader: true,
   check_origin: false,
   watchers: [
-    node: [
-      "node_modules/vite/bin/vite.js",
-      cd: Path.expand("../frontend/admin", __DIR__)
-    ]
+    # node: [
+    #   "node_modules/vite/bin/vite.js",
+    #   cd: Path.expand("../frontend/admin", __DIR__)
+    # ]
   ]
 
 # ## SSL Support
