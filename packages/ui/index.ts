@@ -6,9 +6,7 @@ import Login from './src/components/Login/Login'
 import LoginButton from './src/components/LoginButton/LoginButton'
 import LoginError from './src/components/LoginError/LoginError'
 import ModelTable, { ModelTableProps } from './src/components/ModelTable/ModelTable'
-import Pagination from './src/components/Pagination/Pagination'
 import Pill, { PillProps } from './src/components/Pill/Pill'
-import Search from './src/components/Search/Search'
 import StateEmpty, { StateEmptyProps } from './src/components/StateEmpty/StateEmpty'
 import StateLoading from './src/components/StateLoading/StateLoading'
 import { SidebarNavItemProps } from './templates/components/SidebarNavItem/SidebarNavItem'
@@ -32,9 +30,7 @@ export {
   LoginButton,
   LoginError,
   ModelTable,
-  Pagination,
   Pill,
-  Search,
   StateEmpty,
   StateLoading
 }
