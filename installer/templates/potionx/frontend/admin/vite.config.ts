@@ -1,10 +1,12 @@
 import { defineConfig } from 'vite'
 import jsx from '@vitejs/plugin-vue-jsx'
-import path from 'path'
+// @ts-ignore
+import { resolve } from "path";
 
 export default defineConfig({
   alias: {
-    'shared': path.resolve(__dirname, '../shared/src')
+    // @ts-ignore
+    'shared': resolve(__dirname, '../shared/src')
   },
   build: {
     emptyOutDir: true,

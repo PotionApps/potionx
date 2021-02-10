@@ -1,8 +1,13 @@
 module.exports = {
-  purge: [
-    'src/**/*.tsx?',
-  ],
   darkMode: false, // or 'media' or 'class'
+  plugins: [
+    require('@tailwindcss/forms')
+  ],
+  purge: [
+    '../shared/src/**/*.tsx?',
+    './src/**/*.tsx?',
+    './node_modules/\\@potionapps/ui/dist/*.js'
+  ],
   theme: {
     fontFamily: {
       sans: ['Inter', 'sans-serif'],
