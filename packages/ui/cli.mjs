@@ -36,7 +36,6 @@ const run = () => {
     context.source,
     `component or theme doesn't exist: ${context.componentName}`
   )
-
   
   // copy over to destination
   fs.copySync(
@@ -48,6 +47,17 @@ const run = () => {
       }
     }
   )
+  
+  // copy required components
+  if (context.componentType === "theme") {
+    (fs.readJSONSync(path.join(context.source, 'config.json')).components || [])
+      .forEach(comp => {
+        fs.copySync(
+          toPath({componentName: comp, componentType: 'component'}),
+          path.join(context.destination, context.componentName, 'components', comp)
+        )
+      })
+  }
 }
 
 const toPath = ({componentName, componentType}) => {
