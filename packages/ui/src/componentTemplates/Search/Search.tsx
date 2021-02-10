@@ -2,7 +2,7 @@ import { defineComponent, computed, Ref, ref, onMounted, watch } from "vue";
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "../../fontawesomeTypeFix";
 
-export interface PropsSearch {
+export interface SearchProps {
   change: (s: string) => void
   focusOnMount: boolean
   placeholder?: string

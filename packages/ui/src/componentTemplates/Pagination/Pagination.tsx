@@ -1,4 +1,4 @@
-import BtnPrimary from "../../componentTemplates/Btn/BtnPrimary";
+import BtnPrimary from "../Btn/BtnPrimary";
 import { defineComponent } from "vue"
 import { faAngleDoubleLeft, faAngleDoubleRight, faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "../../fontawesomeTypeFix"

@@ -5,16 +5,16 @@ import AdminHeader from "../../components/AdminHeader/AdminHeader";
 import AdminList from '../../layouts/AdminList/AdminList'
 import AdminShell from "../../layouts/AdminShell/AdminShell";
 import Btn from "../../componentTemplates/Btn/Btn";
+import Dropdown from '../../componentTemplates/Dropdown/Dropdown'
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { defineComponent, computed } from "vue";
 import { routeNames } from "../../playground/routeNames";
 import { faFilter, faSortAmountDown, faTag } from '@fortawesome/free-solid-svg-icons'
-import Pagination from '../../components/Pagination/Pagination'
+import Pagination from '../../componentTemplates/Pagination/Pagination'
 import Pill from '../../components/Pill/Pill'
-import Search from '../../components/Search/Search'
+import Search from '../../componentTemplates/Search/Search'
 import StateEmpty from "../../components/StateEmpty/StateEmpty"
 import StateLoading from "../../components/StateLoading/StateLoading"
-import { FontAwesomeIcon } from "../../fontawesomeTypeFix"
 
 export default defineComponent({
   setup () {
@@ -41,12 +41,6 @@ export default defineComponent({
       {
         icon: faArrowLeft,
         label: "Entries",
-        to: {
-          name: routeNames.menu
-        }
-      },
-      {
-        label: "Entry Type",
         to: {
           name: routeNames.menu
         }
@@ -88,47 +82,43 @@ export default defineComponent({
         </div>
       </AdminHeader>
       <AdminBody>
-      <div>
-          <div class="flex s650m:flex-wrap mb-2">
-            <Search 
-              change={() => {}}
-              class="mb-2"
-              focusOnMount={false}
-              placeholder="Search..."
-              val={search}
-            />
-            <div class="flex-fit s650m:pr-1 s650m:w-1/2 s650:ml-2">
-              <div class="bg-white border-1 border-gray-300 cursor-pointer flex items-center p-2 rounded-md  transition hover:border-blue-400">
-                <FontAwesomeIcon class="mr-1 text-gray-400 text-base" icon={faSortAmountDown} />
-                <span>Oldest</span>
-              </div>
-            </div>
-            <div class="flex-fit mb-2 s650m:pl-1 s650m:w-1/2 s650:ml-2">
-              <div class="bg-white border-1 border-gray-300 cursor-pointer flex items-center p-2 rounded-md  transition hover:border-blue-400">
-                <FontAwesomeIcon class="mr-1 text-gray-400 text-base" icon={faFilter} />
-                <span>Sort</span>
-              </div>
-            </div>
-          </div>
-          <div class="flex">
-            <Pill 
-              class="mb-2 mr-2"
-              icon={faTag}
-              label="Category"
-              remove={() => {}}
-            />
-          </div>
-          {
-            false && <StateEmpty class="pb-2 pt-4" />
-          }
-          {
-            false && <StateLoading class="pb-2 pt-4"/>
-          }
-          <AdminList>
-            {[1,2,3,4].map(i => <AdminCard>Test</AdminCard>)}
-          </AdminList>
-          <Pagination class="py-6" />
+        <div class="flex s650m:flex-wrap mb-2">
+          <Search 
+            change={() => {}}
+            class="mb-2"
+            focusOnMount={false}
+            placeholder="Search..."
+            val={search}
+          />
+          <Dropdown 
+            class="flex-fit mb-2 s650m:pr-1 s650m:w-1/2 s650:ml-2"
+            icon={faSortAmountDown}
+            label="Oldest"
+          />
+          <Dropdown 
+            class="flex-fit mb-2 s650m:pl-1 s650m:w-1/2 s650:ml-2"
+            icon={faFilter}
+            label="Sort"
+          />
         </div>
+        <div class="flex">
+          <Pill 
+            class="mb-2 mr-2"
+            icon={faTag}
+            label="Category"
+            remove={() => {}}
+          />
+        </div>
+        {
+          false && <StateEmpty class="pb-2 pt-4" />
+        }
+        {
+          false && <StateLoading class="pb-2 pt-4"/>
+        }
+        <AdminList>
+          {[1,2,3,4].map(i => <AdminCard>Test</AdminCard>)}
+        </AdminList>
+        <Pagination class="py-6" />
       </AdminBody>
       <AdminFooter menuRoute={{name: routeNames.menu}}>
         {
