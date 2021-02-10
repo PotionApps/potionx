@@ -1,9 +1,8 @@
 {
     "name": "@potionapps/forms",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "files": [
-        "dist",
-        "src"
+        "dist"
     ],
     "main": "./dist/potion-forms.esm.js",
     "module": "./dist/potion-forms.esm.js",
