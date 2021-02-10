@@ -1,0 +1,11 @@
+{
+  "components": [
+    "FieldCheckbox",
+    "FieldInput",
+    "FieldRadio",
+    "FieldSelect",
+    "FieldRadio",
+    "FieldTextarea",
+    "SidebarNavItem"
+  ]
+}

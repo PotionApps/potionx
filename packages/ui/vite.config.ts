@@ -5,7 +5,7 @@ export default defineConfig({
   build: {
     emptyOutDir: true,
     lib: {
-      entry: './src/index.ts',
+      entry: './index.ts',
       name: 'Potion UI'
     },
     rollupOptions: {

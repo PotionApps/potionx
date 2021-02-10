@@ -5,14 +5,13 @@ import { routeNames } from "./playground/routeNames";
 import { useRoute } from "vue-router"
 import AdminSidebar from "./components/AdminSidebar/AdminSidebar";
 import PotionLogo from './assets/potion-logo.svg'
-import SidebarNavItem from "./componentTemplates/SidebarNavItem/SidebarNavItem";
+import SidebarNavItem from '../templates/components/SidebarNavItem/SidebarNavItem';
 import * as Stories from './stories'
 
 export default defineComponent({
   name: 'App',
   components: {},
   setup () {
-    
     const { adminNavPrimary } = useAdminNavPrimary()
     const { adminNavSecondary } = useAdminNavSecondary()
 
