@@ -14,8 +14,8 @@ export default () : Ref<AdminHeaderAccountProps> => {
           __typename
           id
           email
-          name
-          surname
+          nameFirst
+          nameLast
           title
         }
       }`

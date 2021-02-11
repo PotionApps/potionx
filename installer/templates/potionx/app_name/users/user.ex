@@ -6,8 +6,8 @@ defmodule <%= @app_module %>.Users.User do
   schema "users" do
     field :deleted_at, :utc_datetime
     field :email, :string
-    field :name, :string
-    field :surname, :string
+    field :name_first, :string
+    field :name_last, :string
     field :roles, {:array, Ecto.Enum}, values: [:admin, :guest]
 
     has_many :user_identities, <%= @app_module %>.UserIdentities.UserIdentity
@@ -16,7 +16,7 @@ defmodule <%= @app_module %>.Users.User do
 
   def changeset(user_or_changeset, attrs) do
     user_or_changeset
-    |> cast(attrs, [:name, :surname, :roles])
+    |> cast(attrs, [:name_first, :name_last, :roles])
     |> Pow.Ecto.Schema.Changeset.user_id_field_changeset(attrs, [])
     |> validate_subset(
       :roles,

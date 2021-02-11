@@ -4,9 +4,13 @@ import jsx from '@vitejs/plugin-vue-jsx'
 import { resolve } from "path";
 
 export default defineConfig({
-  alias: {
-    // @ts-ignore
-    'shared': resolve(__dirname, '../shared/src')
+  resolve: {
+    alias: {
+      // @ts-ignore
+      'root': resolve(__dirname, './src'),
+      // @ts-ignore
+      'shared': resolve(__dirname, '../shared/src')
+    }
   },
   build: {
     emptyOutDir: true,

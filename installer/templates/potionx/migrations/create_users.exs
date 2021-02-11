@@ -5,8 +5,8 @@ defmodule <%= @graphql_namespace %>.Repo.Migrations.CreateUsers do
     create table(:users) do
       add :email, :string, null: false
       add :deleted_at, :utc_datetime
-      add :name, :string
-      add :surname, :string
+      add :name_first, :string
+      add :name_last, :string
       add :roles, {:array, :string}
       timestamps()
     end

@@ -104,9 +104,9 @@ export type User = Node & {
   /** The ID of an object */
   id: Scalars['ID'];
   insertedAt?: Maybe<Scalars['NaiveDateTime']>;
-  name?: Maybe<Scalars['String']>;
+  nameFirst?: Maybe<Scalars['String']>;
+  nameLast?: Maybe<Scalars['String']>;
   roles?: Maybe<Array<Maybe<Scalars['String']>>>;
-  surname?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['NaiveDateTime']>;
   userIdentities?: Maybe<Array<Maybe<UserIdentity>>>;
@@ -128,9 +128,9 @@ export type UserFilters = {
   deletedAt?: Maybe<Scalars['DateTime']>;
   email?: Maybe<Scalars['String']>;
   insertedAt?: Maybe<Scalars['NaiveDateTime']>;
-  name?: Maybe<Scalars['String']>;
+  nameFirst?: Maybe<Scalars['String']>;
+  nameLast?: Maybe<Scalars['String']>;
   roles?: Maybe<Array<Maybe<Scalars['String']>>>;
-  surname?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['NaiveDateTime']>;
 };
 
@@ -153,9 +153,9 @@ export type UserInput = {
   deletedAt?: Maybe<Scalars['DateTime']>;
   email?: Maybe<Scalars['String']>;
   insertedAt?: Maybe<Scalars['NaiveDateTime']>;
-  name?: Maybe<Scalars['String']>;
+  nameFirst?: Maybe<Scalars['String']>;
+  nameLast?: Maybe<Scalars['String']>;
   roles?: Maybe<Array<Maybe<Scalars['String']>>>;
-  surname?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['NaiveDateTime']>;
 };
 
