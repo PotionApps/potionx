@@ -1,27 +1,29 @@
 {
-    "name": "@potion/utils",
-    "version": "0.0.0",
+    "name": "@potionapps/utils",
+    "version": "0.0.1",
     "files": [
         "dist",
         "src"
     ],
-    "main": "./dist/potion-utils.esm.js",
-    "module": "./dist/potion-utils.esm.js",
+    "main": "./dist/potionapps-utils.esm.js",
+    "module": "./dist/potionapps-utils.esm.js",
     "exports": {
         ".": {
-            "import": "./dist/potion-utils.esm.js"
+            "import": "./dist/potionapps-utils.esm.js"
         }
     },
     "typings": "dist/index.d.ts",
     "scripts": {
         "dev": "vite",
-        "build": "tsdx build --name @potion-utils --format 'cjs,esm,umd'",
+        "build": "tsdx build --name potionapps-utils --format 'cjs,esm,umd'",
         "prepublishOnly": "npm run build"
     },
     "peerDependencies": {
+        "@fortawesome/vue-fontawesome": "^3.0.0-3",
         "vue": "^3.0.5"
     },
     "devDependencies": {
+        "@fortawesome/vue-fontawesome": "^3.0.0-3",
         "@rollup/plugin-image": "^2.0.6",
         "@vitejs/plugin-vue-jsx": "^1.0.2",
         "@vue/compiler-sfc": "^3.0.5",

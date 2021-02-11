@@ -8,17 +8,17 @@
     "bin": {
         "potionapps-ui": "./cli.mjs"
     },
-    "main": "./dist/potion-ui.esm.js",
-    "module": "./dist/potion-ui.esm.js",
+    "main": "./dist/potionapps-ui.esm.js",
+    "module": "./dist/potionapps-ui.esm.js",
     "exports": {
         ".": {
-            "import": "./dist/potion-ui.esm.js"
+            "import": "./dist/potionapps-ui.esm.js"
         }
     },
     "typings": "dist/index.d.ts",
     "scripts": {
         "dev": "vite",
-        "build": "tsdx build --name @potion-ui --format 'cjs,esm,umd'",
+        "build": "tsdx build --name potionapps-ui --format 'cjs,esm,umd'",
         "prepare": "node bumpVersion.mjs && npm run build"
     },
     "peerDependencies": {
