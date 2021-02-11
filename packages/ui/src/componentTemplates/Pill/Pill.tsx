@@ -31,11 +31,11 @@ export default defineComponent({
   setup (props) {
     return () => {
       return (
-        <div class="bg-gray-300 flex items-center px-2 py-1 rounded-2xl">
-          <FontAwesomeIcon class="flex-fit mr-1 text-sm" icon={props.icon} />
+        <div class="bg-white border-1 border-gray-300 flex items-center px-2 py-0.5 rounded-2xl">
+          <FontAwesomeIcon class="flex-fit mr-1 text-gray-500 text-sm" icon={props.icon} />
           <span class="font-semibold text-gray-900 text-sm">{props.label}</span>
           {props.remove && <div class="cursor-pointer ml-2" onClick={props.remove}>
-            <FontAwesomeIcon class="text-base text-gray-600 hover:text-gray-900 transition-color" icon={faTimes} />
+            <FontAwesomeIcon class="text-base text-gray-400 hover:text-gray-900 transition" icon={faTimes} />
           </div>}
         </div>
       )

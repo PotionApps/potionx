@@ -9,9 +9,9 @@ import Dropdown from '../../componentTemplates/Dropdown/Dropdown'
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { defineComponent, computed } from "vue";
 import { routeNames } from "../../playground/routeNames";
-import { faFilter, faSortAmountDown, faTag } from '@fortawesome/free-solid-svg-icons'
+import { faFilter, faSortAmountDown, faTag, faUsers } from '@fortawesome/free-solid-svg-icons'
 import Pagination from '../../componentTemplates/Pagination/Pagination'
-import Pill from '../../components/Pill/Pill'
+import Pill from '../../componentTemplates/Pill/Pill'
 import Search from '../../componentTemplates/Search/Search'
 import StateEmpty from "../../components/StateEmpty/StateEmpty"
 import StateLoading from "../../components/StateLoading/StateLoading"
@@ -110,10 +110,10 @@ export default defineComponent({
           />
         </div>
         {
-          false && <StateEmpty class="pb-2 pt-4" />
+          true && <StateEmpty class="pb-2 pt-4" icon={faUsers} label="No Users Found" />
         }
         {
-          false && <StateLoading class="pb-2 pt-4"/>
+          true && <StateLoading class="pb-2 pt-4"/>
         }
         <AdminList>
           {[1,2,3,4].map(i => <AdminCard>Test</AdminCard>)}
