@@ -23,6 +23,6 @@
   },
   "homepage": "https://github.com/PotionApps/potionx#readme",
   "dependencies": {
-    "@potionapps/ui": "0.0.9"
+    "@potionapps/ui": "0.0.10"
   }
 }
