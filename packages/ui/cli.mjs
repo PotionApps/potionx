@@ -61,7 +61,7 @@ const run = () => {
 }
 
 const toPath = ({componentName, componentType}) => {
-  return path.join('./templates', componentType + "s", componentName)
+  return path.join('./src/templates', componentType + "s", componentName)
 }
 
 run()

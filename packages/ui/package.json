@@ -3,7 +3,7 @@
     "version": "0.0.8",
     "files": [
         "dist",
-        "templates"
+        "src/templates"
     ],
     "bin": {
         "potionapps-ui": "./cli.mjs"

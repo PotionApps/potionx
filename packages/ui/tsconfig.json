@@ -16,11 +16,10 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "templates/**/*.ts",
-    "templates/**/*.d.ts",
-    "templates/**/*.tsx",
-    "index.ts",
-    "index.ts"
   ],
-  "exclude": ["dist/**", "node_modules/**"]
+  "exclude": [
+    "dist/**",
+    "node_modules/**",
+    "src/templates/themes/**"
+  ]
 }
