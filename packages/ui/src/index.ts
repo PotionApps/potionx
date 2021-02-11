@@ -8,7 +8,6 @@ import LoginError from './components/LoginError/LoginError'
 import ModelTable, { ModelTableProps } from './components/ModelTable/ModelTable'
 import StateEmpty, { StateEmptyProps } from './components/StateEmpty/StateEmpty'
 import StateLoading from './components/StateLoading/StateLoading'
-import { FontAwesomeIcon } from './fontawesomeTypeFix'
 
 export type {
   ModelTableProps,
@@ -20,7 +19,6 @@ export {
   AdminList,
   AdminShell,
   AdminSidebar,
-  FontAwesomeIcon,
   Login,
   LoginButton,
   LoginError,

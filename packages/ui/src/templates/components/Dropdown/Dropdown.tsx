@@ -1,5 +1,5 @@
 import { defineComponent } from "vue";
-import { FontAwesomeIcon } from "../../../fontawesomeTypeFix";
+import { FontAwesomeIcon } from '@potionapps/utils';
 
 export interface DropdownProps {
   icon?: Object

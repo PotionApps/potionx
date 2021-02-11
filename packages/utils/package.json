@@ -16,7 +16,7 @@
     "scripts": {
         "dev": "vite",
         "build": "tsdx build --name potionapps-utils --format 'cjs,esm,umd'",
-        "prepublishOnly": "npm run build"
+        "prepare": "node bumpVersion.mjs && npm run build"
     },
     "peerDependencies": {
         "@fortawesome/vue-fontawesome": "^3.0.0-3",

@@ -1,6 +1,6 @@
 import { defineComponent, PropType } from "vue"
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from "../../../fontawesomeTypeFix"
+import { FontAwesomeIcon } from '@potionapps/utils';
 
 export interface PillProps {
   bg?: string
