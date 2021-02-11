@@ -15,7 +15,7 @@
     "scripts": {
         "dev": "vite",
         "build": "tsdx build --name @potion-forms --format 'cjs,esm,umd'",
-        "prepublishOnly": "npm run build",
+        "prepare": "node bumpVersion.js && npm run build",
         "test": "jest"
     },
     "peerDependencies": {

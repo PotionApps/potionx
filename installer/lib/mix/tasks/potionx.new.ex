@@ -305,6 +305,13 @@ defmodule Mix.Tasks.Potionx.New do
 
     maybe_cmd(
       project,
+      "cd #{relative_app_path(frontend_path)} && npx potionapps-ui theme shared --destination #{frontend_path}",
+      true,
+      install? && System.find_executable("npm")
+    )
+
+    maybe_cmd(
+      project,
       "cd #{relative_app_path(frontend_path <> "/admin")} && npm install",
       true,
       install? && System.find_executable("npm")
