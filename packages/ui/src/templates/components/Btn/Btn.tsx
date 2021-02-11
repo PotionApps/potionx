@@ -1,5 +1,5 @@
 import { defineComponent, computed, PropType } from "vue";
-import { FontAwesomeIcon } from '../../fontawesomeTypeFix';
+import { FontAwesomeIcon } from '../../../fontawesomeTypeFix';
 import { RouteLocationRaw } from "vue-router";
 
 export const btnProps : any = {

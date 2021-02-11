@@ -1,7 +1,7 @@
 import BtnPrimary from "../Btn/BtnPrimary";
 import { defineComponent } from "vue"
 import { faAngleDoubleLeft, faAngleDoubleRight, faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "../../../src/fontawesomeTypeFix"
+import { FontAwesomeIcon } from "../../../fontawesomeTypeFix"
 
 export interface PaginationProps {
   

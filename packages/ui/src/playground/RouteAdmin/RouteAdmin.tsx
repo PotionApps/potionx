@@ -4,15 +4,15 @@ import AdminFooter from "../../components/AdminFooter/AdminFooter";
 import AdminHeader from "../../components/AdminHeader/AdminHeader";
 import AdminList from '../../layouts/AdminList/AdminList'
 import AdminShell from "../../layouts/AdminShell/AdminShell";
-import Btn from "../../componentTemplates/Btn/Btn";
-import Dropdown from '../../componentTemplates/Dropdown/Dropdown'
+import Btn from "../../templates/components/Btn/Btn";
+import Dropdown from '../../templates/components/Dropdown/Dropdown'
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { defineComponent, computed } from "vue";
 import { routeNames } from "../../playground/routeNames";
 import { faFilter, faSortAmountDown, faTag, faUsers } from '@fortawesome/free-solid-svg-icons'
-import Pagination from '../../componentTemplates/Pagination/Pagination'
-import Pill from '../../componentTemplates/Pill/Pill'
-import Search from '../../componentTemplates/Search/Search'
+import Pagination from '../../templates/components/Pagination/Pagination'
+import Pill from '../../templates/components/Pill/Pill'
+import Search from '../../templates/components/Search/Search'
 import StateEmpty from "../../components/StateEmpty/StateEmpty"
 import StateLoading from "../../components/StateLoading/StateLoading"
 

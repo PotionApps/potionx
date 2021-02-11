@@ -1,5 +1,5 @@
 import { defineComponent } from "vue";
-import { FontAwesomeIcon } from "../../../src/fontawesomeTypeFix";
+import { FontAwesomeIcon } from "../../../fontawesomeTypeFix";
 
 export interface DropdownProps {
   icon?: Object

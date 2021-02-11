@@ -1,6 +1,6 @@
 import { defineComponent, computed, Ref, ref, onMounted, watch } from "vue";
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from "../../../src/fontawesomeTypeFix";
+import { FontAwesomeIcon } from "../../../fontawesomeTypeFix";
 
 export interface SearchProps {
   change: (s: string) => void
