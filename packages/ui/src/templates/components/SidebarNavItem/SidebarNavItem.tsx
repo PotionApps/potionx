@@ -1,5 +1,5 @@
 import { defineComponent, PropType, computed } from "vue";
-import { FontAwesomeIcon } from '../../../fontawesomeTypeFix'
+import { FontAwesomeIcon } from '@potionapps/utils'
 import { RouteLocationRaw } from "vue-router";
 
 export interface SidebarNavItemProps {
