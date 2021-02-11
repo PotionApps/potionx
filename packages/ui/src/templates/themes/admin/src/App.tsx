@@ -4,7 +4,7 @@ import { useAdminNavPrimary } from "./useAdminNavPrimary";
 import { useAdminNavSecondary } from "./useAdminNavSecondary";
 import { useRoute } from 'vue-router'
 import { routeNames } from './routes/routeNames'
-import SidebarNavItem from './components/SidebarNavItem'
+import SidebarNavItem from './components/SidebarNavItem/SidebarNavItem'
 
 export default defineComponent({
   name: 'App',
@@ -13,7 +13,6 @@ export default defineComponent({
   setup () {
     const adminNavPrimary = useAdminNavPrimary()
     const adminNavSecondary = useAdminNavSecondary()
-    const route = useRoute()
 
     const showSidebar = computed(() => {
       return useRoute().name != routeNames.login && routeNames.loginError

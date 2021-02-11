@@ -298,14 +298,14 @@ defmodule Mix.Tasks.Potionx.New do
 
     maybe_cmd(
       project,
-      "cd #{relative_app_path(frontend_path)} && npx potionapps-ui theme admin --destination #{frontend_path}",
+      "cd #{relative_app_path(frontend_path)} && npx potionapps-ui theme admin --destination #{frontend_path}/src",
       true,
       install? && System.find_executable("npm")
     )
 
     maybe_cmd(
       project,
-      "cd #{relative_app_path(frontend_path)} && npx potionapps-ui theme shared --destination #{frontend_path}",
+      "cd #{relative_app_path(frontend_path)} && npx potionapps-ui theme shared --destination #{frontend_path}/src",
       true,
       install? && System.find_executable("npm")
     )

@@ -1,7 +1,9 @@
 {
   "components": [
     "FieldCheckbox",
+    "FieldError",
     "FieldInput",
+    "FieldLabel",
     "FieldRadio",
     "FieldSelect",
     "FieldRadio",

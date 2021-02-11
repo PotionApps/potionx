@@ -8,14 +8,12 @@ import LoginError from './components/LoginError/LoginError'
 import ModelTable, { ModelTableProps } from './components/ModelTable/ModelTable'
 import StateEmpty, { StateEmptyProps } from './components/StateEmpty/StateEmpty'
 import StateLoading from './components/StateLoading/StateLoading'
-import { SidebarNavItemProps } from './templates/components/SidebarNavItem/SidebarNavItem'
 import { FontAwesomeIcon } from './fontawesomeTypeFix'
 
 export type {
   AdminHeaderProps,
   AdminHeaderTabProps,
   ModelTableProps,
-  SidebarNavItemProps,
   StateEmptyProps
 }
 
