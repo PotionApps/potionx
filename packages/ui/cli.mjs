@@ -4,6 +4,10 @@ import path from 'path'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 const scriptName = "potionapps-ui"
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const argv =
   yargs(hideBin(process.argv))
@@ -61,7 +65,7 @@ const run = () => {
 }
 
 const toPath = ({componentName, componentType}) => {
-  return path.join('./src/templates', componentType + "s", componentName)
+  return path.resolve(__dirname, './src/templates', componentType + "s", componentName)
 }
 
 run()

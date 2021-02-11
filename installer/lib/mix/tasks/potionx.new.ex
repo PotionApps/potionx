@@ -209,8 +209,8 @@ defmodule Mix.Tasks.Potionx.New do
   def generate(base_path, generator, path, opts) do
     base_path
     |> Project.new(opts)
-    |> Map.replace(:no_install_deps, !!Keyword.get(opts, :no_install_deps, true))
-    |> Map.replace(:no_migrations, !!Keyword.get(opts, :no_migrations, true))
+    |> Map.replace(:no_install_deps, !!Keyword.get(opts, :no_install_deps, false))
+    |> Map.replace(:no_migrations, !!Keyword.get(opts, :no_migrations, false))
     |> ask_for_local_postgres_user
     |> ask_for_local_postgres_password
     |> generator.prepare_project()
@@ -287,11 +287,25 @@ defmodule Mix.Tasks.Potionx.New do
   defp switch_to_string({name, val}), do: name <> "=" <> val
 
   defp install_frontend(install?, project) do
-    admin_path = Path.join(project.web_path || project.project_path, "frontend/admin")
+    frontend_path = Path.join(project.web_path || project.project_path, "frontend")
 
     maybe_cmd(
       project,
-      "cd #{relative_app_path(admin_path)} && npm install",
+      "cd #{relative_app_path(frontend_path)} && npm install @potionapps/ui",
+      true,
+      install? && System.find_executable("npm")
+    )
+
+    maybe_cmd(
+      project,
+      "cd #{relative_app_path(frontend_path)} && npx potionapps-ui theme admin --destination #{frontend_path}",
+      true,
+      install? && System.find_executable("npm")
+    )
+
+    maybe_cmd(
+      project,
+      "cd #{relative_app_path(frontend_path <> "/admin")} && npm install",
       true,
       install? && System.find_executable("npm")
     )

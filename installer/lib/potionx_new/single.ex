@@ -83,31 +83,9 @@ defmodule Potionx.New.Single do
     {:migration, "potionx/migrations/create_users.exs", :app, "priv/repo/migrations/{timestamp}_create_users.exs"},
     # {:eex, "potionx/test/app_name_web/controllers/authorization_controller_test.exs", :app, "test/:lib_web_name/controllers/authorization_controller_test.exs"},
     {:eex, "potionx/priv/repo/potionx_seed.exs", :app, "priv/repo/potionx_seed.exs"},
-    {:eex, "potionx/frontend/admin/.gitignore", :app, "frontend/admin/.gitignore"},
-    {:eex, "potionx/frontend/admin/package.json", :app, "frontend/admin/package.json"},
-    {:eex, "potionx/frontend/admin/postcss.config.js", :app, "frontend/admin/postcss.config.js"},
-    {:eex, "potionx/frontend/admin/tailwind.config.js", :app, "frontend/admin/tailwind.config.js"},
-    {:eex, "potionx/frontend/admin/tsconfig.json", :app, "frontend/admin/tsconfig.json"},
-    {:eex, "potionx/frontend/admin/vite.config.ts", :app, "frontend/admin/vite.config.ts"},
-    {:eex, "potionx/frontend/admin/src/App.tsx", :app, "frontend/admin/src/App.tsx"},
-    {:eex, "potionx/frontend/admin/src/useAdminHeaderAccount.ts", :app, "frontend/admin/src/useAdminHeaderAccount.ts"},
-    {:eex, "potionx/frontend/admin/src/useAdminHeaderNav.ts", :app, "frontend/admin/src/useAdminHeaderNav.ts"},
-    {:eex, "potionx/frontend/admin/src/main.css", :app, "frontend/admin/src/main.css"},
-    {:eex, "potionx/frontend/admin/src/main.ts", :app, "frontend/admin/src/main.ts"},
-    {:eex, "potionx/frontend/admin/src/routes/index.ts", :app, "frontend/admin/src/routes/index.ts"},
-    {:eex, "potionx/frontend/admin/src/routes/routeNames.ts", :app, "frontend/admin/src/routes/routeNames.ts"},
-    {:eex, "potionx/frontend/admin/src/routes/RouteHome/RouteHome.tsx", :app, "frontend/admin/src/routes/RouteHome/RouteHome.tsx"},
-    {:eex, "potionx/frontend/admin/src/routes/RouteLogin/RouteLogin.tsx", :app, "frontend/admin/src/routes/RouteLogin/RouteLogin.tsx"},
-    {:eex, "potionx/frontend/admin/src/routes/RouteLoginError/RouteLoginError.tsx", :app, "frontend/admin/src/routes/RouteLoginError/RouteLoginError.tsx"},
-    {:eex, "potionx/frontend/shared/.gitignore", :app, "frontend/shared/.gitignore"},
-    {:eex, "potionx/frontend/shared/package.json", :app, "frontend/shared/package.json"},
-    {:eex, "potionx/frontend/shared/codegen.yml", :app, "frontend/shared/codegen.yml"},
-    {:eex, "potionx/frontend/shared/src/gql.ts", :app, "frontend/shared/src/gql.ts"},
-    {:eex, "potionx/frontend/shared/src/signIn.ts", :app, "frontend/shared/src/signIn.ts"},
-    {:eex, "potionx/frontend/shared/src/signOut.ts", :app, "frontend/shared/src/signOut.ts"},
-    {:eex, "potionx/frontend/shared/src/types.d.ts", :app, "frontend/shared/src/types.d.ts"},
     {:eex, "potionx/build.sh", :app, "build.sh"},
-    {:eex, "potionx/Dockerfile", :app, "Dockerfile"}
+    {:eex, "potionx/Dockerfile", :app, "Dockerfile"},
+    {:keep, "potionx/frontend", :project, "frontend"}
   ]
 
   def prepare_project(%Project{app: app} = project) when not is_nil(app) do
