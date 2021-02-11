@@ -4,8 +4,19 @@ defmodule <%= module_name_graphql %>.Resolver.<%= model_name %> do
   use Absinthe.Relay.Schema.Notation, :modern
 
   def collection(args, %{context: %Service{} = ctx}) do
-    <%= model_name %>Service.query(ctx)
-    |> Absinthe.Relay.Connection.from_query(&<%= module_name_data %>.Repo.all/1, args)
+    q = <%= model_name %>Service.query(ctx)
+    count = <%= model_name %>Service.count(ctx)
+
+    q
+    |> Absinthe.Relay.Connection.from_query(
+      &<%= module_name_data %>.Repo.all/1,
+      args
+    )
+    |> case do
+      {:ok, result} ->
+        {:ok, Map.put(result, :count, count)}
+      err -> err
+    end
   end
 
   def data do

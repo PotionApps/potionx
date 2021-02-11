@@ -18,7 +18,6 @@ export default defineComponent({
       return useRoute().name != routeNames.login && routeNames.loginError
     })
 
-
     return () => <div class="flex min-h-screen max-w-screen overflow-x-hidden">
       {
         showSidebar.value && 

@@ -464,11 +464,28 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
               acc.lines,
               k,
               maybe_add_line(Map.get(acc.lines, k), v, 2, true)
-              |> maybe_add_line(
-                "connection node_type: :#{state.model_name_atom}",
-                2,
-                false
-              )
+              |> (fn lines_types ->
+                lines_types
+                |> Enum.find_index(fn l ->
+                  String.contains?(l, "connection node_type: :#{state.model_name_atom}")
+                end)
+                |> case do
+                  nil ->
+                    add_lines_to_block(
+                      lines_types,
+                      [
+                        DocUtils.indent_to_string(2) <> "connection node_type: :#{state.model_name_atom} do",
+                        DocUtils.indent_to_string(4) <> "field :count, non_null(:integer)",
+                        DocUtils.indent_to_string(4) <> "edge do",
+                        DocUtils.indent_to_string(4) <> "end",
+                        DocUtils.indent_to_string(2) <> "end"
+                      ],
+                      Enum.at(lines_types, 0),
+                      0
+                    )
+                  _ -> lines_types
+                end
+              end).()
             )
       }
     end)
@@ -1018,17 +1035,20 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
       {k, {n, _}} ->
         {k, %{name: n}}
     end)
-    |> Enum.map(fn validation ->
-      Map.put(
-        validation,
-        :name,
-        Absinthe.Adapter.LanguageConventions.to_external_name(
-          to_string(
-            validation.name
-          ),
-          nil
+    |> Enum.map(fn {name, validation} ->
+      {
+        name,
+        Map.put(
+          validation,
+          :name,
+          Absinthe.Adapter.LanguageConventions.to_external_name(
+            to_string(
+              name
+            ),
+            nil
+          )
         )
-      )
+      }
     end)
   end
 

@@ -18,6 +18,7 @@ query <%= model_name_graphql_case %>Collection(
       hasPreviousPage
       startCursor
     }
+    count
     edges {
       node {
         <%= for field <- graphql_fields do %><%= field %>

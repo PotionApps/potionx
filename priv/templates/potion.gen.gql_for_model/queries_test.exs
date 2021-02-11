@@ -22,6 +22,7 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>QueryTest do
         }
       )
       |> (fn {:ok, res} ->
+        assert res.data["<%= model_name_graphql_case %>Collection"]["count"] === 1
         assert res.data["<%= model_name_graphql_case %>Collection"]["edges"] |> Enum.count === 1
       end).()
     end

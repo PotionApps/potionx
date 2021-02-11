@@ -4,6 +4,11 @@ defmodule <%= module_name_data %>.<%= context_name %>.<%= model_name %>Service d
   alias <%= module_name_data %>.Repo
   import Ecto.Query
 
+  def count(%Service{} = ctx) do
+    from(item in query(ctx), select: count(item.id))
+    |> Repo.one!
+  end
+
   def delete(%Service{} = ctx) do
     query(ctx)
     |> Repo.one
