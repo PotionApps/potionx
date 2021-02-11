@@ -10,7 +10,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.0-3",
     "@fortawesome/free-regular-svg-icons": "^5.15.2",
     "@potionapps/forms": "0.0.4",
-    "@potionapps/ui": "0.0.10",
+    "@potionapps/ui": "0.0.11",
     "@urql/core": "^1.16.2",
     "@urql/exchange-auth": "^0.1.2",
     "@urql/exchange-graphcache": "^3.4.0",

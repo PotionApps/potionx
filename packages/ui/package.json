@@ -19,7 +19,7 @@
     "scripts": {
         "dev": "vite",
         "build": "tsdx build --name @potion-ui --format 'cjs,esm,umd'",
-        "prepare": "node bumpVersion.js && npm run build"
+        "prepare": "node bumpVersion.mjs && npm run build"
     },
     "peerDependencies": {
         "vue": "^3.0.5",
