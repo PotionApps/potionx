@@ -1,9 +1,7 @@
-import AdminBody from '../../components/AdminBody/AdminBody'
 import AdminCard from '../../components/AdminCard/AdminCard'
+import AdminContent from "../../layouts/AdminContent/AdminContent";
 import AdminFooter from "../../components/AdminFooter/AdminFooter";
-import AdminHeader from "../../components/AdminHeader/AdminHeader";
-import AdminList from '../../layouts/AdminList/AdminList'
-import AdminShell from "../../layouts/AdminShell/AdminShell";
+import AdminList from '../../components/AdminList/AdminList'
 import Btn from "../../templates/components/Btn/Btn";
 import Dropdown from '../../templates/components/Dropdown/Dropdown'
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
@@ -15,6 +13,8 @@ import Pill from '../../templates/components/Pill/Pill'
 import Search from '../../templates/components/Search/Search'
 import StateEmpty from "../../components/StateEmpty/StateEmpty"
 import StateLoading from "../../components/StateLoading/StateLoading"
+import Tabs from '../../templates/components/Tabs/Tabs'
+import Wrapper from '../../templates/components/Wrapper/Wrapper'
 
 export default defineComponent({
   setup () {
@@ -65,8 +65,8 @@ export default defineComponent({
       return ""
     })
 
-    return () => <AdminShell>
-      <AdminHeader tabs={headerTabs}>
+    return () => <AdminContent>
+      <Wrapper class="bg-white border-b-1 border-gray-300 pt-4">
         <div class="flex items-center justify-between pr-4 s1050m:flex-wrap s1050:pr-0">
           <div class="flex flex-full items-center mb-2">
             <div class="s1050:max-w-500 s1450:max-w-600">
@@ -80,8 +80,9 @@ export default defineComponent({
               class={["bg-gray-200 mb-2 p-2 rounded text-gray-900 text-xs s1050m:mr-2 s1050:ml-2", btn.hideBtnMobile && "s1050m:hidden"]}
           />})}
         </div>
-      </AdminHeader>
-      <AdminBody>
+        <Tabs tabs={headerTabs} />
+      </Wrapper>
+      <Wrapper class="py-6">
         <div class="flex s650m:flex-wrap mb-2">
           <Search 
             change={() => {}}
@@ -119,7 +120,7 @@ export default defineComponent({
           {[1,2,3,4].map(i => <AdminCard>Test</AdminCard>)}
         </AdminList>
         <Pagination class="py-6" />
-      </AdminBody>
+      </Wrapper>
       <AdminFooter menuRoute={{name: routeNames.menu}}>
         {
           mobileBtns.value.map(btn => {
@@ -130,6 +131,6 @@ export default defineComponent({
           })
         }
       </AdminFooter>
-    </AdminShell>
+    </AdminContent>
   }
 })

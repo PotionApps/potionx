@@ -1,9 +1,10 @@
+import AdminShell from "./layouts/AdminShell/AdminShell";
+import AdminSidebar from "./components/AdminSidebar/AdminSidebar";
 import { defineComponent, computed, ref } from 'vue'
 import { useAdminNavPrimary } from "./useAdminNavPrimary";
 import { useAdminNavSecondary } from "./useAdminNavSecondary";
 import { routeNames } from "./playground/routeNames";
 import { useRoute } from "vue-router"
-import AdminSidebar from "./components/AdminSidebar/AdminSidebar";
 import PotionLogo from './assets/potion-logo.svg'
 import SidebarNavItem from './templates/themes/admin/src/components/SidebarNavItem/SidebarNavItem';
 import * as Stories from './stories'
@@ -21,7 +22,7 @@ export default defineComponent({
 
     const showMenu = ref(false)
 
-    return () => <div class="flex min-h-screen max-w-screen overflow-x-hidden">
+    return () => <AdminShell>
       {
         showMenu.value &&
         <div class="bg-white fixed inset-y-0 left-0 py-4 shadow-2xl w-64 z-2">
@@ -35,7 +36,7 @@ export default defineComponent({
       {
         showSidebar.value && 
         <AdminSidebar
-          class="s1050m:hidden relative z-1"
+          class="s1050m:hidden z-1"
         >
           <div class="flex items-center mb-6">
             <img class="mr-2 w-4" src={PotionLogo}/>
@@ -64,6 +65,6 @@ export default defineComponent({
         class="bg-black fixed bottom-0 mb-4 mr-4 px-4 py-1 right-0 rounded-full text-white"
         onClick={() => showMenu.value = !showMenu.value}
       >Menu</button>
-    </div>
+    </AdminShell>
   }
 })

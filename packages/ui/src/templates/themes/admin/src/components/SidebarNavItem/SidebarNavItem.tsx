@@ -1,5 +1,5 @@
 import { defineComponent, PropType, computed } from "vue";
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { FontAwesomeIcon } from '../../../fontawesomeTypeFix'
 import { RouteLocationRaw } from "vue-router";
 
 export interface SidebarNavItemProps {
@@ -37,8 +37,8 @@ export default defineComponent({
         </div>
         {
           props.notification &&
-          <div class="bg-blue-500 flex ml-2 px-2 py-1 rounded-full">
-            <span class="font-semibold text-white text-sm">{props.notification}</span>
+          <div class="bg-blue-500 flex ml-1 px-1.5 py-0.5 rounded-full">
+            <span class="font-semibold text-white text-xs">{props.notification}</span>
           </div>
         }
       </div>

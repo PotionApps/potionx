@@ -1,5 +1,5 @@
-import AdminHeader, { AdminHeaderProps, AdminHeaderTabProps } from './components/AdminHeader/AdminHeader'
-import AdminList from './layouts/AdminList/AdminList'
+import AdminContent from './layouts/AdminContent/AdminContent'
+import AdminList from './components/AdminList/AdminList'
 import AdminShell from './layouts/AdminShell/AdminShell'
 import AdminSidebar from './components/AdminSidebar/AdminSidebar'
 import Login from './components/Login/Login'
@@ -11,14 +11,12 @@ import StateLoading from './components/StateLoading/StateLoading'
 import { FontAwesomeIcon } from './fontawesomeTypeFix'
 
 export type {
-  AdminHeaderProps,
-  AdminHeaderTabProps,
   ModelTableProps,
   StateEmptyProps
 }
 
 export {
-  AdminHeader,
+  AdminContent,
   AdminList,
   AdminShell,
   AdminSidebar,

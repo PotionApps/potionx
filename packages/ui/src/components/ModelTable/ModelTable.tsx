@@ -82,12 +82,12 @@ export default defineComponent({
         return acc
       }, [])
     })
-    return () => <table class="table-auto">
-      <thead>
+    return () => <table class="table-auto w-full s750:overflow-auto">
+      <thead class="bg-gray-100">
         {
           fieldsOrdered.value!.map(({ key, label }) => {
             if (key === "image") return <th></th>
-            return <th class="text-gray-500 text-sm text-left px-4 capitalize">
+            return <th class="border-gray-300 border-b-1 border-t-1 px-4 py-4 text-gray-500 text-left text-sm uppercase s750m:hidden">
               {label}
             </th>
           })
@@ -96,7 +96,7 @@ export default defineComponent({
       <tbody>
         {
           props.rows.map(row => {
-            return <tr>
+            return <tr class="border-gray-300 border-b-1 cursor-pointer relative transition hover:shadow-negative-xl hover:z-2">
               {
                 fieldsOrdered.value!.map((field) => {
                   const key = field.key as keyof ModelRow
@@ -120,7 +120,7 @@ export default defineComponent({
                         rowData = val
                       }
                   }
-                  return <td class="px-4"><span class="hidden">{field.label}</span>{rowData}</td>
+                  return <td class="px-4 py-4 s750m:flex s750m:items-start s1250:py-6"><span class="s750:hidden max-w-1/2 w-full s450:max-w-200">{field.label}</span><p class="text-gray-900 text-sm">{rowData}</p></td>
                 })
               }
             </tr>

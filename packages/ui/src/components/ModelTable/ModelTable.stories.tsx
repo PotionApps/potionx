@@ -8,6 +8,16 @@ export default defineComponent(
       [
         {
           id: "1",
+          description: "Creates an async component.",
+          icon: PotionLogo,
+          subtitle: "Developer and Master of the Sea",
+          roles: ["Admin", "Guck Tuckerson"],
+          title: "Michael Demchuk",
+          insertedAt: (new Date()).toISOString(),
+          updatedAt: (new Date()).toISOString()
+        } as ModelRow,
+        {
+          id: "2",
           description: "Creates an async component that will be loaded only when it's necessary.",
           icon: PotionLogo,
           subtitle: "Developer and Cofounder",
