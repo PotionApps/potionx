@@ -1,9 +1,9 @@
-import { AdminSidebar } from "@potionapps/ui";
 import { computed, defineComponent } from 'vue'
 import { useAdminNavPrimary } from "./useAdminNavPrimary";
 import { useAdminNavSecondary } from "./useAdminNavSecondary";
 import { useRoute } from 'vue-router'
 import { routeNames } from './routes/routeNames'
+import AdminSidebar from './components/AdminSidebar/AdminSidebar'
 import SidebarNavItem from './components/SidebarNavItem/SidebarNavItem'
 
 export default defineComponent({

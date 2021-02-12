@@ -18,7 +18,6 @@ import Wrapper from '../../templates/components/Wrapper/Wrapper'
 
 export default defineComponent({
   setup () {
-
     const headerBtns = computed(() => [
       {
         hideBtnMobile: true,

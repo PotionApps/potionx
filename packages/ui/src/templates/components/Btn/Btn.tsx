@@ -49,8 +49,11 @@ export default defineComponent({
         {context.slots.default && context.slots.default()}
       </div>
 
-      if (props.click) {
-        return <button class={classes.value} onClick={props.click}>{slot}</button>
+      const eventHandlers : any = {}
+
+      if (!props.to) {
+        if (props.click) eventHandlers.onClick = props.click
+        return <button class={classes.value} {...eventHandlers}>{slot}</button>
       }
       return <router-link
         class={classes.value}

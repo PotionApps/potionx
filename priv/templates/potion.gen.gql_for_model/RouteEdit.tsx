@@ -1,23 +1,163 @@
 import { computed, defineComponent } from 'vue'
-import { useRoute } from 'vue-router'
-import { useQuery } from "@urql/vue";
-import { <%= model_name %> } from "shared/types";
-import single from 'shared/models/<%= context_name %>/<%= model_name %>/<%= model_name_graphql_case %>Single.gql.ts'
-import schema from 'shared/models/<%= context_name %>/<%= model_name %>/<%= model_name_graphql_case %>.json'
+import { Field, useForm } from '@potionapps/forms'
+import { useRoute, useRouter } from 'vue-router'
+import { useQuery, useMutation } from "@urql/vue";
+import { RootQueryType, RootMutationTypeUserMutationArgs, RootMutationType } from "shared/types";
+import AdminBody from 'root/components/AdminBody/AdminBody'
+import AdminFooter from 'root/components/AdminFooter/AdminFooter'
+import AdminHeader from 'root/components/AdminHeader/AdminHeader'
+import AdminShell from 'root/components/AdminShell/AdminShell'
+import AdminTitle from 'root/components/AdminTitle/AdminTitle'
+import Btn from 'root/components/Btn/Btn'
+import BtnSubmit from 'root/components/Btn/BtnSubmit'
+import BtnMobileMenu from 'root/components/Btn/BtnMobileMenu'
+import FieldCheckbox from 'root/components/FieldCheckbox/FieldCheckbox';
+import FieldInput from 'root/components/FieldInput/FieldInput';
+import FieldRadio from 'root/components/FieldRadio/FieldRadio';
+import FieldSelect from 'root/components/FieldSelect/FieldSelect';
+import FieldTextarea from 'root/components/FieldTextarea/FieldTextarea';
+import mutation from 'shared/models/Users/User/userMutation.gql.ts'
+import routeNames from 'root/routes/routeNames'
+import schema from 'shared/models/Users/User/user.json'
+import single from 'shared/models/Users/User/userSingle.gql.ts'
 
 export default defineComponent({
   setup () {
-    const route = useRoute()
+    const deleteEntry = () => {
 
-    const q = useQuery({
+    }
+
+    const route = useRoute()
+    const router = useRouter()
+    const { data } = useQuery<RootQueryType>({
+      pause: computed(() => {
+        return route.params.id === 'new'
+      }),
       query: single,
       variables: computed(() => {
-        return { id: route.params.id }
+        return {filters: {id: route.params.id}}
       })
     })
 
+    const model = computed(() => {
+      return data.value?.userSingle
+    })
+
+    const newEntryLink = {
+      name: routeNames.<%= @model_name_graphql_case %>Edit,
+      params: {
+        id: 'new'
+      }
+    }
+
+    const { executeMutation } = useMutation<RootMutationType>(mutation)
+    const form = useForm({
+      data: model,
+      fields: schema,
+      onSubmit: (cs) => {
+        const params : RootMutationTypeUserMutationArgs = {
+          changes: {
+            ...cs.changes
+          }
+        }
+        if (route.params.id !== 'new') {
+          params.filters = { id: route.params.id as string }
+        }
+        return executeMutation(params)
+          .then(res => {
+            if (res.error || res.data?.userMutation?.errorsFields?.length) {
+              if (res.data?.userMutation?.errorsFields?.length) {
+                res.data?.userMutation?.errorsFields.forEach(err => {
+                  form.setServerError(err?.field, err?.message)
+                })
+              }
+              return false
+            } else {
+              if (route.params.id === 'new') {
+                router.push({
+                  name: route.name!,
+                  params: { id: res.data!.userMutation!.node!.id }
+                })
+              }
+              return true
+            }
+          })
+      }
+    })
+
     return () => {
-      return null
+      return <AdminShell>
+        <AdminHeader
+          v-slots={{
+            btns: () => <Btn
+              class="s1050m:hidden"
+              click={deleteEntry}
+              label="New <%= @model_name %>"
+            />
+          }}
+        >
+          <AdminTitle>
+            {model.value?.title} || <%= model_name %>
+          </AdminTitle>
+        </AdminHeader>
+        <AdminBody>
+          <form class="m-auto max-w-500 w-full pt-10" onSubmit={form.submit}>
+          {
+            schema.map((s: Field) => {
+              let component
+              switch (s.type) {
+                case "string":
+                  component = <FieldInput label={s.label || s.name} name={s.name} />
+                  break;
+                case "checkbox":
+                  component =
+                    <FieldCheckbox
+                      label={s.label || s.name}
+                      name={s.name}
+                      options={s.options?.map((value: any) => ({value, label: value}))}
+                    />
+                  break;
+                case "radio":
+                  component =
+                    <FieldRadio
+                      label={s.label || s.name}
+                      name={s.name}
+                      options={s.options?.map((value: any) => ({value, label: value}))}
+                    />
+                  break;
+                case "select":
+                  component =
+                    <FieldSelect
+                      label={s.label || s.name}
+                      name={s.name}
+                    />
+                    break;
+                case "select":
+                  component =
+                    <FieldTextarea
+                      label={s.label || s.name}
+                      name={s.name}
+                    />
+                    break;
+                default: 
+                  return null
+              }
+
+              return <div class="mb-3">
+                {component}
+              </div>
+            })
+          }
+          <BtnSubmit />
+        </form>
+        </AdminBody>
+        <AdminFooter>
+          <BtnMobileMenu
+            label="New <%= @model_name %>"
+            to={newEntryLink}
+          />
+        </AdminFooter>
+      </AdminShell>
     }
   }
 })

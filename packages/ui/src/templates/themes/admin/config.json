@@ -1,5 +1,12 @@
 {
   "components": [
+    "AdminBody",
+    "AdminHeader",
+    "AdminFooter",
+    "AdminShell",
+    "AdminSidebar",
+    "AdminSubtitle",
+    "AdminTitle",
     "FieldCheckbox",
     "FieldError",
     "FieldInput",
