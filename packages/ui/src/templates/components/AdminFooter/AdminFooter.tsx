@@ -2,6 +2,7 @@ import { defineComponent } from "vue";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@potionapps/utils";
 import { RouteLocationRaw } from "vue-router";
+import { routeNames } from 'root/routes/routeNames'
 
 export interface PropsAdminFooter {
   hideMenu?: boolean,
@@ -11,11 +12,7 @@ export interface PropsAdminFooter {
 export default defineComponent({
   name: "AdminFooter",
   props: {
-    hideMenu: Boolean,
-    menuRoute: {
-      type: Object,
-      required: true
-    }
+    hideMenu: Boolean
   },
   setup (props, context) {
 
@@ -26,7 +23,7 @@ export default defineComponent({
           {
             !props.hideMenu && <router-link
               class="bg-gray-700 flex flex-fit h-auto items-center justify-center px-3 py-2 rounded text-gray-300 w-auto hover:bg-gray-600"
-              to={props.menuRoute}
+              to={{name: routeNames.menu}}
             >
               <FontAwesomeIcon icon={faBars} />
             </router-link>

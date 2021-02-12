@@ -58,7 +58,6 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
 
   def add_to_frontend_routes(%GqlForModel{no_frontend: true} = state), do: state
   def add_to_frontend_routes(%GqlForModel{} = state) do
-
     index =
       [
         "frontend",
@@ -80,7 +79,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
         "frontend",
         "admin",
         "src",
-        "useAdminHeaderNav.ts"
+        "useAdminNavPrimary.ts"
       ] |> Enum.join("/")
 
     route_names_content = File.read!(route_names)

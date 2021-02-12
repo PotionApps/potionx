@@ -1,5 +1,6 @@
 import { computed, defineComponent } from 'vue'
 import { Field, useForm } from '@potionapps/forms'
+import { routeNames } from 'root/routes/routeNames'
 import { useRoute, useRouter } from 'vue-router'
 import { useQuery, useMutation } from "@urql/vue";
 import { RootQueryType, RootMutationTypeUserMutationArgs, RootMutationType } from "shared/types";
@@ -17,7 +18,6 @@ import FieldRadio from 'root/components/FieldRadio/FieldRadio';
 import FieldSelect from 'root/components/FieldSelect/FieldSelect';
 import FieldTextarea from 'root/components/FieldTextarea/FieldTextarea';
 import mutation from 'shared/models/Users/User/userMutation.gql.ts'
-import routeNames from 'root/routes/routeNames'
 import schema from 'shared/models/Users/User/user.json'
 import single from 'shared/models/Users/User/userSingle.gql.ts'
 
@@ -44,7 +44,7 @@ export default defineComponent({
     })
 
     const newEntryLink = {
-      name: routeNames.<%= @model_name_graphql_case %>Edit,
+      name: routeNames.<%= model_name_graphql_case %>Edit,
       params: {
         id: 'new'
       }
@@ -92,7 +92,7 @@ export default defineComponent({
             btns: () => <Btn
               class="s1050m:hidden"
               click={deleteEntry}
-              label="New <%= @model_name %>"
+              label="New <%= model_name %>"
             />
           }}
         >
@@ -153,7 +153,7 @@ export default defineComponent({
         </AdminBody>
         <AdminFooter>
           <BtnMobileMenu
-            label="New <%= @model_name %>"
+            label="New <%= model_name %>"
             to={newEntryLink}
           />
         </AdminFooter>

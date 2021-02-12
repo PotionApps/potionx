@@ -14,6 +14,7 @@ defmodule Potionx.New.Project do
             local_postgres_user: nil,
             no_install_deps: false,
             no_migrations: true,
+            potionx_version: "0.2.11",
             root_app: nil,
             root_mod: nil,
             project_path: nil,

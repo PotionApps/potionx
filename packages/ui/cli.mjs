@@ -58,7 +58,7 @@ const run = () => {
       .forEach(comp => {
         fs.copySync(
           toPath({componentName: comp, componentType: 'component'}),
-          path.join(context.destination, context.componentName, 'components', comp)
+          path.join(context.destination , context.componentName, 'src', 'components', comp)
         )
       })
   }

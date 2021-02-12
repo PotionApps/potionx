@@ -11,8 +11,8 @@
     "lib": ["esnext", "dom"],
     "types": ["vite/client"],
     "paths": {
-      "root/*": ["./*"],
-      "shared/*": ["../../shared/src/*"]
+      "root/*": ["./src/*"],
+      "shared/*": ["../shared/src/*"]
     },
     "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }],
     "resolveJsonModule": true

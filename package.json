@@ -4,6 +4,7 @@
   "description": "Components and utilities for Vue 3",
   "main": "index.js",
   "scripts": {
+    "hex.publish": "node ./bumpVersion.mjs && mix hex.publish",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,5 +24,6 @@
   },
   "homepage": "https://github.com/PotionApps/potionx#readme",
   "dependencies": {
+    "@potionapps/ui": "file:packages/ui"
   }
 }
