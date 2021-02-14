@@ -86,6 +86,11 @@ export default defineComponent({
       }
     })
 
+    const title = computed(() => {
+      if (route.params.id === "new") return "New TEMP_model"
+      return model.value?.title || "TEMP_model"
+    })
+
     return () => {
       return <AdminShell>
         <AdminHeader
@@ -98,7 +103,7 @@ export default defineComponent({
           }}
         >
           <AdminTitle>
-            {model.value?.title} || "TEMP_model"
+            {title.value}
           </AdminTitle>
         </AdminHeader>
         <AdminBody>

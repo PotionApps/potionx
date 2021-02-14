@@ -679,7 +679,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
             _ -> []
           end
         acc ++ [%{
-          name: to_string(k),
+          name: k,
           options: options,
           type: "checkbox",
           validations:
@@ -705,7 +705,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
                 end
               end)
             acc ++ [%{
-              name: to_string(k),
+              name: k,
               type: field_type_from_validations(v, validations),
               validations: validations
             }]
@@ -713,6 +713,18 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
     end)
     |> Enum.uniq_by(fn v ->
       v.name
+    end)
+    |> Enum.map(fn %{name: name} = field ->
+      Map.put(
+        field,
+        :name,
+        Absinthe.Adapter.LanguageConventions.to_external_name(
+          to_string(
+            name
+          ),
+          nil
+        )
+      )
     end)
     |> Jason.encode!(pretty: true)
     |> (fn res ->
