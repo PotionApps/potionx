@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
     "declaration": true,
     "target": "esnext",
     "module": "esnext",
@@ -9,7 +11,12 @@
     "sourceMap": true,
     "lib": ["esnext", "dom"],
     "types": ["vite/client"],
-    "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }]
+    "paths": {
+      "root/*": ["./src/templates/*"],
+      "shared/*": ["./src/playground/shared/*"]
+    },
+    "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }],
+    "resolveJsonModule": true
   },
   "include": [
     "src/**/*.ts",
@@ -20,7 +27,6 @@
   "exclude": [
     "dist/**",
     "node_modules/**",
-    "src/templates/eex/**",
     "src/templates/themes/**"
   ]
 }

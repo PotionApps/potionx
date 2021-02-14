@@ -27,9 +27,9 @@ defmodule Mix.Tasks.Potionx.NewTest do
     assert_received {:mix_shell, :info, ["Potionx v" <> _]}
   end
 
-  test "new with defaults" do
+  test "new with defaults without: deps, frontend and migrations" do
     in_tmp "new with defaults", fn ->
-      Mix.Tasks.Potionx.New.run([@app_name, "--no-migrations", "--no-install-deps"])
+      Mix.Tasks.Potionx.New.run([@app_name, "--no-frontend", "--no-migrations", "--no-install-deps", "--no-users"])
 
       assert_file "potionx_blog/README.md"
 

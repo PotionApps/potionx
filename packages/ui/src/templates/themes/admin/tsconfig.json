@@ -12,7 +12,7 @@
     "types": ["vite/client"],
     "paths": {
       "root/*": ["./src/*"],
-      "shared/*": ["../shared/src/*"]
+      "shared/*": ["../../shared/src/*"]
     },
     "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }],
     "resolveJsonModule": true

@@ -2,11 +2,13 @@
     "name": "@potionapps/ui",
     "version": "0.0.12",
     "files": [
+        "cli",
         "dist",
         "src/templates"
     ],
     "bin": {
-        "potionapps-ui": "./cli.mjs"
+        "potionapps-ui": "./cli/cliComponents.mjs",
+        "potionapps-ui-route": "./cli/cliRoutes.mjs"
     },
     "main": "./dist/potionapps-ui.esm.js",
     "module": "./dist/potionapps-ui.esm.js",
@@ -36,6 +38,7 @@
         "@potionapps/forms": "file:../forms",
         "@potionapps/utils": "0.0.1",
         "@rollup/plugin-image": "^2.0.6",
+        "@urql/vue": "^0.2.1",
         "@vitejs/plugin-vue-jsx": "^1.0.2",
         "@vue/compiler-sfc": "^3.0.5",
         "@vuedx/typecheck": "^0.4.1",

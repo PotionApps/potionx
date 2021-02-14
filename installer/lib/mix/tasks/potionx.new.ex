@@ -80,7 +80,7 @@ defmodule Mix.Tasks.Potionx.New do
       mix potionx.new -v
   """
   use Mix.Task
-  alias Potionx.New.{Generator, Project, Single, Ecto}
+  alias Potionx.New.{Generator, Project, Single}
 
   @version Mix.Project.config()[:version]
   @shortdoc "Creates a new Potionx v#{@version} application"
@@ -89,7 +89,10 @@ defmodule Mix.Tasks.Potionx.New do
              app: :string, module: :string, web_module: :string,
              database: :string, binary_id: :boolean, html: :boolean,
              gettext: :boolean, umbrella: :boolean, verbose: :boolean,
-             live: :boolean, dashboard: :boolean, install: :boolean, no_migrations: :boolean, no_install_deps: :boolean]
+             live: :boolean, dashboard: :boolean, install: :boolean,
+             no_frontend: :boolean, no_migrations: :boolean,
+             no_install_deps: :boolean, no_users: :boolean, ui_package: :string
+            ]
 
   def ask_for_email(%Project{} = project) do
     email =
@@ -144,24 +147,10 @@ defmodule Mix.Tasks.Potionx.New do
     project
   end
 
-  def generate_default_graphql(%Project{} = project, path_key) do
-    path = Map.fetch!(project, path_key)
-
-    maybe_cd(path, fn ->
-      cmd(project, "mix potionx.gen.gql_for_model UserIdentities UserIdentity --no-associations --no-queries --no-mutations --no-frontend")
-    end)
-
-    maybe_cd(path, fn ->
-      cmd(project, "mix potionx.gen.gql_for_model Users User")
-    end)
-
+  defp install_deps(%Project{no_install_deps: true} = project, _path_key) do
     project
   end
-
-  defp install_deps(%Project{no_install_deps: true} = project, _generator, _path_key) do
-    project
-  end
-  defp install_deps(%Project{} = project, generator, path_key) do
+  defp install_deps(%Project{} = project, path_key) do
     path = Map.fetch!(project, path_key)
 
     maybe_cd(path, fn ->
@@ -172,26 +161,7 @@ defmodule Mix.Tasks.Potionx.New do
           [] -> Task.async(fn -> rebar_available?() && cmd(project, "mix deps.compile") end)
           _  -> Task.async(fn -> :ok end)
         end
-      install_frontend(true, project)
-
       Task.await(compile, :infinity)
-
-      if !System.find_executable("npm") do
-        print_frontend_info(project, generator)
-      end
-
-      if path_key == :web_path do
-        Mix.shell().info("""
-        Your web app requires a PubSub server to be running.
-        The PubSub server is typically defined in a `mix potionx.new.ecto` app.
-        If you don't plan to define an Ecto app, you must explicitly start
-        the PubSub in your supervision tree as:
-
-            {Phoenix.PubSub, name: #{inspect(project.app_mod)}.PubSub}
-        """)
-      end
-
-      print_mix_info(generator)
     end)
     project
   end
@@ -210,19 +180,76 @@ defmodule Mix.Tasks.Potionx.New do
     base_path
     |> Project.new(opts)
     |> Map.replace(:no_install_deps, !!Keyword.get(opts, :no_install_deps, false))
+    |> Map.replace(:no_frontend, !!Keyword.get(opts, :no_frontend, false))
     |> Map.replace(:no_migrations, !!Keyword.get(opts, :no_migrations, false))
+    |> Map.replace(:no_users, !!Keyword.get(opts, :no_users, false))
+    |> Map.replace(:ui_package, Keyword.get(opts, :ui_package, "@potionapps/ui"))
     |> ask_for_local_postgres_user
     |> ask_for_local_postgres_password
-    |> generator.prepare_project()
     |> ask_for_email
+    |> generator.prepare_project()
+    |> validate_project(path)
     |> Generator.put_binding()
     |> validate_project(path)
     |> generator.generate()
-    |> install_deps(generator, path)
+    |> generate_backend(path)
+    |> generate_frontend(path)
+    |> generate_users_graphql_and_frontend(path)
+  end
+
+  def generate_backend(project, path) do
+    project
+    |> install_deps(path)
     |> install_pow_assent(path)
-    |> generate_default_graphql(path)
     |> run_migrations(path)
     |> run_seed(path)
+  end
+
+  defp generate_frontend(%{no_frontend: true} = project, _path), do: project
+  defp generate_frontend(project, path) do
+    frontend_path = Path.join(project.web_path || project.project_path, "frontend")
+    ui_path = Path.join(project.web_path || project.project_path, "node_modules/@potionapps/ui")
+
+    if !System.find_executable("npm") do
+      print_frontend_info(project)
+    end
+
+    maybe_cmd(
+      project,
+      "cd #{relative_app_path(project.project_path)} && npm install #{project.ui_package}",
+      true,
+      System.find_executable("npm")
+    )
+    File.cp_r!(Path.join(ui_path, "src/templates/shared"), Path.join(project.project_path, "/shared"))
+
+    maybe_cmd(
+      project,
+      "npx potionapps-ui theme admin --destination=#{frontend_path}",
+      true,
+      System.find_executable("npm")
+    )
+
+    maybe_cmd(
+      project,
+      "cd #{relative_app_path(frontend_path <> "/admin")} && npm install",
+      true,
+      System.find_executable("npm")
+    )
+
+    project
+  end
+
+  def generate_users_graphql_and_frontend(%{no_users: true} = project, _path), do: project
+  def generate_users_graphql_and_frontend(project, path) do
+    maybe_cd(path, fn ->
+      cmd(project, "mix potionx.gen.gql_for_model UserIdentities UserIdentity --no-associations --no-queries --no-mutations --no-frontend")
+    end)
+
+    maybe_cd(path, fn ->
+      cmd(project, "mix potionx.gen.gql_for_model Users User")
+    end)
+
+    project
     |> add_me_query
   end
 
@@ -286,38 +313,6 @@ defmodule Mix.Tasks.Potionx.New do
   defp switch_to_string({name, nil}), do: name
   defp switch_to_string({name, val}), do: name <> "=" <> val
 
-  defp install_frontend(install?, project) do
-    frontend_path = Path.join(project.web_path || project.project_path, "frontend")
-
-    maybe_cmd(
-      project,
-      "cd #{relative_app_path(frontend_path)} && npm install @potionapps/ui",
-      true,
-      install? && System.find_executable("npm")
-    )
-
-    maybe_cmd(
-      project,
-      "cd #{relative_app_path(frontend_path)} && npx potionapps-ui theme admin --destination #{frontend_path}/src",
-      true,
-      install? && System.find_executable("npm")
-    )
-
-    maybe_cmd(
-      project,
-      "cd #{relative_app_path(frontend_path)} && npx potionapps-ui theme shared --destination #{frontend_path}/src",
-      true,
-      install? && System.find_executable("npm")
-    )
-
-    maybe_cmd(
-      project,
-      "cd #{relative_app_path(frontend_path <> "/admin")} && npm install",
-      true,
-      install? && System.find_executable("npm")
-    )
-  end
-
   defp install_mix(project, install?) do
     maybe_cmd(project, "mix deps.get", true, install? && hex_available?())
   end
@@ -330,34 +325,33 @@ defmodule Mix.Tasks.Potionx.New do
     Mix.Rebar.rebar_cmd(:rebar) && Mix.Rebar.rebar_cmd(:rebar3)
   end
 
-  defp print_frontend_info(_project, _gen) do
+  defp print_frontend_info(_project) do
     Mix.shell().info """
-    Potionx uses an assets build tool called Vite
-    that requires node.js and npm. Installation instructions for
+    Potionx relies on Node.js packages that requires node.js and npm. Installation instructions for
     node.js, which includes npm, can be found at http://nodejs.org.
 
     The command listed next expect that you have npm available.
     """
   end
 
-  defp print_mix_info(Ecto) do
-    Mix.shell().info """
-    You can run your app inside IEx (Interactive Elixir) as:
+  # defp print_mix_info(Ecto) do
+  #   Mix.shell().info """
+  #   You can run your app inside IEx (Interactive Elixir) as:
 
-        $ iex -S mix
-    """
-  end
-  defp print_mix_info(_gen) do
-    Mix.shell().info """
-    Start your Phoenix app with:
+  #       $ iex -S mix
+  #   """
+  # end
+  # defp print_mix_info(_gen) do
+  #   Mix.shell().info """
+  #   Start your Phoenix app with:
 
-        $ mix phx.server
+  #       $ mix phx.server
 
-    You can also run your app inside IEx (Interactive Elixir) as:
+  #   You can also run your app inside IEx (Interactive Elixir) as:
 
-        $ iex -S mix phx.server
-    """
-  end
+  #       $ iex -S mix phx.server
+  #   """
+  # end
 
   defp relative_app_path(path) do
     case Path.relative_to_cwd(path) do

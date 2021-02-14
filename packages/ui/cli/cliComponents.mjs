@@ -65,7 +65,7 @@ const run = () => {
 }
 
 const toPath = ({componentName, componentType}) => {
-  return path.resolve(__dirname, './src/templates', componentType + "s", componentName)
+  return path.resolve(__dirname, '../src/templates', componentType + "s", componentName)
 }
 
 run()

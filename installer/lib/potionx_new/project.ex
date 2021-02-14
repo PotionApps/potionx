@@ -12,8 +12,10 @@ defmodule Potionx.New.Project do
             lib_web_name: nil,
             local_postgres_password: nil,
             local_postgres_user: nil,
+            no_frontend: false,
             no_install_deps: false,
-            no_migrations: true,
+            no_migrations: false,
+            no_users: false,
             potionx_version: "0.2.11",
             root_app: nil,
             root_mod: nil,
@@ -25,7 +27,8 @@ defmodule Potionx.New.Project do
             in_umbrella?: false,
             binding: [],
             generators: [],
-            timestamp: nil
+            timestamp: nil,
+            ui_package: "@potionapps/ui"
 
   def new(project_path, opts) do
     project_path = Path.expand(project_path)

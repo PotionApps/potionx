@@ -85,7 +85,9 @@ defmodule Potionx.New.Single do
     {:eex, "potionx/priv/repo/potionx_seed.exs", :app, "priv/repo/potionx_seed.exs"},
     {:eex, "potionx/build.sh", :app, "build.sh"},
     {:eex, "potionx/Dockerfile", :app, "Dockerfile"},
-    {:keep, "potionx/frontend", :project, "frontend"}
+    {:eex, "potionx/package.json", :app, "package.json"},
+    {:keep, "potionx/frontend", :project, "frontend"},
+    {:keep, "potionx/shared", :project, "shared"}
   ]
 
   def prepare_project(%Project{app: app} = project) when not is_nil(app) do
