@@ -54,13 +54,13 @@ export default defineComponent({
         v-slots={{
           btns: () => <Btn
             class="s1050m:hidden"
-            label="New TEMP_model_name"
+            label="New TEMP_model"
             reverse={true}
             to={newEntryLink}
           />
         }}
       >
-        <AdminTitle>TEMP_model_name Management</AdminTitle>
+        <AdminTitle>TEMP_model Management</AdminTitle>
       </AdminHeader>
       <AdminBody>
         {
