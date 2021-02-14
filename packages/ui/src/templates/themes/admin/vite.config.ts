@@ -9,7 +9,7 @@ export default defineConfig({
       // @ts-ignore
       'root': resolve(__dirname, './src'),
       // @ts-ignore
-      'shared': resolve(__dirname, '../shared/src')
+      'shared': resolve(__dirname, '../../shared/src')
     }
   },
   build: {

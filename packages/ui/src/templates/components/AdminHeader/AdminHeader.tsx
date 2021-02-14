@@ -7,7 +7,6 @@ export interface AdminHeaderTabProps {
 }
 
 export interface AdminHeaderProps {
-  headerBtns: 
   tabs?: AdminHeaderTabProps[]
 }
 

@@ -1,5 +1,4 @@
 import { defineComponent, computed } from "vue"
-import { faEmptySet } from '@fortawesome/free-solid-svg-icons'
 import { RootQueryType } from "shared/types";
 import { routeNames } from 'root/routes/routeNames'
 import { useQuery } from "@urql/vue";
@@ -66,7 +65,7 @@ export default defineComponent({
       <AdminBody>
         {
           data.value?.TEMP_model_graphql_caseCollection?.count! > 0 &&
-            <StateEmpty class="pb-2 pt-4" icon={faEmptySet} label="No Results" />
+            <StateEmpty class="pb-2 pt-4" label="No Results" />
         }
         {
           fetching.value &&

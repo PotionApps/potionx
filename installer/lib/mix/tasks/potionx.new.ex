@@ -206,7 +206,7 @@ defmodule Mix.Tasks.Potionx.New do
   end
 
   defp generate_frontend(%{no_frontend: true} = project, _path), do: project
-  defp generate_frontend(project, path) do
+  defp generate_frontend(project, _path) do
     frontend_path = Path.join(project.web_path || project.project_path, "frontend")
     ui_path = Path.join(project.web_path || project.project_path, "node_modules/@potionapps/ui")
 
@@ -224,7 +224,7 @@ defmodule Mix.Tasks.Potionx.New do
 
     maybe_cmd(
       project,
-      "npx potionapps-ui theme admin --destination=#{frontend_path}",
+      "cd #{relative_app_path(project.project_path)} && npx potionapps-ui theme admin --destination=#{frontend_path}",
       true,
       System.find_executable("npm")
     )

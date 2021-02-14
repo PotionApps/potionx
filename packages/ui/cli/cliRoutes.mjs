@@ -30,7 +30,7 @@ const addToRoutes = (context) => {
         `routes.push(`,
         `  {`,
         `    name: routeNames.${context.modelGraphqlCase}${key},`,
-        `    path: '/${camelToSnakeCase(context.modelGraphqlCase)}-${key.toLowerCase()}/:id',`,
+        `    path: '/${camelToDashCase(context.modelGraphqlCase)}-list${key === "Edit" && '/:id' || ''}',`,
         `    component: Route${context.model}${key}`,
         `  }`,
         `)`
@@ -62,26 +62,26 @@ const addToRouteNames = (context) => {
 const addToNav = (context) => {
   const pathToNav = path.join(context.destination, "src", "useAdminNavPrimary.ts")
   let nav = fs.readFileSync(pathToNav, { encoding: 'utf-8' })
-  nav = ['Edit', 'List'].reduce((acc, key) => {
-    if (!nav.includes(`${context.model}${key}`)) {
-      acc += 
-        `
-        nav.push(
-          {
-            label: "${context.model}s",
-            to: {
-              name: routeNames.${context.modelGraphqlCase}List
-            }
-          }
-        )
-        `
+  nav = ['List'].reduce((acc, key) => {
+    if (!nav.includes(`${context.modelGraphqlCase}List`)) {
+      acc += [
+          ``,
+          `nav.push(`,
+          `  {`,
+          `    label: "${context.model}s",`,
+          `    to: {`,
+          `      name: routeNames.${context.modelGraphqlCase}List`,
+          `    }`,
+          `  }`,
+        `)`
+      ].join('\r\n')
     }
     return acc
   }, nav)
   fs.writeFileSync(pathToNav, nav)
 }
 
-const camelToSnakeCase = str => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+const camelToDashCase = str => str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
 
 const checkFileExists = (f, errorMsg) => {
   try {
