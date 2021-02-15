@@ -181,7 +181,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
     end)
   end
 
-  def load_model(%GqlForModel{} = state) do
+  def load_model(%GqlForModel{} = state, nil) do
      %{
        state | model: [
         "Elixir",
@@ -193,6 +193,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
       |> String.to_atom
     }
   end
+  def load_model(%GqlForModel{} = state, model), do: %{state | model: model}
 
   def load_validations(%GqlForModel{} = state) do
     %{
@@ -459,10 +460,15 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
 
   @doc false
   def run(args) do
+    model = Enum.find(args, fn a -> is_atom(a) end)
+    args = Enum.filter(args, fn a -> not is_struct(a) end)
+
     if Mix.Project.umbrella? do
       Mix.raise "mix #{@task_name} can only be run inside an application directory"
     end
-    Mix.Task.run("app.start")
+    if (!model) do
+      Mix.Task.run("app.start")
+    end
     {opts, [context, schema]} = build(args)
 
     this_app = Mix.Phoenix.otp_app()
@@ -491,7 +497,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
       no_queries: Keyword.get(opts, :no_queries, false)
     }
     |> ensure_files_and_directories_exist
-    |> load_model
+    |> load_model(model)
     |> load_lines
     |> load_validations
     |> maybe_init_types
@@ -704,6 +710,9 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
                   acc
                 end
               end)
+              |> Enum.uniq_by(fn v ->
+                v.name
+              end)
             acc ++ [%{
               name: k,
               type: field_type_from_validations(v, validations),
@@ -721,6 +730,15 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
         Absinthe.Adapter.LanguageConventions.to_external_name(
           to_string(
             name
+          ),
+          nil
+        )
+      )
+      |> Map.put(
+        :type,
+        Absinthe.Adapter.LanguageConventions.to_external_name(
+          to_string(
+            field.type
           ),
           nil
         )
@@ -775,7 +793,23 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
       |> File.read!,
       Enum.map(
         Map.from_struct(state)
-        |> Map.put(:mock, Jason.encode!(fields, pretty: true)),
+        |> Map.put(
+          :mock,
+          fields
+          |> Enum.reduce(%{}, fn {k, v}, acc ->
+            Map.put(
+              acc,
+              Absinthe.Adapter.LanguageConventions.to_external_name(
+                to_string(
+                  k
+                ),
+                nil
+              ),
+              v
+            )
+          end)
+          |> Jason.encode!(pretty: true)
+        ),
         &(&1)
       )
     )

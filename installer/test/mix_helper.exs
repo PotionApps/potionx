@@ -35,7 +35,7 @@ defmodule MixHelper do
       File.mkdir_p!(path)
       File.cd!(path, fn ->
         File.touch!("mix.exs")
-        function.()
+        function.(path)
       end)
     after
       File.rm_rf!(path)
