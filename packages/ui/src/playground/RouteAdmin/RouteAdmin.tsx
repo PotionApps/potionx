@@ -11,8 +11,8 @@ import { faFilter, faSortAmountDown, faTag, faUsers } from '@fortawesome/free-so
 import Pagination from '../../templates/components/Pagination/Pagination'
 import Pill from '../../templates/components/Pill/Pill'
 import Search from '../../templates/components/Search/Search'
-import StateEmpty from "../../components/StateEmpty/StateEmpty"
-import StateLoading from "../../components/StateLoading/StateLoading"
+import StateEmpty from "../../templates/components/StateEmpty/StateEmpty"
+import StateLoading from "../../templates/components/StateLoading/StateLoading"
 import Tabs from '../../templates/components/Tabs/Tabs'
 import Wrapper from '../../templates/components/Wrapper/Wrapper'
 
@@ -116,7 +116,7 @@ export default defineComponent({
           true && <StateLoading class="pb-2 pt-4"/>
         }
         <AdminList>
-          {[1,2,3,4].map(i => <AdminCard>Test</AdminCard>)}
+          {[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17].map(i => <AdminCard>Test</AdminCard>)}
         </AdminList>
         <Pagination class="py-6" />
       </Wrapper>

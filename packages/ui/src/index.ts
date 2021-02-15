@@ -6,12 +6,9 @@ import Login from './components/Login/Login'
 import LoginButton from './components/LoginButton/LoginButton'
 import LoginError from './components/LoginError/LoginError'
 import ModelTable, { ModelTableProps } from './components/ModelTable/ModelTable'
-import StateEmpty, { StateEmptyProps } from './components/StateEmpty/StateEmpty'
-import StateLoading from './components/StateLoading/StateLoading'
 
 export type {
-  ModelTableProps,
-  StateEmptyProps
+  ModelTableProps
 }
 
 export {
@@ -22,7 +19,5 @@ export {
   Login,
   LoginButton,
   LoginError,
-  ModelTable,
-  StateEmpty,
-  StateLoading
+  ModelTable
 }

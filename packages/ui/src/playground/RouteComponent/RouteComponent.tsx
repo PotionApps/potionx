@@ -1,11 +1,12 @@
+import AdminContent from "../../layouts/AdminContent/AdminContent";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   setup () {
     return () => (
-      <div class="bg-white">
+      <AdminContent>
         <router-view />
-      </div>
+      </AdminContent>
     )
   }
 })

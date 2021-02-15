@@ -1,6 +1,6 @@
 import { defineComponent } from "vue";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { FontAwesomeIcon } from '@potionapps/utils';
 import { RouteLocationRaw } from "vue-router";
 
 export interface PropsAdminFooter {
