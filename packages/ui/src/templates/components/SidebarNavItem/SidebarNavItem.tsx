@@ -8,6 +8,7 @@ export interface SidebarNavItemProps {
   id?: string
   label?: string
   notification?: number
+  parentId?: string
   to?: RouteLocationRaw
 }
 
@@ -17,13 +18,12 @@ export default defineComponent({
     icon: Object,
     label: String,
     notification: Number,
-    to: {
-      type: [Object, String] as PropType<RouteLocationRaw>
-    }
+    parentId: String,
+    to: [Object, String] as PropType<RouteLocationRaw>
   },
   setup (props: SidebarNavItemProps, ctx) {
     const classes = computed(() => {
-      return "block opacity-70 text-gray-100 transition-opacity w-full hover:opacity-100"
+      return ["block opacity-70 text-gray-100 transition-opacity w-full hover:opacity-100", props.parentId && "pl-3 text-sm"]
     })
     return () => {
       const slot = <div class="flex items-center justify-between">
@@ -37,8 +37,8 @@ export default defineComponent({
         </div>
         {
           props.notification &&
-          <div class="bg-blue-500 flex ml-1 px-1.5 py-0.5 rounded-full">
-            <span class="font-semibold text-white text-xs">{props.notification}</span>
+          <div class={["bg-blue-500 flex ml-1 px-1 py-0.5 rounded-full", !props.parentId && "px-1.5"]}>
+            <span class={["font-semibold text-white text-2xs", !props.parentId && "text-xs"]}>{props.notification}</span>
           </div>
         }
       </div>

@@ -21,6 +21,21 @@ export const useAdminNavPrimary = () => {
         }
       },
       {
+        label: "New Message",
+        parentId: "Inbox",
+        notification: 14,
+        to: {
+          name: routeNames.login
+        }
+      },
+      {
+        label: "Categories",
+        parentId: "Inbox",
+        to: {
+          name: routeNames.login
+        }
+      },
+      {
         label: "Websites",
         to: {
           name: routeNames.login
@@ -28,7 +43,21 @@ export const useAdminNavPrimary = () => {
       },
       {
         label: "Forms",
-        notification: 3,
+        to: {
+          name: routeNames.login
+        }
+      },
+      {
+        label: "New Form",
+        parentId: "Forms",
+        to: {
+          name: routeNames.login
+        }
+      },
+      {
+        label: "Categories",
+        parentId: "Forms",
+        notification: 142,
         to: {
           name: routeNames.login
         }
