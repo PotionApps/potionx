@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import jsx from '@vitejs/plugin-vue-jsx'
+import WindiCSS from 'vite-plugin-windicss'
 
 export default defineConfig({
   build: {
@@ -22,5 +23,10 @@ export default defineConfig({
       }
     }
   },
-  plugins: [jsx()]
+  plugins: [
+    jsx(),
+    ...WindiCSS({
+      safelist: 'prose prose-sm m-auto'
+    })
+  ]
 })

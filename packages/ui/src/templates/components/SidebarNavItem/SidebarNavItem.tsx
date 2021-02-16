@@ -37,8 +37,8 @@ export default defineComponent({
         </div>
         {
           props.notification &&
-          <div class={["bg-blue-500 flex ml-1 px-1 py-0.5 rounded-full", !props.parentId && "px-1.5"]}>
-            <span class={["font-semibold text-white text-2xs", !props.parentId && "text-xs"]}>{props.notification}</span>
+          <div class={["bg-blue-500 flex ml-1 py-0.5 rounded-full", props.parentId ? "px-1" : "px-1.5"]}>
+            <span class={["font-semibold text-white", props.parentId ? "text-2xs" : "text-xs"]}>{props.notification}</span>
           </div>
         }
       </div>

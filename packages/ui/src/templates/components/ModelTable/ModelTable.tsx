@@ -87,17 +87,17 @@ export default defineComponent({
           {
             fieldsOrdered.value!.map(({ key, label }) => {
               if (key === "image") return <th></th>
-              return <th class="border-gray-300 border-b-1 border-t-1 px-4 py-4 text-gray-500 text-left text-sm uppercase s750m:hidden">
+              return <th class="border-gray-300 border-b-1 border-t-1 px-3 py-3 s750:first:pl-8 s750:last:pr-8 text-gray-500 text-left text-sm uppercase s750m:hidden">
                 {label}
               </th>
             })
           }
         </thead>
-        <tbody>
+        <tbody class="bg-white">
           {
             props.rows?.map(row => {
               return <tr
-                class="border-gray-300 border-b-1 cursor-pointer relative transition hover:shadow-negative-xl hover:z-2"
+                class="cursor-pointer relative transition hover:shadow-negative-xl hover:z-2"
                 onClick={() => props.checkboxClick?.(row)}
               >
                 {
@@ -125,7 +125,7 @@ export default defineComponent({
                           rowData = val
                         }
                     }
-                    return <td class="px-4 py-1 s750m:last:pb-6 s750m:first:pt-6 s750:py-4 s750m:flex s750m:items-start s1250:py-6">
+                    return <td class="s750:border-b-1 s750:border-gray-300 s750m:flex s750m:items-start px-4 py-1 s750m:last:pb-6 s750m:first:pt-6 s750:first:pl-8 s750:last:pr-8 s750:py-4">
                       <span class="flex-fit font-semibold max-w-2/5 s450:max-w-150 text-gray-800 text-sm s550:text-base w-full s750:hidden">{field.label}</span>
                       <p class="text-gray-900 text-sm">{rowData}</p>
                     </td>
