@@ -86,6 +86,7 @@ defmodule Potionx.New.Single do
     {:eex, "potionx/build.sh", :app, "build.sh"},
     {:eex, "potionx/Dockerfile", :app, "Dockerfile"},
     {:eex, "potionx/package.json", :app, "package.json"},
+    {:eex, "potionx/README.md", :app, "README.md"},
     {:keep, "potionx/frontend", :project, "frontend"},
     {:keep, "potionx/shared", :project, "shared"}
   ]

@@ -6,38 +6,6 @@ defmodule Potionx.Plug.ApiAuth do
   alias Pow.{Config, Plug, Store.CredentialsCache}
   alias PowPersistentSession.Store.PersistentSessionCache
 
-  @doc """
-  Creates an access and renewal token for the user.
-
-  The tokens are added to the `conn.private` as `:api_access_token` and
-  `:api_renewal_token`. The renewal token is stored in the access token
-  metadata and vice versa.
-  """
-  @impl true
-  @spec create(Conn.t(), map(), Config.t()) :: {Conn.t(), map()}
-  def create(conn, user, config) do
-    store_config  = store_config(config)
-    access_token  = Pow.UUID.generate()
-    fingerprint   = conn.private[:pow_api_session_fingerprint] || Po
-    renewal_token = Pow.UUID.generate()
-    expiry =
-      DateTime.utc_now()
-      |> DateTime.add(60 * 30, :second) # 30 minutes
-      |> DateTime.to_unix
-    conn =
-      conn
-      |> Conn.put_private(:api_access_token, sign_token(conn, access_token, config))
-      |> Conn.put_private(:api_renewal_token, sign_token(conn, renewal_token, config))
-      |> Conn.put_private(:api_access_expiry, expiry)
-
-    # The store caches will use their default `:ttl` settting which is 30minutes for access and 30 days for renewal. To change the
-    # `:ttl`, `Keyword.put(store_config, :ttl, :timer.minutes(10))` can be
-    # passed in as the first argument instead of `store_config`.
-    CredentialsCache.put(store_config, access_token, {user, [renewal_token: renewal_token, expiry: expiry, fingerprint: fingerprint]})
-    PersistentSessionCache.put(store_config, renewal_token, {user, [access_token: access_token, fingerprint: fingerprint]})
-
-    {conn, user}
-  end
 
   def cookie_names(config) do
     Map.merge(
@@ -59,6 +27,39 @@ defmodule Potionx.Plug.ApiAuth do
       secure: conn.scheme === :https,
       same_site: "strict"
     ] ++ (config[:cookie_options] || [])
+  end
+
+  @doc """
+  Creates an access and renewal token for the user.
+
+  The tokens are added to the `conn.private` as `:api_access_token` and
+  `:api_renewal_token`. The renewal token is stored in the access token
+  metadata and vice versa.
+  """
+  @impl true
+  @spec create(Conn.t(), map(), Config.t()) :: {Conn.t(), map()}
+  def create(conn, user, config) do
+    store_config  = store_config(config)
+    access_token  = Pow.UUID.generate()
+    fingerprint   = conn.private[:pow_api_session_fingerprint]
+    renewal_token = Pow.UUID.generate()
+    expiry =
+      DateTime.utc_now()
+      |> DateTime.add(60 * 30, :second) # 30 minutes
+      |> DateTime.to_unix
+    conn =
+      conn
+      |> Conn.put_private(:api_access_token, sign_token(conn, access_token, config))
+      |> Conn.put_private(:api_renewal_token, sign_token(conn, renewal_token, config))
+      |> Conn.put_private(:api_access_expiry, expiry)
+
+    # The store caches will use their default `:ttl` settting which is 30minutes for access and 30 days for renewal. To change the
+    # `:ttl`, `Keyword.put(store_config, :ttl, :timer.minutes(10))` can be
+    # passed in as the first argument instead of `store_config`.
+    CredentialsCache.put(store_config, access_token, {user, [renewal_token: renewal_token, expiry: expiry, fingerprint: fingerprint]})
+    PersistentSessionCache.put(store_config, renewal_token, {user, [access_token: access_token, fingerprint: fingerprint]})
+
+    {conn, user}
   end
 
   @doc """
