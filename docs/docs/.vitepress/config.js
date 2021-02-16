@@ -4,13 +4,14 @@ module.exports = {
     description: 'Documentation for deploying apps on PotionX.',
     themeConfig: {
         nav: [
-            { text: 'Docs', link: '/', activeMatch: '^/$|^/(guide|generators)/' },
+            { text: 'Docs', link: '/', activeMatch: '^/$|^/(conventions|guide|generators)/' },
             {
                 text: 'Github',
                 link: 'https://github.com/PotionApps/potionx'
             }
         ],
         sidebar: {
+            '/conventions/': getGuideSidebar(),
             '/generators/': getGuideSidebar(),
             '/guide/': getGuideSidebar(),
             '/': getGuideSidebar()
@@ -20,6 +21,12 @@ module.exports = {
 
 function getGuideSidebar() {
     return [
+        {
+            text: 'Conventions',
+            children: [
+                { text: 'Overview', link: '/conventions/overview' }
+            ]
+        },
         {
             text: 'Docs',
             children: [

@@ -7,7 +7,7 @@ Potionx is a set of generators and modules that speeds up the process of setting
 > **Warning:** Still in early stages of development. Not suitable for production use. 
 
 ## Features
-- Uses [opinionated defaults for naming and file structure](/guide/conventions-and-file-structure/).
+- Uses [opinionated defaults for naming and file structure](/conventions/overview/).
 - Uses [Phoenix](https://github.com/phoenixframework/phoenix) as the base Elixir framework with some opinionated defaults.
 - GraphQL layer that uses [Absinthe](https://github.com/absinthe-graphql/absinthe).
 - Social login with Apple, Google, Github, Twitter enabled using [Pow and PowAssent](https://github.com/danschultzer/pow)
