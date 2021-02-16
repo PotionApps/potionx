@@ -10,8 +10,9 @@ import AdminHeader from 'root/components/AdminHeader/AdminHeader'
 import AdminShell from 'root/components/AdminShell/AdminShell'
 import AdminTitle from 'root/components/AdminTitle/AdminTitle'
 import Btn from 'root/components/Btn/Btn'
-import BtnSubmit from 'root/components/Btn/BtnSubmit'
 import BtnMobileMenu from 'root/components/Btn/BtnMobileMenu'
+import BtnPrimary from 'root/components/Btn/BtnPrimary';
+import BtnSubmit from 'root/components/Btn/BtnSubmit'
 import FieldCheckbox from 'root/components/FieldCheckbox/FieldCheckbox';
 import FieldInput from 'root/components/FieldInput/FieldInput';
 import FieldRadio from 'root/components/FieldRadio/FieldRadio';
@@ -20,7 +21,7 @@ import FieldTextarea from 'root/components/FieldTextarea/FieldTextarea';
 import mutation from 'shared/models/TEMP_context/TEMP_model/TEMP_model_graphql_caseMutation.gql.ts'
 import schema from 'shared/models/TEMP_context/TEMP_model/TEMP_model_graphql_case.json'
 import single from 'shared/models/TEMP_context/TEMP_model/TEMP_model_graphql_caseSingle.gql.ts'
-
+import AdminHeaderBtnWrap from 'root/components/AdminHeaderBtnWrap/AdminHeaderBtnWrap';
 
 export default defineComponent({
   setup () {
@@ -95,11 +96,22 @@ export default defineComponent({
       return <AdminShell>
         <AdminHeader
           v-slots={{
-            btns: () => <Btn
-              class="s1050m:hidden"
-              click={deleteEntry}
-              label="New TEMP_model"
-            />
+            btns: () => <>
+              <AdminHeaderBtnWrap>
+                <Btn
+                  class="s1050m:hidden"
+                  click={deleteEntry}
+                  label="Delete User"
+                />
+              </AdminHeaderBtnWrap>
+              <AdminHeaderBtnWrap>
+                <BtnPrimary
+                  class="s1050m:hidden"
+                  label="Add User"
+                  to={newEntryLink}
+                />
+              </AdminHeaderBtnWrap>
+            </>
           }}
         >
           <AdminTitle>

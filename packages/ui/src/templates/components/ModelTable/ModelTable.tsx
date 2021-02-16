@@ -96,7 +96,10 @@ export default defineComponent({
         <tbody>
           {
             props.rows?.map(row => {
-              return <tr class="border-gray-300 border-b-1 cursor-pointer relative transition hover:shadow-negative-xl hover:z-2">
+              return <tr
+                class="border-gray-300 border-b-1 cursor-pointer relative transition hover:shadow-negative-xl hover:z-2"
+                onClick={() => props.checkboxClick?.(row)}
+              >
                 {
                   fieldsOrdered.value!.map((field) => {
                     const key = field.key as keyof ModelRow

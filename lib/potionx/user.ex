@@ -3,7 +3,9 @@ defmodule Potionx.Users.User do
     quote do
       def pow_user_id_field, do: :email
       def title(entry) do
-        Enum.join([entry.name_first, entry.name_last], " ")
+        [entry.name_first, entry.name_last]
+        |> Enum.filter(fn e -> e end)
+        |> Enum.join(" ")
       end
       def user_identity_changeset(user_or_changeset, user_identity, attrs, user_id_attrs) do
         attrs = Potionx.Users.User.pow_attrs_to_changes(attrs)

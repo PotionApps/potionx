@@ -1,6 +1,7 @@
 import { defineComponent, computed } from "vue"
 import { RootQueryType } from "shared/types";
 import { routeNames } from 'root/routes/routeNames'
+import { useRouter } from "vue-router";
 import { useQuery } from "@urql/vue";
 import AdminBody from 'root/components/AdminBody/AdminBody'
 import AdminFooter from 'root/components/AdminFooter/AdminFooter'
@@ -18,6 +19,7 @@ import StateLoading from 'root/components/StateLoading/StateLoading'
 
 export default defineComponent({
   setup () {
+    const router = useRouter()
     const headingLabels =
       schema.map((s: any) => ({
         key: s.name,
@@ -26,6 +28,14 @@ export default defineComponent({
 
     const modelTableProps = computed<ModelTableProps>(() => {
       return {
+        checkboxClick: (row) => {
+          router.push({
+            name: routeNames.TEMP_model_graphql_caseEdit,
+            params: {
+              id: row.id!
+            }
+          })
+        },
         headingLabels,
         rows: data.value?.TEMP_model_graphql_caseCollection?.edges?.map((edge) => edge!.node!).filter(n => n)
       }

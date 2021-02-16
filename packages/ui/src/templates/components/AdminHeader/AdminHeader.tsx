@@ -24,7 +24,7 @@ export default defineComponent({
                 {context.slots.default && context.slots.default()}
               </div>
             </div>
-            {context.slots.btns && context.slots.btns()}
+            {context.slots.btns && <div class="flex">{context.slots.btns()}</div>}
           </div>
           {
             props.tabs && 

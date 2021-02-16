@@ -1,5 +1,5 @@
 import { defineComponent } from "vue";
-import PotionLogo from '../../assets/potion-logo.svg'
+import PotionLogo from '../../../assets/potion-logo.svg'
 import ModelTable, { ModelRow } from "./ModelTable";
 
 export default defineComponent(
