@@ -1,29 +1,29 @@
 {
-  "name": "potionx",
-  "version": "0.0.1",
-  "description": "Components and utilities for Vue 3",
-  "main": "index.js",
-  "scripts": {
-    "hex.publish": "node ./bumpVersion.mjs && mix hex.publish",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/PotionApps/potionx.git"
-  },
-  "keywords": [
-    "Vue",
-    "Typescript",
-    "GraphQL",
-    "Form"
-  ],
-  "license": "MIT",
-  "private": true,
-  "bugs": {
-    "url": "https://github.com/PotionApps/potionx/issues"
-  },
-  "homepage": "https://github.com/PotionApps/potionx#readme",
-  "dependencies": {
-    "@potionapps/ui": "file:packages/ui"
-  }
+    "name": "potionx",
+    "version": "0.0.1",
+    "description": "Components and utilities for Vue 3",
+    "main": "index.js",
+    "scripts": {
+        "hex.publish": "node ./bumpVersion.mjs && mix hex.publish",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/PotionApps/potionx.git"
+    },
+    "keywords": [
+        "Vue",
+        "Typescript",
+        "GraphQL",
+        "Form"
+    ],
+    "license": "MIT",
+    "private": true,
+    "bugs": {
+        "url": "https://github.com/PotionApps/potionx/issues"
+    },
+    "homepage": "https://github.com/PotionApps/potionx#readme",
+    "dependencies": {
+        "@potionapps/ui": "file:packages/ui"
+    }
 }

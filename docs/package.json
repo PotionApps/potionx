@@ -1,0 +1,17 @@
+{
+    "name": "docs",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "ui:dev": "vitepress dev docs",
+        "ui:build": "vitepress build docs",
+        "ui:serve": "vitepress serve docs",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "vitepress": "^0.12.2"
+    }
+}
