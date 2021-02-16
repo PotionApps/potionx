@@ -2,6 +2,7 @@
   "components": [
     "AdminBody",
     "AdminHeader",
+    "AdminHeaderBtnWrap",
     "AdminFooter",
     "AdminShell",
     "AdminSidebar",
@@ -16,6 +17,7 @@
     "FieldSelect",
     "FieldRadio",
     "FieldTextarea",
+    "ModelTable",
     "SidebarNavItem",
     "StateEmpty",
     "StateLoading"

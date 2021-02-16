@@ -17,7 +17,7 @@ export default defineComponent({
   setup (props, context) {
     return () => {
       return (
-        <div class="bg-white border-b-1 border-gray-300 px-4 pt-3 s850:pt-4 s1050:px-8 s1450:px-12">
+        <div class="bg-white border-b-1 border-gray-300 pb-1 px-4 pt-3 s850:pt-4 s1050:px-8 s1450:px-12">
           <div class="flex items-center justify-between pr-4 s1050m:flex-wrap s1050:pr-0">
             <div class="flex flex-full items-center mb-2">
               <div class="s1050:max-w-500 s1450:max-w-600">

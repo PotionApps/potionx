@@ -47,6 +47,7 @@ const run = () => {
     path.join(context.destination, context.componentName),
     {
       filter: (src, dest) => {
+        if (src.includes('.stories.')) return false
         return true
       }
     }

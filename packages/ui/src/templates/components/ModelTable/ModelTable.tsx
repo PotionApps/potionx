@@ -6,14 +6,14 @@ type HeadingLabel = {
 }
 
 export interface ModelRow {
-  id: string
-  description?: string
-  icon?: string
-  image?: string
-  insertedAt?: string
-  subtitle?: string
-  title?: string
-  updatedAt?: string
+  id: string | null
+  description?: string | null
+  icon?: string | null
+  image?: string | null
+  insertedAt?: string | null
+  subtitle?: string | null
+  title?: string | null
+  updatedAt?: string | null
 }
 
 export interface ModelTableProps {
@@ -21,7 +21,7 @@ export interface ModelTableProps {
   columnOrder?: string[]
   excludeTimestamps?: boolean
   headingLabels?: HeadingLabel[]
-  rows: ModelRow[]
+  rows?: ModelRow[]
 }
 
 export default defineComponent({
@@ -31,7 +31,6 @@ export default defineComponent({
     excludeTimestamps: Boolean,
     headingLabels: Array as PropType<ModelTableProps['headingLabels']>,
     rows: {
-      required: true,
       type: Array as PropType<ModelTableProps['rows']>
     }
   },
@@ -96,7 +95,7 @@ export default defineComponent({
         </thead>
         <tbody>
           {
-            props.rows.map(row => {
+            props.rows?.map(row => {
               return <tr class="border-gray-300 border-b-1 cursor-pointer relative transition hover:shadow-negative-xl hover:z-2">
                 {
                   fieldsOrdered.value!.map((field) => {
@@ -104,7 +103,9 @@ export default defineComponent({
                     let rowData : any
                     switch (key) {
                       case "image":
-                        rowData = <img class="rounded-lg max-w-50" src={row[key]} /> 
+                        if (row[key]) {
+                          rowData = <img class="rounded-lg max-w-50" src={row[key]!} /> 
+                        }
                         break;
                       case "title": 
                         rowData = <p class="w-36">{row[key]}</p>
