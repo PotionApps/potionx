@@ -4,9 +4,9 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "ui:dev": "vitepress dev docs",
-        "ui:build": "vitepress build docs",
-        "ui:serve": "vitepress serve docs",
+        "docs:dev": "vitepress dev docs",
+        "docs:build": "vitepress build docs",
+        "docs:serve": "vitepress serve docs",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "",
