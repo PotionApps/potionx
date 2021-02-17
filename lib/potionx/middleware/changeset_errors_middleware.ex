@@ -1,4 +1,6 @@
 defmodule Potionx.Middleware.ChangesetErrors do
+  @behaviour Absinthe.Middleware
+
   def call(res, _) do
     with %{errors: [%Ecto.Changeset{} = changeset]} <- res do
       %{res |

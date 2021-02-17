@@ -1,4 +1,5 @@
 defmodule Potionx.Middleware.RolesAuthorization do
+  @behaviour Absinthe.Middleware
 
   def call(%{context: %Potionx.Context.Service{} = ctx} = res, opts) do
     (opts[:roles] || [])

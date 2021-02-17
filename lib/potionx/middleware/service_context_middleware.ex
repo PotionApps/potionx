@@ -1,4 +1,6 @@
 defmodule Potionx.Middleware.ServiceContext do
+  @behaviour Absinthe.Middleware
+
   def call(%{arguments: args, context: %Potionx.Context.Service{} = ctx} = res, _) do
     %{
       res |
