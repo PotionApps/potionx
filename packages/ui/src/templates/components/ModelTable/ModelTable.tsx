@@ -87,7 +87,7 @@ export default defineComponent({
           {
             fieldsOrdered.value!.map(({ key, label }) => {
               if (key === "image") return <th></th>
-              return <th class="border-gray-300 border-b-1 border-t-1 px-3 py-3 s750:first:pl-8 s750:last:pr-8 text-gray-500 text-left text-sm uppercase s750m:hidden">
+              return <th class="border-gray-300 border-b-1 border-t-1 px-3 py-3 s750:first:pl-8 s750:last:pr-8 text-gray-400 text-left text-sm uppercase s750m:hidden">
                 {label}
               </th>
             })
@@ -105,9 +105,14 @@ export default defineComponent({
                     const key = field.key as keyof ModelRow
                     let rowData : any
                     switch (key) {
+                      case "icon":
+                        if (row[key]) {
+                          rowData = <img class="w-6 min-w-6" src={row[key]!} /> 
+                        }
+                        break;
                       case "image":
                         if (row[key]) {
-                          rowData = <img class="rounded-lg max-w-50" src={row[key]!} /> 
+                          rowData = <img class="object-cover h-8 min-w-8 rounded-full w-6" src={row[key]!} /> 
                         }
                         break;
                       case "title": 
@@ -126,7 +131,7 @@ export default defineComponent({
                         }
                     }
                     return <td class="s750:border-b-1 s750:border-gray-300 s750m:flex s750m:items-start px-4 py-1 s750m:last:pb-6 s750m:first:pt-6 s750:first:pl-8 s750:last:pr-8 s750:py-4">
-                      <span class="flex-fit font-semibold max-w-2/5 s450:max-w-150 text-gray-800 text-sm s550:text-base w-full s750:hidden">{field.label}</span>
+                      <span class="flex-fit font-semibold max-w-2/5 s450:max-w-150 text-gray-500 text-sm uppercase w-full s750:hidden">{field.label}</span>
                       <p class="text-gray-900 text-sm">{rowData}</p>
                     </td>
                   })

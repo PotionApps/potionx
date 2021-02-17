@@ -1,4 +1,3 @@
-import AdminCard from '../../components/AdminCard/AdminCard'
 import AdminContent from "../../layouts/AdminContent/AdminContent";
 import AdminFooter from "../../components/AdminFooter/AdminFooter";
 import AdminList from '../../components/AdminList/AdminList'
@@ -15,6 +14,9 @@ import StateEmpty from "../../templates/components/StateEmpty/StateEmpty"
 import StateLoading from "../../templates/components/StateLoading/StateLoading"
 import Tabs from '../../templates/components/Tabs/Tabs'
 import Wrapper from '../../templates/components/Wrapper/Wrapper'
+import ModelTable, { ModelRow } from "../../templates/components/ModelTable/ModelTable";
+import PotionLogo from '../../assets/potion-logo-color.svg'
+import Space from '../../assets/space.jpg'
 
 export default defineComponent({
   setup () {
@@ -109,17 +111,40 @@ export default defineComponent({
             remove={() => {}}
           />
         </div>
-        {
-          true && <StateEmpty class="pb-2 pt-4" icon={faUsers} label="No Users Found" />
-        }
-        {
-          true && <StateLoading class="pb-2 pt-4"/>
-        }
-        <AdminList>
-          {[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17].map(i => <AdminCard>Test</AdminCard>)}
-        </AdminList>
-        <Pagination class="py-6" />
       </Wrapper>
+      {
+        false && <StateEmpty class="pb-2 pt-4" icon={faUsers} label="No Users Found" />
+      }
+      {
+        false && <StateLoading class="pb-2 pt-4"/>
+      }
+      <ModelTable
+        rows={
+          [
+            {
+              id: "1",
+            description: "Creates an async component.",
+              icon: PotionLogo,
+              image: Space,
+              subtitle: "Developer and Master of the Sea",
+              roles: ["Admin", "Guck Tuckerson"],
+              title: "Michael Demchuk",
+              insertedAt: (new Date()).toISOString(),
+              updatedAt: (new Date()).toISOString()
+            } as ModelRow,
+            {
+              id: "2",
+              description: "Creates an async component that will be loaded only when it's necessary.",
+              subtitle: "Developer and Cofounder",
+              roles: ["admin", "test"],
+              title: "Vince Roy",
+              insertedAt: (new Date()).toISOString(),
+              updatedAt: (new Date()).toISOString()
+            } as ModelRow
+          ]
+        }
+      />
+      <Pagination class="py-6" />
       <AdminFooter menuRoute={{name: routeNames.menu}}>
         {
           mobileBtns.value.map(btn => {

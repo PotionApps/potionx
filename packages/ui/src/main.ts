@@ -2,8 +2,8 @@ import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import App from './App'
 import routes from './playground/routes'
-import '../main.css'
 import 'windi.css'
+import '../main.css'
 
 const router = createRouter({
   history: createWebHistory(),
