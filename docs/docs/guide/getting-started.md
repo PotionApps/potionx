@@ -3,8 +3,8 @@
 ## Prerequisites
 - [Node version 12 or above](https://nodejs.org/en/)
 - [Elixir version 1.11 or above](https://elixir-lang.org/install.html)
-- Familiarity with Elixir and [Phoenix](https://www.phoenixframework.org/j)
-- Familiarity with Vue and JSX
+- Familiarity with [Elixir](https://elixir-lang.org/) and [Phoenix](https://www.phoenixframework.org/j)
+- Familiarity with [Vue](https://vuejs.org/) and JSX
 
 
 ## Generating a project
@@ -15,8 +15,8 @@ mix potionx.new some_project_name
 This will create a project, install dependencies and run migrations based on the [conventions and code structure here](/guide/conventions-and-file-structure).
 
 In order to log in, update `config/dev.secret.exs` with Azure/Microsoft and Google client ID and secrets.
-[Google instructions](https://developers.google.com/identity/protocols/oauth2)
-[Microsoft instructions](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app)
+- [Google instructions](https://developers.google.com/identity/protocols/oauth2)
+- [Microsoft instructions](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app)
 
 To start your app backend run the following in your new directory:
 ```bash

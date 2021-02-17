@@ -4,7 +4,7 @@ module.exports = {
     description: 'Documentation for deploying apps on PotionX.',
     themeConfig: {
         nav: [
-            { text: 'Docs', link: '/', activeMatch: '^/$|^/(conventions|guide|generators)/' },
+            { text: 'Guide', link: '/', activeMatch: '^/$|^/(conventions|guide|generators)/' },
             {
                 text: 'Github',
                 link: 'https://github.com/PotionApps/potionx'
@@ -20,20 +20,19 @@ module.exports = {
 }
 
 function getGuideSidebar() {
-    return [
+    return [{
+            text: 'Guide',
+            children: [
+                { text: 'Introduction', link: '/' },
+                { text: 'Getting Started', link: '/guide/getting-started' },
+                { text: 'Deployment', link: '/guide/deployment' },
+                { text: 'Forms', link: '/guide/forms' }
+            ]
+        },
         {
             text: 'Conventions',
             children: [
                 { text: 'Overview', link: '/conventions/overview' }
-            ]
-        },
-        {
-            text: 'Docs',
-            children: [
-                { text: 'What is Potionx?', link: '/' },
-                { text: 'Getting Started', link: '/guide/getting-started' },
-                { text: 'Deployment', link: '/guide/deployment' },
-                { text: 'Forms', link: '/guide/forms' }
             ]
         },
         {

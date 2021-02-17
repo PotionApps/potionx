@@ -8,29 +8,25 @@ Potionx is a set of generators and modules that speeds up the process of setting
 
 ## Features
 - Uses [opinionated defaults for naming and file structure](/conventions/overview).
-- Uses [Phoenix](https://github.com/phoenixframework/phoenix) as the base Elixir framework with some opinionated defaults.
-- GraphQL layer that uses [Absinthe](https://github.com/absinthe-graphql/absinthe).
-- Social login with Apple, Google, Github, Twitter enabled using [Pow and PowAssent](https://github.com/danschultzer/pow)
-- [Pow and PowAssent](https://github.com/danschultzer/pow) for authentication/authorization
-- Frontend components using [Vue 3](https://github.com/vuejs/vue) with JSX, Typescript and [TailwindCSS](https://tailwindcss.com/).
-- Fast frontend development with [Vite](https://github.com/vitejs/vite)
+- Uses [Phoenix](https://www.phoenixframework.org/) as the base Elixir framework with some opinionated defaults.
+- GraphQL layer that uses [Absinthe](http://absinthe-graphql.org/).
+- Social login with Apple, Google, Github, Twitter enabled using [Pow and PowAssent](https://powauth.com/)
+- [Pow and PowAssent](https://powauth.com/) for authentication/authorization
+- Frontend components using [Vue 3](https://vuejs.org/) with JSX, Typescript and [TailwindCSS](https://tailwindcss.com/).
+- Fast frontend development with [Vite](https://vitejs.dev/)
 - [@potionapps/forms](/guide/forms), Vue 3 form helpers
 - [@potionapps/ui](/generators/ui), a collection of pre-made UI components that can be easily copied over to your project.
 - *Coming soon*: Recipes for deployment with [Pulumi](https://www.pulumi.com/) and recipe for deployment to [Render.com](https://render.com/)
 
 ## Technologies
 - [Elixir](https://elixir-lang.org/)
-- [Phoenix](https://github.com/phoenixframework/phoenix)
-- [Absinthe](https://github.com/absinthe-graphql/absinthe)
+- [Phoenix](https://www.phoenixframework.org/)
+- [Absinthe](http://absinthe-graphql.org/)
 - [PostgreSQL](https://www.postgresql.org/)
-- [Pow and PowAssent](https://github.com/danschultzer/pow)
+- [Pow and PowAssent](https://powauth.com/)
 - [Redis](https://redis.io/)
-- [Vue 3](https://github.com/vuejs/vue)
-- [Vite](https://github.com/vitejs/vite)
-- [URQL](https://github.com/FormidableLabs/urql)
+- [Vue 3](https://vuejs.org/)
+- [Vite](https://vitejs.dev/)
+- [URQL](https://formidable.com/open-source/urql/)
 - [Typescript](https://www.typescriptlang.org/)
-- [TailwindCSS](https://tailwindcss.com/)
-
-## Get Started
-
-[Get started here](/guide/getting-started)
+- [TailwindCSS](https://tailwindcss.com/) / [Windicss](https://windicss.netlify.app/)

@@ -1,6 +1,5 @@
 # Conventions and File Structure
 
-## Overview
 Here's an overview of what a Potionx project looks like. It's what a project directory contains after running the Potionx project generator with `mix potionx.new some_project_name`.
 
 ```bash
