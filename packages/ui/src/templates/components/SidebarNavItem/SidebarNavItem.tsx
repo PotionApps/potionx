@@ -25,7 +25,7 @@ export default defineComponent({
   },
   setup (props: SidebarNavItemProps, ctx) {
     const classes = computed(() => {
-      return ["block opacity-70 rounded text-gray-100 transition-opacity w-full hover:opacity-100", props.parentId ? "px-4 py-1.5 text-xs" : "px-2 py-1"]
+      return ["block opacity-70 rounded text-gray-100 transition-opacity w-full hover:opacity-100 hover:bg-gray-700", props.parentId ? "px-4 py-1.5 text-xs" : "px-2 py-1"]
     })
     return () => {
       const slot = <div class="flex items-center justify-between">
