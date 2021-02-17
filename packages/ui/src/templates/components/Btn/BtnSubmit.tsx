@@ -3,7 +3,7 @@ import { FormSubmitStatus, useFormButton } from "@potionapps/forms";
 import Btn from './Btn'
 
 export default defineComponent({
-  setup () {
+  setup (props, ctx) {
     const {
       formSubmitStatus
     } = useFormButton()
@@ -12,7 +12,7 @@ export default defineComponent({
      return formSubmitStatus?.value === FormSubmitStatus.loading
     })
 
-    return (_props, ctx) => {
+    return () => {
       return <Btn
         disabled={disabled.value}
       >

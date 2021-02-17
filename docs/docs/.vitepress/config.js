@@ -26,7 +26,7 @@ function getGuideSidebar() {
                 { text: 'Introduction', link: '/' },
                 { text: 'Getting Started', link: '/guide/getting-started' },
                 { text: 'Deployment', link: '/guide/deployment' },
-                { text: 'Forms', link: '/guide/forms' },
+                { text: 'Forms (@potionapps/forms)', link: '/guide/forms' },
                 // permissions
             ]
         },
