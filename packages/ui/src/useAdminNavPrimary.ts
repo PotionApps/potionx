@@ -17,7 +17,7 @@ export const useAdminNavPrimary = () => {
         label: "Inbox",
         notification: 14,
         to: {
-          name: routeNames.admin
+          name: routeNames.home
         }
       },
       {
@@ -66,7 +66,7 @@ export const useAdminNavPrimary = () => {
         icon: faUsers,
         label: "People",
         to: {
-          name: routeNames.admin
+          name: routeNames.home
         }
       }
     ]

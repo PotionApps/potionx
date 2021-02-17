@@ -1,6 +1,5 @@
 import AdminContent from "../../layouts/AdminContent/AdminContent";
 import AdminFooter from "../../components/AdminFooter/AdminFooter";
-import AdminList from '../../components/AdminList/AdminList'
 import Btn from "../../templates/components/Btn/Btn";
 import Dropdown from '../../templates/components/Dropdown/Dropdown'
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
@@ -36,7 +35,7 @@ export default defineComponent({
       {
         label: "Categories",
         to: {
-          name: routeNames.admin
+          name: routeNames.home
         }
       },
       {
@@ -66,7 +65,7 @@ export default defineComponent({
       return ""
     })
 
-    return () => <AdminContent>
+    return () => <AdminContent class="bg-gray-100">
       <Wrapper class="bg-white border-b-1 border-gray-300 pt-4">
         <div class="flex items-center justify-between pr-4 s1050m:flex-wrap s1050:pr-0">
           <div class="flex flex-full items-center mb-2">

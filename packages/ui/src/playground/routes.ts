@@ -1,7 +1,7 @@
 import * as Stories from '../stories'
 import { routeNames } from './routeNames'
 import { RouteRecordRaw } from 'vue-router'
-import RouteAdmin from './RouteAdmin/RouteAdmin'
+import RouteHome from './RouteAdmin/RouteAdmin'
 import RouteLogin from './RouteLogin/RouteLogin'
 import RouteMenu from './RouteMenu/RouteMenu'
 import RouteLoginError from './RouteLoginError/RouteLoginError'
@@ -10,9 +10,9 @@ import RouteError from './RouteError/RouteError'
 
 const routes : RouteRecordRaw[] = [
   {
-    name: routeNames.admin,
-    path: '/admin',
-    component: RouteAdmin
+    name: routeNames.home,
+    path: '',
+    component: RouteHome
   },
   {
     name: routeNames.login,
@@ -43,7 +43,7 @@ const routes : RouteRecordRaw[] = [
   },
   {
     name: routeNames.error,
-    path: '/*',
+    path: '/:pathMatch(.*)*',
     component: RouteError
   },
 ]
