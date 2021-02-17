@@ -697,7 +697,9 @@ Example usage:
 ```tsx
   const form = useForm({
     data: model,
+    // where model is a computed property pointing to the entry
     fields: schema,
+    // where schema is a list of fields adhering to the spec listed below
     onSubmit: (cs) => {
       const params = {
         changes: {
@@ -711,7 +713,28 @@ Example usage:
   return () =>  <form class="m-auto max-w-500 w-full pt-10" onSubmit={form.submit}></form>
 ```
 
-## useFormButton
+Options: 
+```tsx
+export interface UseFormArgs {
+  clearAfterSuccess?: boolean
+  // whether to clear changeset after a successful save
+  // defaults to true
+  data?: ComputedRef<any>
+  // a computed ref pointing to the
+  // latest version of the saved entry
+  fields: Field[]
+  // a list of fields and validation rules to pass to the validator
+  onSubmit: (cs: Changeset<any>) => Promise<boolean>
+  // a function that receives a changeset
+  // and will fire when a form with changes
+  // and no errors is submitted
+  validator?: Validator
+  // an option to provide your own validation function
+  // defaults to Validator Ecto
+}
+```
+
+### useFormButton
 Provides convenience properties for use in a form submit button:
 ```tsx
 import { inject, Ref } from "vue"
@@ -770,5 +793,83 @@ export enum FormSubmitStatus {
 }
 ```
 
-
 ## Validation
+The ```@potionapps/forms``` package includes a ```ValidatorEcto``` module by default which contains validation rules meant to work with Ecto. The validation rules have the same names as [Ecto validation rules](https://hexdocs.pm/ecto/Ecto.Changeset.html), but in camel case.
+
+The useForm hook accepts a ```fields``` argument which accepts fields in the form:
+```tsx
+export interface Field {
+  label?: string,
+  name: string,
+  options?: any[]
+  type?: string,
+  validations?: Validation[]
+}
+```
+
+Where a ```Validation``` is defined as:
+
+```tsx
+export interface Validation {
+  name: string,
+  params?: {[key: string]: any},
+  fn?: ValidationFnCustom
+}
+
+export type ValidationFnCustom = (validation: Validation, params: any, data: any) => string[]
+export type ValidationFn = (validation: Validation, params: any, data: any) => boolean
+```
+
+Example of a set of fields for use in ```useForm```:
+```json
+[
+  {
+    "name": "deletedAt",
+    "type": "utc_datetime",
+    "validations": []
+  },
+  {
+    "name": "email",
+    "type": "string",
+    "validations": [
+      {
+        "name": "email"
+      },
+      {
+        "name": "email"
+      }
+    ]
+  },
+  {
+    "name": "roles",
+    "options": [
+      "admin",
+      "guest"
+    ],
+    "type": "checkbox",
+    "validations": [
+      {
+        "name": "roles",
+        "params": {
+          "values": [
+            "admin",
+            "guest"
+          ]
+        }
+      }
+    ]
+  }
+]
+```
+
+### Custom Validator
+If you'd like to use a validator other than ```ValidatorEcto```, the ```useForm``` hook accepts a ```validator``` argument that will be used to validate your data. 
+
+Your validator must adhere to the validator convention:
+```tsx
+export type Validator = (data: object, fields: Field[]) => {[key: string]: string[]}
+```
+
+
+
+

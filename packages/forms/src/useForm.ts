@@ -28,7 +28,6 @@ export enum FormSubmitStatus {
 export interface UseFormArgs {
   clearAfterSuccess?: boolean
   data?: ComputedRef<any>
-  defaultValues?: Partial<{[key: string]: string[]}>
   fields: Field[]
   onSubmit: (cs: Changeset<any>) => Promise<boolean>
   validator?: Validator
