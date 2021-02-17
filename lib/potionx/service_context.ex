@@ -4,7 +4,7 @@ defmodule Potionx.Context.Service do
 
   typedstruct do
     field :changes, map(), default: %{}
-    field :file, Plug.Upload.t()
+    field :files, [Plug.Upload.t()]
     field :filters, map(), default: %{}
     field :organization, struct()
     field :pagination, map(), default: %{}
