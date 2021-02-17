@@ -1,5 +1,12 @@
-# Conventions and File Structure
+# Architecture and File Structure
 
+## Architecture
+Here's a general overview of the architecture proposed:
+![architecture](./architecture.svg)
+
+Details about each layer can be found in the other sections in this area.
+
+## File Structure
 Here's an overview of what a Potionx project looks like. It's what a project directory contains after running the Potionx project generator with `mix potionx.new some_project_name`.
 
 ```bash
@@ -30,7 +37,7 @@ Here's an overview of what a Potionx project looks like. It's what a project dir
 │     │   │  ├─ AdminBody
 │     │   │  ├─ AdminFooter
 │     │   │  ├─ AdminHeader
-│     │   │  └─ ...many more
+│     │   │  └─ # ...many more
 │     │   ├─ routes
 │     │   │  ├─ RouteHome # Code for the home page
 │     │   │  ├─ RouteLogin # Code for the login page

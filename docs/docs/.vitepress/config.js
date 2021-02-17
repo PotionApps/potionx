@@ -30,9 +30,10 @@ function getGuideSidebar() {
             ]
         },
         {
-            text: 'Conventions',
+            text: 'Architecture and Conventions',
             children: [
-                { text: 'Overview', link: '/conventions/overview' }
+                { text: 'Overview', link: '/conventions/overview' },
+                { text: 'Data Layer', link: '/conventions/data-layer' }
             ]
         },
         {
