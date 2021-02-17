@@ -1,8 +1,14 @@
 import { defineConfig } from 'vite'
 import jsx from '@vitejs/plugin-vue-jsx'
 import WindiCSS from 'vite-plugin-windicss'
+import { resolve } from "path";
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      'root': resolve(__dirname, './src/templates')
+    }
+  },
   build: {
     emptyOutDir: true,
     lib: {
