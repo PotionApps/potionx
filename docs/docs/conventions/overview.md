@@ -1,7 +1,7 @@
 # Architecture and File Structure
 
 ## Architecture
-Here's a general overview of the architecture proposed:
+Here's a general overview of the architecture Potionx uses:
 ![architecture](./architecture.svg)
 
 Details about each layer can be found in the other sections in this area.

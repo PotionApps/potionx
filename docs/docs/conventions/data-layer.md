@@ -95,7 +95,7 @@ Here's an example of a message:
 }
 ```
 
-## File and Folder Names
+## File and Folder Naming Conventions
 Potionx tries follows Phoenix's [Contexts](https://hexdocs.pm/phoenix/contexts.html) framework for naming folders. Individual model files follow Phoenix's guidelines as well. Potionx differs in how it handles naming modules responsible for manipulating models. In Potionx these are called "Services" and follows the file naming convention: "model_service.ex".
 
 For example, files for a User model would include:

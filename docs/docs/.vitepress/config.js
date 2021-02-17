@@ -26,14 +26,17 @@ function getGuideSidebar() {
                 { text: 'Introduction', link: '/' },
                 { text: 'Getting Started', link: '/guide/getting-started' },
                 { text: 'Deployment', link: '/guide/deployment' },
-                { text: 'Forms', link: '/guide/forms' }
+                { text: 'Forms', link: '/guide/forms' },
+                // permissions
             ]
         },
         {
             text: 'Architecture and Conventions',
             children: [
                 { text: 'Overview', link: '/conventions/overview' },
-                { text: 'Data Layer', link: '/conventions/data-layer' }
+                { text: 'Data Layer', link: '/conventions/data-layer' },
+                { text: 'GraphQL Layer', link: '/conventions/graphql-layer' },
+                { text: 'Web Layer', link: '/conventions/web-layer' }
             ]
         },
         {
