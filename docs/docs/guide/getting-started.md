@@ -3,7 +3,7 @@
 ## Prerequisites
 - [Node version 12 or above](https://nodejs.org/en/)
 - [Elixir version 1.11 or above](https://elixir-lang.org/install.html)
-- Familiarity with [Elixir](https://elixir-lang.org/) and [Phoenix](https://www.phoenixframework.org/j)
+- Familiarity with [Elixir](https://elixir-lang.org/) and [Phoenix](https://www.phoenixframework.org/)
 - Familiarity with [Vue](https://vuejs.org/) and JSX
 
 
