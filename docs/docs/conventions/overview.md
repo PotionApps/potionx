@@ -10,19 +10,24 @@ Here's an overview of what a Potionx project looks like. It's what a project dir
 │  ├─ dev.exs # general dev-related config goes here
 │  ├─ dev.secret.exs # local database and auth provider config go here
 │  ├─ prod.exs # general production-related config goes here
-│  ├─ runtime.exs # deployment config goes here, mostly loads env variables at runtime
+│  ├─ runtime.exs
+│  │  # deployment config goes here, mostly loads env variables at runtime
 │  ├─ test.exs # general dev-related config goes here
 │  └─ test.secret.exs # test database and auth provider config goes here
 ├─ deps # elixir deps
 ├─ frontend # frontend apps live here
 │  └─ admin
 │     ├─ node_modules
-│     ├─ public # convenience directory to serve assets via URL as opposed to imported into code
+│     ├─ public 
+│     │  # convenience directory to serve assets via URL as opposed to
+│     │  # imported into code
 │     ├─ src
 │     │   ├─ assets # assets meant to be imported into code
 │     │   │  └─ logo.png
-│     │   ├─ components # general app components, by default contains components copied from the UI package necessary for this theme
-│     │   │  # see UI docs for more information about there components.
+│     │   ├─ components 
+│     │   │  # general app components, by default contains components copied 
+│     │   │  # from the UI package necessary for this theme. 
+│     │   │  # See UI docs for more information about there components.
 │     │   │  ├─ AdminBody
 │     │   │  ├─ AdminFooter
 │     │   │  ├─ AdminHeader
@@ -34,7 +39,8 @@ Here's an overview of what a Potionx project looks like. It's what a project dir
 │     │   │  ├─ RouteUserEdit # Code to edit a user
 │     │   │  ├─ RouteUserList # Code that shows a list of the app's users
 │     │   │  ├─ index.ts # Global Route setup
-│     │   │  ├─ routeNames.ts # A Typescript enum containing all the app's route names
+│     │   │  └─ routeNames.ts
+│     │   │  # A Typescript enum containing all the app's route names
 │     │   ├─ App.tsx # Root app Vue component
 │     │   ├─ main.css # main app css file for general styling imports/config
 │     │   ├─ main.ts # main app entry point
@@ -51,14 +57,20 @@ Here's an overview of what a Potionx project looks like. It's what a project dir
 │  │   ├─ user_identities
 │  │   │  ├─ user_identity.ex # user_identity model used by Pow Assent
 │  │   │  ├─ user_identity_mock.ex # mock of user_identity for testing purposes
-│  │   │  └─ user_identity_service.ex # the service used to create/query/edit user identities
+│  │   │  └─ user_identity_service.ex
+│  │   │  # the service used to create/query/edit user identities
 │  │   ├─ users
-│  │   │  ├─ user.ex # user model used by Pow, Pow Assent and used in the admin theme by default
+│  │   │  ├─ user.ex
+│  │   │  │ # user model used by Pow, Pow Assent and used in the
+│  │   │  │ # admin theme by default
 │  │   │  ├─ user_mock.ex # mock of user for testing purposes
 │  │   │  └─ user_service.ex # the service used to create/query/edit users
 │  │   ├─ application.ex # main application entry point
-│  │   ├─ release.ex # release/deployment specific configuration. Creates default user if they don't exist
-│  │   └─ repo.ex # General database handler config. Used to set up app-level scoping for models by default.
+│  │   ├─ release.ex # release/deployment specific configuration. 
+│  │   │  # Creates default user if they don't exist.
+│  │   └─ repo.ex
+│  │   # General database handler config.
+│  │   # Used to set up scoping for models.
 │  ├─ some_project_name_graphql # The GraphQL layer
 │  │   ├─ resolvers 
 │  │   │  ├─ user_identity_resolver.ex # the user_identity GraphQL resolver
@@ -69,26 +81,32 @@ Here's an overview of what a Potionx project looks like. It's what a project dir
 │  │   │  │  ├─ user_queries.ex # the user queries (one user, many users)
 │  │   │  │  └─ user_types.ex # the default user types needed by GraphQL
 │  │   │  └─ user_identity
-│  │   │     └─ user_identity_types.ex # the default user_identity types needed by GraphQL
+│  │   │     └─ user_identity_types.ex
+│  │   │     # the default user_identity types needed by GraphQL
 │  │   └─ schema.ex
 │  ├─ some_project_name_web
 │  │   ├─ channels
 │  │       └─ user_socket.ex # the main websocket config file
 │  │   ├─ controllers
 │  │   │  ├─ app_controller.ex # Serves the based frontend code
-│  │   │  ├─ auth_controller.ex # creates, delete and renews authenticationtokens for users (create not used)
-│  │   │  ├─ authorization_controller.ex # handles initial creation of access tokens (logging in) via third parties (Google, Microsoft...)
+│  │   │  ├─ auth_controller.ex
+│  │   │  │ # Deletes and renews authentication tokens for users
+│  │   │  │ # Note: the create function in here is not used.
+│  │   │  ├─ authorization_controller.ex
+│  │   │  │ # handles initial creation of access tokens (logging in) via
+│  │   │  │ # third parties like Google, Microsoft..
 │  │   │  └─ page_controller.ex # serves HTML, not currently used
 │  │   ├─ templates
 │  │   │  ├─ app
 │  │   │  │  └─ index.html.eex # Base app markup needed by the frontend apps
 │  │   │  ├─ authorization
-│  │   │  │  └─ refresh.html.eex # used to refresh the page after a user logs so cookies are properly set
+│  │   │  │  └─ refresh.html.eex
+│  │   │  │  # used to refresh the page after a user logs so cookies are properly set
 │  │   │  ├─ layout
 │  │   │  │  └─ app.html.eex # markup for general app layout (head, body)
 │  │   │  └─ page
 │  │   │     └─ index.html.eex # not used
-│  │   ├─ views # used to set convenience or computed functions for use in templates, mostly empty by default
+│  │   ├─ views # used to set convenience or computed functions for use in templates
 │  │   │  ├─ app_view.ex
 │  │   │  ├─ authorization_view.ex
 │  │   │  ├─ error_helpers.ex
@@ -98,9 +116,12 @@ Here's an overview of what a Potionx project looks like. It's what a project dir
 │  │   ├─ endpoint.ex # the root module for HTTP/Socket communication 
 │  │   ├─ gettext.ex # the root internalization module
 │  │   ├─ router.ex # the app routing configuration
-│  │   └─ telemetry.ex # Module that sets up telemetry for the app. The data can be visualized in LiveDashboard.
+│  │   └─ telemetry.ex
+│  │   # Module that sets up telemetry for the app. 
+│  │   # The data can be visualized in LiveDashboard.
 │  ├─ some_project_name.ex # root data layer module, mostly empty
-│  └─ some_project_name_web.ex # root web module, contains Phoenix-related code required by code in the web module
+│  └─ some_project_name_web.ex
+│  # root web module, contains Phoenix-related code required by code in the web module
 ├─ node_modules
 ├─ priv
 │  ├─ gettext # translations folder
@@ -109,8 +130,9 @@ Here's an overview of what a Potionx project looks like. It's what a project dir
 │  │  └─ errors.pot # translation file template
 │  ├─ repo
 │  │  ├─ migrations
-│  │  │  ├─ DATE_create_users.exs # default user migration generated by project
-│  │  │  └─ DATE_create_user_identities.exs # default user_identities migration generated by project
+│  │  │  ├─ DATE_create_users.exs # default user migration generated
+│  │  │  └─ DATE_create_user_identities.exs
+│  │  │  # default user_identities migration generated
 │  │  ├─ potionx_seed.exs # runs release.ex and runs during initial project creation
 │  │  └─ seed.exs # Best place to put your own database seeding. Empty by default.
 ├─ shared # shared frontend/backend code
@@ -121,17 +143,26 @@ Here's an overview of what a Potionx project looks like. It's what a project dir
 │  │  │  │    ├ user.json # user schema to be used in frontend forms
 │  │  │  │    ├ user.mock.json # mock user to be used in frontend tests
 │  │  │  │    ├ userCollection.gql # auto-generated default user collection query
-│  │  │  │    ├ userCollection.gql.ts # Typescript-friendly import of user collection query for use in frontend
+│  │  │  │    ├ userCollection.gql.ts
+│  │  │  │    │ # Typescript-friendly import of user collection query
+│  │  │  │    │ # for use in frontend
 │  │  │  │    ├ userDelete.gql # auto-generated default user delete query
-│  │  │  │    ├ userDelete.gql.ts # Typescript-friendly import of user delete query for use in frontend
+│  │  │  │    ├ userDelete.gql.ts 
+│  │  │  │    │ # Typescript-friendly import of user delete query
+│  │  │  │    │ # for use in frontend
 │  │  │  │    ├ userMutation.gql # auto-generated default user mutation query
-│  │  │  │    ├ userMutation.gql.ts # Typescript-friendly import of user mutation query for use in frontend
+│  │  │  │    ├ userMutation.gql.ts
+│  │  │  │    │ # Typescript-friendly import of user mutation query
+│  │  │  │    │ # for use in frontend
 │  │  │  │    ├ userSingle.gql # auto-generated default single user query
-│  │  │  │    └ userSingle.gql.ts # Typescript-friendly import of single user query for use in frontend
+│  │  │  │    └ userSingle.gql.ts
+│  │  │  │    # Typescript-friendly import of single user query for use in frontend
 │  │  │  └─ UserIdentities
 │  │  │      └ User
-│  │  │        ├ userIdentity.json # user identity schema to be used in frontend forms
-│  │  │        └ userIdentity..mock.json # mock user_identity to be used in frontend tests
+│  │  │        ├ userIdentity.json
+│  │  │        │ # user identity schema to be used in frontend forms
+│  │  │        └ userIdentity.mock.json
+│  │  │        # mock user_identity to be used in frontend tests
 │  │  ├─ gql.ts # lightweight gql file to get proper linting in VS Code
 │  │  ├─ signIn.ts # default user sign in function
 │  │  ├─ signOut.ts # default user sign out function
