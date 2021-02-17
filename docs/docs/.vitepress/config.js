@@ -32,7 +32,6 @@ function getGuideSidebar() {
             children: [
                 { text: 'What is Potionx?', link: '/' },
                 { text: 'Getting Started', link: '/guide/getting-started' },
-                { text: 'Conventions and File Structure', link: '/guide/conventions-and-file-structure' },
                 { text: 'Deployment', link: '/guide/deployment' },
                 { text: 'Forms', link: '/guide/forms' }
             ]

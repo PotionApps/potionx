@@ -26,4 +26,5 @@ potionx-*.tar
 # Temporary files for e.g. tests
 /tmp
 
+dist
 node_modules
