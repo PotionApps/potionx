@@ -86,7 +86,7 @@ export default defineComponent({
         <thead class="bg-gray-100">
           {
             fieldsOrdered.value!.map(({ key, label }) => {
-              if (key === "image") return <th></th>
+              if (key === "image") return <th class="border-gray-300 border-b-1 border-t-1"></th>
               return <th class="border-gray-300 border-b-1 border-t-1 px-3 py-3 s750:first:pl-8 s750:last:pr-8 text-gray-400 text-left text-sm uppercase s750m:hidden">
                 {label}
               </th>

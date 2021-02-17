@@ -5,7 +5,7 @@ export default defineComponent({
   setup (props, context) {
     return () => {
       return (
-        <div class="bg-gray-100 max-w-screen s1050m:pb-14 s1050:max-w-4/5 s1450:max-w-5/6 s1650:max-w-8/9">
+        <div class="bg-white max-w-screen s1050m:pb-14 s1050:max-w-4/5 s1450:max-w-5/6 s1650:max-w-8/9">
           {context.slots.default && context.slots.default()}
         </div>
       )

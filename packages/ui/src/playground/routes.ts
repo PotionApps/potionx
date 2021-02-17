@@ -6,6 +6,7 @@ import RouteLogin from './RouteLogin/RouteLogin'
 import RouteMenu from './RouteMenu/RouteMenu'
 import RouteLoginError from './RouteLoginError/RouteLoginError'
 import RouteComponent from './RouteComponent/RouteComponent'
+import RouteError from './RouteError/RouteError'
 
 const routes : RouteRecordRaw[] = [
   {
@@ -39,6 +40,11 @@ const routes : RouteRecordRaw[] = [
           path: key
         }
       })
-  }
+  },
+  {
+    name: routeNames.error,
+    path: '/*',
+    component: RouteError
+  },
 ]
 export default routes
