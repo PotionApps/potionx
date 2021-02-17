@@ -1,12 +1,10 @@
 import { defineComponent } from "vue";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@potionapps/utils";
-import { RouteLocationRaw } from "vue-router";
 import { routeNames } from 'root/routes/routeNames'
 
 export interface PropsAdminFooter {
-  hideMenu?: boolean,
-  menuRoute: RouteLocationRaw
+  hideMenu?: boolean
 }
 
 export default defineComponent({

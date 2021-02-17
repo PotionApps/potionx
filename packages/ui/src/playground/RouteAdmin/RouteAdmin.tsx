@@ -1,5 +1,5 @@
 import AdminContent from "../../layouts/AdminContent/AdminContent";
-import AdminFooter from "../../components/AdminFooter/AdminFooter";
+import AdminFooter from "../../templates/components/AdminFooter/AdminFooter";
 import Btn from "../../templates/components/Btn/Btn";
 import Dropdown from '../../templates/components/Dropdown/Dropdown'
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
@@ -144,7 +144,7 @@ export default defineComponent({
         }
       />
       <Pagination class="py-6" />
-      <AdminFooter menuRoute={{name: routeNames.menu}}>
+      <AdminFooter>
         {
           mobileBtns.value.map(btn => {
             return <Btn
