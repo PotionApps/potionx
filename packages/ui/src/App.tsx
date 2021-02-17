@@ -44,18 +44,18 @@ export default defineComponent({
             <img class="mr-2 w-4" src={PotionLogo}/>
             <p class="text-2xl text-gray-100">Potion</p>
           </div>
-          <div class="flex flex-1 flex-col justify-between">
+          <div class="">
             <nav>
               {
                 adminNavPrimary.value.map(nav => {
-                  return <SidebarNavItem class="mb-2" {...nav} />
+                  return <SidebarNavItem class="mb-0.5" {...nav} />
                 })
               }
             </nav>
-            <nav>
+            <nav class="border-t border-gray-500 pt-4 mt-4">
               {
                 adminNavSecondary.value.map(nav => {
-                  return <SidebarNavItem class="mb-2" {...nav} />
+                  return <SidebarNavItem class="mb-0.5" {...nav} />
                 })
               }
             </nav>

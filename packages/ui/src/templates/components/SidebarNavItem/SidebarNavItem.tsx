@@ -6,6 +6,7 @@ export interface SidebarNavItemProps {
   click?: (e?: MouseEvent) => void
   icon?: any
   id?: string
+  image?: string
   label?: string
   notification?: number
   parentId?: string
@@ -16,6 +17,7 @@ export default defineComponent({
   props: {
     click: Function as PropType<(e?: MouseEvent) => void>,
     icon: Object,
+    image: String,
     label: String,
     notification: Number,
     parentId: String,
@@ -23,15 +25,15 @@ export default defineComponent({
   },
   setup (props: SidebarNavItemProps, ctx) {
     const classes = computed(() => {
-      return ["block opacity-70 text-gray-100 transition-opacity w-full hover:opacity-100", props.parentId && "pl-3 text-sm"]
+      return ["block opacity-70 rounded text-gray-100 transition-opacity w-full hover:opacity-100", props.parentId ? "px-4 py-1.5 text-xs" : "px-2 py-1"]
     })
     return () => {
       const slot = <div class="flex items-center justify-between">
         <div class="flex items-center">
-          {props.icon && <div class="flex items-center justify-center mr-2 w-5">
-              <FontAwesomeIcon icon={props.icon} />
-            </div>
-          }
+          {props.icon && !props.image && <div class={["flex items-center justify-center mr-2", props.parentId ? "w-4" : "w-5"]}>
+            <FontAwesomeIcon icon={props.icon} />
+          </div>}
+          {props.image && <img class="h-5 mr-2 object-cover rounded-full w-5" src={props.image} />}
           {props.label}
           {ctx.slots.default && ctx.slots.default()}
         </div>
@@ -48,7 +50,7 @@ export default defineComponent({
       }
       return <router-link
         class={classes.value}
-        exactActiveClass="opacity-100"
+        exactActiveClass="bg-gray-700 opacity-100"
         to={props.to}
       >
         {slot}

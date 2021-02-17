@@ -1,12 +1,13 @@
 import { computed } from 'vue'
 import { routeNames } from "./playground/routeNames";
-import { faInbox, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faClipboard, faEnvelope, faFile, faInbox, faPlus, faTags, faUsers, faWindowMaximize } from "@fortawesome/free-solid-svg-icons";
 import { RouteLocationRaw } from "vue-router";
 
 export const useAdminNavPrimary = () => {
   const adminNavPrimary = computed<{label: string, to: RouteLocationRaw}[]>(() => {
     return [
       {
+        icon: faFile,
         label: "Content",
         to: {
           name: routeNames.login
@@ -21,14 +22,15 @@ export const useAdminNavPrimary = () => {
         }
       },
       {
+        icon: faPlus,
         label: "New Message",
         parentId: "Inbox",
-        notification: 14,
         to: {
           name: routeNames.login
         }
       },
       {
+        icon: faTags,
         label: "Categories",
         parentId: "Inbox",
         to: {
@@ -36,28 +38,31 @@ export const useAdminNavPrimary = () => {
         }
       },
       {
+        icon: faWindowMaximize,
         label: "Websites",
         to: {
           name: routeNames.login
         }
       },
       {
-        label: "Forms",
+        icon: faPlus,
+        label: "New Website",
+        parentId: "websites",
         to: {
           name: routeNames.login
         }
       },
       {
-        label: "New Form",
-        parentId: "Forms",
-        to: {
-          name: routeNames.login
-        }
-      },
-      {
+        icon: faTags,
         label: "Categories",
-        parentId: "Forms",
-        notification: 142,
+        parentId: "Websites",
+        to: {
+          name: routeNames.login
+        }
+      },
+      {
+        icon: faClipboard,
+        label: "Forms",
         to: {
           name: routeNames.login
         }
@@ -66,7 +71,24 @@ export const useAdminNavPrimary = () => {
         icon: faUsers,
         label: "People",
         to: {
-          name: routeNames.home
+          name: routeNames.login
+        }
+      },
+      {
+        icon: faPlus,
+        label: "Invite User",
+        parentId: "People",
+        to: {
+          name: routeNames.login
+        }
+      },
+      {
+        icon: faEnvelope,
+        label: "Invites",
+        notification: 8,
+        parentId: "People",
+        to: {
+          name: routeNames.login
         }
       }
     ]
