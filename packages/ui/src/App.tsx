@@ -16,11 +16,13 @@ export default defineComponent({
     const { adminNavPrimary } = useAdminNavPrimary()
     const { adminNavSecondary } = useAdminNavSecondary()
 
-    const showSidebar = computed(() => {
-      return useRoute().name != routeNames.login && routeNames.loginError
-    })
+    const route = useRoute()
 
     const showMenu = ref(false)
+
+    const showSidebar = computed(() => {
+      return route.name != routeNames.login && routeNames.loginError
+    })
 
     return () => <AdminShell>
       {
