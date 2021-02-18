@@ -38,7 +38,7 @@ export default defineComponent({
       }
       {
         showSidebar.value && 
-        <AdminSidebar class="flex flex-col">
+        <AdminSidebar>
           <div class="flex-1">
             <p class="my-4 mx-2 text-2xl text-gray-100">Potion</p>
             <nav>
