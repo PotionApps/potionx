@@ -3,8 +3,8 @@ import { useAdminNavPrimary } from "./useAdminNavPrimary";
 import { useAdminNavSecondary } from "./useAdminNavSecondary";
 import { useRoute } from 'vue-router'
 import { routeNames } from './routes/routeNames'
-import AdminSidebar from './components/AdminSidebar/AdminSidebar'
-import SidebarNavItem from './components/SidebarNavItem/SidebarNavItem'
+import AdminSidebar from 'root/components/AdminSidebar/AdminSidebar'
+import SidebarNavItem from 'root/components/SidebarNavItem/SidebarNavItem'
 
 export default defineComponent({
   name: 'App',

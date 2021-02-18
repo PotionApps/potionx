@@ -11,7 +11,7 @@
     "lib": ["esnext", "dom"],
     "types": ["vite/client"],
     "paths": {
-      "root/*": ["./src/*"],
+      "root/*": ["../../*"],
       "shared/*": ["../../shared/src/*"]
     },
     "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }],
@@ -22,7 +22,7 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "../shared/**/*.gql",
-    "../shared/**/*.ts"
-]
+    "../../shared/**/*.gql",
+    "../../shared/**/*.ts"
+  ]
 }

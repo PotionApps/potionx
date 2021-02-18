@@ -27,6 +27,23 @@ const checkDirectoryExists = (folder, errorMsg) => {
   }
 }
 
+const fixConfigPaths = (context) => {
+  const viteConfigPath = 
+    path.join(context.destination, context.componentName, "vite.config.ts")
+  const viteConfig = fs.readFileSync(viteConfigPath)
+  fs.writeFileSync(
+    viteConfigPath,
+    viteConfig.replace('../..', './src').replace(`'../../components',`, '')
+  )
+  const tsConfigPath = 
+    path.join(context.destination, context.componentName, "tsconfig.json")
+  const tsConfig = fs.readFileSync(tsConfigPath)
+  fs.writeFileSync(
+    tsConfigPath,
+    tsConfig.replace(`"root/*": ["../../*"]`, `"root/*": ["./src/*"]`)
+  )
+}
+
 const run = () => {
   const context = {
     componentName: argv._[1],
@@ -47,7 +64,11 @@ const run = () => {
     path.join(context.destination, context.componentName),
     {
       filter: (src, dest) => {
-        if (src.includes('.stories.') || src.includes('config.json')) return false
+        if (
+          src.includes('.stories.') ||
+          src.includes('config.json') ||
+          src.includes('index.html')
+        ) return false
         return true
       }
     }
@@ -55,6 +76,7 @@ const run = () => {
   
   // copy required components
   if (context.componentType === "theme") {
+    fixConfigPaths(context)
     (fs.readJSONSync(path.join(context.source, 'config.json')).components || [])
       .forEach(comp => {
         fs.copySync(
