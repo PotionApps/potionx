@@ -25,7 +25,7 @@ test('Copies the admin theme to the target directory and outputs correct files',
     'config.json',
     'index.html'
   ].forEach(f => {
-    expect(fs.existsSync(`${dest}${f}`)).toEqual(false)
+    expect(fs.existsSync(`${dest}/${f}`)).toEqual(false)
   })
   expect(
     fs.readFileSync(`${dest}/vite.config.ts`, {encoding: 'utf-8'})

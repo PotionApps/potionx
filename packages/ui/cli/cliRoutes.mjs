@@ -13,11 +13,12 @@ const argv =
   yargs(hideBin(process.argv))
   .scriptName(scriptName)
   .demandCommand(2)
+  .demandOption("destination", "Please add destination path")
   .usage(`Usage: $0 <command> <context> <model> [options]`)
   .argv
 
 const addToRoutes = (context) => {
-  const pathToRoutes = path.join(context.destination, "src", "crudRoutes", "index.ts")
+  const pathToRoutes = path.join(context.destination, "src", "routes", "index.ts")
   let routes = fs.readFileSync(pathToRoutes, { encoding: 'utf-8' })
   routes = ['Edit', 'List'].reduce((acc, key) => {
     if (!routes.includes(`Route${context.model}${key}`)) {
@@ -97,7 +98,7 @@ const run = () => {
     context: argv._[0],
     model,
     modelGraphqlCase: model.slice(0, 1).toLowerCase() + model.slice(1),
-    destination: "./frontend/admin",
+    destination: argv.destination,
     source: null
   }
   context.source = toPath(context)
@@ -149,7 +150,7 @@ const replaceTempVars = (text, ctx) => {
 }
 
 const toPath = (routeName) => {
-  return path.resolve(__dirname, `../src/templates/routes/${routeName}.tsx`)
+  return path.resolve(__dirname, `../src/templates/crudRoutes/${routeName}.tsx`)
 }
 
 run()
