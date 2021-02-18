@@ -1,7 +1,6 @@
 import { defineComponent, PropType } from 'vue'
-import googleLogo from '../../assets/google-logo.svg'
+import { faGoogle, faMicrosoft } from "@fortawesome/free-brands-svg-icons"
 import LoginButton from '../LoginButton/LoginButton'
-import microsoftLogo from '../../assets/microsoft-logo.svg'
 
 export default defineComponent({
   name: 'Login',
@@ -18,7 +17,7 @@ export default defineComponent({
           props.authSelect('google')
         },
         label: "Google",
-        icon: googleLogo,
+        icon: faGoogle,
         provider: 'google'
       },
       {
@@ -26,16 +25,16 @@ export default defineComponent({
           props.authSelect('azure_ad')
         },
         label: "Microsoft",
-        icon: microsoftLogo,
+        icon: faMicrosoft,
       }
     ]
 
-    return () => <div class="bg-white flex flex-col items-center justify-center py-12 px-6 min-h-screen">
-      <div class="p-6 s450:px-10 w-full bg-gray-100 max-w-400 text-center shadow-md rounded-lg">
-        <h1 class="text-gray-800 text-2xl mb-8">Sign In</h1>
+    return () => <div class="bg-gray-100 flex flex-col items-center justify-center py-12 px-6 min-h-screen">
+      <div class="bg-white max-w-400 p-6 s450:px-10 rounded-lg shadow-md text-center w-full">
+        <h1 class="font-semibold mb-6 text-2xl text-gray-600">Sign In</h1>
         <div>
           {
-            loginOptions.map(i => <LoginButton class="mb-2" {...i} key={i.label} />)
+            loginOptions.map(i => <LoginButton class="mb-3" {...i} key={i.label} />)
           }
         </div>
       </div>

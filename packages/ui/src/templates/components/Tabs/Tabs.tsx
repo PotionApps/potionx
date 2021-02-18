@@ -11,13 +11,14 @@ export interface AdminHeaderProps {
 }
 
 export default defineComponent({
+  name: "Tabs",
   props: {
     tabs: {
       type: Object as PropType<Ref<AdminHeaderTabProps[]>>,
       required: true
     }
   },
-  setup (props, context) {
+  setup (props) {
     return () => {
       return (
         <div class="overflow-auto relative" style="height: 50px; margin-bottom: -18px;">

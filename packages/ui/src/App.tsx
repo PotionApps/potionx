@@ -1,13 +1,14 @@
-import AdminShell from "./layouts/AdminShell/AdminShell";
-import AdminSidebar from "./components/AdminSidebar/AdminSidebar";
+import AdminAccount from "./templates/components/AdminAccount/AdminAccount";
+import AdminShell from "./templates/components/AdminShell/AdminShell";
+import AdminSidebar from "./templates/components/AdminSidebar/AdminSidebar";
 import { defineComponent, computed, ref } from 'vue'
 import { useAdminNavPrimary } from "./useAdminNavPrimary";
 import { useAdminNavSecondary } from "./useAdminNavSecondary";
 import { routeNames } from "./playground/routeNames";
 import { useRoute } from "vue-router"
-import PotionLogo from './assets/potion-logo.svg'
 import SidebarNavItem from './templates/components/SidebarNavItem/SidebarNavItem';
 import * as Stories from './stories'
+import Musk from './assets/Musk.png';
 
 export default defineComponent({
   name: 'App',
@@ -37,29 +38,22 @@ export default defineComponent({
       }
       {
         showSidebar.value && 
-        <AdminSidebar
-          class="s1050m:hidden z-1"
-        >
-          <div class="flex items-center mb-6">
-            <img class="mr-2 w-4" src={PotionLogo}/>
-            <p class="text-2xl text-gray-100">Potion</p>
-          </div>
-          <div class="">
+        <AdminSidebar class="flex flex-col">
+          <div class="flex-1">
+            <p class="my-4 mx-2 text-2xl text-gray-100">Potion</p>
             <nav>
               {
                 adminNavPrimary.value.map(nav => {
-                  return <SidebarNavItem class="mb-0.5" {...nav} />
-                })
-              }
-            </nav>
-            <nav class="border-t border-gray-500 pt-4 mt-4">
-              {
-                adminNavSecondary.value.map(nav => {
-                  return <SidebarNavItem class="mb-0.5" {...nav} />
+                  return <SidebarNavItem {...nav} />
                 })
               }
             </nav>
           </div>
+          <AdminAccount
+            image={Musk}
+            name="Elon Musk"
+            nav={adminNavSecondary}
+          />
         </AdminSidebar>
       }
       <router-view class="flex-1" />

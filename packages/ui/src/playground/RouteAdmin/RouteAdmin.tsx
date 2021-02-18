@@ -1,4 +1,4 @@
-import AdminContent from "../../layouts/AdminContent/AdminContent";
+import AdminMain from "../../templates/components/AdminMain/AdminMain";
 import AdminFooter from "../../templates/components/AdminFooter/AdminFooter";
 import Btn from "../../templates/components/Btn/Btn";
 import Dropdown from '../../templates/components/Dropdown/Dropdown'
@@ -14,8 +14,6 @@ import StateLoading from "../../templates/components/StateLoading/StateLoading"
 import Tabs from '../../templates/components/Tabs/Tabs'
 import Wrapper from '../../templates/components/Wrapper/Wrapper'
 import ModelTable, { ModelRow } from "../../templates/components/ModelTable/ModelTable";
-import PotionLogo from '../../assets/potion-logo-color.svg'
-import Space from '../../assets/space.jpg'
 
 export default defineComponent({
   setup () {
@@ -65,7 +63,7 @@ export default defineComponent({
       return ""
     })
 
-    return () => <AdminContent class="bg-gray-100">
+    return () => <AdminMain class="bg-gray-100">
       <Wrapper class="bg-white border-b-1 border-gray-300 pt-4">
         <div class="flex items-center justify-between pr-4 s1050m:flex-wrap s1050:pr-0">
           <div class="flex flex-full items-center mb-2">
@@ -122,12 +120,100 @@ export default defineComponent({
           [
             {
               id: "1",
-            description: "Creates an async component.",
-              icon: PotionLogo,
-              image: Space,
+              description: "Creates an async component.",
               subtitle: "Developer and Master of the Sea",
               roles: ["Admin", "Guck Tuckerson"],
               title: "Michael Demchuk",
+              insertedAt: (new Date()).toISOString(),
+              updatedAt: (new Date()).toISOString()
+            } as ModelRow,
+            {
+              id: "2",
+              description: "Creates an async component that will be loaded only when it's necessary.",
+              subtitle: "Developer and Cofounder",
+              roles: ["admin", "test"],
+              title: "Vince Roy",
+              insertedAt: (new Date()).toISOString(),
+              updatedAt: (new Date()).toISOString()
+            } as ModelRow,
+            {
+              id: "2",
+              description: "Creates an async component that will be loaded only when it's necessary.",
+              subtitle: "Developer and Cofounder",
+              roles: ["admin", "test"],
+              title: "Vince Roy",
+              insertedAt: (new Date()).toISOString(),
+              updatedAt: (new Date()).toISOString()
+            } as ModelRow,
+            {
+              id: "2",
+              description: "Creates an async component that will be loaded only when it's necessary.",
+              subtitle: "Developer and Cofounder",
+              roles: ["admin", "test"],
+              title: "Vince Roy",
+              insertedAt: (new Date()).toISOString(),
+              updatedAt: (new Date()).toISOString()
+            } as ModelRow,
+            {
+              id: "2",
+              description: "Creates an async component that will be loaded only when it's necessary.",
+              subtitle: "Developer and Cofounder",
+              roles: ["admin", "test"],
+              title: "Vince Roy",
+              insertedAt: (new Date()).toISOString(),
+              updatedAt: (new Date()).toISOString()
+            } as ModelRow,
+            {
+              id: "2",
+              description: "Creates an async component that will be loaded only when it's necessary.",
+              subtitle: "Developer and Cofounder",
+              roles: ["admin", "test"],
+              title: "Vince Roy",
+              insertedAt: (new Date()).toISOString(),
+              updatedAt: (new Date()).toISOString()
+            } as ModelRow,
+            {
+              id: "2",
+              description: "Creates an async component that will be loaded only when it's necessary.",
+              subtitle: "Developer and Cofounder",
+              roles: ["admin", "test"],
+              title: "Vince Roy",
+              insertedAt: (new Date()).toISOString(),
+              updatedAt: (new Date()).toISOString()
+            } as ModelRow,
+            {
+              id: "2",
+              description: "Creates an async component that will be loaded only when it's necessary.",
+              subtitle: "Developer and Cofounder",
+              roles: ["admin", "test"],
+              title: "Vince Roy",
+              insertedAt: (new Date()).toISOString(),
+              updatedAt: (new Date()).toISOString()
+            } as ModelRow,
+            {
+              id: "2",
+              description: "Creates an async component that will be loaded only when it's necessary.",
+              subtitle: "Developer and Cofounder",
+              roles: ["admin", "test"],
+              title: "Vince Roy",
+              insertedAt: (new Date()).toISOString(),
+              updatedAt: (new Date()).toISOString()
+            } as ModelRow,
+            {
+              id: "2",
+              description: "Creates an async component that will be loaded only when it's necessary.",
+              subtitle: "Developer and Cofounder",
+              roles: ["admin", "test"],
+              title: "Vince Roy",
+              insertedAt: (new Date()).toISOString(),
+              updatedAt: (new Date()).toISOString()
+            } as ModelRow,
+            {
+              id: "2",
+              description: "Creates an async component that will be loaded only when it's necessary.",
+              subtitle: "Developer and Cofounder",
+              roles: ["admin", "test"],
+              title: "Vince Roy",
               insertedAt: (new Date()).toISOString(),
               updatedAt: (new Date()).toISOString()
             } as ModelRow,
@@ -154,6 +240,6 @@ export default defineComponent({
           })
         }
       </AdminFooter>
-    </AdminContent>
+    </AdminMain>
   }
 })

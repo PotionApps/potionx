@@ -1,4 +1,4 @@
-import AdminContent from "../../layouts/AdminContent/AdminContent";
+import AdminMain from "../../templates/components/AdminMain/AdminMain";
 import AdminFooter from "../../templates/components/AdminFooter/AdminFooter";
 import Btn from "../../templates/components/Btn/Btn";
 import BtnPrimary from "../../templates/components/Btn/BtnPrimary";
@@ -24,7 +24,7 @@ export default defineComponent({
       }
     ])
 
-    return () => <AdminContent class="bg-white flex items-center justify-center p-6 text-center">
+    return () => <AdminMain class="bg-white flex items-center justify-center p-6 text-center">
       <div class="relative">
         <p class="absolute font-bold left-1/2 text-gray-100 top-1/2 transform -translate-x-1/2 -translate-y-1/2" style="font-size:220px;">404</p>
         <div class="relative z-2">
@@ -41,7 +41,7 @@ export default defineComponent({
           </div>
         </div>
       </div>
-      <AdminFooter menuRoute={{name: routeNames.menu}}>
+      <AdminFooter>
         {
           mobileBtns.value.map(btn => {
             return <Btn
@@ -51,6 +51,6 @@ export default defineComponent({
           })
         }
       </AdminFooter>
-    </AdminContent>
+    </AdminMain>
   }
 })

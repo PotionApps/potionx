@@ -14,6 +14,7 @@ export interface SidebarNavItemProps {
 }
 
 export default defineComponent({
+  name: "SidebarNavItem",
   props: {
     click: Function as PropType<(e?: MouseEvent) => void>,
     icon: Object,
@@ -24,22 +25,22 @@ export default defineComponent({
     to: [Object, String] as PropType<RouteLocationRaw>
   },
   setup (props: SidebarNavItemProps, ctx) {
+
     const classes = computed(() => {
-      return ["block opacity-70 rounded text-gray-100 transition-opacity w-full hover:opacity-100 hover:bg-gray-700", props.parentId ? "px-4 py-1.5 text-xs" : "px-2 py-1"]
+      return ["block my-1 opacity-70 text-gray-100 transition-opacity w-full hover:opacity-100 hover:bg-gray-700", props.parentId ? "px-4 py-1.5 text-xs" : "px-2 py-1"]
     })
     return () => {
       const slot = <div class="flex items-center justify-between">
         <div class="flex items-center">
-          {props.icon && !props.image && <div class={["flex items-center justify-center mr-2", props.parentId ? "w-4" : "w-5"]}>
+          {props.icon && <div class={["flex items-center justify-center mr-2", props.parentId ? "w-4" : "w-5"]}>
             <FontAwesomeIcon icon={props.icon} />
           </div>}
-          {props.image && <img class="h-5 mr-2 object-cover rounded-full w-5" src={props.image} />}
           {props.label}
           {ctx.slots.default && ctx.slots.default()}
         </div>
         {
           props.notification &&
-          <div class={["bg-blue-500 flex ml-1 py-0.5 rounded-full", props.parentId ? "px-1" : "px-1.5"]}>
+          <div class={["bg-blue-500 flex ml-1 py-0.5 rounded-full", props.parentId ? "px-2" : "px-2.5"]}>
             <span class={["font-semibold text-white", props.parentId ? "text-2xs" : "text-xs"]}>{props.notification}</span>
           </div>
         }

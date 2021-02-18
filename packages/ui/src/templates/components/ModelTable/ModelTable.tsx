@@ -25,6 +25,7 @@ export interface ModelTableProps {
 }
 
 export default defineComponent({
+  name: "ModelTable",
   props: {
     checkboxClick: Function as PropType<ModelTableProps['checkboxClick']>,
     columnOrder: Array as PropType<ModelTableProps['columnOrder']>,

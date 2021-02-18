@@ -3,6 +3,7 @@ import { FormSubmitStatus, useFormButton } from "@potionapps/forms";
 import Btn from './Btn'
 
 export default defineComponent({
+  name: "BtnSubmit",
   setup (props, ctx) {
     const {
       formSubmitStatus

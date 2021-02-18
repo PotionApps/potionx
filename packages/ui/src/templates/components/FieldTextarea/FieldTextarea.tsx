@@ -4,6 +4,7 @@ import FieldLabel from "../FieldLabel/FieldLabel";
 import { useField, useFieldTextarea } from "@potionapps/forms";
 
 export default defineComponent({
+  name: "FieldTextarea",
   props: {
     disableErrors: Boolean,
     label: String,

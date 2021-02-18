@@ -4,6 +4,7 @@ import FieldError from "../FieldError/FieldError";
 import FieldLabel from "../FieldLabel/FieldLabel";
 
 export default defineComponent({
+  name: "FieldInput",
   props: {
     disableErrors: Boolean,
     label: String,

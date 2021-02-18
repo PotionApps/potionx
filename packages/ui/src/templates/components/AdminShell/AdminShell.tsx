@@ -1,13 +1,14 @@
 import { defineComponent } from "vue";
 
-export default defineComponent(
-  (props, context) => {
+export default defineComponent({
+  name: "AdminShell",
+  setup (_, ctx) {
     return () => {
       return (
-        <div class="bg-gray-200 max-w-screen s1050m:pb-14 s1050:max-w-4/5 s1450:max-w-5/6 s1650:max-w-8/9">
-          {context.slots.default && context.slots.default()}
+        <div class="s1050:flex max-w-screen min-h-screen relative">
+          {ctx.slots.default && ctx.slots.default()}
         </div>
       )
     }
   }
-)
+})

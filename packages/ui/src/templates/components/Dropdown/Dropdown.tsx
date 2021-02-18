@@ -7,12 +7,12 @@ export interface DropdownProps {
 }
 
 export default defineComponent({
+  name: "Dropdown",
   props: {
     icon: {},
     label: String
   },
-  setup (props, context) {
-
+  setup (props) {
     return () => {
       return (
         <div class="bg-white border-1 border-gray-300 cursor-pointer flex items-center p-2 rounded-md text-gray-400 transition hover:border-blue-400 hover:text-blue-400">

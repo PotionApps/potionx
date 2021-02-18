@@ -12,12 +12,11 @@ export default defineComponent({
   props: {
     hideMenu: Boolean
   },
-  setup (props, context) {
-
+  setup (props, ctx) {
     return () => {
       return (
         <div class="bg-gray-900 bottom-0 justify-end h-14 left-0 fixed w-full z-99 py-2 px-2 flex shadow s1050:hidden">
-          {context.slots.default && context.slots.default()}
+          {ctx.slots.default && ctx.slots.default()}
           {
             !props.hideMenu && <router-link
               class="bg-gray-700 flex flex-fit h-auto items-center justify-center px-3 py-2 rounded text-gray-300 w-auto hover:bg-gray-600"

@@ -24,6 +24,7 @@ export const useAdminNavPrimary = () => {
       {
         icon: faPlus,
         label: "New Message",
+        notification: 14,
         parentId: "Inbox",
         to: {
           name: routeNames.login

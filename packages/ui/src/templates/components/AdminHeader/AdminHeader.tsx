@@ -11,20 +11,21 @@ export interface AdminHeaderProps {
 }
 
 export default defineComponent({
+  name: "AdminHeader",
   props: {
     tabs: Object as PropType<Ref<AdminHeaderTabProps[]>>
   },
-  setup (props, context) {
+  setup (props, ctx) {
     return () => {
       return (
         <div class="bg-white border-b-1 border-gray-300 pb-1 px-4 pt-3 s850:pt-4 s1050:px-8 s1450:px-12">
           <div class="flex items-center justify-between pr-4 s1050m:flex-wrap s1050:pr-0">
             <div class="flex flex-full items-center mb-2">
               <div class="s1050:max-w-500 s1450:max-w-600">
-                {context.slots.default && context.slots.default()}
+                {ctx.slots.default && ctx.slots.default()}
               </div>
             </div>
-            {context.slots.btns && <div class="flex">{context.slots.btns()}</div>}
+            {ctx.slots.btns && <div class="flex">{ctx.slots.btns()}</div>}
           </div>
           {
             props.tabs && 

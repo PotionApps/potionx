@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'login-error',
+  name: 'LoginError',
   setup (props) {
     return () => <div class="bg-white flex flex-col items-center justify-center py-12 px-6 min-h-screen">
       <div class="p-6 s450:px-10 w-full bg-gray-100 max-w-400 text-center shadow-md rounded">

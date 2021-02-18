@@ -1,4 +1,6 @@
 export enum routeNames {
+  account = 'account',
+  error = "error",
   home = "home",
   login = "login",
   loginError = "loginError",

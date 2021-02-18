@@ -28,8 +28,9 @@ export interface BtnProps {
 }
 
 export default defineComponent({
+  name: "Btn",
   props: btnProps,
-  setup (props, context) {
+  setup (props, ctx) {
     const classes = computed(() => [
       "flex items-center justify-center transition",
       props.disabled && "opacity-50 pointer-events-none"
@@ -46,7 +47,7 @@ export default defineComponent({
       const slot = <div class={["flex items-center justify-center", props.reverse && "flex-row-reverse"]}>
         {props.icon && <FontAwesomeIcon class={imgClasses.value} icon={props.icon} />}
         {props.label && <span class="whitespace-nowrap">{props.label}</span>}
-        {context.slots.default && context.slots.default()}
+        {ctx.slots.default && ctx.slots.default()}
       </div>
 
       const eventHandlers : any = {}

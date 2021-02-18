@@ -1,9 +1,7 @@
-import AdminContent from "../../layouts/AdminContent/AdminContent";
 import AdminFooter from "../../templates/components/AdminFooter/AdminFooter";
 import Btn from "../../templates/components/Btn/Btn";
-import BtnPrimary from "../../templates/components/Btn/BtnPrimary";
 import { defineComponent, computed } from "vue";
-import { faArrowLeft, faHome } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { routeNames } from "../../playground/routeNames";
 
 export default defineComponent({
@@ -17,7 +15,7 @@ export default defineComponent({
       }
     ])
 
-    return () => <div>
+    return () => <div class="bg-white h-screen s1050m:pb-14">
       <AdminFooter hideMenu={true}>
         {
           mobileBtns.value.map(btn => {

@@ -23,7 +23,7 @@ export default defineComponent({
       type: Object
     }
   },
-  setup (props, context) {
+  setup (props) {
 
     const blur = () => {
       focused.value = false

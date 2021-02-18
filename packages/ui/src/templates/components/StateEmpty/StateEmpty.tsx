@@ -13,7 +13,7 @@ export default defineComponent({
     icon: {},
     label: String
   },
-  setup (props, context) {
+  setup (props) {
     return () => {
       return (
         <div class="text-center">

@@ -21,9 +21,7 @@ export default defineComponent({
     return () => <div class="flex min-h-screen max-w-screen overflow-x-hidden">
       {
         showSidebar.value && 
-        <AdminSidebar
-          class="s1050m:hidden relative z-1"
-        >
+        <AdminSidebar>
           <div class="flex items-center mb-6">
             <p class="text-2xl text-gray-100">Admin</p>
           </div>

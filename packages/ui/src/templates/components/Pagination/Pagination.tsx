@@ -8,6 +8,7 @@ export interface PaginationProps {
 }
 
 export default defineComponent({
+  name: "Pagination",
   setup () {
     return () => {
       return (

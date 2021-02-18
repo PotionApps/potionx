@@ -1,12 +1,12 @@
-import AdminContent from "../../layouts/AdminContent/AdminContent";
+import AdminMain from "../../templates/components/AdminMain/AdminMain";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   setup () {
     return () => (
-      <AdminContent>
+      <AdminMain>
         <router-view />
-      </AdminContent>
+      </AdminMain>
     )
   }
 })

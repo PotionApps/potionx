@@ -9,6 +9,7 @@ export type FieldCheckboxOption = {
 }
 
 export default defineComponent({
+  name: "FieldRadio",
   props: {
     disableErrors: Boolean,
     label: String,

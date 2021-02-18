@@ -1,5 +1,5 @@
 import { defineComponent } from "vue";
-import LoginError from "../../components/LoginError/LoginError";
+import LoginError from "../../templates/components/LoginError/LoginError";
 
 export default defineComponent({
   setup () {

@@ -1,5 +1,5 @@
 import { defineComponent } from "vue";
-import Login from "../../components/Login/Login";
+import Login from "../../templates/components/Login/Login";
 
 export default defineComponent({
   setup () {

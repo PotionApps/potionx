@@ -15,6 +15,11 @@ const routes : RouteRecordRaw[] = [
     component: RouteHome
   },
   {
+    name: routeNames.account,
+    path: '/account',
+    component: RouteHome
+  },
+  {
     name: routeNames.login,
     path: '/login',
     component: RouteLogin
