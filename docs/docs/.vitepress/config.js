@@ -4,30 +4,45 @@ module.exports = {
     description: 'Documentation for deploying apps on PotionX.',
     themeConfig: {
         nav: [
-            { text: 'Guide', link: '/', activeMatch: '^/$|^/(conventions|guide|generators)/' },
+            { text: 'Docs', link: '/', activeMatch: '^/$|^/(conventions|guide|generators)/' },
+            { text: 'API', link: '/api/overview' },
+            { text: 'Roadmap', link: '/roadmap' },
             {
                 text: 'Github',
                 link: 'https://github.com/PotionApps/potionx'
             }
         ],
+        search: true,
+        searchMaxSuggestions: 10,
         sidebar: {
-            '/conventions/': getGuideSidebar(),
-            '/generators/': getGuideSidebar(),
-            '/guide/': getGuideSidebar(),
-            '/': getGuideSidebar()
+            '/api/': getApiSidebar(),
+            '/conventions/': getDocsSidebar(),
+            '/docs/': getDocsSidebar(),
+            '/': getDocsSidebar()
         }
     }
 }
 
-function getGuideSidebar() {
+function getApiSidebar() {
     return [{
-            text: 'Guide',
+        text: 'API',
+        children: [
+            { text: 'Overview', link: '/api/overview' },
+            { text: 'Forms', link: '/api/forms' },
+        ]
+    }]
+}
+
+function getDocsSidebar() {
+    return [{
+            text: 'Docs',
             children: [
                 { text: 'Introduction', link: '/' },
-                { text: 'Getting Started', link: '/guide/getting-started' },
-                { text: 'Deployment', link: '/guide/deployment' },
-                { text: 'Forms (@potionapps/forms)', link: '/guide/forms' },
-                // permissions
+                { text: 'Getting Started', link: '/docs/getting-started' },
+                { text: 'Generators', link: '/docs/generators' },
+                { text: 'Packages', link: '/docs/packages' },
+                { text: 'Permissions', link: '/docs/permissions' },
+                { text: 'Deployment', link: '/docs/deployment' },
             ]
         },
         {
@@ -37,13 +52,6 @@ function getGuideSidebar() {
                 { text: 'Data Layer', link: '/conventions/data-layer' },
                 { text: 'GraphQL Layer', link: '/conventions/graphql-layer' },
                 { text: 'Web Layer', link: '/conventions/web-layer' }
-            ]
-        },
-        {
-            text: 'Generators',
-            children: [
-                { text: 'Model', link: '/generators/model' },
-                { text: 'UI', link: '/generators/ui' }
             ]
         }
     ]

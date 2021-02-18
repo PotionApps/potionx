@@ -7,12 +7,12 @@ Potionx is a set of generators and modules that speeds up the process of setting
 > **Warning:** Still in early stages of development. Not suitable for production use. 
 
 ## Features
-- Uses [opinionated defaults for naming and file structure](/conventions/overview).
-- Uses [Phoenix](https://www.phoenixframework.org/) as the base Elixir framework with some opinionated defaults.
-- GraphQL layer that uses [Absinthe](http://absinthe-graphql.org/).
-- Social login with Apple, Google, Github, Twitter enabled using [Pow and PowAssent](https://powauth.com/)
+- [Opinionated defaults for naming and file structure](/conventions/overview).
+- [Phoenix](https://www.phoenixframework.org/) as the base Elixir framework with some opinionated defaults.
+- GraphQL layer using [Absinthe](http://absinthe-graphql.org/).
+- Social login with Apple, Microsoft, Google, Github, and Twitter enabled by [Pow and PowAssent](https://powauth.com/)
 - [Pow and PowAssent](https://powauth.com/) for authentication/authorization
-- Frontend components using [Vue 3](https://vuejs.org/) with JSX, Typescript and [TailwindCSS](https://tailwindcss.com/).
+- [Vue 3](https://vuejs.org/) frontend components with JSX, Typescript and [TailwindCSS](https://tailwindcss.com/).
 - Fast frontend development with [Vite](https://vitejs.dev/)
 - [@potionapps/forms](/guide/forms), Vue 3 form helpers
 - [@potionapps/ui](/generators/ui), a collection of pre-made UI components that can be easily copied over to your project.
@@ -29,4 +29,4 @@ Potionx is a set of generators and modules that speeds up the process of setting
 - [Vite](https://vitejs.dev/)
 - [URQL](https://formidable.com/open-source/urql/)
 - [Typescript](https://www.typescriptlang.org/)
-- [TailwindCSS](https://tailwindcss.com/) / [Windicss](https://windicss.netlify.app/)
+- [TailwindCSS](https://tailwindcss.com/)
