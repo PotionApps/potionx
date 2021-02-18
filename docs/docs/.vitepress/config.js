@@ -14,6 +14,7 @@ module.exports = {
         ],
         search: true,
         searchMaxSuggestions: 10,
+        searchPlaceholder: 'Search...',
         sidebar: {
             '/api/': getApiSidebar(),
             '/conventions/': getDocsSidebar(),
