@@ -1,7 +1,7 @@
 import { computed } from 'vue'
 import { RouteLocationRaw } from "vue-router";
 import { routeNames } from './routes/routeNames'
-import { SidebarNavItemProps } from './components/SidebarNavItem/SidebarNavItem'
+import { SidebarNavItemProps } from 'root/components/SidebarNavItem/SidebarNavItem'
 
 const nav : SidebarNavItemProps[] = []
 

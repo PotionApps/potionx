@@ -17,7 +17,7 @@ const argv =
   .argv
 
 const addToRoutes = (context) => {
-  const pathToRoutes = path.join(context.destination, "src", "routes", "index.ts")
+  const pathToRoutes = path.join(context.destination, "src", "crudRoutes", "index.ts")
   let routes = fs.readFileSync(pathToRoutes, { encoding: 'utf-8' })
   routes = ['Edit', 'List'].reduce((acc, key) => {
     if (!routes.includes(`Route${context.model}${key}`)) {
