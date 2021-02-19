@@ -30,7 +30,7 @@ export default defineComponent({
       return (
         <div class="bottom-0 sticky">
           <div
-            class="bg-gray-800 cursor-pointer flex items-center justify-between px-4 py-3 transition w-full hover:bg-gray-700"
+            class="bg-gray-800 cursor-pointer flex items-center justify-between px-2 py-3 transition w-full hover:bg-gray-700"
             onClick={toggleMenu}
           >
             <div class="flex items-center">
@@ -44,13 +44,13 @@ export default defineComponent({
             </div>
             <FontAwesomeIcon class={["duration-200 ease-in-out text-lg text-gray-400 transform", menuOpen.value && "-rotate-180"]} icon={faChevronCircleDown} />
           </div>
-          {menuOpen.value && <div>
+          {menuOpen.value && <nav class="bg-gray-900">
             {
               props.nav.value.map((i : any) => {
                 return <SidebarNavItem {...i} />
               })
             }  
-          </div>}
+          </nav>}
         </div>
       )
     }
