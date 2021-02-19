@@ -4,8 +4,8 @@ module.exports = {
     description: 'Documentation for deploying apps on PotionX.',
     themeConfig: {
         nav: [
-            { text: 'Docs', link: '/', activeMatch: '^/$|^/(conventions|guide|generators)/' },
-            { text: 'API', link: '/api/overview' },
+            { text: 'Docs', link: '/', activeMatch: '^/$|^/(conventions|docs|guide|generators)/' },
+            { text: 'API', link: '/api/overview', activeMatch: '^/$|^/api/'},
             { text: 'Roadmap', link: '/roadmap' },
             {
                 text: 'Github',
