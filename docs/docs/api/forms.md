@@ -2,7 +2,7 @@
 
 The Potionx toolkit relies on the ```@potionapps/forms``` package for its code generation and comes with it installed by default.
 
-```@potionapps/forms``` is set of Vue 3 composition API hooks for building forms.
+```@potionapps/forms``` is a set of Vue 3 composition API hooks for building forms.
 
 ## Hooks
 
