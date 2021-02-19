@@ -25,6 +25,7 @@ function getApiSidebar() {
     return [{
         text: 'API',
         children: [
+            { text: 'Overview', link: '/api' },
             { text: 'Potionx', link: '/api/potionx' },
             { text: 'Forms', link: '/api/forms' },
             { text: 'UI', link: '/api/ui' },
