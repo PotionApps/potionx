@@ -8,7 +8,7 @@ defmodule Potionx.Pow.Provider.Dev do
       nil   -> {
         :ok, %{
           session_params: %{a: 1},
-          url: "https://provider.example.com/oauth/authorize"
+          url: "/api/v1/auth/dev/callback"
         }
       }
       error -> {:error, error}
@@ -16,7 +16,7 @@ defmodule Potionx.Pow.Provider.Dev do
   end
 
   @impl true
-  def callback(_config, %{"code" => "valid", "email" => email}) do
+  def callback(_config, %{"email" => email}) do
     {
       :ok,
       %{

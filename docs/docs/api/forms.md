@@ -314,7 +314,7 @@ export default defineComponent({
       default: "text",
       type: String
     },
-    unstyled: Boolea
+    unstyled: Boolean
   },
   setup (props, ctx) {
     const {
