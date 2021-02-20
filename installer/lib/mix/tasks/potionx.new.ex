@@ -4,7 +4,7 @@ defmodule Mix.Tasks.Potionx.New do
 
   It expects the path of the project as an argument.
 
-      mix potionx.new PATH [--module MODULE] [--app APP]
+      mix potionx.new PATH
 
   A project at the given PATH will be created. The
   application name and module name will be retrieved
@@ -12,43 +12,10 @@ defmodule Mix.Tasks.Potionx.New do
 
   ## Options
 
-    * `--live` - include Phoenix.LiveView to make it easier than ever
-      to build interactive, real-time applications
-
-    * `--umbrella` - generate an umbrella project,
-      with one application for your domain, and
-      a second application for the web interface.
-
-    * `--app` - the name of the OTP application
-
-    * `--module` - the name of the base module in
-      the generated skeleton
-
-    * `--database` - specify the database adapter for Ecto. One of:
-
-        * `postgres` - via https://github.com/elixir-ecto/postgrex
-        * `mysql` - via https://github.com/elixir-ecto/myxql
-        * `mssql` - via https://github.com/livehelpnow/tds
-
-      Please check the driver docs for more information
-      and requirements. Defaults to "postgres".
-
-    * `--no-webpack` - do not generate webpack files
-      for static asset building. When choosing this
-      option, you will need to manually handle
-      JavaScript dependencies if building HTML apps
-
-    * `--no-ecto` - do not generate Ecto files.
-
-    * `--no-html` - do not generate HTML views.
-
-    * `--no-gettext` - do not generate gettext files.
-
-    * `--no-dashboard` - do not include Phoenix.LiveDashboard
-
-    * `--binary-id` - use `binary_id` as primary key type
-      in Ecto schemas
-
+    * `--no-frontend` - don't install frontend
+    * `--no-install-deps` - don't install deps
+    * `--no-migrations` - don't run migrations
+    * `--no-users` - don't set up users and default user
     * `--verbose` - use verbose output
 
   ## Installation
@@ -61,21 +28,15 @@ defmodule Mix.Tasks.Potionx.New do
 
       mix potionx.new hello_world
 
-  Is equivalent to:
-
-      mix potionx.new hello_world --module HelloWorld
-
   Would generate the following directory structure and modules:
 
-      hello_umbrella/   Hello.Umbrella
+      hello_world/   HelloWorld
         apps/
-          hello/        Hello
-          hello_web/    HelloWeb
+          hello_world/  Hello
+          hello_world_graphql/  HelloWorldGraphQl
+          hello_world_web/  HelloWorldWeb
 
-  You can read more about umbrella projects using the
-  official [Elixir guide](http://elixir-lang.org/getting-started/mix-otp/dependencies-and-umbrella-apps.html#umbrella-projects)
-
-  To print the Phoenix installer version, pass `-v` or `--version`, for example:
+  To print the Potionx installer version, pass `-v` or `--version`, for example:
 
       mix potionx.new -v
   """
@@ -127,6 +88,7 @@ defmodule Mix.Tasks.Potionx.New do
         "schema.ex"
       ]
     )
+
     File.write!(
       schema_path,
       File.read!(schema_path)
@@ -343,7 +305,7 @@ defmodule Mix.Tasks.Potionx.New do
   # end
   # defp print_mix_info(_gen) do
   #   Mix.shell().info """
-  #   Start your Phoenix app with:
+  #   Start your Potionx app with:
 
   #       $ mix phx.server
 
@@ -445,7 +407,7 @@ defmodule Mix.Tasks.Potionx.New do
 
   defp elixir_version_check! do
     unless Version.match?(System.version(), "~> 1.11") do
-      Mix.raise "Phoenix v#{@version} requires at least Elixir v1.11.\n " <>
+      Mix.raise "Potionx v#{@version} requires at least Elixir v1.11.\n " <>
                 "You have #{System.version()}. Please update accordingly"
     end
   end

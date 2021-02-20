@@ -3,7 +3,7 @@ all:
     BUILD +all-integration-test
 
 all-test:
-    BUILD --build-arg ELIXIR=1.11.0 --build-arg OTP=23.1.1 +test
+    BUILD --build-arg ELIXIR=1.11.3 --build-arg OTP=23.2.5 +test
 
 test:
     FROM +test-setup
@@ -18,7 +18,7 @@ test:
     RUN mix test
 
 all-integration-test:
-    BUILD --build-arg ELIXIR=1.11.1 --build-arg OTP=23.2 +integration-test
+    BUILD --build-arg ELIXIR=1.11.3 --build-arg OTP=23.2.5 +integration-test
 
 integration-test:
     FROM +setup-base
@@ -27,52 +27,49 @@ integration-test:
 
     # Install tooling needed to check if the DBs are actually up when performing integration tests
     RUN apk add postgresql-client
+    RUN echo "hello"
 
     # Integration test deps
-    COPY /integration_test/docker-compose.yml ./integration_test/docker-compose.yml
-    COPY mix.exs ./
-    COPY /.formatter.exs ./
-    COPY /installer/mix.exs ./installer/mix.exs
-    COPY /integration_test/mix.exs ./integration_test/mix.exs
-    COPY /integration_test/mix.lock ./integration_test/mix.lock
-    COPY /integration_test/config/config.exs ./integration_test/config/config.exs
-    WORKDIR /src/integration_test
-    RUN mix local.hex --force
+    # COPY /integration_test/docker-compose.yml ./integration_test/docker-compose.yml
+    # COPY mix.exs ./
+    # COPY /.formatter.exs ./
+    # COPY /installer/mix.exs ./installer/mix.exs
+    # COPY /installer/templates/potionx/mix.exs ./integration_test/mix.exs
+    # RUN sed -i 's/<%= @app_name %>/potionx_integration/g' ./integration_test/mix.exs
+    # RUN sed -i 's/mod: {<%= @app_module %>\.Application, \[\]},/ /g' ./integration_test/mix.exs
+    # RUN sed -i 's/<%= inspect @adapter_app %>/:postgrex/g' ./integration_test/mix.exs
+    # COPY /integration_test/config/config.exs ./integration_test/config/config.exs
+    # WORKDIR /src/integration_test
+    # RUN mix local.hex --force
 
-    # Ensure integration_test/mix.lock contains all of the dependencies we need and none we don't
-    RUN cp mix.lock mix.lock.orig && \
-        mix deps.get && \
-        mix deps.unlock --check-unused && \
-        diff -u mix.lock.orig mix.lock && \
-        rm mix.lock.orig
+    # RUN mix deps.get
 
+    # # Compile phoenix
+    # COPY --dir config installer lib test priv /src
+    # RUN mix local.rebar --force
+    # # Compiling here improves caching, but slows down GHA speed
+    # # Removing until this feature exists https://github.com/earthly/earthly/issues/574
+    # # RUN MIX_ENV=test mix deps.compile
 
-    # Compile phoenix
-    COPY --dir assets config installer lib test priv /src
-    RUN mix local.rebar --force
-    # Compiling here improves caching, but slows down GHA speed
-    # Removing until this feature exists https://github.com/earthly/earthly/issues/574
-    # RUN MIX_ENV=test mix deps.compile
+    # # Run integration tests
+    # COPY integration_test/test  ./test
+    # COPY integration_test/config/config.exs  ./config/config.exs
 
-    # Run integration tests
-    COPY integration_test/test  ./test
-    COPY integration_test/config/config.exs  ./config/config.exs
-
-    WITH DOCKER
-        # Start docker compose
-        # In parallel start compiling tests
-        # Check for DB to be up x 3
-        # Run the database tests
-        RUN docker-compose up -d & \
-            MIX_ENV=test mix deps.compile && \
-            while ! pg_isready --host=localhost --port=5432 --quiet; do sleep 1; done; \
-            mix test --include database
-    END
+    # WITH DOCKER
+    #     # Start docker compose
+    #     # In parallel start compiling tests
+    #     # Check for DB to be up x 3
+    #     # Run the database tests
+    #     RUN docker-compose up -d & \
+    #         MIX_ENV=test mix deps.compile && \
+    #         while ! pg_isready --host=localhost --port=5432 --quiet; do sleep 1; done; \
+    #         mix test
+    # END
 
 setup-base:
-   ARG ELIXIR=1.11.2
-   ARG OTP=23.2
-   FROM hexpm/elixir:$ELIXIR-erlang-$OTP-alpine-3.12.0
+   ARG ELIXIR=1.11.3
+   ARG OTP=23.2.5
+   FROM hexpm/elixir:$ELIXIR-erlang-$OTP-alpine-3.13.1
    RUN apk add --no-progress --update git build-base
    ENV ELIXIR_ASSERT_TIMEOUT=10000
    WORKDIR /src
