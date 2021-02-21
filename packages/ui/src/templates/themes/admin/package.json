@@ -23,7 +23,7 @@
     "lodash-es": "^4.17.20",
     "vue-router": "^4.0.3",
     "vue": "^3.0.5",
-    "@potionapps/ui": "0.0.12"
+    "@potionapps/ui": "0.0.13"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.0.4",
