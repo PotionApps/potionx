@@ -20,7 +20,13 @@ test('Copies the admin theme to the target directory and outputs correct files',
   const themeConfig = fs.readJSONSync('./src/templates/themes/admin/config.json')
   const dest = './test/tmp/themes/admin'
 
-  spawnSync('node', ['./cli/cliComponents.mjs', 'theme', 'admin', '--destination=./test/tmp/themes'])
+  const child = spawnSync(
+    'node',
+    ['./cli/cliComponents.mjs', 'theme', 'admin', '--destination=./test/tmp/themes'],
+    {
+      encoding: 'utf-8'
+    }
+  )
   ;[
     'config.json',
     'index.html'

@@ -71,7 +71,7 @@ const run = () => {
       filter: (src, dest) => {
         if (
           src.includes('.stories.') ||
-          src.includes('/config.json') ||
+          src.includes(path.sep + 'config.json') ||
           src.includes('index.html') ||
           src.includes('node_modules')
         ) return false
