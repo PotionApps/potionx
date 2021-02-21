@@ -176,8 +176,8 @@ defmodule Potionx.New.Generator do
         String.downcase(project.app),
         project.app_mod,
         %{
-          password: project.local_postgres_password,
-          user: project.local_postgres_user
+          password: project.local_db_password,
+          user: project.local_db_user
         }
       )
 

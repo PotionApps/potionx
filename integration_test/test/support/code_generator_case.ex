@@ -14,7 +14,7 @@ defmodule Potionx.Integration.CodeGeneratorCase do
     app_root_path = get_app_root_path(tmp_dir, app_name, opts)
 
     output =
-      mix_run!(["potionx.new", app_path] ++ opts, integration_test_root_path)
+      mix_run!(["potionx.new", app_path, "--default-email=test@potionapps.com", "--db-password=postgres", "--db-user=postgres"] ++ opts, integration_test_root_path)
 
     # for path <- ~w(mix.lock deps _build) do
     #   File.cp_r!(

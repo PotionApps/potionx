@@ -27,50 +27,47 @@ integration-test:
 
     # Install tooling needed to check if the DBs are actually up when performing integration tests
     RUN apk add postgresql-client
-    RUN echo "hello"
 
     # Integration test deps
-    # COPY /integration_test/docker-compose.yml ./integration_test/docker-compose.yml
-    # COPY mix.exs ./
-    # COPY /.formatter.exs ./
-    # COPY /installer/mix.exs ./installer/mix.exs
-    # COPY /installer/templates/potionx/mix.exs ./integration_test/mix.exs
-    # RUN sed -i 's/<%= @app_name %>/potionx_integration/g' ./integration_test/mix.exs
-    # RUN sed -i 's/mod: {<%= @app_module %>\.Application, \[\]},/ /g' ./integration_test/mix.exs
-    # RUN sed -i 's/<%= inspect @adapter_app %>/:postgrex/g' ./integration_test/mix.exs
-    # COPY /integration_test/config/config.exs ./integration_test/config/config.exs
-    # WORKDIR /src/integration_test
-    # RUN mix local.hex --force
+    COPY /integration_test/docker-compose.yml ./integration_test/docker-compose.yml
+    COPY mix.exs ./
+    COPY /.formatter.exs ./
+    COPY /installer/mix.exs ./installer/mix.exs
+    COPY /integration_test/mix.exs ./integration_test/mix.exs
+    COPY /integration_test/config/config.exs ./integration_test/config/config.exs
+    WORKDIR /src/integration_test
+    RUN mix local.hex --force
 
-    # RUN mix deps.get
+    RUN mix deps.get
 
-    # # Compile phoenix
-    # COPY --dir config installer lib test priv /src
-    # RUN mix local.rebar --force
-    # # Compiling here improves caching, but slows down GHA speed
-    # # Removing until this feature exists https://github.com/earthly/earthly/issues/574
-    # # RUN MIX_ENV=test mix deps.compile
+    # Compile phoenix
+    COPY --dir config installer lib test priv /src
+    RUN mix local.rebar --force
+    # Compiling here improves caching, but slows down GHA speed
+    # Removing until this feature exists https://github.com/earthly/earthly/issues/574
+    # RUN MIX_ENV=test mix deps.compile
 
-    # # Run integration tests
-    # COPY integration_test/test  ./test
-    # COPY integration_test/config/config.exs  ./config/config.exs
+    # Run integration tests
+    COPY integration_test/test  ./test
+    COPY integration_test/config/config.exs  ./config/config.exs
 
-    # WITH DOCKER
-    #     # Start docker compose
-    #     # In parallel start compiling tests
-    #     # Check for DB to be up x 3
-    #     # Run the database tests
-    #     RUN docker-compose up -d & \
-    #         MIX_ENV=test mix deps.compile && \
-    #         while ! pg_isready --host=localhost --port=5432 --quiet; do sleep 1; done; \
-    #         mix test
-    # END
+    WITH DOCKER
+        # Start docker compose
+        # In parallel start compiling tests
+        # Check for DB to be up x 3
+        # Run the database tests
+        RUN docker-compose up -d & \
+            MIX_ENV=test mix deps.compile && \
+            while ! pg_isready --host=localhost --port=5432 --quiet; do sleep 1; done; \
+            mix potionx.new ./alpha beta --default-email=test@potionapps.com --db-password=postgres --db-user=postgres
+            # mix test
+    END
 
 setup-base:
    ARG ELIXIR=1.11.3
    ARG OTP=23.2.5
    FROM hexpm/elixir:$ELIXIR-erlang-$OTP-alpine-3.13.1
-   RUN apk add --no-progress --update git build-base
+   RUN apk add --no-progress --update git build-base npm nodejs
    ENV ELIXIR_ASSERT_TIMEOUT=10000
    WORKDIR /src
 

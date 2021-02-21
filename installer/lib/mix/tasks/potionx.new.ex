@@ -4,7 +4,7 @@ defmodule Mix.Tasks.Potionx.New do
 
   It expects the path of the project as an argument.
 
-      mix potionx.new PATH
+      mix potionx.new PATH [--module MODULE] [--app APP]
 
   A project at the given PATH will be created. The
   application name and module name will be retrieved
@@ -12,6 +12,9 @@ defmodule Mix.Tasks.Potionx.New do
 
   ## Options
 
+    * `--db_password` - database password
+    * `--db_user` - database user 
+    * `--default_email` - default email
     * `--no-frontend` - don't install frontend
     * `--no-install-deps` - don't install deps
     * `--no-migrations` - don't run migrations
@@ -46,38 +49,41 @@ defmodule Mix.Tasks.Potionx.New do
   @version Mix.Project.config()[:version]
   @shortdoc "Creates a new Potionx v#{@version} application"
 
-  @switches [dev: :boolean, webpack: :boolean, ecto: :boolean,
+  @switches [dev: :boolean, db_password: :string, db_user: :string, default_email: :string,
              app: :string, module: :string, web_module: :string,
-             database: :string, binary_id: :boolean, html: :boolean,
+             database: :string, binary_id: :boolean,
              gettext: :boolean, umbrella: :boolean, verbose: :boolean,
              live: :boolean, dashboard: :boolean, install: :boolean,
              no_frontend: :boolean, no_migrations: :boolean,
              no_install_deps: :boolean, no_users: :boolean, ui_package: :string
             ]
 
-  def ask_for_email(%Project{} = project) do
+  def ask_for_email(%Project{email: nil} = project) do
     email =
       Mix.shell().prompt("\nWhat email should the default user have?")
       |> String.trim
 
     %{project | email: email}
   end
+  def ask_for_email(%Project{} = project), do: project
 
-  def ask_for_local_postgres_user(%Project{} = project) do
+  def ask_for_local_db_user(%Project{local_db_user: nil} = project) do
     user =
       Mix.shell().prompt("\nWhat is the user for your local Postgres database? (defaults to: postgres)")
       |> String.trim
 
-    %{project | local_postgres_user: user !== "" && user || "postgres"}
+    %{project | local_db_user: user !== "" && user || "db"}
   end
+  def ask_for_local_db_user(%Project{} = project), do: project
 
-  def ask_for_local_postgres_password(%Project{} = project) do
+  def ask_for_local_db_password(%Project{local_db_password: nil} = project) do
     pw =
       Mix.shell().prompt("\nWhat is the password to your local Postgres database?")
       |> String.trim
 
-    %{project | local_postgres_password: pw}
+    %{project | local_db_password: pw}
   end
+  def ask_for_local_db_password(%Project{} = project), do: project
 
   def add_me_query(%Project{} = project) do
     schema_path = Path.join(
@@ -141,13 +147,16 @@ defmodule Mix.Tasks.Potionx.New do
   def generate(base_path, generator, path, opts) do
     base_path
     |> Project.new(opts)
+    |> Map.replace(:email, !!Keyword.get(opts, :default_email, nil))
+    |> Map.replace(:local_db_password, !!Keyword.get(opts, :db_password, nil))
+    |> Map.replace(:local_db_user, !!Keyword.get(opts, :db_user, nil))
     |> Map.replace(:no_install_deps, !!Keyword.get(opts, :no_install_deps, false))
     |> Map.replace(:no_frontend, !!Keyword.get(opts, :no_frontend, false))
     |> Map.replace(:no_migrations, !!Keyword.get(opts, :no_migrations, false))
     |> Map.replace(:no_users, !!Keyword.get(opts, :no_users, false))
     |> Map.replace(:ui_package, Keyword.get(opts, :ui_package, "@potionapps/ui"))
-    |> ask_for_local_postgres_user
-    |> ask_for_local_postgres_password
+    |> ask_for_local_db_user
+    |> ask_for_local_db_password
     |> ask_for_email
     |> generator.prepare_project()
     |> validate_project(path)

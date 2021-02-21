@@ -20,7 +20,6 @@ defmodule Potionx.New.Single do
     {:eex,  "potionx/app_name_web/router.ex",           :project, "lib/:lib_web_name/router.ex"},
     {:eex,  "phx_web/telemetry.ex",                     :project, "lib/:lib_web_name/telemetry.ex"},
     {:eex,  "phx_single/lib/app_name_web.ex",           :project, "lib/:lib_web_name.ex"},
-    {:eex,  "phx_single/README.md",                     :project, "README.md"},
     {:eex,  "phx_single/formatter.exs",                 :project, ".formatter.exs"},
     {:eex,  "phx_single/gitignore",                     :project, ".gitignore"},
     {:eex,  "phx_test/support/channel_case.ex",         :project, "test/support/channel_case.ex"},
