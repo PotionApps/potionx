@@ -14,7 +14,7 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>MutationTest do
       {:ok, ctx: ctx, entry: entry}
     end
     test "deletes <%= model_name_snakecase %>", %{ctx: ctx, entry: entry} do
-      File.read!("shared/src/models/<%= context_name %>/<%= model_name %>/<%= model_name %>Delete.gql")
+      File.read!("shared/src/models/<%= context_name %>/<%= model_name %>/<%= model_name_graphql_case %>Delete.gql")
       |> Absinthe.run(
         <%= module_name_graphql %>.Schema,
         context: ctx,
