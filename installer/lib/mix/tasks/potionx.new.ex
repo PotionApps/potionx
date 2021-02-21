@@ -148,8 +148,8 @@ defmodule Mix.Tasks.Potionx.New do
     base_path
     |> Project.new(opts)
     |> Map.replace(:email, !!Keyword.get(opts, :default_email, nil))
-    |> Map.replace(:local_db_password, !!Keyword.get(opts, :db_password, nil))
-    |> Map.replace(:local_db_user, !!Keyword.get(opts, :db_user, nil))
+    |> Map.replace(:local_db_password, Keyword.get(opts, :db_password, nil))
+    |> Map.replace(:local_db_user, Keyword.get(opts, :db_user, nil))
     |> Map.replace(:no_install_deps, !!Keyword.get(opts, :no_install_deps, false))
     |> Map.replace(:no_frontend, !!Keyword.get(opts, :no_frontend, false))
     |> Map.replace(:no_migrations, !!Keyword.get(opts, :no_migrations, false))
@@ -191,6 +191,21 @@ defmodule Mix.Tasks.Potionx.New do
       true,
       System.find_executable("npm")
     )
+
+    maybe_cmd(
+      project,
+      "cd #{relative_app_path(project.project_path)} && ls node_modules/@potionapps/ui/src/templates",
+      true,
+      System.find_executable("npm")
+    )
+
+    maybe_cmd(
+      project,
+      "cd #{relative_app_path(project.project_path)} && cat package.json",
+      true,
+      System.find_executable("npm")
+    )
+
     File.cp_r!(Path.join(ui_path, "src/templates/shared"), Path.join(project.project_path, "/shared"))
 
     maybe_cmd(
@@ -211,7 +226,8 @@ defmodule Mix.Tasks.Potionx.New do
   end
 
   def generate_users_graphql_and_frontend(%{no_users: true} = project, _path), do: project
-  def generate_users_graphql_and_frontend(project, path) do
+  def generate_users_graphql_and_frontend(project, path_key) do
+    path = Map.fetch!(project, path_key)
     maybe_cd(path, fn ->
       cmd(project, "mix potionx.gen.gql_for_model UserIdentities UserIdentity --no-associations --no-queries --no-mutations --no-frontend")
     end)

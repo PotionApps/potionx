@@ -59,8 +59,8 @@ integration-test:
         RUN docker-compose up -d & \
             MIX_ENV=test mix deps.compile && \
             while ! pg_isready --host=localhost --port=5432 --quiet; do sleep 1; done; \
-            mix potionx.new ./alpha beta --default-email=test@potionapps.com --db-password=postgres --db-user=postgres
-            # mix test
+            mix potionx.new ./alpha beta --default-email=test@potionapps.com --db-password=postgres --db-user=postgres && \
+            cd alpha && mix test
     END
 
 setup-base:

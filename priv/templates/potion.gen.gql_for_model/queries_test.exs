@@ -13,7 +13,7 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>QueryTest do
       {:ok, ctx: ctx, entry: entry}
     end
     test "returns collection of <%= model_name_snakecase %>", %{ctx: ctx} do
-      File.read!("frontend/shared/src/models/<%= context_name %>/<%= model_name_graphql_case %>/<%= model_name_graphql_case %>Collection.gql")
+      File.read!("shared/src/models/<%= context_name %>/<%= model_name %>/<%= model_name_graphql_case %>Collection.gql")
       |> Absinthe.run(
         <%= module_name_graphql %>.Schema,
         context: ctx,
@@ -27,7 +27,7 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>QueryTest do
       end).()
     end
     test "returns single <%= model_name_snakecase %>", %{ctx: ctx, entry: entry} do
-      File.read!("frontend/shared/src/models/<%= context_name %>/<%= model_name_graphql_case %>/<%= model_name_graphql_case %>Single.gql")
+      File.read!("shared/src/models/<%= context_name %>/<%= model_name %>/<%= model_name_graphql_case %>Single.gql")
       |> Absinthe.run(
         <%= module_name_graphql %>.Schema,
         context: ctx,
