@@ -6,13 +6,14 @@
     "build": "vuedx-typecheck . && vite build"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fontsource/inter": "^4.1.0",
-    "@fortawesome/vue-fontawesome": "^3.0.0-3",
+    "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-brands-svg-icons": "^5.15.2",
     "@fortawesome/free-regular-svg-icons": "^5.15.2",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
+    "@fortawesome/vue-fontawesome": "^3.0.0-3",
     "@potionapps/forms": "0.0.4",
+    "@potionapps/ui": "0.0.13",
     "@potionapps/utils": "0.0.1",
     "@tailwindcss/forms": "^0.2.1",
     "@urql/core": "^1.16.2",
@@ -21,9 +22,8 @@
     "@urql/vue": "^0.2.1",
     "graphql": "^15.4.0",
     "lodash-es": "^4.17.20",
-    "vue-router": "^4.0.3",
     "vue": "^3.0.5",
-    "@potionapps/ui": "0.0.13"
+    "vue-router": "^4.0.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.0.4",

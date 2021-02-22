@@ -1,10 +1,11 @@
 import { computed, defineComponent } from 'vue'
 import { useAdminNavPrimary } from "./useAdminNavPrimary";
 import { useAdminNavSecondary } from "./useAdminNavSecondary";
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { routeNames } from './routes/routeNames'
 import AdminSidebar from 'root/components/AdminSidebar/AdminSidebar'
 import SidebarNavItem from 'root/components/SidebarNavItem/SidebarNavItem'
+import RouteMenu from './routes/RouteMenu/RouteMenu';
 
 export default defineComponent({
   name: 'App',
@@ -13,9 +14,15 @@ export default defineComponent({
   setup () {
     const adminNavPrimary = useAdminNavPrimary()
     const adminNavSecondary = useAdminNavSecondary()
+    const route = useRoute()
+    const router = useRouter()
 
     const showSidebar = computed(() => {
-      return useRoute().name != routeNames.login && routeNames.loginError
+      return route.name != routeNames.login && routeNames.loginError
+    })
+
+    const showMenu = computed(() => {
+      return route.query.menu === "1"
     })
 
     return () => <div class="flex min-h-screen max-w-screen overflow-x-hidden">
@@ -43,7 +50,14 @@ export default defineComponent({
           </div>
         </AdminSidebar>
       }
-      <router-view class="flex-1" />
+      {
+        showMenu.value &&
+        <RouteMenu class="flex-1" />
+      }
+      {
+        !showMenu.value &&
+        <router-view class="flex-1" />
+      }
     </div>
   }
 })
