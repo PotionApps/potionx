@@ -26,7 +26,6 @@ import AdminHeaderBtnWrap from 'root/components/AdminHeaderBtnWrap/AdminHeaderBt
 export default defineComponent({
   setup () {
     const deleteEntry = () => {
-
     }
 
     const route = useRoute()
