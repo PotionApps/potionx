@@ -40,7 +40,7 @@ export default defineComponent({
                   <FontAwesomeIcon icon={faUser} />
                 </div>
               }
-              <p class="text-gray-100 text-sm">{props.name}</p>
+              <p class="font-semibold text-gray-300 text-sm">{props.name}</p>
             </div>
             <FontAwesomeIcon class={["duration-200 ease-in-out text-lg text-gray-400 transform", menuOpen.value && "-rotate-180"]} icon={faChevronCircleDown} />
           </div>

@@ -1,16 +1,16 @@
+import AdminAccount from 'root/components/AdminAccount/AdminAccount'
+import AdminShell from 'root/components/AdminShell/AdminShell'
+import AdminSidebar from 'root/components/AdminSidebar/AdminSidebar'
 import { computed, defineComponent } from 'vue'
+import { routeNames } from './routes/routeNames'
+import RouteMenu from './routes/RouteMenu/RouteMenu';
+import SidebarNavItem from 'root/components/SidebarNavItem/SidebarNavItem'
 import { useAdminNavPrimary } from "./useAdminNavPrimary";
 import { useAdminNavSecondary } from "./useAdminNavSecondary";
 import { useRoute, useRouter } from 'vue-router'
-import { routeNames } from './routes/routeNames'
-import AdminSidebar from 'root/components/AdminSidebar/AdminSidebar'
-import SidebarNavItem from 'root/components/SidebarNavItem/SidebarNavItem'
-import RouteMenu from './routes/RouteMenu/RouteMenu';
 
 export default defineComponent({
   name: 'App',
-  components: {
-  },
   setup () {
     const adminNavPrimary = useAdminNavPrimary()
     const adminNavSecondary = useAdminNavSecondary()
@@ -25,29 +25,24 @@ export default defineComponent({
       return route.query.menu === "1"
     })
 
-    return () => <div class="flex min-h-screen max-w-screen overflow-x-hidden">
+    return () => <AdminShell>
       {
         showSidebar.value && 
         <AdminSidebar>
-          <div class="flex items-center mb-6">
-            <p class="text-2xl text-gray-100">Admin</p>
-          </div>
-          <div class="flex flex-1 flex-col justify-between">
+          <div class="flex-1">
+            <p class="my-4 mx-2 text-2xl text-gray-100">Admin</p>
             <nav>
               {
                 adminNavPrimary.value.map(nav => {
-                  return <SidebarNavItem class="mb-2" {...nav} />
-                })
-              }
-            </nav>
-            <nav>
-              {
-                adminNavSecondary.value.map(nav => {
-                  return <SidebarNavItem class="mb-2" {...nav} />
+                  return <SidebarNavItem {...nav} />
                 })
               }
             </nav>
           </div>
+          <AdminAccount
+            name="User Name"
+            nav={adminNavSecondary}
+          />
         </AdminSidebar>
       }
       {
@@ -58,6 +53,6 @@ export default defineComponent({
         !showMenu.value &&
         <router-view class="flex-1" />
       }
-    </div>
+    </AdminShell>
   }
 })
