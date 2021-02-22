@@ -950,7 +950,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
           :name,
           Absinthe.Adapter.LanguageConventions.to_external_name(
             to_string(
-              name
+              validation.name
             ),
             nil
           )
