@@ -227,7 +227,7 @@ defmodule Potionx.New.Generator do
       adapter_config: adapter_config,
       generators: nil_if_empty(project.generators ++ adapter_generators(adapter_config)),
       namespaced?: namespaced?(project),
-      potionx_version: project.potionx_version
+      potionx_dep: project.potionx_dep
     ]
 
     %Project{project | binding: binding}

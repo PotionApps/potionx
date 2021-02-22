@@ -43,7 +43,7 @@ defmodule <%= @app_module %>.MixProject do
       {:mint, "~> 1.0"},
       {:phoenix, "~> 1.5.7"},
       {:phoenix_ecto, "~> 4.1"},
-      {:potionx, "~> <%= @potionx_version %>"},
+      {:potionx, <%= @potionx_dep %>},
       {:pow, "~> 1.0.21"},
       {:pow_assent, "~> 0.4.10"},
       {:redix, "~> 1.0.0"},

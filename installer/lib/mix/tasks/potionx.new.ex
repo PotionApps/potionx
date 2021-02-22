@@ -55,7 +55,7 @@ defmodule Mix.Tasks.Potionx.New do
              gettext: :boolean, umbrella: :boolean, verbose: :boolean,
              live: :boolean, dashboard: :boolean, install: :boolean,
              no_frontend: :boolean, no_migrations: :boolean,
-             no_install_deps: :boolean, no_users: :boolean, ui_package: :string
+             no_install_deps: :boolean, no_users: :boolean, potionx_dep: :string, ui_package: :string
             ]
 
   def ask_for_email(%Project{email: nil} = project) do
@@ -150,6 +150,7 @@ defmodule Mix.Tasks.Potionx.New do
     |> Map.replace(:email, !!Keyword.get(opts, :default_email, nil))
     |> Map.replace(:local_db_password, Keyword.get(opts, :db_password, nil))
     |> Map.replace(:local_db_user, Keyword.get(opts, :db_user, nil))
+    |> Map.replace(:potionx_dep, Keyword.get(opts, :potionx_dep, nil))
     |> Map.replace(:no_install_deps, !!Keyword.get(opts, :no_install_deps, false))
     |> Map.replace(:no_frontend, !!Keyword.get(opts, :no_frontend, false))
     |> Map.replace(:no_migrations, !!Keyword.get(opts, :no_migrations, false))
@@ -158,6 +159,7 @@ defmodule Mix.Tasks.Potionx.New do
     |> ask_for_local_db_user
     |> ask_for_local_db_password
     |> ask_for_email
+    |> set_potionx_dep
     |> generator.prepare_project()
     |> validate_project(path)
     |> Generator.put_binding()
@@ -296,6 +298,11 @@ defmodule Mix.Tasks.Potionx.New do
 
     project
   end
+
+  def set_potionx_dep(%Project{potionx_dep: nil} = project) do
+    %{project | potionx_dep: "\"~> " <> project.potionx_version <> "\""}
+  end
+  def set_potionx_dep(project), do: project
 
   defp switch_to_string({name, nil}), do: name
   defp switch_to_string({name, val}), do: name <> "=" <> val
