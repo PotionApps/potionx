@@ -13,7 +13,7 @@ export default defineComponent({
     return () => {
       return (
         <div class="flex items-center justify-center sticky bottom-0">
-          <div class={["cursor-pointer", "mx-1", "opacity-40", "px-1", "pointer-events-none", "transition-opacity", "hover:opacity-100"]}>
+          <div class="cursor-pointer mx-1 opacity-40 focus:opacity-100 hover:opacity-100 px-1 pointer-events-none transition-opacity">
             <FontAwesomeIcon class="h-4" icon={faAngleDoubleLeft} />
           </div>
           <BtnPrimary
@@ -31,7 +31,7 @@ export default defineComponent({
             label="Next"
             reverse={true}
           />
-          <div class={["cursor-pointer", "opacity-80", "px-1", "transition-opacity", "hover:opacity-100"]}>
+          <div class="cursor-pointer opacity-80 focus:opacity-100 hover:opacity-100 px-1 transition-opacity">
             <FontAwesomeIcon class="h-4" icon={faAngleDoubleRight} />
           </div>
         </div>

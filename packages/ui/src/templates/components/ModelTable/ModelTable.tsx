@@ -98,7 +98,7 @@ export default defineComponent({
           {
             props.rows?.map(row => {
               return <tr
-                class="cursor-pointer relative transition hover:shadow-negative-xl hover:z-2"
+                class="cursor-pointer relative focus:shadow-negative-xl hover:shadow-negative-xl transition hover:z-2"
                 onClick={() => props.checkboxClick?.(row)}
               >
                 {

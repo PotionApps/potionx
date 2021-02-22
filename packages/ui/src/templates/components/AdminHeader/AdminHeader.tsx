@@ -35,7 +35,7 @@ export default defineComponent({
                   props.tabs.value.map(tab => {
                     return <div>
                       <router-link 
-                        class="flex items-center text-center mr-3 s1050:h-full s1050:mr-4 outline-none px-1 pb-1 text-gray-600 hover:text-gray-900 border-b-3 border-transparent transition"
+                        class="flex items-center text-center mr-3 s1050:h-full s1050:mr-4 outline-none px-1 pb-1 text-gray-600 focus:text-gray-900 hover:text-gray-900 border-b-3 border-transparent transition"
                         exactActiveClass="text-gray-900 font-semibold border-blue-500"
                         to={tab.to}
                       >

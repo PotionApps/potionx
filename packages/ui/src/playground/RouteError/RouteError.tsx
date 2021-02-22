@@ -1,6 +1,6 @@
 import AdminMain from "../../templates/components/AdminMain/AdminMain";
 import AdminFooter from "../../templates/components/AdminFooter/AdminFooter";
-import Btn from "../../templates/components/Btn/Btn";
+import BtnMobileMenu from "../../templates/components/Btn/BtnMobileMenu";
 import BtnPrimary from "../../templates/components/Btn/BtnPrimary";
 import { defineComponent, computed } from "vue";
 import { faArrowLeft, faHome } from "@fortawesome/free-solid-svg-icons";
@@ -44,8 +44,7 @@ export default defineComponent({
       <AdminFooter>
         {
           mobileBtns.value.map(btn => {
-            return <Btn
-              class="bg-gray-700 hover:bg-gray-600 mr-2 font-semibold text-gray-300 w-full"
+            return <BtnMobileMenu
               {...btn}
             />
           })

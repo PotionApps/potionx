@@ -30,7 +30,7 @@ export default defineComponent({
       return (
         <div class="bottom-0 sticky">
           <div
-            class="bg-gray-800 cursor-pointer flex items-center justify-between px-2 py-3 transition w-full hover:bg-gray-700"
+            class="bg-gray-800 focus:bg-gray-700 hover:bg-gray-700 cursor-pointer flex items-center justify-between px-2 py-3 transition w-full"
             onClick={toggleMenu}
           >
             <div class="flex items-center">
