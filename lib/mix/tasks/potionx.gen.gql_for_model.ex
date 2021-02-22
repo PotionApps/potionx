@@ -547,18 +547,6 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
     [
       {
         :no_queries,
-        "priv/templates/#{@task_name}/collection.gql.ts",
-        [
-          "shared",
-          "src",
-          "models",
-          state.context_name,
-          state.model_name,
-          "#{state.model_name_graphql_case}Collection.gql.ts"
-        ]
-      },
-      {
-        :no_queries,
         "priv/templates/#{@task_name}/collection.gql",
         [
           "shared",
@@ -567,18 +555,6 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
           state.context_name,
           state.model_name,
           "#{state.model_name_graphql_case}Collection.gql"
-        ]
-      },
-      {
-        :no_mutations,
-        "priv/templates/#{@task_name}/delete.gql.ts",
-        [
-          "shared",
-          "src",
-          "models",
-          state.context_name,
-          state.model_name,
-          "#{state.model_name_graphql_case}Delete.gql.ts"
         ]
       },
       {
@@ -595,18 +571,6 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
       },
       {
         :no_mutations,
-        "priv/templates/#{@task_name}/mutation.gql.ts",
-        [
-          "shared",
-          "src",
-          "models",
-          state.context_name,
-          state.model_name,
-          "#{state.model_name_graphql_case}Mutation.gql.ts"
-        ]
-      },
-      {
-        :no_mutations,
         "priv/templates/#{@task_name}/mutation.gql",
         [
           "shared",
@@ -615,18 +579,6 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
           state.context_name,
           state.model_name,
           "#{state.model_name_graphql_case}Mutation.gql"
-        ]
-      },
-      {
-        :no_queries,
-        "priv/templates/#{@task_name}/single.gql.ts",
-        [
-          "shared",
-          "src",
-          "models",
-          state.context_name,
-          state.model_name,
-          "#{state.model_name_graphql_case}Single.gql.ts"
         ]
       },
       {

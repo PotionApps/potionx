@@ -67,7 +67,7 @@ const addToNav = (context) => {
     if (!nav.includes(`${context.modelGraphqlCase}List`)) {
       acc += [
           ``,
-          `nav.push(`,
+          `nav.value.push(`,
           `  {`,
           `    label: "${context.model}s",`,
           `    to: {`,

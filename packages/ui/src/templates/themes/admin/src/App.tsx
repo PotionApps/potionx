@@ -1,13 +1,13 @@
+import { computed, defineComponent } from 'vue'
+import { routeNames } from './routes/routeNames'
+import { useRoute } from 'vue-router'
 import AdminAccount from 'root/components/AdminAccount/AdminAccount'
 import AdminShell from 'root/components/AdminShell/AdminShell'
 import AdminSidebar from 'root/components/AdminSidebar/AdminSidebar'
-import { computed, defineComponent } from 'vue'
-import { routeNames } from './routes/routeNames'
 import RouteMenu from './routes/RouteMenu/RouteMenu';
 import SidebarNavItem from 'root/components/SidebarNavItem/SidebarNavItem'
-import { useAdminNavPrimary } from "./useAdminNavPrimary";
-import { useAdminNavSecondary } from "./useAdminNavSecondary";
-import { useRoute, useRouter } from 'vue-router'
+import useAdminNavPrimary from "./useAdminNavPrimary";
+import useAdminNavSecondary from "./useAdminNavSecondary";
 
 export default defineComponent({
   name: 'App',

@@ -1,8 +1,8 @@
-import { computed } from 'vue'
+import { ref, Ref } from 'vue'
 import { SidebarNavItemProps } from 'root/components/SidebarNavItem/SidebarNavItem'
 
-const nav : SidebarNavItemProps[] = []
+const nav : Ref<SidebarNavItemProps[]> = ref([])
 
-export const useAdminNavPrimary = () => {
-  return computed(() => nav)
+export default () => {
+  return nav
 }

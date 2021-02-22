@@ -11,7 +11,7 @@ import AdminShell from 'root/components/AdminShell/AdminShell'
 import AdminTitle from 'root/components/AdminTitle/AdminTitle'
 import Btn from 'root/components/Btn/Btn'
 import BtnMobileMenu from 'root/components/Btn/BtnMobileMenu'
-import collection from 'shared/models/TEMP_context/TEMP_model/TEMP_model_graphql_caseCollection.gql.ts'
+import collection from 'shared/models/TEMP_context/TEMP_model/TEMP_model_graphql_caseCollection.gql'
 import ModelTable, { ModelTableProps } from 'root/components/ModelTable/ModelTable'
 import schema from 'shared/models/TEMP_context/TEMP_model/TEMP_model_graphql_case.json'
 import StateEmpty from 'root/components/StateEmpty/StateEmpty'
@@ -48,7 +48,7 @@ export default defineComponent({
       }
     }
 
-    const { data, fetching } = useQuery<RootQueryType>({
+    const { data, fetching, error } = useQuery<RootQueryType>({
       query: collection,
       variables: {
         first: 50
@@ -72,7 +72,7 @@ export default defineComponent({
       </AdminHeader>
       <AdminBody>
         {
-          data.value?.TEMP_model_graphql_caseCollection?.count! > 0 &&
+          (error.value || data.value?.TEMP_model_graphql_caseCollection?.count! > 0) &&
             <StateEmpty class="pb-2 pt-4" label="No Results" />
         }
         {

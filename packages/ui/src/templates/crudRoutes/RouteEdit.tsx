@@ -1,12 +1,13 @@
 import { computed, defineComponent } from 'vue'
 import { Field, useForm } from '@potionapps/forms'
+import { RootQueryType, RootMutationType } from "shared/types";
 import { routeNames } from 'root/routes/routeNames'
-import { useRoute, useRouter } from 'vue-router'
 import { useQuery, useMutation } from "@urql/vue";
-import { RootQueryType, RootMutationTypeUserMutationArgs, RootMutationType } from "shared/types";
+import { useRoute, useRouter } from 'vue-router'
 import AdminBody from 'root/components/AdminBody/AdminBody'
 import AdminFooter from 'root/components/AdminFooter/AdminFooter'
 import AdminHeader from 'root/components/AdminHeader/AdminHeader'
+import AdminHeaderBtnWrap from 'root/components/AdminHeaderBtnWrap/AdminHeaderBtnWrap';
 import AdminShell from 'root/components/AdminShell/AdminShell'
 import AdminTitle from 'root/components/AdminTitle/AdminTitle'
 import Btn from 'root/components/Btn/Btn'
@@ -18,10 +19,9 @@ import FieldInput from 'root/components/FieldInput/FieldInput';
 import FieldRadio from 'root/components/FieldRadio/FieldRadio';
 import FieldSelect from 'root/components/FieldSelect/FieldSelect';
 import FieldTextarea from 'root/components/FieldTextarea/FieldTextarea';
-import mutation from 'shared/models/TEMP_context/TEMP_model/TEMP_model_graphql_caseMutation.gql.ts'
+import mutation from 'shared/models/TEMP_context/TEMP_model/TEMP_model_graphql_caseMutation.gql'
 import schema from 'shared/models/TEMP_context/TEMP_model/TEMP_model_graphql_case.json'
-import single from 'shared/models/TEMP_context/TEMP_model/TEMP_model_graphql_caseSingle.gql.ts'
-import AdminHeaderBtnWrap from 'root/components/AdminHeaderBtnWrap/AdminHeaderBtnWrap';
+import single from 'shared/models/TEMP_context/TEMP_model/TEMP_model_graphql_caseSingle.gql'
 
 export default defineComponent({
   setup () {
@@ -56,7 +56,7 @@ export default defineComponent({
       data: model,
       fields: schema,
       onSubmit: (cs) => {
-        const params : RootMutationTypeUserMutationArgs = {
+        const params : RootMutationTypeTEMP_modelMutationArgs = {
           changes: {
             ...cs.changes
           }
@@ -66,9 +66,9 @@ export default defineComponent({
         }
         return executeMutation(params)
           .then(res => {
-            if (res.error || res.data?.userMutation?.errorsFields?.length) {
-              if (res.data?.userMutation?.errorsFields?.length) {
-                res.data?.userMutation?.errorsFields.forEach(err => {
+            if (res.error || res.data?.TEMP_modelMutation?.errorsFields?.length) {
+              if (res.data?.TEMP_modelMutation?.errorsFields?.length) {
+                res.data?.TEMP_modelMutation?.errorsFields.forEach(err => {
                   form.setServerError(err?.field, err?.message)
                 })
               }
@@ -100,13 +100,13 @@ export default defineComponent({
                 <Btn
                   class="s1050m:hidden"
                   click={deleteEntry}
-                  label="Delete User"
+                  label="Delete TEMP_model"
                 />
               </AdminHeaderBtnWrap>
               <AdminHeaderBtnWrap>
                 <BtnPrimary
                   class="s1050m:hidden"
-                  label="Add User"
+                  label="Add TEMP_model"
                   to={newEntryLink}
                 />
               </AdminHeaderBtnWrap>

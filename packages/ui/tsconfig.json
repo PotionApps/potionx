@@ -13,13 +13,14 @@
     "types": ["jest", "vite/client"],
     "paths": {
       "root/*": ["./src/templates/*"],
-      "shared/*": ["./src/playground/shared/*"]
+      "shared/*": ["./src/templates/shared/src/*"]
     },
     "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }],
     "resolveJsonModule": true
   },
   "include": [
     "src/**/*.ts",
+    "src/**/*.gql",
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",

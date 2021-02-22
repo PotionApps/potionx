@@ -54,3 +54,5 @@ app.use(
   }
 )
 app.mount('#app')
+
+export default router

@@ -1,13 +1,12 @@
-import { computed } from 'vue'
+import { Ref, ref } from 'vue'
 import signOut from 'shared/signOut'
+import { SidebarNavItemProps } from 'root/components/SidebarNavItem/SidebarNavItem'
 
-export const useAdminNavSecondary = () => {
-  return computed(() => {
-    return ([
-      {
-        click: signOut,
-        label: "Log Out"
-      }
-    ])
-  })
+const nav : Ref<SidebarNavItemProps[]> = ref([{
+  click: signOut,
+  label: "Log Out"
+}])
+
+export default () => {
+  return nav
 }

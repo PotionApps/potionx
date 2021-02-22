@@ -1,11 +1,11 @@
 import { defineComponent, computed } from "vue";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { useAdminNavPrimary } from "../../useAdminNavPrimary";
-import { useAdminNavSecondary } from "../../useAdminNavSecondary";
 import { useRouter } from "vue-router"
 import AdminFooter from "root/components/AdminFooter/AdminFooter";
 import BtnMobileMenu from "root/components/Btn/BtnMobileMenu";
 import SidebarNavItem from 'root/components/SidebarNavItem/SidebarNavItem';
+import useAdminNavPrimary from "../../useAdminNavPrimary";
+import useAdminNavSecondary from "../../useAdminNavSecondary";
 
 export default defineComponent({
   setup () {

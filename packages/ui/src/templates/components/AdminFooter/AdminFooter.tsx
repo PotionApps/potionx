@@ -23,7 +23,9 @@ export default defineComponent({
               icon={faBars}
               to={
                 {
-                  name: routeNames.menu
+                  query: {
+                    menu: "1"
+                  }
                 }
               }
             />
