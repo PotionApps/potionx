@@ -16,7 +16,7 @@ export const useAdminNavPrimary = () => {
       {
         icon: faInbox,
         label: "Inbox",
-        notification: 14,
+        notification: 1,
         to: {
           name: routeNames.home
         }

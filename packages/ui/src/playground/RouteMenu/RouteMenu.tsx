@@ -1,8 +1,7 @@
 import AdminFooter from "../../templates/components/AdminFooter/AdminFooter";
-import Btn from "../../templates/components/Btn/Btn";
+import BtnMobileMenu from "../../templates/components/Btn/BtnMobileMenu";
 import { defineComponent, computed } from "vue";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { routeNames } from "../../playground/routeNames";
 import SidebarNavItem from '../../templates/components/SidebarNavItem/SidebarNavItem';
 import { useAdminNavPrimary } from "../../useAdminNavPrimary";
 import { useAdminNavSecondary } from "../../useAdminNavSecondary";
@@ -40,10 +39,7 @@ export default defineComponent({
       <AdminFooter hideMenu={true}>
         {
           mobileBtns.value.map(btn => {
-            return <Btn
-              class="bg-gray-700 hover:bg-gray-600 font-semibold text-gray-300 w-full"
-              {...btn}
-            />
+            return <BtnMobileMenu {...btn} />
           })
         }
       </AdminFooter>

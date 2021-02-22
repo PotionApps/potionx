@@ -94,7 +94,7 @@ export default defineComponent({
             })
           }
         </thead>
-        <tbody class="bg-white">
+        <tbody class="bg-white s750m:border-t-1 s750m:border-gray-300">
           {
             props.rows?.map(row => {
               return <tr
@@ -131,7 +131,7 @@ export default defineComponent({
                           rowData = val
                         }
                     }
-                    return <td class="s750:border-b-1 s750:border-gray-300 s750m:flex s750m:items-start px-4 py-1 s750m:last:pb-6 s750m:first:pt-6 s750:first:pl-8 s750:last:pr-8 s750:py-4">
+                    return <td class="s750m:last:border-b-1 s750m:last:border-gray-300  s750:border-b-1 s750:border-gray-300 s750m:flex s750m:items-start px-4 py-1 s750m:last:pb-6 s750m:first:pt-6 s750:first:pl-8 s750:last:pr-8 s750:py-4">
                       <span class="flex-fit font-semibold max-w-2/5 s450:max-w-150 text-gray-500 text-sm uppercase w-full s750:hidden">{field.label}</span>
                       <p class="text-gray-900 text-sm">{rowData}</p>
                     </td>
