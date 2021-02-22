@@ -26,6 +26,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
         :roles,
         Ecto.Enum.values(__MODULE__, :roles)
       )
+      |> validate_required([:name_first, :name_last])
     end
   end
 
@@ -92,7 +93,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
       end
 
       assert_file "shared/src/models/Users/User/user.json", fn file ->
-        assert file =~ """
+        assert String.replace(file, ~r(\n|\r|\s), "") =~ """
         [
           {
             "name": "deletedAt",
@@ -112,12 +113,12 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
           {
             "name": "nameFirst",
             "type": "string",
-            "validations": []
+            "validations": [{"name": "required"}]
           },
           {
             "name": "nameLast",
             "type": "string",
-            "validations": []
+            "validations": [{"name": "required"}]
           },
           {
             "name": "roles",
@@ -128,7 +129,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
             "type": "checkbox",
             "validations": [
               {
-                "name": "roles",
+                "name": "subset",
                 "params": {
                   "values": [
                     "admin",
@@ -139,7 +140,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
             ]
           }
         ]
-        """ |> String.trim()
+        """ |> String.replace(~r(\n|\r|\s), "")
       end
 
       assert_file "shared/src/models/Users/User/user.mock.json", fn file ->
