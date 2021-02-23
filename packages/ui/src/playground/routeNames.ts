@@ -5,5 +5,5 @@ export enum routeNames {
   home = "home",
   login = "login",
   loginError = "loginError",
-  menu= "menu"
+  test = "test"
 }

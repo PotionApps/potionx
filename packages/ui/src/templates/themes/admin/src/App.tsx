@@ -1,10 +1,10 @@
 import { computed, defineComponent } from 'vue'
 import { routeNames } from './routes/routeNames'
 import { useRoute } from 'vue-router'
-import AdminAccount from 'root/components/AdminAccount/AdminAccount'
+import AdminAccount from 'root/components/AccountToggle/AccountToggle'
 import AdminShell from 'root/components/AdminShell/AdminShell'
 import AdminSidebar from 'root/components/AdminSidebar/AdminSidebar'
-import RouteMenu from './routes/RouteMenu/RouteMenu';
+import Menu from 'root/components/Menu/Menu';
 import SidebarNavItem from 'root/components/SidebarNavItem/SidebarNavItem'
 import useAdminNavPrimary from "./useAdminNavPrimary";
 import useAdminNavSecondary from "./useAdminNavSecondary";
@@ -47,7 +47,20 @@ export default defineComponent({
       }
       {
         showMenu.value &&
-        <RouteMenu class="flex-1" />
+        <Menu>
+          <nav>
+            {
+              adminNavPrimary.value.map(nav => {
+                return <SidebarNavItem {...nav} />
+              })
+            }
+            {
+              adminNavSecondary.value.map(nav => {
+                return <SidebarNavItem {...nav} />
+              })
+            }
+          </nav>
+        </Menu>
       }
       {
         !showMenu.value &&

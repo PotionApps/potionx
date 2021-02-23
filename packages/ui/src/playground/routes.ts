@@ -3,7 +3,6 @@ import { routeNames } from './routeNames'
 import { RouteRecordRaw } from 'vue-router'
 import RouteHome from './RouteAdmin/RouteAdmin'
 import RouteLogin from './RouteLogin/RouteLogin'
-import RouteMenu from './RouteMenu/RouteMenu'
 import RouteLoginError from './RouteLoginError/RouteLoginError'
 import RouteComponent from './RouteComponent/RouteComponent'
 import RouteError from './RouteError/RouteError'
@@ -12,6 +11,11 @@ const routes : RouteRecordRaw[] = [
   {
     name: routeNames.home,
     path: '',
+    component: RouteHome
+  },
+  {
+    name: routeNames.test,
+    path: '/test',
     component: RouteHome
   },
   {
@@ -28,11 +32,6 @@ const routes : RouteRecordRaw[] = [
     name: routeNames.loginError,
     path: '/login/error',
     component: RouteLoginError
-  },
-  {
-    name: routeNames.menu,
-    path: '/menu',
-    component: RouteMenu
   },
   {
     path: "/components",

@@ -1,6 +1,6 @@
 import { defineComponent, ref } from "vue";
 import { FontAwesomeIcon } from '@potionapps/utils';
-import { faChevronCircleDown, faChevronDown, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faChevronCircleDown, faUser } from "@fortawesome/free-solid-svg-icons";
 import SidebarNavItem, { SidebarNavItemProps } from '../SidebarNavItem/SidebarNavItem';
 
 export interface AdminAccountProps {
@@ -10,7 +10,7 @@ export interface AdminAccountProps {
 }
 
 export default defineComponent({
-  name: "AdminAccount",
+  name: "AccountToggle",
   props: {
     image: String,
     name: String,

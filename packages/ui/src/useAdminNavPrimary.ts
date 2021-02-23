@@ -10,7 +10,7 @@ export const useAdminNavPrimary = () => {
         icon: faFile,
         label: "Content",
         to: {
-          name: routeNames.login
+          name: routeNames.test
         }
       },
       {
