@@ -1,26 +1,23 @@
-import { computed } from 'vue'
 import { routeNames } from "./playground/routeNames";
 import { faSignOutAlt, faUser } from "@fortawesome/free-solid-svg-icons";
-import { RouteLocationRaw } from "vue-router";
+import { Ref, ref } from 'vue'
+import { SidebarNavItemProps } from 'root/components/SidebarNavItem/SidebarNavItem'
 
-export const useAdminNavSecondary = () => {
-  const adminNavSecondary = computed<{label: string, to: RouteLocationRaw}[]>(() => {
-    return [
-      {
-        label: "Account",
-        icon: faUser,
-        to: {
-          name: routeNames.login
-        }
-      },
-      {
-        click: () => {},
-        icon: faSignOutAlt,
-        label: "Log Out"
-      }
-    ]
-  })
+const nav : Ref<SidebarNavItemProps[]> = ref([
+  {
+    label: "Account",
+    icon: faUser,
+    to: {
+      name: routeNames.login
+    }
+  },
+  {
+    click: () => {},
+    icon: faSignOutAlt,
+    label: "Log Out"
+  }
+])
 
-  return { adminNavSecondary }
+export default () => {
+  return nav
 }
-
