@@ -35,8 +35,7 @@ test('Generates a CRUD Route in the target directory', () => {
 
     const data = fs.readFileSync(`${dest}/routes/${f}/${f}.tsx`, {encoding: 'utf-8'})
 
-    expect(data.includes('TEMP')).toEqual(false)
-    expect(data.includes('_model')).toEqual(false)
+    expect(data.includes('__')).toEqual(false)
   })
 
   expect(

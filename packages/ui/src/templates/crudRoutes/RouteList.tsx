@@ -11,9 +11,9 @@ import AdminShell from 'root/components/AdminShell/AdminShell'
 import AdminTitle from 'root/components/AdminTitle/AdminTitle'
 import Btn from 'root/components/Btn/Btn'
 import BtnMobileMenu from 'root/components/Btn/BtnMobileMenu'
-import collection from 'shared/models/TEMP_context/TEMP_model/TEMP_model_graphql_caseCollection.gql'
+import collection from 'shared/models/__context__/__model__/__model_graphql_case__Collection.gql'
 import ModelTable, { ModelTableProps } from 'root/components/ModelTable/ModelTable'
-import schema from 'shared/models/TEMP_context/TEMP_model/TEMP_model_graphql_case.json'
+import schema from 'shared/models/__context__/__model__/__model_graphql_case__.json'
 import StateEmpty from 'root/components/StateEmpty/StateEmpty'
 import StateLoading from 'root/components/StateLoading/StateLoading'
 
@@ -30,19 +30,19 @@ export default defineComponent({
       return {
         checkboxClick: (row) => {
           router.push({
-            name: routeNames.TEMP_model_graphql_caseEdit,
+            name: routeNames.__model_graphql_case__Edit,
             params: {
               id: row.id!
             }
           })
         },
         headingLabels,
-        rows: data.value?.TEMP_model_graphql_caseCollection?.edges?.map((edge) => edge!.node!).filter(n => n)
+        rows: data.value?.__model_graphql_case__Collection?.edges?.map((edge) => edge!.node!).filter(n => n)
       }
     })
 
     const newEntryLink = {
-      name: routeNames.TEMP_model_graphql_caseEdit,
+      name: routeNames.__model_graphql_case__Edit,
       params: {
         id: 'new'
       }
@@ -55,24 +55,25 @@ export default defineComponent({
       }
     })
 
-    return () => <AdminShell>
+    return () => {
+    return <AdminShell>
       <AdminHeader
         v-slots={{
           btns: () => 
           <AdminHeaderBtnWrap>
             <Btn
-              label="New TEMP_model"
+              label="New __model"
               reverse={true}
               to={newEntryLink}
             />
           </AdminHeaderBtnWrap>
         }}
       >
-        <AdminTitle>TEMP_model Management</AdminTitle>
+        <AdminTitle>__model Management</AdminTitle>
       </AdminHeader>
       <AdminBody>
         {
-          (error.value || data.value?.TEMP_model_graphql_caseCollection?.count! > 0) &&
+          (error.value || data.value?.__model_graphql_case__Collection?.count! > 0) &&
             <StateEmpty class="pb-2 pt-4" label="No Results" />
         }
         {
@@ -80,16 +81,16 @@ export default defineComponent({
             <StateLoading class="pb-2 pt-4"/>
         }
         {
-          !!data.value?.userCollection?.edges?.length &&
+          !!data.value?.__model_graphql_case__Collection?.edges?.length &&
           <ModelTable {...modelTableProps.value} />
         }
       </AdminBody>
       <AdminFooter>
         <BtnMobileMenu
-          label="New TEMP_model_name"
+          label="New __model_name"
           to={newEntryLink}
         />
       </AdminFooter>
     </AdminShell>
-  }
+  }}
 })

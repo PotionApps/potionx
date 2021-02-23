@@ -82,66 +82,68 @@ export default defineComponent({
         return acc
       }, [])
     })
-    return () => <div class="s750:overflow-x-auto">
-      <table class="table-auto w-full">
-        <thead class="bg-gray-100">
-          {
-            fieldsOrdered.value!.map(({ key, label }) => {
-              if (key === "image") return <th class="border-gray-300 border-b-1 border-t-1"></th>
-              return <th class="border-gray-300 border-b-1 border-t-1 font-normal px-3 py-3 s750:first:pl-8 s750:last:pr-8 text-gray-400 text-left text-sm uppercase s750m:hidden">
-                {label}
-              </th>
-            })
-          }
-        </thead>
-        <tbody class="bg-white s750m:border-t-1 s750m:border-gray-300">
-          {
-            props.rows?.map(row => {
-              return <tr
-                class="cursor-pointer relative focus:shadow-negative-xl hover:shadow-negative-xl transition hover:z-2"
-                onClick={() => props.checkboxClick?.(row)}
-              >
-                {
-                  fieldsOrdered.value!.map((field) => {
-                    const key = field.key as keyof ModelRow
-                    let rowData : any
-                    switch (key) {
-                      case "icon":
-                        if (row[key]) {
-                          rowData = <img class="w-6 min-w-6" src={row[key]!} /> 
-                        }
-                        break;
-                      case "image":
-                        if (row[key]) {
-                          rowData = <img class="object-cover h-8 min-w-8 rounded-full w-6" src={row[key]!} /> 
-                        }
-                        break;
-                      case "title": 
-                        rowData = <p class="w-36">{row[key]}</p>
-                        break;
-                      case "insertedAt":
-                      case "updatedAt":
-                        rowData = row[key] && new Date(row[key]!).toLocaleString() 
-                        break;
-                      default:
-                        const val = row[key]
-                        if (Array.isArray(val)) {
-                          rowData = val.join(", ")
-                        } else {
-                          rowData = val
-                        }
-                    }
-                    return <td class="s750m:last:border-b-1 s750m:last:border-gray-300  s750:border-b-1 s750:border-gray-300 s750m:flex s750m:items-start px-4 py-1 s750m:last:pb-6 s750m:first:pt-6 s750:first:pl-8 s750:last:pr-8 s750:py-4">
-                      <span class="flex-fit font-semibold max-w-2/5 s450:max-w-150 text-gray-500 text-sm uppercase w-full s750:hidden">{field.label}</span>
-                      <p class="text-gray-900 text-sm">{rowData}</p>
-                    </td>
-                  })
-                }
-              </tr>
-            })
-          }
-        </tbody>
-      </table>
-    </div>
+    return () => {
+      return <div class="s750:overflow-x-auto">
+        <table class="table-auto w-full">
+          <thead class="bg-gray-100">
+            {
+              fieldsOrdered.value!.map(({ key, label }) => {
+                if (key === "image") return <th class="border-gray-300 border-b-1 border-t-1"></th>
+                return <th class="border-gray-300 border-b-1 border-t-1 font-normal px-3 py-3 s750:first:pl-8 s750:last:pr-8 text-gray-400 text-left text-sm uppercase s750m:hidden">
+                  {label}
+                </th>
+              })
+            }
+          </thead>
+          <tbody class="bg-white s750m:border-t-1 s750m:border-gray-300">
+            {
+              props.rows?.map(row => {
+                return <tr
+                  class="cursor-pointer relative focus:shadow-negative-xl hover:shadow-negative-xl transition hover:z-2"
+                  onClick={() => props.checkboxClick?.(row)}
+                >
+                  {
+                    fieldsOrdered.value!.map((field) => {
+                      const key = field.key as keyof ModelRow
+                      let rowData : any
+                      switch (key) {
+                        case "icon":
+                          if (row[key]) {
+                            rowData = <img class="w-6 min-w-6" src={row[key]!} /> 
+                          }
+                          break;
+                        case "image":
+                          if (row[key]) {
+                            rowData = <img class="object-cover h-8 min-w-8 rounded-full w-6" src={row[key]!} /> 
+                          }
+                          break;
+                        case "title": 
+                          rowData = <p class="w-36">{row[key]}</p>
+                          break;
+                        case "insertedAt":
+                        case "updatedAt":
+                          rowData = row[key] && new Date(row[key]!).toLocaleString() 
+                          break;
+                        default:
+                          const val = row[key]
+                          if (Array.isArray(val)) {
+                            rowData = val.join(", ")
+                          } else {
+                            rowData = val
+                          }
+                      }
+                      return <td class="s750m:last:border-b-1 s750m:last:border-gray-300  s750:border-b-1 s750:border-gray-300 s750m:flex s750m:items-start px-4 py-1 s750m:last:pb-6 s750m:first:pt-6 s750:first:pl-8 s750:last:pr-8 s750:py-4">
+                        <span class="flex-fit font-semibold max-w-2/5 s450:max-w-150 text-gray-500 text-sm uppercase w-full s750:hidden">{field.label}</span>
+                        <p class="text-gray-900 text-sm">{rowData}</p>
+                      </td>
+                    })
+                  }
+                </tr>
+              })
+            }
+          </tbody>
+        </table>
+      </div>
+    }
   }
 })

@@ -5,6 +5,6 @@ export enum routeNames {
   login = "login",
   loginError = "loginError",
   menu = "menu",
-  TEMP_model_graphql_caseEdit = "TEMP_model_graphql_caseEdit",
-  TEMP_model_graphql_caseList = "TEMP_model_graphql_caseList"
+  __model_graphql_case__Edit = "__model_graphql_case__Edit",
+  __model_graphql_case__List = "__model_graphql_case__List"
 }

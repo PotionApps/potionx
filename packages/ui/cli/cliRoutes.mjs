@@ -144,9 +144,9 @@ const run = () => {
 
 const replaceTempVars = (text, ctx) => {
   return text
-    .replace(/TEMP_model_graphql_case/g, ctx.modelGraphqlCase)
-    .replace(/TEMP_model/g, ctx.model)
-    .replace(/TEMP_context/g, ctx.context)
+    .replace(/__model_graphql_case__/g, ctx.modelGraphqlCase)
+    .replace(/__model__/g, ctx.model)
+    .replace(/__context__/g, ctx.context)
 }
 
 const toPath = (routeName) => {

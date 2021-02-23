@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
-import jsx from '@vitejs/plugin-vue-jsx'
 // @ts-ignore
 import { resolve } from "path";
+import jsx from '@vitejs/plugin-vue-jsx'
 import WindiCSS from 'vite-plugin-windicss'
 
 export default defineConfig({
@@ -17,7 +17,7 @@ export default defineConfig({
     jsx(),
     ...WindiCSS({
       scan: {
-        dirs: ['../../components', './src'],
+        dirs: ['../../components', './src', "../../crudRoutes"],
         runOnStartup: true
       },
       safelist: 'prose prose-sm m-auto'

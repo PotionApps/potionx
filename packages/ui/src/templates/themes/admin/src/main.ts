@@ -20,6 +20,7 @@ const router = createRouter({
 })
 
 const app = createApp(App)
+const cache = cacheExchange()
 app.use(router)
 app.use(
   urql,
@@ -27,7 +28,7 @@ app.use(
     url: '/graphql/v1',
     exchanges: [
       dedupExchange,
-      cacheExchange(),
+      cache,
       authExchange({
         addAuthToOperation: ({authState, operation}) => operation,
         getAuth: async ({ authState, mutate }) => {
@@ -40,7 +41,7 @@ app.use(
               {
                 credentials: 'same-origin',
                 headers: {
-                  'Content-Type': 'application/json',
+                  'Content-Type': 'application/json'
                 },
                 method: "POST"
               }
@@ -54,5 +55,3 @@ app.use(
   }
 )
 app.mount('#app')
-
-export default router

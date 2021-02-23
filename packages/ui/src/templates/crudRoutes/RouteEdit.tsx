@@ -19,9 +19,9 @@ import FieldInput from 'root/components/FieldInput/FieldInput';
 import FieldRadio from 'root/components/FieldRadio/FieldRadio';
 import FieldSelect from 'root/components/FieldSelect/FieldSelect';
 import FieldTextarea from 'root/components/FieldTextarea/FieldTextarea';
-import mutation from 'shared/models/TEMP_context/TEMP_model/TEMP_model_graphql_caseMutation.gql'
-import schema from 'shared/models/TEMP_context/TEMP_model/TEMP_model_graphql_case.json'
-import single from 'shared/models/TEMP_context/TEMP_model/TEMP_model_graphql_caseSingle.gql'
+import mutation from 'shared/models/__context__/__model__/__model_graphql_case__Mutation.gql'
+import schema from 'shared/models/__context__/__model__/__model_graphql_case__.json'
+import single from 'shared/models/__context__/__model__/__model_graphql_case__Single.gql'
 
 export default defineComponent({
   setup () {
@@ -41,11 +41,11 @@ export default defineComponent({
     })
 
     const model = computed(() => {
-      return data.value?.userSingle
+      return data.value?.__model_graphql_case__Single
     })
 
     const newEntryLink = {
-      name: routeNames.TEMP_model_graphql_caseEdit,
+      name: routeNames.__model_graphql_case__Edit,
       params: {
         id: 'new'
       }
@@ -56,7 +56,7 @@ export default defineComponent({
       data: model,
       fields: schema,
       onSubmit: (cs) => {
-        const params : RootMutationTypeTEMP_modelMutationArgs = {
+        const params : RootMutationType__model__MutationArgs = {
           changes: {
             ...cs.changes
           }
@@ -66,9 +66,9 @@ export default defineComponent({
         }
         return executeMutation(params)
           .then(res => {
-            if (res.error || res.data?.TEMP_modelMutation?.errorsFields?.length) {
-              if (res.data?.TEMP_modelMutation?.errorsFields?.length) {
-                res.data?.TEMP_modelMutation?.errorsFields.forEach(err => {
+            if (res.error || res.data?.__model_graphql_case__Mutation?.errorsFields?.length) {
+              if (res.data?.__model_graphql_case__Mutation?.errorsFields?.length) {
+                res.data?.__model_graphql_case__Mutation?.errorsFields.forEach(err => {
                   form.setServerError(err?.field, err?.message)
                 })
               }
@@ -87,8 +87,8 @@ export default defineComponent({
     })
 
     const title = computed(() => {
-      if (route.params.id === "new") return "New TEMP_model"
-      return model.value?.title || "TEMP_model"
+      if (route.params.id === "new") return "New __model__"
+      return model.value?.title || "__model__"
     })
 
     return () => {
@@ -100,13 +100,13 @@ export default defineComponent({
                 <Btn
                   class="s1050m:hidden"
                   click={deleteEntry}
-                  label="Delete TEMP_model"
+                  label="Delete __model__"
                 />
               </AdminHeaderBtnWrap>
               <AdminHeaderBtnWrap>
                 <BtnPrimary
                   class="s1050m:hidden"
-                  label="Add TEMP_model"
+                  label="Add __model__"
                   to={newEntryLink}
                 />
               </AdminHeaderBtnWrap>
@@ -170,7 +170,7 @@ export default defineComponent({
         </AdminBody>
         <AdminFooter>
           <BtnMobileMenu
-            label="New TEMP_model"
+            label="New __model__"
             to={newEntryLink}
           />
         </AdminFooter>

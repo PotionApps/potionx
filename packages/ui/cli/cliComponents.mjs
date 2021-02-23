@@ -73,7 +73,9 @@ const run = () => {
           src.includes('.stories.') ||
           src.includes(path.sep + 'config.json') ||
           src.includes('index.html') ||
-          src.includes('node_modules')
+          src.includes('node_modules') ||
+          src.includes('.dev.') ||
+          src.includes('__')
         ) return false
         return true
       }

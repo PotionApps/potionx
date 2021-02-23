@@ -71,7 +71,6 @@ export type RootQueryType = {
   me?: Maybe<User>;
   userCollection?: Maybe<UserConnection>;
   userSingle?: Maybe<User>;
-  TEMP_model_graphql_caseCollection?: Maybe<UserConnection>;
 };
 
 
