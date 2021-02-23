@@ -31,8 +31,12 @@ export default defineConfig({
   },
   plugins: [
     jsx(),
-    ...WindiCSS({
-      safelist: 'prose prose-sm m-auto'
+    WindiCSS({
+      safelist: 'prose prose-sm m-auto',
+      scan: {
+        dirs: ['./src/playground', './src/templates/components'],
+        runOnStartup: true
+      },
     })
   ]
 })

@@ -49,6 +49,7 @@ defmodule <%= module_name_data %>.<%= context_name %>.<%= model_name %>Service d
         |> Map.to_list
       )
     )
+    |> order_by([desc: :id])
   end
   def query(q, _args), do: q
 end

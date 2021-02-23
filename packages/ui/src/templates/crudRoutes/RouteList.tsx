@@ -51,9 +51,12 @@ export default defineComponent({
     const { data, fetching, error } = useQuery<RootQueryType>({
       query: collection,
       variables: {
-        first: 50
+        first: 100
       }
     })
+
+    // load modelTable
+    // foreach cursor + initial, load useQuery and rows
 
     return () => {
     return <AdminShell>
