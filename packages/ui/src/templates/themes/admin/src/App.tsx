@@ -27,7 +27,7 @@ export default defineComponent({
 
     return () => <AdminShell>
       {
-        showSidebar.value && 
+        showSidebar.value && !showMenu.value && 
         <AdminSidebar>
           <div class="flex-1">
             <p class="my-4 mx-2 text-2xl text-gray-100">Admin</p>
