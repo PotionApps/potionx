@@ -51,6 +51,7 @@ const mockQuery = () => {
     case "list":
       data = {
         __model_graphql_case__Collection: {
+          count: 5,
           edges: [
             {
               node: {
@@ -76,7 +77,11 @@ const mockQuery = () => {
                 "updatedAt": "2010-04-17T14:00:00"
               }
             }
-          ]
+          ],
+          pageInfo: {
+            endCursor: "2",
+            hasNext: true
+          }
         }
       }
       break;
