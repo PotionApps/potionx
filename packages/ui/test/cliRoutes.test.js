@@ -43,7 +43,7 @@ test('Generates a CRUD Route in the target directory', () => {
     .replace(/\s|\r|\n/g, '')
     .includes(
       `
-      nav.push(
+      nav.value.push(
         {
           label: "Users",
           to: {

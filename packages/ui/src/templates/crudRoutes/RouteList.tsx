@@ -66,7 +66,7 @@ export default defineComponent({
     } = usePagination({
       limit,
       pageInfo,
-      routeMode: true
+      routeMode: false // disabled until Potionx moves to :paginator
     })
 
     const { data, fetching, error } = useQuery<RootQueryType>({
@@ -83,7 +83,7 @@ export default defineComponent({
             btns: () => 
             <AdminHeaderBtnWrap>
               <Btn
-                label="New __model"
+                label="New __model__"
                 reverse={true}
                 to={newEntryLink}
               />
@@ -120,7 +120,7 @@ export default defineComponent({
         </AdminBody>
         <AdminFooter>
           <BtnMobileMenu
-            label="New __model_name"
+            label="New __model__"
             to={newEntryLink}
           />
         </AdminFooter>

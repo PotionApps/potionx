@@ -21,5 +21,8 @@
     "SidebarNavItem",
     "StateEmpty",
     "StateLoading"
+  ],
+  "hooks": [
+    "usePagination.ts"
   ]
 }

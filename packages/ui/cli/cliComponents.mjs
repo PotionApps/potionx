@@ -31,6 +31,7 @@ const fixConfigPaths = (context) => {
   const viteConfigPath = 
     path.join(context.destination, context.componentName, "vite.config.ts")
   const viteConfig = fs.readFileSync(viteConfigPath, {encoding: 'utf-8'})
+
   fs.writeFileSync(
     viteConfigPath,
     viteConfig
@@ -52,7 +53,7 @@ const fixConfigPaths = (context) => {
 const run = () => {
   const context = {
     componentName: argv._[1],
-    componentType: argv._[0],
+    componentType: argv._[0] + 's',
     destination: argv.destination,
     source: null
   }
@@ -84,20 +85,23 @@ const run = () => {
   )
   
   // copy required components
-  if (context.componentType === "theme") {
+  if (context.componentType === "themes") {
     fixConfigPaths(context);
-    (fs.readJSONSync(path.join(context.source, 'config.json')).components || [])
-      .forEach(comp => {
-        fs.copySync(
-          toPath({componentName: comp, componentType: 'component'}),
-          path.join(context.destination , context.componentName, 'src', 'components', comp)
-        )
+    const config = (fs.readJSONSync(path.join(context.source, 'config.json')) || {})
+    Object.keys(config)
+      .forEach(componentType => {
+        config[componentType].forEach(componentName => {
+          fs.copySync(
+            toPath({componentName, componentType}),
+            path.join(context.destination , context.componentName, 'src', componentType, componentName)
+          )
+        })
       })
   }
 }
 
 const toPath = ({componentName, componentType}) => {
-  return path.resolve(__dirname, '../src/templates', componentType + "s", componentName)
+  return path.resolve(__dirname, '../src/templates', componentType, componentName)
 }
 
 run()

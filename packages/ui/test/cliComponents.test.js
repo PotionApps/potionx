@@ -55,4 +55,7 @@ test('Copies the admin theme to the target directory and outputs correct files',
   themeConfig.components.forEach(c => {
     expect(fs.existsSync(`${dest}/src/components/${c}`)).toEqual(true)
   })
+  themeConfig.hooks.forEach(c => {
+    expect(fs.existsSync(`${dest}/src/hooks/${c}`)).toEqual(true)
+  })
 });
