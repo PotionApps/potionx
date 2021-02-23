@@ -67,7 +67,7 @@ export default defineComponent({
           import.meta.env.DEV &&
           <form class="flex flex-col mt-6" onSubmit={devLogIn}>
             <hr class="border-gray-300 mb-6" />
-            <div class="mb-2">DEVELOPMENT LOGIN</div>
+            <div class="font-semibold mb-2 text-gray-700">DEVELOPMENT LOGIN</div>
             <input class="bg-gray-100 border border-gray-300 mb-1 px-3 py-2 rounded-md outline-none" name="email" placeholder="admin@example.com" type="email" required />
             <BtnLogin class="mt-2" label="Login"></BtnLogin>
           </form>
