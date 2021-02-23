@@ -53,5 +53,8 @@
         "vue": "^3.0.5",
         "vue-router": "^4.0.3",
         "yargs": "^16.2.0"
+    },
+    "dependencies": {
+        "graphql": "^15.5.0"
     }
 }

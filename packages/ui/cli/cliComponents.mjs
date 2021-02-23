@@ -75,7 +75,8 @@ const run = () => {
           src.includes('index.html') ||
           src.includes('node_modules') ||
           src.includes('.dev.') ||
-          src.includes('__')
+          src.includes('__') ||
+          src.includes('package-lock')
         ) return false
         return true
       }

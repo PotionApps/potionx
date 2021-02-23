@@ -35,7 +35,6 @@ export default defineComponent({
     })
     
     const {
-      classes,
       internalValue,
       onChange,
     } = useFieldCheckbox({
@@ -43,6 +42,11 @@ export default defineComponent({
       name: props.name,
       showErrors,
       val
+    })
+
+    const classes = computed(() => {
+      const base = "rounded text-blue-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
+      return base + (showErrors?.value ? "border-red-300 text-red-800" : "border-gray-300")
     })
     
     return () => <>

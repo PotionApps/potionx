@@ -69,7 +69,7 @@ export default defineComponent({
           </AdminHeaderBtnWrap>
         }}
       >
-        <AdminTitle>__model Management</AdminTitle>
+        <AdminTitle>__model__ Management</AdminTitle>
       </AdminHeader>
       <AdminBody>
         {

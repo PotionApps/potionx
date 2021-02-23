@@ -10,11 +10,6 @@ export interface UseFieldSelectArgs {
 export default (args: UseFieldSelectArgs) => {
   const internalValue = ref<any>('')
 
-  const classes = computed(() => {
-    const base = "block rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full "
-    return base + (args.showErrors?.value ? "border-red-300 text-red-800" : "border-gray-300")
-  })
-
   const onChange = (e: Event) => {
     internalValue.value = (e.target as HTMLInputElement).value
     args.change?.(args.name, internalValue.value)
@@ -26,7 +21,6 @@ export default (args: UseFieldSelectArgs) => {
   }, { immediate: true})
 
   return {
-    classes,
     internalValue,
     onChange
   }

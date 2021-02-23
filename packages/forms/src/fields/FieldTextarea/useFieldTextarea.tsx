@@ -9,10 +9,6 @@ export interface UseFieldTextareaArgs {
 }
 export default (args: UseFieldTextareaArgs) => {
   const internalValue = ref<string>('')
-  const classes = computed(() => {
-    const base = "rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full "
-    return base + (args.showErrors?.value ? "border-red-300 text-red-800" : "border-gray-300")
-  })
 
   const onInput = (e: Event) => {
     internalValue.value = (e.target as HTMLInputElement).value
@@ -26,7 +22,6 @@ export default (args: UseFieldTextareaArgs) => {
   }, { immediate: true })
 
   return {
-    classes,
     internalValue,
     onInput
   }

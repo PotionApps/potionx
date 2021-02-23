@@ -10,10 +10,6 @@ export interface UseFieldCheckboxArgs {
 }
 export default (args: UseFieldCheckboxArgs) => {
   const internalValue = ref<any[]>([])
-  const classes = computed(() => {
-    const base = "rounded text-blue-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
-    return base + (args.showErrors?.value ? "border-red-300 text-red-800" : "border-gray-300")
-  })
 
   const onChange = (e: Event) => {
     const value = (e.target as HTMLInputElement).value

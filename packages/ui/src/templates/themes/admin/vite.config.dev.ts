@@ -5,6 +5,7 @@ import jsx from '@vitejs/plugin-vue-jsx'
 import WindiCSS from 'vite-plugin-windicss'
 
 export default defineConfig({
+  root: './',
   resolve: {
     alias: {
       // @ts-ignore
@@ -16,6 +17,9 @@ export default defineConfig({
   plugins: [
     jsx(),
     ...WindiCSS({
+      preflight: {
+        enableAll: true // temporary forms fix for: https://github.com/windicss/windicss/issues/56
+      },
       scan: {
         dirs: ['../../components', './src', "../../crudRoutes"],
         runOnStartup: true

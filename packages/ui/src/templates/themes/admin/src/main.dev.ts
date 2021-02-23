@@ -13,9 +13,6 @@ import "@fontsource/inter/variable.css"
 import './main.css'
 import 'windi.css'
 
-// const { source, next } = makeSubject();
-
-
 const router = createRouter({
   history: createWebHistory(),
   routes, // short for `routes: routes`
@@ -44,9 +41,9 @@ const mockQuery = () => {
           "email": "test@example.com",
           "id": "1",
           "insertedAt": "2010-04-17T14:00:00",
-          "nameFirst": "some name_first",
-          "nameFast": "some name_last",
-          "roles": [],
+          "nameFirst": "Elon",
+          "nameLast": "Melon",
+          "roles": ["admin"],
           "updatedAt": "2010-04-17T14:00:00"
         }
       }
@@ -61,9 +58,21 @@ const mockQuery = () => {
                 "email": "test@example.com",
                 "id": "1",
                 "insertedAt": "2010-04-17T14:00:00",
-                "nameFirst": "some name_first",
-                "nameFast": "some name_last",
-                "roles": [],
+                "nameFirst": "Elon",
+                "nameLast": "Melon",
+                "roles": ["admin"],
+                "updatedAt": "2010-04-17T14:00:00"
+              }
+            },
+            {
+              node: {
+                "deletedAt": "2010-04-17T14:00:00Z",
+                "email": "wine@example.com",
+                "id": "2",
+                "insertedAt": "2010-04-17T14:00:00",
+                "nameFirst": "John",
+                "nameLast": "Smith",
+                "roles": ["guest"],
                 "updatedAt": "2010-04-17T14:00:00"
               }
             }
