@@ -51,7 +51,7 @@ export default defineComponent({
         <div class="flex items-center justify-center sticky bottom-0">
           <div
             class={
-              (props.countBefore ? "opacity-40 pointer-events-none" : "opacity-80") +
+              (!props.countBefore ? "opacity-40 pointer-events-none" : "opacity-80") +
               " cursor-pointer mx-1 focus:opacity-100 hover:opacity-100 px-1 transition-opacity"
             }
             onClick={props.goToFirst}
@@ -59,16 +59,17 @@ export default defineComponent({
             <FontAwesomeIcon class="h-4" icon={faAngleDoubleLeft} />
           </div>
           <BtnPrimary
-            class={(props.countBefore ? "opacity-40 pointer-events-none" : "") + " ml-2 mr-4"}
+            class={"ml-2 mr-4"}
             click={props.prev}
-            disabled={true}
+            disabled={!props.countBefore}
             icon={faAngleLeft}
             label="Prev"
           />
-          <span class={"font-bold text-gray-700 text-sm s450:text-base"}>{props.countBefore} - {props.limit}/{props.count}</span>
+          <span class={"font-bold text-gray-700 text-sm s450:text-base"}>{props.countBefore}–{props.countBefore + props.limit} of {props.count}</span>
           <BtnPrimary
-            class={(props.countBefore + props.limit === props.count ? "opacity-40 pointer-events-none" : "") + " ml-4 mr-2"}
+            class="ml-4 mr-2"
             click={props.next}
+            disabled={props.countBefore + props.limit === props.count}
             icon={faAngleRight}
             label="Next"
             reverse={true}
