@@ -76,12 +76,6 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
       )
       Gen.GqlForModel.run(~w(Users User --no-frontend) ++ [Potionx.Users.User])
 
-      # shared
-      # types
-      # resolver
-      # queries
-      # mutations
-
       assert_file "lib/potionx_graphql/schema.ex", fn file ->
         assert file =~
           "|> Dataloader.add_source(PotionxGraphQl.Resolver.User, PotionxGraphQl.Resolver.User.data())"
@@ -160,11 +154,10 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
         "roles": [],
         """
       end
-      assert_file "shared/src/models/Users/User/userCollection.gql.ts", fn file ->
+      assert_file "shared/src/models/Users/User/userCollection.gql", fn file ->
         assert String.replace(file, ~r(\n|\r|\s), "") =~
           """
-          import gql from "../../../gql"
-          export default gql`query userCollection(
+          query userCollection(
             $after: String,
             $before: String,
             $first: Int,
@@ -184,6 +177,8 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
                 hasPreviousPage
                 startCursor
               }
+              count
+              countBefore
               edges {
                 node {
                   deletedAt
@@ -199,14 +194,13 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
                 cursor
               }
             }
-          }`
+          }
           """ |> String.replace(~r(\n|\r|\s), "")
       end
-      assert_file "shared/src/models/Users/User/userMutation.gql.ts", fn file ->
+      assert_file "shared/src/models/Users/User/userMutation.gql", fn file ->
         assert String.replace(file, ~r(\n|\r|\s), "") =~
           """
-          import gql from "../../../gql"
-          export default gql`mutation userMutation(
+          mutation userMutation(
             $changes: UserInput,
             $filters: UserFiltersSingle
           ) {
@@ -231,14 +225,13 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
 
               }
             }
-          }`
+          }
           """ |> String.replace(~r(\n|\r|\s), "")
       end
-      assert_file "shared/src/models/Users/User/userSingle.gql.ts", fn file ->
+      assert_file "shared/src/models/Users/User/userSingle.gql", fn file ->
         assert String.replace(file, ~r(\n|\r|\s), "") =~
           """
-          import gql from "../../../gql"
-          export default gql`query userSingle(
+          query userSingle(
             $filters: UserFiltersSingle
           ) {
             userSingle(
@@ -253,7 +246,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
               roles
               updatedAt
             }
-          }`
+          }
           """ |> String.replace(~r(\n|\r|\s), "")
       end
       assert_file "lib/potionx_graphql/resolvers/user_resolver.ex", fn file ->
@@ -267,15 +260,25 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
             def collection(args, %{context: %Service{} = ctx}) do
               q = UserService.query(ctx)
               count = UserService.count(ctx)
+              count_before = get_count_before(ctx, count)
 
               q
               |> Absinthe.Relay.Connection.from_query(
                 &Potionx.Repo.all/1,
-                args
+                ensure_first_page_is_full(args),
+                [count: count]
               )
               |> case do
                 {:ok, result} ->
-                  {:ok, Map.put(result, :count, count)}
+                  {
+                    :ok,
+                    Map.merge(
+                      result, %{
+                        count: count,
+                        count_before: count_before
+                      }
+                    )
+                  }
                 err -> err
               end
             end
@@ -286,6 +289,40 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
 
             def delete(_, %{context: %Service{} = ctx}) do
               UserService.delete(ctx)
+            end
+
+            def ensure_first_page_is_full(args) do
+              if Map.get(args, :before) do
+                Absinthe.Relay.Connection.cursor_to_offset(args.before)
+                |> elem(1)
+                |> Kernel.<(args.last)
+                |> if do
+                  %{
+                    first: args.last
+                  }
+                else
+                  args
+                end
+              else
+                args
+              end
+            end
+
+            def get_count_before(ctx, count) do
+              cond do
+                not is_nil(ctx.pagination.after) ->
+                  Absinthe.Relay.Connection.cursor_to_offset(ctx.pagination.after)
+                  |> elem(1)
+                not is_nil(ctx.pagination.before) ->
+                  Absinthe.Relay.Connection.cursor_to_offset(ctx.pagination.before)
+                  |> elem(1)
+                  |> Kernel.-(ctx.pagination.last)
+                  |> max(0)
+                not is_nil(ctx.pagination.last) ->
+                  count - ctx.pagination.last
+                true ->
+                  0
+              end
             end
 
             def mutation(_, %{context: %Service{} = ctx}) do
@@ -366,6 +403,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
             end
             connection node_type: :user do
               field :count, non_null(:integer)
+              field :count_before, non_null(:integer)
               edge do
               end
             end
