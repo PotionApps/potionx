@@ -25,7 +25,7 @@ export default defineComponent({
         label: "Compose",
         reverse: true,
         to: {
-          name: routeNames.menu
+          name: routeNames.login
         }
       }
     ])
@@ -41,7 +41,7 @@ export default defineComponent({
         icon: faArrowLeft,
         label: "Entries",
         to: {
-          name: routeNames.menu
+          name: routeNames.login
         }
       }
     ])
@@ -230,7 +230,7 @@ export default defineComponent({
           ]
         }
       />
-      <Pagination class="py-6" />
+      {/* <Pagination class="py-6" /> */}
       <AdminFooter>
         {
           mobileBtns.value.map(btn => {
