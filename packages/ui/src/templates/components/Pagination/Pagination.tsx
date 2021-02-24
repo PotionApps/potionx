@@ -48,7 +48,7 @@ export default defineComponent({
   setup (props: PaginationProps) {
     return () => {
       return (
-        <div class="flex items-center justify-center sticky bottom-0">
+        <div class="bg-white flex items-center justify-center sticky bottom-0 z-3">
           <div
             class={
               (!props.countBefore ? "opacity-40 pointer-events-none" : "opacity-80") +
@@ -65,7 +65,9 @@ export default defineComponent({
             icon={faAngleLeft}
             label="Prev"
           />
-          <span class={"font-bold text-gray-700 text-sm s450:text-base"}>{props.countBefore}–{props.countBefore + props.limit} of {props.count}</span>
+          <span class={"font-bold text-gray-700 text-sm s450:text-base"}>
+            {props.countBefore}–{Math.min(props.countBefore + props.limit, props.count)} of {props.count}
+          </span>
           <BtnSecondary
             class="ml-4 mr-2"
             click={props.next}

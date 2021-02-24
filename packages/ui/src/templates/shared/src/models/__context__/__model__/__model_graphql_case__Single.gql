@@ -1,7 +1,5 @@
-export default `
   query {
     userSingle {
       id
     }
   }
-`

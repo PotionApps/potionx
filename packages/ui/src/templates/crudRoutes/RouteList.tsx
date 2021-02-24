@@ -3,14 +3,12 @@ import { RootQueryType } from "shared/types";
 import { routeNames } from 'root/routes/routeNames'
 import { useRouter } from "vue-router";
 import { useQuery } from "@urql/vue";
-import AdminBody from 'root/components/AdminBody/AdminBody'
 import AdminFooter from 'root/components/AdminFooter/AdminFooter'
 import AdminHeader from 'root/components/AdminHeader/AdminHeader'
 import AdminHeaderBtnWrap from "root/components/AdminHeaderBtnWrap/AdminHeaderBtnWrap";
-import AdminShell from 'root/components/AdminShell/AdminShell'
 import AdminTitle from 'root/components/AdminTitle/AdminTitle'
-import Btn from 'root/components/Btn/Btn'
 import BtnMobileMenu from 'root/components/Btn/BtnMobileMenu'
+import BtnPrimary from "root/components/Btn/BtnPrimary";
 import collection from 'shared/models/__context__/__model__/__model_graphql_case__Collection.gql'
 import ModelTable, { ModelTableProps } from 'root/components/ModelTable/ModelTable'
 import schema from 'shared/models/__context__/__model__/__model_graphql_case__.json'
@@ -18,7 +16,6 @@ import StateEmpty from 'root/components/StateEmpty/StateEmpty'
 import StateLoading from 'root/components/StateLoading/StateLoading'
 import usePagination from "root/hooks/usePagination";
 import Pagination from "root/components/Pagination/Pagination";
-import BtnPrimary from "root/components/Btn/BtnPrimary";
 
 export default defineComponent({
   setup () {
@@ -67,7 +64,7 @@ export default defineComponent({
     } = usePagination({
       limit,
       pageInfo,
-      routeMode: false // disabled until Potionx moves to :paginator
+      routeMode: false
     })
 
     const { data, fetching, error } = useQuery<RootQueryType>({
@@ -93,24 +90,26 @@ export default defineComponent({
         >
           <AdminTitle>__model__ Management</AdminTitle>
         </AdminHeader>
+        <div class="min-h-screen">
         {
           (error.value || data.value?.__model_graphql_case__Collection?.count! === 0) &&
             <StateEmpty class="pb-2 pt-4" label="No Results" />
         }
         {
-          fetching.value &&
+          fetching.value && !data.value &&
             <StateLoading class="pb-2 pt-4"/>
         }
         {
           !!data.value?.__model_graphql_case__Collection?.edges?.length &&
           <ModelTable {...modelTableProps.value} />
         }
+        </div>
         {
-          pageInfo.value &&
+          pageInfo.value && data.value?.__model_graphql_case__Collection?.count &&
           <Pagination
-            class="py-4"
-            count={data.value?.__model_graphql_case__Collection?.count}
-            countBefore={data.value?.__model_graphql_case__Collection?.countBefore}
+            class="py-3"
+            count={data.value?.__model_graphql_case__Collection?.count!}
+            countBefore={data.value?.__model_graphql_case__Collection?.countBefore!}
             goToFirst={goToFirst}
             goToLast={goToLast}
             limit={limit}

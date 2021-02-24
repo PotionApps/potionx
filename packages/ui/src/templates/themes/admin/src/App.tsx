@@ -1,7 +1,6 @@
 import { computed, defineComponent } from 'vue'
 import { routeNames } from './routes/routeNames'
 import { useRoute } from 'vue-router'
-import AdminAccount from 'root/components/AccountToggle/AccountToggle'
 import AdminShell from 'root/components/AdminShell/AdminShell'
 import AdminSidebar from 'root/components/AdminSidebar/AdminSidebar'
 import Menu from 'root/components/Menu/Menu';

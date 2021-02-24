@@ -16,7 +16,7 @@ export default defineConfig({
   },
   plugins: [
     jsx(),
-    ...WindiCSS({
+    WindiCSS({
       preflight: {
         enableAll: true // temporary forms fix for: https://github.com/windicss/windicss/issues/56
       },
@@ -25,6 +25,17 @@ export default defineConfig({
         runOnStartup: true
       },
       safelist: 'prose prose-sm m-auto'
-    })
+    }),
+    {
+      name: "gql",
+      transform (src, id) {
+        if (/\.(gql)$/.test(id)) {
+          return {
+            code: `export default \`${src}\``,
+            map: null
+          }
+        }
+      }
+    }
   ]
 })

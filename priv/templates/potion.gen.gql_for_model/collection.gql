@@ -19,6 +19,7 @@ query <%= model_name_graphql_case %>Collection(
       startCursor
     }
     count
+    countBefore
     edges {
       node {
         <%= for field <- graphql_fields do %><%= field %>

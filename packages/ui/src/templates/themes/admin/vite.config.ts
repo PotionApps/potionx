@@ -24,12 +24,23 @@ export default defineConfig({
   },
   plugins: [
     jsx(),
-    ...WindiCSS({
+    WindiCSS({
       scan: {
         dirs: ['../../components', './src'],
         runOnStartup: true
       },
       safelist: 'prose prose-sm m-auto'
-    })
+    }),
+    {
+      name: "gql",
+      transform (src, id) {
+        if (/\.(gql)$/.test(id)) {
+          return {
+            code: `export default \`${src}\``,
+            map: null
+          }
+        }
+      }
+    }
   ]
 })

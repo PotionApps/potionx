@@ -13,7 +13,7 @@ defmodule Mix.Tasks.Potionx.New do
   ## Options
 
     * `--db_password` - database password
-    * `--db_user` - database user 
+    * `--db_user` - database user
     * `--default_email` - default email
     * `--no-frontend` - don't install frontend
     * `--no-install-deps` - don't install deps
@@ -147,7 +147,7 @@ defmodule Mix.Tasks.Potionx.New do
   def generate(base_path, generator, path, opts) do
     base_path
     |> Project.new(opts)
-    |> Map.replace(:email, !!Keyword.get(opts, :default_email, nil))
+    |> Map.replace(:email, Keyword.get(opts, :default_email, nil))
     |> Map.replace(:local_db_password, Keyword.get(opts, :db_password, nil))
     |> Map.replace(:local_db_user, Keyword.get(opts, :db_user, nil))
     |> Map.replace(:potionx_dep, Keyword.get(opts, :potionx_dep, nil))
@@ -181,7 +181,6 @@ defmodule Mix.Tasks.Potionx.New do
   defp generate_frontend(%{no_frontend: true} = project, _path), do: project
   defp generate_frontend(project, _path) do
     frontend_path = Path.join(project.web_path || project.project_path, "frontend")
-    ui_path = Path.join(project.web_path || project.project_path, "node_modules/@potionapps/ui")
 
     if !System.find_executable("npm") do
       print_frontend_info(project)
@@ -203,12 +202,17 @@ defmodule Mix.Tasks.Potionx.New do
 
     maybe_cmd(
       project,
-      "cd #{relative_app_path(project.project_path)} && cat package.json",
+      "cd #{relative_app_path(project.project_path)}",
       true,
       System.find_executable("npm")
     )
 
-    File.cp_r!(Path.join(ui_path, "src/templates/shared"), Path.join(project.project_path, "/shared"))
+    maybe_cmd(
+      project,
+      "cd #{relative_app_path(project.project_path)} && npx potionapps-ui shared shared --destination=#{project.web_path || project.project_path}",
+      true,
+      System.find_executable("npm")
+    )
 
     maybe_cmd(
       project,

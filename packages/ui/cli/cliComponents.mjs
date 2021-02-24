@@ -14,6 +14,7 @@ const argv =
   .scriptName(scriptName)
   .command('component', 'Copy a component to a destination of your choice')
   .command('theme', 'Copy a theme to a destination of your choice')
+  .command('shared', 'Copy the base shared folder to a destination of your choice')
   .demandCommand(2)
   .demandOption("destination", "Please add destination path")
   .usage(`Usage: $0 <command> <component-name> [options]`)
@@ -53,7 +54,7 @@ const fixConfigPaths = (context) => {
 const run = () => {
   const context = {
     componentName: argv._[1],
-    componentType: argv._[0] + 's',
+    componentType: (argv._[0] + 's').replace("shareds", 'shared'),
     destination: argv.destination,
     source: null
   }
@@ -101,6 +102,9 @@ const run = () => {
 }
 
 const toPath = ({componentName, componentType}) => {
+  if (componentType === "shared") {
+    return path.resolve(__dirname, '../src/templates', componentType)
+  }
   return path.resolve(__dirname, '../src/templates', componentType, componentName)
 }
 

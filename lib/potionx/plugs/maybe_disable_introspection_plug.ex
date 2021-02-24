@@ -5,7 +5,11 @@ defmodule Potionx.Plug.MaybeDisableIntrospection do
 
   @doc false
   def init(config) do
-    Enum.into(%{roles: [:admin]}, config)
+    Keyword.merge(
+      [roles: [:admin]],
+      config
+    )
+    |> Enum.into(%{})
   end
 
   def call(%Plug.Conn{params: %{"query" => q}} = conn, config) do
@@ -28,7 +32,7 @@ defmodule Potionx.Plug.MaybeDisableIntrospection do
   end
 
   def maybe_refuse(user, conn, %{roles: roles}) do
-    roles
+    (roles || [])
     |> Enum.any?(fn role ->
       Enum.member?(user.roles, role)
     end)

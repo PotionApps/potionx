@@ -7,6 +7,7 @@ defmodule <%= module_name_data %>.<%= context_name %>.<%= model_name %>Service d
   def count(%Service{} = ctx) do
     from(item in query(ctx))
     |> select([i], count(i.id))
+    |> exclude(:order_by)
     |> Repo.one!
   end
 

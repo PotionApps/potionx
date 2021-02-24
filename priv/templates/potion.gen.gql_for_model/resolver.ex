@@ -6,20 +6,13 @@ defmodule <%= module_name_graphql %>.Resolver.<%= model_name %> do
   def collection(args, %{context: %Service{} = ctx}) do
     q = <%= model_name %>Service.query(ctx)
     count = <%= model_name %>Service.count(ctx)
-    count_before =
-      cond do
-        not is_nil(ctx.pagination.after) ->
-          cursor_to_offset(ctx.pagination.after)
-        not is_nil(ctx.pagination.before) ->
-          count - cursor_to_offset(before) - ctx.pagination.last
-        true ->
-          0
-      end
+    count_before = get_count_before(ctx, count)
 
     q
     |> Absinthe.Relay.Connection.from_query(
       &<%= module_name_data %>.Repo.all/1,
-      args
+      ensure_first_page_is_full(args),
+      [count: count]
     )
     |> case do
       {:ok, result} ->
@@ -42,6 +35,40 @@ defmodule <%= module_name_graphql %>.Resolver.<%= model_name %> do
 
   def delete(_, %{context: %Service{} = ctx}) do
     <%= model_name %>Service.delete(ctx)
+  end
+
+  def ensure_first_page_is_full(args) do
+    if Map.get(args, :before) do
+      Absinthe.Relay.Connection.cursor_to_offset(args.before)
+      |> elem(1)
+      |> Kernel.<(args.last)
+      |> if do
+        %{
+          first: args.last
+        }
+      else
+        args
+      end
+    else
+      args
+    end
+  end
+
+  def get_count_before(ctx, count) do
+    cond do
+      not is_nil(ctx.pagination.after) ->
+        Absinthe.Relay.Connection.cursor_to_offset(ctx.pagination.after)
+        |> elem(1)
+      not is_nil(ctx.pagination.before) ->
+        Absinthe.Relay.Connection.cursor_to_offset(ctx.pagination.before)
+        |> elem(1)
+        |> Kernel.-(ctx.pagination.last)
+        |> max(0)
+      not is_nil(ctx.pagination.last) ->
+        count - ctx.pagination.last
+      true ->
+        0
+    end
   end
 
   def mutation(_, %{context: %Service{} = ctx}) do

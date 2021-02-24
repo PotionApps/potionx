@@ -115,6 +115,7 @@ export type User = Node & {
 export type UserConnection = {
   __typename?: 'UserConnection';
   count?: number
+  countBefore?: number
   edges?: Maybe<Array<Maybe<UserEdge>>>;
   pageInfo: PageInfo;
 };
