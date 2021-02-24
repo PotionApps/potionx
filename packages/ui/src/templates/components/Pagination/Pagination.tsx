@@ -1,7 +1,7 @@
-import BtnPrimary from "../Btn/BtnPrimary";
 import { defineComponent, PropType } from "vue"
 import { faAngleDoubleLeft, faAngleDoubleRight, faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from '@potionapps/utils';
+import BtnSecondary from "../Btn/BtnSecondary";
 
 export interface PaginationProps {
   count: number
@@ -58,7 +58,7 @@ export default defineComponent({
           >
             <FontAwesomeIcon class="h-4" icon={faAngleDoubleLeft} />
           </div>
-          <BtnPrimary
+          <BtnSecondary
             class={"ml-2 mr-4"}
             click={props.prev}
             disabled={!props.countBefore}
@@ -66,7 +66,7 @@ export default defineComponent({
             label="Prev"
           />
           <span class={"font-bold text-gray-700 text-sm s450:text-base"}>{props.countBefore}–{props.countBefore + props.limit} of {props.count}</span>
-          <BtnPrimary
+          <BtnSecondary
             class="ml-4 mr-2"
             click={props.next}
             disabled={props.countBefore + props.limit === props.count}

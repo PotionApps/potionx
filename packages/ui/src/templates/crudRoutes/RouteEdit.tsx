@@ -8,7 +8,6 @@ import AdminBody from 'root/components/AdminBody/AdminBody'
 import AdminFooter from 'root/components/AdminFooter/AdminFooter'
 import AdminHeader from 'root/components/AdminHeader/AdminHeader'
 import AdminHeaderBtnWrap from 'root/components/AdminHeaderBtnWrap/AdminHeaderBtnWrap';
-import AdminShell from 'root/components/AdminShell/AdminShell'
 import AdminTitle from 'root/components/AdminTitle/AdminTitle'
 import Btn from 'root/components/Btn/Btn'
 import BtnMobileMenu from 'root/components/Btn/BtnMobileMenu'
@@ -22,6 +21,7 @@ import FieldTextarea from 'root/components/FieldTextarea/FieldTextarea';
 import mutation from 'shared/models/__context__/__model__/__model_graphql_case__Mutation.gql'
 import schema from 'shared/models/__context__/__model__/__model_graphql_case__.json'
 import single from 'shared/models/__context__/__model__/__model_graphql_case__Single.gql'
+import BtnSecondary from 'root/components/Btn/BtnSecondary';
 
 export default defineComponent({
   setup () {
@@ -92,12 +92,12 @@ export default defineComponent({
     })
 
     return () => {
-      return <AdminShell>
+      return <div>
         <AdminHeader
           v-slots={{
             btns: () => <>
               <AdminHeaderBtnWrap>
-                <Btn
+                <BtnSecondary
                   class="s1050m:hidden"
                   click={deleteEntry}
                   label="Delete __model__"
@@ -165,7 +165,7 @@ export default defineComponent({
               </div>
             })
           }
-          <BtnSubmit />
+          <BtnSubmit class="mt-6" />
         </form>
         </AdminBody>
         <AdminFooter>
@@ -174,7 +174,7 @@ export default defineComponent({
             to={newEntryLink}
           />
         </AdminFooter>
-      </AdminShell>
+      </div>
     }
   }
 })

@@ -18,6 +18,7 @@ import StateEmpty from 'root/components/StateEmpty/StateEmpty'
 import StateLoading from 'root/components/StateLoading/StateLoading'
 import usePagination from "root/hooks/usePagination";
 import Pagination from "root/components/Pagination/Pagination";
+import BtnPrimary from "root/components/Btn/BtnPrimary";
 
 export default defineComponent({
   setup () {
@@ -77,12 +78,12 @@ export default defineComponent({
     })
 
     return () => {
-      return <AdminShell>
+      return <div>
         <AdminHeader
           v-slots={{
             btns: () => 
             <AdminHeaderBtnWrap>
-              <Btn
+              <BtnPrimary
                 label="New __model__"
                 reverse={true}
                 to={newEntryLink}
@@ -92,38 +93,37 @@ export default defineComponent({
         >
           <AdminTitle>__model__ Management</AdminTitle>
         </AdminHeader>
-        <AdminBody>
-          {
-            (error.value || data.value?.__model_graphql_case__Collection?.count! === 0) &&
-              <StateEmpty class="pb-2 pt-4" label="No Results" />
-          }
-          {
-            fetching.value &&
-              <StateLoading class="pb-2 pt-4"/>
-          }
-          {
-            !!data.value?.__model_graphql_case__Collection?.edges?.length &&
-            <ModelTable {...modelTableProps.value} />
-          }
-          {
-            pageInfo.value &&
-            <Pagination
-              count={data.value?.__model_graphql_case__Collection?.count}
-              countBefore={data.value?.__model_graphql_case__Collection?.countBefore}
-              goToFirst={goToFirst}
-              goToLast={goToLast}
-              limit={limit}
-              next={next}
-              prev={prev}
-            />
-          }
-        </AdminBody>
+        {
+          (error.value || data.value?.__model_graphql_case__Collection?.count! === 0) &&
+            <StateEmpty class="pb-2 pt-4" label="No Results" />
+        }
+        {
+          fetching.value &&
+            <StateLoading class="pb-2 pt-4"/>
+        }
+        {
+          !!data.value?.__model_graphql_case__Collection?.edges?.length &&
+          <ModelTable {...modelTableProps.value} />
+        }
+        {
+          pageInfo.value &&
+          <Pagination
+            class="py-4"
+            count={data.value?.__model_graphql_case__Collection?.count}
+            countBefore={data.value?.__model_graphql_case__Collection?.countBefore}
+            goToFirst={goToFirst}
+            goToLast={goToLast}
+            limit={limit}
+            next={next}
+            prev={prev}
+          />
+        }
         <AdminFooter>
           <BtnMobileMenu
             label="New __model__"
             to={newEntryLink}
           />
         </AdminFooter>
-    </AdminShell>
+    </div>
   }}
 })

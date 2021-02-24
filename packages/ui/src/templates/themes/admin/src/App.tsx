@@ -9,7 +9,6 @@ import SidebarNavItem from 'root/components/SidebarNavItem/SidebarNavItem'
 import useAdminNavPrimary from "./useAdminNavPrimary";
 import useAdminNavSecondary from "./useAdminNavSecondary";
 
-
 export default defineComponent({
   name: 'App',
   setup () {
@@ -17,12 +16,12 @@ export default defineComponent({
     const adminNavSecondary = useAdminNavSecondary()
     const route = useRoute()
 
-    const showSidebar = computed(() => {
-      return route.name != routeNames.login && routeNames.loginError
-    })
-
     const showMenu = computed(() => {
       return route.query.menu === "1"
+    })
+
+    const showSidebar = computed(() => {
+      return route.name != routeNames.login && routeNames.loginError
     })
 
     return () => <AdminShell>
