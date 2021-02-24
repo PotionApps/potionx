@@ -1,6 +1,6 @@
 {
     "name": "@potionapps/ui",
-    "version": "0.0.13",
+    "version": "0.0.14",
     "files": [
         "cli",
         "src/templates"
