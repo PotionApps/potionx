@@ -6,6 +6,15 @@ defmodule <%= module_name_graphql %>.Resolver.<%= model_name %> do
   def collection(args, %{context: %Service{} = ctx}) do
     q = <%= model_name %>Service.query(ctx)
     count = <%= model_name %>Service.count(ctx)
+    count_before =
+      cond do
+        not is_nil(ctx.pagination.after) ->
+          cursor_to_offset(ctx.pagination.after)
+        not is_nil(ctx.pagination.before) ->
+          count - cursor_to_offset(before) - ctx.pagination.last
+        true ->
+          0
+      end
 
     q
     |> Absinthe.Relay.Connection.from_query(
@@ -14,7 +23,15 @@ defmodule <%= module_name_graphql %>.Resolver.<%= model_name %> do
     )
     |> case do
       {:ok, result} ->
-        {:ok, Map.put(result, :count, count)}
+        {
+          :ok,
+          Map.merge(
+            result, %{
+              count: count,
+              count_before: count_before
+            }
+          )
+        }
       err -> err
     end
   end

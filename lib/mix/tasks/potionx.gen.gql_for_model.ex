@@ -339,7 +339,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
                       [
                         DocUtils.indent_to_string(2) <> "connection node_type: :#{state.model_name_atom} do",
                         DocUtils.indent_to_string(4) <> "field :count, non_null(:integer)",
-                        DocUtils.indent_to_string(4) <> "field :count_after, non_null(:integer)",
+                        DocUtils.indent_to_string(4) <> "field :count_before, non_null(:integer)",
                         DocUtils.indent_to_string(4) <> "edge do",
                         DocUtils.indent_to_string(4) <> "end",
                         DocUtils.indent_to_string(2) <> "end"

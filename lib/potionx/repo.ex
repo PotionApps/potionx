@@ -1,6 +1,16 @@
 defmodule Potionx.Repo do
   @tenant_key_org {:potionx, :organization_id}
   @tenant_key_user {:potionx, :user_id}
+  use TypedStruct
+
+  defmodule Pagination do
+    typedstruct do
+      field :after, :string
+      field :before, :string
+      field :first, :integer
+      field :last, :integer
+    end
+  end
 
   defmacro __using__(opts) do
     quote do

@@ -5,7 +5,8 @@ defmodule <%= module_name_data %>.<%= context_name %>.<%= model_name %>Service d
   import Ecto.Query
 
   def count(%Service{} = ctx) do
-    from(item in query(ctx), select: count(item.id))
+    from(item in query(ctx))
+    |> select([i], count(i.id))
     |> Repo.one!
   end
 
