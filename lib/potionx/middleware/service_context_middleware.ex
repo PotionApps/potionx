@@ -7,7 +7,8 @@ defmodule Potionx.Middleware.ServiceContext do
         context: %{
           ctx |
             changes: Map.get(args, :changes, ctx.changes),
-            filters: Map.get(args, :filters, ctx.filters)
+            filters: Map.get(args, :filters, ctx.filters),
+            pagination: Map.take(args, [:after, :before, :first, :last])
         }
     }
   end
