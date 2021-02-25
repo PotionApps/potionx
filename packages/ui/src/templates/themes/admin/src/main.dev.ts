@@ -1,7 +1,7 @@
 import 'vite/dynamic-import-polyfill'
-import { createApp, pushScopeId } from 'vue'
+import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import { make, makeSubject } from 'wonka';
+import { make } from 'wonka';
 import App from './App'
 import RouteEdit from 'root/crudRoutes/RouteEdit'
 import RouteList from 'root/crudRoutes/RouteList'
@@ -12,24 +12,24 @@ import "@fontsource/inter/700.css"
 import "@fontsource/inter/variable.css"
 import './main.css'
 import 'windi.css'
+import { routeNames } from 'root/routes/routeNames';
 
 const router = createRouter({
   history: createWebHistory(),
-  routes, // short for `routes: routes`
+  routes // short for `routes: routes`
 })
 
 // add routes
 router.addRoute({
   component: RouteEdit,
-  name: "__model_graphql_case__Edit",
+  name: routeNames.__model_graphql_case__Edit,
   path: "/edit/:id"
 })
 router.addRoute({
   component: RouteList,
-  name: "list",
+  name: routeNames.__model_graphql_case__List,
   path: "/list"
 })
-
 
 const mockQuery = () => {
   let data
