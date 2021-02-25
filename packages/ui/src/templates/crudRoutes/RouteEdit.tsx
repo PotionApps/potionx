@@ -179,6 +179,11 @@ export default defineComponent({
         </AdminBody>
         <AdminFooter>
           <BtnMobileMenu
+            click={() => {}}
+            icon={faArrowLeft}
+            label="Back"
+          />
+          <BtnMobileMenu
             icon={faPlus}
             label="New __model__"
             to={newEntryLink}
