@@ -22,6 +22,7 @@ import mutation from 'shared/models/__context__/__model__/__model_graphql_case__
 import schema from 'shared/models/__context__/__model__/__model_graphql_case__.json'
 import single from 'shared/models/__context__/__model__/__model_graphql_case__Single.gql'
 import BtnSecondary from 'root/components/Btn/BtnSecondary';
+import AdminMain from 'root/components/AdminMain/AdminMain';
 
 export default defineComponent({
   setup () {
@@ -92,7 +93,7 @@ export default defineComponent({
     })
 
     return () => {
-      return <div>
+      return <AdminMain>
         <AdminHeader
           v-slots={{
             btns: () => <>
@@ -118,7 +119,7 @@ export default defineComponent({
           </AdminTitle>
         </AdminHeader>
         <AdminBody>
-          <form class="m-auto max-w-500 w-full pt-10" onSubmit={form.submit}>
+          <form class="m-auto max-w-500 w-full s750:pt-6" onSubmit={form.submit}>
           {
             schema.map((s: Field) => {
               let component
@@ -174,7 +175,7 @@ export default defineComponent({
             to={newEntryLink}
           />
         </AdminFooter>
-      </div>
+      </AdminMain>
     }
   }
 })
