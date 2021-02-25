@@ -1,28 +1,27 @@
-import { computed, defineComponent } from 'vue'
-import { Field, useForm } from '@potionapps/forms'
-import { RootQueryType, RootMutationType } from "shared/types";
-import { routeNames } from 'root/routes/routeNames'
-import { useQuery, useMutation } from "@urql/vue";
-import { useRoute, useRouter } from 'vue-router'
 import AdminBody from 'root/components/AdminBody/AdminBody'
 import AdminFooter from 'root/components/AdminFooter/AdminFooter'
 import AdminHeader from 'root/components/AdminHeader/AdminHeader'
 import AdminHeaderBtnWrap from 'root/components/AdminHeaderBtnWrap/AdminHeaderBtnWrap';
+import AdminMain from 'root/components/AdminMain/AdminMain';
 import AdminTitle from 'root/components/AdminTitle/AdminTitle'
-import Btn from 'root/components/Btn/Btn'
 import BtnMobileMenu from 'root/components/Btn/BtnMobileMenu'
 import BtnPrimary from 'root/components/Btn/BtnPrimary';
+import BtnSecondary from 'root/components/Btn/BtnSecondary';
 import BtnSubmit from 'root/components/Btn/BtnSubmit'
+import { computed, defineComponent } from 'vue'
+import { Field, useForm } from '@potionapps/forms'
 import FieldCheckbox from 'root/components/FieldCheckbox/FieldCheckbox';
 import FieldInput from 'root/components/FieldInput/FieldInput';
 import FieldRadio from 'root/components/FieldRadio/FieldRadio';
 import FieldSelect from 'root/components/FieldSelect/FieldSelect';
 import FieldTextarea from 'root/components/FieldTextarea/FieldTextarea';
 import mutation from 'shared/models/__context__/__model__/__model_graphql_case__Mutation.gql'
+import { RootQueryType, RootMutationType } from "shared/types";
+import { routeNames } from 'root/routes/routeNames'
 import schema from 'shared/models/__context__/__model__/__model_graphql_case__.json'
 import single from 'shared/models/__context__/__model__/__model_graphql_case__Single.gql'
-import BtnSecondary from 'root/components/Btn/BtnSecondary';
-import AdminMain from 'root/components/AdminMain/AdminMain';
+import { useQuery, useMutation } from "@urql/vue";
+import { useRoute, useRouter } from 'vue-router'
 
 export default defineComponent({
   setup () {
