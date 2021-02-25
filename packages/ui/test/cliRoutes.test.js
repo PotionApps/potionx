@@ -2,13 +2,13 @@ const fs = require('fs-extra')
 const { spawnSync } = require('child_process')
 
 afterEach(() => {
-  fs.removeSync('./test/tmp')
+  fs.removeSync('./test/tmpRoutes')
 });
 
 test('Generates a CRUD Route in the target directory', () => {
-  fs.removeSync('./test/tmp')
-  fs.mkdirSync('./test/tmp/src/routes', {recursive: true})
-  const dest = './test/tmp/src'
+  fs.removeSync('./test/tmpRoutes')
+  fs.mkdirSync('./test/tmpRoutes/src/routes', {recursive: true})
+  const dest = './test/tmpRoutes/src'
 
   fs.copyFileSync(
     './src/templates/themes/admin/src/useAdminNavPrimary.ts',
@@ -26,7 +26,7 @@ test('Generates a CRUD Route in the target directory', () => {
   // routeNames
 
 
-  spawnSync('node', ['./cli/cliRoutes.mjs', 'Users', 'User', '--destination=./test/tmp'])
+  spawnSync('node', ['./cli/cliRoutes.mjs', 'Users', 'User', '--destination=./test/tmpRoutes'])
   ;[
     'RouteUserEdit',
     'RouteUserList'
