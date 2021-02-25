@@ -85,11 +85,11 @@ export default defineComponent({
     return () => {
       return <div class="s750:overflow-x-auto">
         <table class="table-auto w-full">
-          <thead class="bg-gray-100">
+          <thead class="bg-gray-200">
             {
               fieldsOrdered.value!.map(({ key, label }) => {
                 if (key === "image") return <th class="border-gray-300 border-b-1 border-t-1"></th>
-                return <th class="border-gray-300 border-b-1 border-t-1 font-normal px-3 py-3 s750:first:pl-8 s750:last:pr-8 text-gray-400 text-left text-sm uppercase s750m:hidden">
+                return <th class="border-gray-300 border-b-1 border-t-1 font-normal px-3 py-3 s750:first:pl-8 s750:last:pr-8 text-gray-500 text-left text-sm uppercase s750m:hidden">
                   {label}
                 </th>
               })

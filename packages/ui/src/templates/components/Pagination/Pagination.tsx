@@ -48,10 +48,10 @@ export default defineComponent({
   setup (props: PaginationProps) {
     return () => {
       return (
-        <div class="bg-white flex items-center justify-center sticky bottom-0 z-3">
+        <div class="bottom-0 s1050m:bottom-8 flex items-center justify-center sticky z-3">
           <div
             class={
-              (!props.countBefore ? "opacity-40 pointer-events-none" : "opacity-80") +
+              (props.countBefore ? "opacity-80" : "opacity-40 pointer-events-none") +
               " cursor-pointer mx-1 focus:opacity-100 hover:opacity-100 px-1 transition-opacity"
             }
             onClick={props.goToFirst}
