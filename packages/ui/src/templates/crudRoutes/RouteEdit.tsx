@@ -1,5 +1,5 @@
 import { computed, defineComponent } from 'vue'
-import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Field, useForm } from '@potionapps/forms'
 import { RootQueryType, RootMutationType } from "shared/types";
 import { routeNames } from 'root/routes/routeNames'
@@ -23,6 +23,7 @@ import FieldTextarea from 'root/components/FieldTextarea/FieldTextarea';
 import mutation from 'shared/models/__context__/__model__/__model_graphql_case__Mutation.gql'
 import schema from 'shared/models/__context__/__model__/__model_graphql_case__.json'
 import single from 'shared/models/__context__/__model__/__model_graphql_case__Single.gql'
+import BtnIcon from 'root/components/Btn/BtnIcon';
 
 export default defineComponent({
   setup () {
@@ -114,9 +115,16 @@ export default defineComponent({
             </>
           }}
         >
-          <AdminTitle>
-            {title.value}
-          </AdminTitle>
+          <div class="flex">
+            <BtnIcon
+              class="mr-2"
+              click={() => {}}
+              icon={faArrowLeft}
+            />
+            <AdminTitle>
+              {title.value}
+            </AdminTitle>
+          </div>
         </AdminHeader>
         <AdminBody>
           <form class="m-auto max-w-500 w-full s750:pt-6" onSubmit={form.submit}>

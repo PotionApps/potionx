@@ -19,10 +19,10 @@ export default defineComponent({
   setup (props, ctx) {
     return () => {
       return (
-        <div class="bg-white border-b-1 border-gray-300 py-3 s850:py-4">
+        <div class="bg-white border-b-1 border-gray-300 pt-3">
           <Wrapper>
-            <div class="flex items-center justify-between pr-2 s1050m:flex-wrap">
-              <div class="flex flex-full items-center s1050:max-w-500 s1450:max-w-600">
+            <div class="flex s1050m:flex-wrap items-center justify-between">
+              <div class="flex flex-full items-center s1050:max-w-500 s1450:max-w-600 pb-3 pr-2">
                 {ctx.slots.default && ctx.slots.default()}
               </div>
               {ctx.slots.btns && <div class="flex">{ctx.slots.btns()}</div>}
