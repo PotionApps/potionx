@@ -118,8 +118,8 @@ export default defineComponent({
           <div class="flex">
             <BtnIcon
               class="mr-2 s1050m:hidden"
-              click={() => {}}
               icon={faArrowLeft}
+              to={{name: routeNames.__model_graphql_case__List}}
             />
             <AdminTitle>
               {title.value}
@@ -179,9 +179,9 @@ export default defineComponent({
         </AdminBody>
         <AdminFooter>
           <BtnMobileMenu
-            click={() => {}}
             icon={faArrowLeft}
             label="Back"
+            to={{name: routeNames.__model_graphql_case__List}}
           />
           <BtnMobileMenu
             icon={faPlus}

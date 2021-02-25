@@ -1,3 +1,8 @@
+import { computed, defineComponent } from "vue"
+import { RootQueryType } from "shared/types";
+import { routeNames } from 'root/routes/routeNames'
+import { useQuery } from "@urql/vue";
+import { useRouter } from "vue-router";
 import AdminFooter from 'root/components/AdminFooter/AdminFooter'
 import AdminHeader from 'root/components/AdminHeader/AdminHeader'
 import AdminHeaderBtnWrap from "root/components/AdminHeaderBtnWrap/AdminHeaderBtnWrap";
@@ -6,17 +11,12 @@ import AdminTitle from 'root/components/AdminTitle/AdminTitle'
 import BtnMobileMenu from 'root/components/Btn/BtnMobileMenu'
 import BtnPrimary from "root/components/Btn/BtnPrimary";
 import collection from 'shared/models/__context__/__model__/__model_graphql_case__Collection.gql'
-import { computed, defineComponent } from "vue"
 import ModelTable, { ModelTableProps } from 'root/components/ModelTable/ModelTable'
 import Pagination from "root/components/Pagination/Pagination";
-import { RootQueryType } from "shared/types";
-import { routeNames } from 'root/routes/routeNames'
 import schema from 'shared/models/__context__/__model__/__model_graphql_case__.json'
 import StateEmpty from 'root/components/StateEmpty/StateEmpty'
 import StateLoading from 'root/components/StateLoading/StateLoading'
 import usePagination from "root/hooks/usePagination";
-import { useRouter } from "vue-router";
-import { useQuery } from "@urql/vue";
 
 export default defineComponent({
   setup () {
