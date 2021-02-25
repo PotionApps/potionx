@@ -76,7 +76,7 @@ export default defineComponent({
     })
 
     return () => {
-      return <AdminMain class="bg-gray-100">
+      return <AdminMain>
         <AdminHeader
           v-slots={{
             btns: () => 
@@ -91,35 +91,32 @@ export default defineComponent({
         >
           <AdminTitle>__model__ Management</AdminTitle>
         </AdminHeader>
-        <div class="mt-4">
-          <div class="min-h-screen">
-            {
-              (error.value || data.value?.__model_graphql_case__Collection?.count! === 0) &&
-                <StateEmpty class="pb-2 pt-4" label="No Results" />
-            }
-            {
-              fetching.value && !data.value &&
-                <StateLoading class="pb-2 pt-4"/>
-            }
-            {
-              !!data.value?.__model_graphql_case__Collection?.edges?.length &&
-              <ModelTable {...modelTableProps.value} />
-            }
-          </div>
+        <div>
           {
-            pageInfo.value && data.value?.__model_graphql_case__Collection?.count &&
-            <Pagination
-              class="bg-gradient-to-t from-gray-100 mb-4 mt-4 s750:mt-8 pb-8 pt-2"
-              count={data.value?.__model_graphql_case__Collection?.count}
-              countBefore={data.value?.__model_graphql_case__Collection?.countBefore}
-              goToFirst={goToFirst}
-              goToLast={goToLast}
-              limit={limit}
-              next={next}
-              prev={prev}
-            />
+            (error.value || data.value?.__model_graphql_case__Collection?.count! === 0) &&
+              <StateEmpty class="pb-2 pt-4" label="No Results" />
+          }
+          {
+            fetching.value && !data.value &&
+              <StateLoading class="pb-2 pt-4"/>
+          }
+          {
+            !!data.value?.__model_graphql_case__Collection?.edges?.length &&
+            <ModelTable {...modelTableProps.value} />
           }
         </div>
+        {
+          pageInfo.value && data.value?.__model_graphql_case__Collection?.count &&
+          <Pagination
+            count={data.value?.__model_graphql_case__Collection?.count}
+            countBefore={data.value?.__model_graphql_case__Collection?.countBefore}
+            goToFirst={goToFirst}
+            goToLast={goToLast}
+            limit={limit}
+            next={next}
+            prev={prev}
+          />
+        }
         <AdminFooter>
           <BtnMobileMenu
             label="New __model__"

@@ -48,7 +48,7 @@ export default defineComponent({
   setup (props: PaginationProps) {
     return () => {
       return (
-        <div class="bottom-0 s1050m:bottom-8 flex items-center justify-center sticky z-3">
+        <div class="bg-white bottom-0 s1050m:bottom-8 flex items-center justify-center mt-4 s750:mt-8 pb-12 pt-2 sticky z-3">
           <div
             class={
               (props.countBefore ? "opacity-80" : "opacity-40 pointer-events-none") +

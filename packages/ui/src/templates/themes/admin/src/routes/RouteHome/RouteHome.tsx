@@ -13,7 +13,7 @@ export default defineComponent({
       {icon: faTwitter, url: "https://twitter.com/Potionapps"},
       {icon: faYoutube, url: "https://www.youtube.com/channel/UCQwh1NM_EpDmY7tEnNb3xdA/featured"}
     ]
-    return () => <AdminMain class="bg-white">
+    return () => <AdminMain>
       <div class="pt-24 px-6 text-center">
         <img class="m-auto mb-2 w-10" src={Logo} />
         <h1 class="font-semibold mb-2 text-3xl text-gray-700">Welcome to Potionx</h1>

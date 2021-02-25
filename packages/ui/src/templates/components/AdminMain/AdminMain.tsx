@@ -5,7 +5,7 @@ export default defineComponent({
   setup (_, ctx) {
     return () => {
       return (
-        <div class="s1050m:pb-14 min-h-screen">
+        <div class="bg-white min-h-screen s1050m:pb-14">
           {ctx.slots.default && ctx.slots.default()}
         </div>
       )
