@@ -14,8 +14,13 @@ test:
     RUN mix test
 
     # Run installer tests
-    WORKDIR /src/installer
+    WORKDIR /installer
     RUN mix test
+
+    # Run UI tests
+    WORKDIR /packages/ui
+    RUN npm i
+    RUN npm test
 
 all-integration-test:
     BUILD --build-arg ELIXIR=1.11.3 --build-arg OTP=23.2.5 +integration-test
