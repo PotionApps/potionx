@@ -44,4 +44,4 @@ jobs:
       - name: Download released earth
         run: "sudo /bin/sh -c 'wget https://github.com/earthly/earthly/releases/download/v0.4.1/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'"
       - name: Execute tests
-        run: earthly +frontend_test
+        run: earthly +frontend-test
