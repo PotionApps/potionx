@@ -1,26 +1,33 @@
 all:
     BUILD +all-test
     BUILD +all-integration-test
+    BUILD +frontend-test
 
 all-test:
     BUILD --build-arg ELIXIR=1.11.3 --build-arg OTP=23.2.5 +test
 
+frontend-test:
+    FROM node:14.16.0-alpine3.12
+    WORKDIR /src
+    RUN mkdir -p packages/ui
+    # Copy package.json + lockfile separatelly to improve caching (JS changes don't trigger `npm install` anymore)
+    COPY packages/ui/package* packages/ui
+    WORKDIR packages/ui
+    RUN npm install
+    COPY packages/ui/ .
+    RUN npm test
+
 test:
     FROM +test-setup
     RUN MIX_ENV=test mix deps.compile
-    COPY --dir assets config installer lib integration_test priv test ./
+    COPY --dir config installer lib priv test ./
 
     # Run unit tests
     RUN mix test
 
     # Run installer tests
-    WORKDIR /installer
+    WORKDIR /src/installer
     RUN mix test
-
-    # Run UI tests
-    WORKDIR /packages/ui
-    RUN npm i
-    RUN npm test
 
 all-integration-test:
     BUILD --build-arg ELIXIR=1.11.3 --build-arg OTP=23.2.5 +integration-test
