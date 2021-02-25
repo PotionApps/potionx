@@ -125,6 +125,6 @@ app.mount('#app')
 useAdminNavPrimary().value.push({
   label: "List",
   to: {
-    name: "list"
+    name: routeNames.__model_graphql_case__List
   }
 })
