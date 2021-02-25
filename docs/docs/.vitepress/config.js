@@ -5,11 +5,15 @@ module.exports = {
     themeConfig: {
         nav: [
             { text: 'Docs', link: '/', activeMatch: '^/$|^/(conventions|docs)/' },
-            { text: 'API', link: '/api/overview', activeMatch: '^/$|^/api/' },
+            { text: 'API', link: '/api/overview', activeMatch: '^/api/' },
             // { text: 'Roadmap', link: '/roadmap' },
             {
                 text: 'Github',
                 link: 'https://github.com/PotionApps/potionx'
+            },
+            {
+                text: 'Discord',
+                link: 'https://discord.gg/JydTNZCS'
             }
         ],
         sidebar: {
@@ -25,7 +29,7 @@ function getApiSidebar() {
     return [{
         text: 'API',
         children: [
-            { text: 'Overview', link: '/api' },
+            { text: 'Overview', link: '/api/overview' },
             { text: 'Potionx', link: '/api/potionx' },
             { text: 'Forms', link: '/api/forms' },
             { text: 'UI', link: '/api/ui' },
