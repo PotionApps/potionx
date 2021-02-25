@@ -28,7 +28,7 @@ export default defineComponent({
         showSidebar.value && !showMenu.value && 
         <AdminSidebar>
           <div class="flex-1">
-            <router-link class="block mx-2 my-4 text-2xl text-gray-100" to={{name: routeNames.home}}>Admin</router-link>
+            <router-link class="block mx-4 my-4 text-2xl text-gray-100" to={{name: routeNames.home}}>Admin</router-link>
             <nav>
               {
                 adminNavPrimary.value.map(nav => {

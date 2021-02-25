@@ -117,7 +117,7 @@ export default defineComponent({
         >
           <div class="flex">
             <BtnIcon
-              class="mr-2"
+              class="mr-2 s1050m:hidden"
               click={() => {}}
               icon={faArrowLeft}
             />
