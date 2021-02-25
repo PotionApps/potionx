@@ -1,3 +1,10 @@
+import { computed, defineComponent } from 'vue'
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Field, useForm } from '@potionapps/forms'
+import { RootQueryType, RootMutationType } from "shared/types";
+import { routeNames } from 'root/routes/routeNames'
+import { useQuery, useMutation } from "@urql/vue";
+import { useRoute, useRouter } from 'vue-router'
 import AdminBody from 'root/components/AdminBody/AdminBody'
 import AdminFooter from 'root/components/AdminFooter/AdminFooter'
 import AdminHeader from 'root/components/AdminHeader/AdminHeader'
@@ -5,23 +12,17 @@ import AdminHeaderBtnWrap from 'root/components/AdminHeaderBtnWrap/AdminHeaderBt
 import AdminMain from 'root/components/AdminMain/AdminMain';
 import AdminTitle from 'root/components/AdminTitle/AdminTitle'
 import BtnMobileMenu from 'root/components/Btn/BtnMobileMenu'
-import BtnPrimary from 'root/components/Btn/BtnPrimary';
-import BtnSecondary from 'root/components/Btn/BtnSecondary';
+import BtnSmallPrimary from 'root/components/Btn/BtnSmallPrimary';
+import BtnSmallSecondary from 'root/components/Btn/BtnSmallSecondary';
 import BtnSubmit from 'root/components/Btn/BtnSubmit'
-import { computed, defineComponent } from 'vue'
-import { Field, useForm } from '@potionapps/forms'
 import FieldCheckbox from 'root/components/FieldCheckbox/FieldCheckbox';
 import FieldInput from 'root/components/FieldInput/FieldInput';
 import FieldRadio from 'root/components/FieldRadio/FieldRadio';
 import FieldSelect from 'root/components/FieldSelect/FieldSelect';
 import FieldTextarea from 'root/components/FieldTextarea/FieldTextarea';
 import mutation from 'shared/models/__context__/__model__/__model_graphql_case__Mutation.gql'
-import { RootQueryType, RootMutationType } from "shared/types";
-import { routeNames } from 'root/routes/routeNames'
 import schema from 'shared/models/__context__/__model__/__model_graphql_case__.json'
 import single from 'shared/models/__context__/__model__/__model_graphql_case__Single.gql'
-import { useQuery, useMutation } from "@urql/vue";
-import { useRoute, useRouter } from 'vue-router'
 
 export default defineComponent({
   setup () {
@@ -97,16 +98,16 @@ export default defineComponent({
           v-slots={{
             btns: () => <>
               <AdminHeaderBtnWrap>
-                <BtnSecondary
-                  class="s1050m:hidden"
+                <BtnSmallSecondary
                   click={deleteEntry}
+                  icon={faTrash}
                   label="Delete __model__"
                 />
               </AdminHeaderBtnWrap>
-              <AdminHeaderBtnWrap>
-                <BtnPrimary
-                  class="s1050m:hidden"
-                  label="Add __model__"
+              <AdminHeaderBtnWrap class="s1050m:hidden">
+                <BtnSmallPrimary
+                  label="New __model__"
+                  icon={faPlus}
                   to={newEntryLink}
                 />
               </AdminHeaderBtnWrap>
@@ -170,6 +171,7 @@ export default defineComponent({
         </AdminBody>
         <AdminFooter>
           <BtnMobileMenu
+            icon={faPlus}
             label="New __model__"
             to={newEntryLink}
           />
