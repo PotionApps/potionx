@@ -34,7 +34,7 @@ router.addRoute({
 const mockQuery = () => {
   let data
   switch (router.currentRoute.value.name) {
-    case "__model_graphql_case__Edit":
+    case routeNames.__model_graphql_case__Edit:
       data = {
         __model_graphql_case__Single: {
           "deletedAt": "2010-04-17T14:00:00Z",
@@ -48,7 +48,7 @@ const mockQuery = () => {
         }
       }
       break;
-    case "list":
+    case routeNames.__model_graphql_case__List:
       data = {
         __model_graphql_case__Collection: {
           count: 500,
