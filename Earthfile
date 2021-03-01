@@ -45,11 +45,16 @@ integration-test:
     RUN mix local.hex --force
     RUN mix deps.get
     RUN mix local.rebar --force
+    RUN mkdir -p packages/ui
+    COPY packages/ui/package* packages/ui
+    WORKDIR packages/ui
+    RUN npm install
+    WORKDIR /src
     COPY --dir config installer lib packages test priv /src
     WORKDIR /src/integration_test
 
     # Compile phoenix
-    # COPY --dir config installer lib test priv /src
+    # COPY --dir config` installer lib test priv /src
     # Compiling here improves caching, but slows down GHA speed
     # Removing until this feature exists https://github.com/earthly/earthly/issues/574
     # RUN MIX_ENV=test mix deps.compile
@@ -66,7 +71,7 @@ integration-test:
         # Run the database tests
         RUN docker-compose up -d & \
             while ! pg_isready --host=localhost --port=5432 --quiet; do sleep 1; done; \
-            mix potionx.new ./alpha beta --default-email=test@potionapps.com \
+            mix potionx.new alpha --default-email=test@potionapps.com \
               --db-password=postgres --db-user=postgres --potionx-dep='path: "../../"' --ui-package="../../packages/ui" && \
             cd alpha && mix test && \
             cd ./frontend/admin && \
