@@ -1,7 +1,7 @@
 import { computed, defineComponent } from 'vue'
 import { faArrowLeft, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Field, useForm } from '@potionapps/forms'
-import { RootQueryType, RootMutationType } from "shared/types";
+import { RootQueryType, RootMutationType__model__MutationArgs, RootMutationType } from "shared/types";
 import { routeNames } from 'root/routes/routeNames'
 import { useQuery, useMutation } from "@urql/vue";
 import { useRoute, useRouter } from 'vue-router'
