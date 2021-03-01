@@ -261,9 +261,96 @@ Passing down an external link will make this an ```<a>``` element that opens a n
 
 **type:** ```String``` ```Optional``` \
 Type applies to a ```<button>``` element when using the click prop 
+<br/>
+<br/>
+
+We've created multiple prestyled Btn components to speed up the development process. They all share props with the ```Btn``` Component, although some only utilize a few.
+
+### BtnIcon
+
+A lighter version of the ```Btn``` component that displays only an icon.
+
+#### Importing BtnIcon
+```tsx
+import BtnIcon from "root/components/Btn/BtnIcon";
+```
+
+### BtnLogin
+
+A button that is styled for the ```Login``` component.
+
+#### Importing BtnLogin
+```tsx
+import BtnLogin from "root/components/Btn/BtnLogin";
+```
+
+### BtnMobileMenu
+
+A button that is styled to match the menu toggle button in the ```Menu``` component.
+
+#### Importing BtnMobileMenu
+```tsx
+import BtnMobileMenu from "root/components/Btn/BtnMobileMenu";
+```
+
+### BtnPrimary
+
+A styled button to be used as the primary button.
+
+#### Importing BtnPrimary
+```tsx
+import BtnPrimary from "root/components/Btn/BtnPrimary";
+```
+
+### BtnSecondary
+
+A styled button to be used as the secondary button, in contrast with the primary button.
+
+#### Importing BtnSecondary
+```tsx
+import BtnSecondary from "root/components/Btn/BtnSecondary";
+```
+
+### BtnSmall
+
+A smaller version of ```Btn```.
+
+#### Importing BtnSmall
+```tsx
+import BtnSmall from "root/components/Btn/BtnSmall";
+```
+
+### BtnSmallPrimary
+
+A smaller version of ```BtnPrimary```.
+
+#### Importing BtnSmallPrimary
+```tsx
+import BtnSmallPrimary from "root/components/Btn/BtnSmallPrimary";
+```
+
+### BtnSmallSecondary
+
+A smaller version of ```BtnSecondary```.
+
+#### Importing BtnSmallSecondary
+```tsx
+import BtnSmallSecondary from "root/components/Btn/BtnSmallSecondary";
+```
+
+### BtnSubmit
+
+A submit button to be used with forms.
+
+#### Importing BtnSubmit
+```tsx
+import BtnSubmit from "root/components/Btn/BtnSubmit";
+```
 
 <br />
 <br />
+
+
 
 <!-- ## Dropdown
 A prestyled select element.

@@ -5,7 +5,7 @@ module.exports = {
     themeConfig: {
         nav: [
             { text: 'Documentation', link: '/', activeMatch: '^/$|^/(conventions|docs)/' },
-            { text: 'API', link: '/potionx/overview', activeMatch: '^/(api|form|ui)/' },
+            { text: 'API', link: '/potionx/overview', activeMatch: '^/(potionx|form|ui)/' },
             {
                 text: 'Github',
                 link: 'https://github.com/PotionApps/potionx'
