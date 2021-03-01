@@ -5,8 +5,8 @@ import FieldLabel from "../FieldLabel/FieldLabel";
 
 export interface FieldSelectProps {
   name: string
-  label: string
-  unstyled: boolean
+  label?: string
+  unstyled?: boolean
 }
 
 export default defineComponent({
@@ -19,7 +19,7 @@ export default defineComponent({
     },
     unstyled: Boolean
   },
-  setup (props, ctx) {
+  setup (props: FieldSelectProps, ctx) {
     const {
       change,
       errors,

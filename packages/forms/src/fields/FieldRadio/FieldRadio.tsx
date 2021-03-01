@@ -4,32 +4,33 @@ import FieldError from "../FieldError";
 import FieldLabel from "../FieldLabel";
 import useFieldRadio from "./useFieldRadio";
 
-export type FieldRadioOption = {
+export type FieldRadioOptionProps = {
   label: string
   value: any
 }
 
 export interface FieldRadioProps {
-  label: string
+  label?: string
   name: string
-  options: FieldRadioOption
-  unstyled: boolean
+  options: FieldRadioOptionProps[]
+  unstyled?: boolean
 }
 
 export default defineComponent({
+  name: "FieldRadio",
   props: {
-    disableErrors: Boolean,
     label: String,
     name: {
       required: true,
       type: String
     },
     options: {
-      type: Array as PropType<FieldRadioOption[]>
+      required: true,
+      type: Array as PropType<FieldRadioOptionProps[]>
     },
     unstyled: Boolean
   },
-  setup (props, ctx) {
+  setup (props: FieldRadioProps, ctx) {
     const {
       change,
       errors,

@@ -4,16 +4,15 @@ import FieldError from "../FieldError/FieldError";
 import FieldLabel from "../FieldLabel/FieldLabel";
 
 export interface FieldInputProps {
-  label: string
+  label?: string
   name: string
-  type: string
-  unstyled: boolean
+  type?: string
+  unstyled?: boolean
 }
 
 export default defineComponent({
   name: "FieldInput",
   props: {
-    disableErrors: Boolean,
     label: String,
     name: {
       required: true,
@@ -25,7 +24,7 @@ export default defineComponent({
     },
     unstyled: Boolean
   },
-  setup (props, ctx) {
+  setup (props: FieldInputProps, ctx) {
     const {
       change,
       errors,

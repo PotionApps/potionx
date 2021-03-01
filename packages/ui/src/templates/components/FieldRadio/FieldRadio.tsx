@@ -3,16 +3,16 @@ import { useField, useFieldRadio } from "@potionapps/forms";
 import FieldError from "../FieldError/FieldError";
 import FieldLabel from "../FieldLabel/FieldLabel";
 
-export type FieldRadioOption = {
+export type FieldRadioOptionProps = {
   label: string
   value: any
 }
 
 export interface FieldRadioProps {
-  label: string
+  label?: string
   name: string
-  options: FieldRadioOption
-  unstyled: boolean
+  options: FieldRadioOptionProps[]
+  unstyled?: boolean
 }
 
 export default defineComponent({
@@ -24,11 +24,12 @@ export default defineComponent({
       type: String
     },
     options: {
-      type: Array as PropType<FieldRadioOption[]>
+      required: true,
+      type: Array as PropType<FieldRadioOptionProps[]>
     },
     unstyled: Boolean
   },
-  setup (props, ctx) {
+  setup (props: FieldRadioProps, ctx) {
     const {
       change,
       errors,

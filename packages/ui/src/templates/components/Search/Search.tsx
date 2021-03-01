@@ -1,13 +1,13 @@
-import { defineComponent, computed, Ref, ref, onMounted, watch } from "vue";
+import { defineComponent, computed, Ref, ref, onMounted, PropType, watch } from "vue";
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@potionapps/utils';
 
 
 export interface SearchProps {
   change: (s: string) => void
-  focusOnMount: boolean
+  focusOnMount?: boolean
   placeholder?: string
-  val: Ref<string>
+  val?: Ref<string>
 }
 
 export default defineComponent({
@@ -15,15 +15,13 @@ export default defineComponent({
   props: {
     change: {
       required: true,
-      type: Function
+      type: Function as PropType<(s: string) => void>,
     },
     focusOnMount: Boolean,
     placeholder: String,
-    val: {
-      type: Object
-    }
+    val: Object as PropType<Ref<string>>
   },
-  setup (props) {
+  setup (props: SearchProps) {
 
     const blur = () => {
       focused.value = false

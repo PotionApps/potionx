@@ -4,9 +4,9 @@ import FieldLabel from "../FieldLabel/FieldLabel";
 import { useField, useFieldTextarea } from "@potionapps/forms";
 
 export interface FieldTextareaProps {
-  label: string
+  label?: string
   name: string
-  unstyled: boolean
+  unstyled?: boolean
 }
 
 export default defineComponent({
@@ -19,7 +19,7 @@ export default defineComponent({
     },
     unstyled: Boolean
   },
-  setup (props, ctx) {
+  setup (props: FieldTextareaProps, ctx) {
     const {
       change,
       errors,

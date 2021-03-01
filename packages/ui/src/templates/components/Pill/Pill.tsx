@@ -17,7 +17,7 @@ export default defineComponent({
     label: String,
     remove: Function as PropType<PillProps['remove']>,
   },
-  setup (props, ctx) {
+  setup (props: PillProps, ctx) {
     return () => {
       return (
         <div class="bg-white border-1 border-gray-300 flex items-center px-2 py-0.5 rounded-2xl">

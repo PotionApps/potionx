@@ -5,12 +5,13 @@ import FieldLabel from "../FieldLabel";
 import useFieldTextarea from "./useFieldTextarea";
 
 export interface FieldTextareaProps {
-  label: string
+  label?: string
   name: string
-  unstyled: boolean
+  unstyled?: boolean
 }
 
 export default defineComponent({
+  name: "FieldTextarea",
   props: {
     label: String,
     name: {
@@ -19,7 +20,7 @@ export default defineComponent({
     },
     unstyled: Boolean
   },
-  setup (props, ctx) {
+  setup (props: FieldTextareaProps, ctx) {
     const {
       change,
       errors,

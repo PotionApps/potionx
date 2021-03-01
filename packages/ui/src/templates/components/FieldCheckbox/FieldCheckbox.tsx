@@ -3,33 +3,33 @@ import FieldError from "../FieldError/FieldError";
 import FieldLabel from "../FieldLabel/FieldLabel";
 import { useField, useFieldCheckbox } from "@potionapps/forms";
 
-export type FieldCheckboxOption = {
+export type FieldCheckboxOptionProps = {
   label: string
   value: any
 }
 
 export interface FieldCheckboxProps {
-  label: string
+  label?: string
   name: string
-  options: FieldCheckboxOption
-  unstyled: boolean
+  options: FieldCheckboxOptionProps[]
+  unstyled?: boolean
 }
 
 export default defineComponent({
   name: "FieldCheckbox",
   props: {
-    disableErrors: Boolean,
     label: String,
     name: {
       required: true,
       type: String
     },
     options: {
-      type: Array as PropType<FieldCheckboxOption[]>
+      required: true,
+      type: Array as PropType<FieldCheckboxOptionProps[]>
     },
     unstyled: Boolean
   },
-  setup (props, ctx) {
+  setup (props: FieldCheckboxProps, ctx) {
     const {
       change,
       errors,
@@ -66,7 +66,7 @@ export default defineComponent({
         value: internalValue.value
       })}
       {
-        props.options?.map(opt => {
+        props.options.map((opt: FieldCheckboxOptionProps) => {
           return <label class="block">
             <input
               checked={internalValue.value.includes(opt.value)}

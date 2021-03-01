@@ -12,7 +12,7 @@ export default defineComponent({
     icon: {},
     label: String
   },
-  setup (props) {
+  setup (props: DropdownProps) {
     return () => {
       return (
         <div class="bg-white border-1 border-gray-300 focus:border-blue-400 hover:border-blue-400 cursor-pointer flex items-center p-2 rounded-md text-gray-400 focus:text-blue-400 hover:text-blue-400 transition">

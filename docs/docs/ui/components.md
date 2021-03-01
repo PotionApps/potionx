@@ -403,7 +403,7 @@ Checkbox label
 Checkbox name
 <br />
 
-**options:** ```FieldCheckboxOption``` ```Array``` ```Required``` \
+**options:** ```FieldCheckboxOptionProps``` ```Array``` ```Required``` \
 Checkbox options
 <br />
 
@@ -412,7 +412,7 @@ Removes component styling
 <br />
 <br />
 
-#### FieldCheckboxOption
+#### FieldCheckboxOptionProps
 **label:** ```String``` ```Required``` \
 Option label 
 <br />
@@ -531,7 +531,7 @@ Radio label
 Radio name
 <br />
 
-**options:** ```FieldRadioOption``` ```Array``` ```Required``` \
+**options:** ```FieldRadioOptionProps``` ```Array``` ```Required``` \
 Radio options
 <br />
 
@@ -540,7 +540,7 @@ Removes component styling
 <br />
 <br />
 
-#### FieldRadioOption
+#### FieldRadioOptionProps
 **label:** ```String``` ```Required``` \
 Option label 
 <br />

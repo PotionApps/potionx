@@ -12,7 +12,7 @@ export default defineComponent({
   props: {
     hideMenuBtn: Boolean
   },
-  setup (props, ctx) {
+  setup (props: AdminFooterProps, ctx) {
     const router = useRouter()
 
     return () => {

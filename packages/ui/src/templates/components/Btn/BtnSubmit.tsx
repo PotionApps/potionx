@@ -4,7 +4,7 @@ import BtnPrimary from "./BtnPrimary";
 
 export default defineComponent({
   name: "BtnSubmit",
-  setup (props, ctx) {
+  setup (_, ctx) {
     const {
       formSubmitStatus
     } = useFormButton()

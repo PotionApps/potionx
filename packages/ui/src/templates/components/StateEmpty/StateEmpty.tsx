@@ -10,10 +10,10 @@ export interface StateEmptyProps {
 export default defineComponent({
   name: "StateEmpty",
   props: {
-    icon: {},
+    icon: Object,
     label: String
   },
-  setup (props) {
+  setup (props: StateEmptyProps) {
     return () => {
       return (
         <div class="text-center">

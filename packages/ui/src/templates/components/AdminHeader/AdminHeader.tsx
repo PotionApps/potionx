@@ -1,21 +1,8 @@
-import { defineComponent, PropType, Ref } from "vue";
-import { RouteLocationRaw } from "vue-router";
-
-export interface AdminHeaderTabProps {
-  label: string
-  to: RouteLocationRaw
-}
-
-export interface AdminHeaderProps {
-  tabs?: AdminHeaderTabProps[]
-}
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "AdminHeader",
-  props: {
-    tabs: Object as PropType<Ref<AdminHeaderTabProps[]>>
-  },
-  setup (props, ctx) {
+  setup (_, ctx) {
     return () => {
       return (
         <div class="bg-white border-b-1 border-gray-300 pt-3">

@@ -176,7 +176,7 @@ import FieldError from "../FieldError/FieldError";
 import FieldLabel from "../FieldLabel/FieldLabel";
 import { useField, useFieldCheckbox } from "@potionapps/forms";
 
-export type FieldCheckboxOption = {
+export type FieldCheckboxOptionProps = {
   label: string
   value: any
 }
@@ -190,7 +190,7 @@ export default defineComponent({
       type: String
     },
     options: {
-      type: Array as PropType<FieldCheckboxOption[]>
+      type: Array as PropType<FieldCheckboxOptionProps[]>
     },
     type: String,
     unstyled: Boolean
@@ -404,7 +404,7 @@ import { useField, useFieldRadio } from "@potionapps/forms";
 import FieldError from "../FieldError/FieldError";
 import FieldLabel from "../FieldLabel/FieldLabel";
 
-export type FieldCheckboxOption = {
+export type FieldCheckboxOptionProps = {
   label: string
   value: any
 }
@@ -418,7 +418,7 @@ export default defineComponent({
       type: String
     },
     options: {
-      type: Array as PropType<FieldCheckboxOption[]>
+      type: Array as PropType<FieldCheckboxOptionProps[]>
     },
     type: String,
     unstyled: Boolean

@@ -5,13 +5,14 @@ import useField from "../../useField";
 import useFieldInput from "./useFieldInput";
 
 export interface FieldInputProps {
-  label: string
+  label?: string
   name: string
-  type: string
-  unstyled: boolean
+  type?: string
+  unstyled?: boolean
 }
 
 export default defineComponent({
+  name: "FieldInput",
   props: {
     disableErrors: Boolean,
     label: String,
@@ -25,7 +26,7 @@ export default defineComponent({
     },
     unstyled: Boolean
   },
-  setup (props, ctx) {
+  setup (props: FieldInputProps, ctx) {
     const {
       change,
       errors,
