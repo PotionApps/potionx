@@ -1,21 +1,11 @@
 all:
     BUILD +all-test
     BUILD +all-integration-test
-    BUILD +frontend-test
+    BUILD +test-forms
+    BUILD +test-ui
 
 all-test:
     BUILD --build-arg ELIXIR=1.11.3 --build-arg OTP=23.2.5 +test
-
-frontend-test:
-    FROM node:14.16.0-alpine3.12
-    WORKDIR /src
-    RUN mkdir -p packages/ui
-    # Copy package.json + lockfile separatelly to improve caching (JS changes don't trigger `npm install` anymore)
-    COPY packages/ui/package* packages/ui
-    WORKDIR packages/ui
-    RUN npm install
-    COPY packages/ui/ .
-    RUN npm test
 
 test:
     FROM +test-setup
@@ -74,6 +64,28 @@ integration-test:
             mix potionx.new ./alpha beta --default-email=test@potionapps.com --db-password=postgres --db-user=postgres --potionx-dep='path: "../../"' && \
             cd alpha && mix test
     END
+
+test-forms:
+    FROM node:14.16.0-alpine3.12
+    WORKDIR /src
+    RUN mkdir -p packages/forms
+    # Copy package.json + lockfile separatelly to improve caching (JS changes don't trigger `npm install` anymore)
+    COPY packages/forms/package* packages/forms
+    WORKDIR packages/forms
+    RUN npm install
+    COPY packages/forms/ .
+    RUN npm test
+
+test-ui:
+    FROM node:14.16.0-alpine3.12
+    WORKDIR /src
+    RUN mkdir -p packages/ui
+    # Copy package.json + lockfile separatelly to improve caching (JS changes don't trigger `npm install` anymore)
+    COPY packages/ui/package* packages/ui
+    WORKDIR packages/ui
+    RUN npm install
+    COPY packages/ui/ .
+    RUN npm test
 
 setup-base:
    ARG ELIXIR=1.11.3
