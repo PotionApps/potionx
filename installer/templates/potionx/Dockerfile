@@ -46,5 +46,4 @@ USER nobody:nobody
 COPY --from=build --chown=nobody:nobody /app/_build/prod/rel/<%= @app_name %> ./
 
 ENV HOME=/app
-
-CMD ["bin/<%= @app_name %>", "start"]
+CMD bin/<%= @app_name %> eval "<%= @app_module %>.Release.migrate" && bin/<%= @app_name %> start

@@ -45,7 +45,7 @@ integration-test:
     RUN mix local.hex --force
     RUN mix deps.get
     RUN mix local.rebar --force
-    COPY --dir config installer lib test priv /src
+    COPY --dir config installer lib packages test priv /src
     WORKDIR /src/integration_test
 
     # Compile phoenix
@@ -66,8 +66,11 @@ integration-test:
         # Run the database tests
         RUN docker-compose up -d & \
             while ! pg_isready --host=localhost --port=5432 --quiet; do sleep 1; done; \
-            mix potionx.new ./alpha beta --default-email=test@potionapps.com --db-password=postgres --db-user=postgres --potionx-dep='path: "../../"' && \
-            cd alpha && mix test
+            mix potionx.new ./alpha beta --default-email=test@potionapps.com \
+              --db-password=postgres --db-user=postgres --potionx-dep='path: "../../"' --ui-package="../../packages/ui" && \
+            cd alpha && mix test && \
+            cd ./frontend/admin && \
+            npm run build
     END
 
 test-forms:

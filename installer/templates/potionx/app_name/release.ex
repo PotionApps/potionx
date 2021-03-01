@@ -5,6 +5,7 @@ defmodule <%= @app_module %>.Release do
 
   def migrate do
     load_app()
+    seed()
 
     for repo <- repos() do
       {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :up, all: true))
@@ -20,7 +21,7 @@ defmodule <%= @app_module %>.Release do
     Application.fetch_env!(@app, :ecto_repos)
   end
 
-  def seed do
+  defp seed do
     Repo.get_by(User, [email: <%= @email %>])
     |> case do
       nil ->
