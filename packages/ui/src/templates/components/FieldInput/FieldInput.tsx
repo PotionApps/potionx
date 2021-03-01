@@ -3,6 +3,13 @@ import { useField, useFieldInput } from "@potionapps/forms";
 import FieldError from "../FieldError/FieldError";
 import FieldLabel from "../FieldLabel/FieldLabel";
 
+export interface FieldInputProps {
+  label: string
+  name: string
+  type: string
+  unstyled: boolean
+}
+
 export default defineComponent({
   name: "FieldInput",
   props: {

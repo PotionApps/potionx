@@ -1,7 +1,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "AdminTitle",
+  name: "AdminHeaderTitle",
   setup (_, ctx) {
     return () => {
       return (

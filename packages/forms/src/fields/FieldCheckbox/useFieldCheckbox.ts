@@ -30,7 +30,6 @@ export default (args: UseFieldCheckboxArgs) => {
   }, { immediate: true})
 
   return {
-    classes,
     internalValue,
     onChange
   }

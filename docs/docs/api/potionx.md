@@ -1,3 +1,3 @@
 # Potionx
 
-Coming soon...
+See [Hexdocs](https://hexdocs.pm/phoenix/Phoenix.html)

@@ -7,7 +7,7 @@ import AdminFooter from 'root/components/AdminFooter/AdminFooter'
 import AdminHeader from 'root/components/AdminHeader/AdminHeader'
 import AdminHeaderBtnWrap from "root/components/AdminHeaderBtnWrap/AdminHeaderBtnWrap";
 import AdminMain from "root/components/AdminMain/AdminMain";
-import AdminTitle from 'root/components/AdminTitle/AdminTitle'
+import AdminHeaderTitle from 'root/components/AdminHeaderTitle/AdminHeaderTitle'
 import BtnMobileMenu from 'root/components/Btn/BtnMobileMenu'
 import BtnPrimary from "root/components/Btn/BtnPrimary";
 import collection from 'shared/models/__context__/__model__/__model_graphql_case__Collection.gql'
@@ -89,7 +89,7 @@ export default defineComponent({
             </AdminHeaderBtnWrap>
           }}
         >
-          <AdminTitle>__model__ Management</AdminTitle>
+          <AdminHeaderTitle>__model__ Management</AdminHeaderTitle>
         </AdminHeader>
         <div>
           {

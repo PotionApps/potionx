@@ -4,15 +4,20 @@ import FieldLabel from "../FieldLabel";
 import useField from "../../useField";
 import useFieldSelect from "./useFieldSelect";
 
+export interface FieldSelectProps {
+  name: string
+  label: string
+  unstyled: boolean
+}
+
+
 export default defineComponent({
   props: {
-    disableErrors: Boolean,
     label: String,
     name: {
       required: true,
       type: String
     },
-    type: String,
     unstyled: Boolean
   },
   setup (props, ctx) {

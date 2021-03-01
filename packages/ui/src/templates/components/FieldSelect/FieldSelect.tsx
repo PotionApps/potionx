@@ -3,16 +3,20 @@ import { useField, useFieldSelect } from "@potionapps/forms";
 import FieldError from "../FieldError/FieldError";
 import FieldLabel from "../FieldLabel/FieldLabel";
 
+export interface FieldSelectProps {
+  name: string
+  label: string
+  unstyled: boolean
+}
+
 export default defineComponent({
   name: "FieldSelect",
   props: {
-    disableErrors: Boolean,
     label: String,
     name: {
       required: true,
       type: String
     },
-    type: String,
     unstyled: Boolean
   },
   setup (props, ctx) {

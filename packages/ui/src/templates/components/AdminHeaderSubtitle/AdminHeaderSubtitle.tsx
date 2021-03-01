@@ -1,7 +1,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "AdminSubtitle",
+  name: "AdminHeaderSubtitle",
   setup (_, ctx) {
     return () => {
       return (

@@ -3,24 +3,29 @@ import { useField, useFieldRadio } from "@potionapps/forms";
 import FieldError from "../FieldError/FieldError";
 import FieldLabel from "../FieldLabel/FieldLabel";
 
-export type FieldCheckboxOption = {
+export type FieldRadioOption = {
   label: string
   value: any
+}
+
+export interface FieldRadioProps {
+  label: string
+  name: string
+  options: FieldRadioOption
+  unstyled: boolean
 }
 
 export default defineComponent({
   name: "FieldRadio",
   props: {
-    disableErrors: Boolean,
     label: String,
     name: {
       required: true,
       type: String
     },
     options: {
-      type: Array as PropType<FieldCheckboxOption[]>
+      type: Array as PropType<FieldRadioOption[]>
     },
-    type: String,
     unstyled: Boolean
   },
   setup (props, ctx) {

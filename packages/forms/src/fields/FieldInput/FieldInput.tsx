@@ -4,6 +4,13 @@ import FieldLabel from "../FieldLabel";
 import useField from "../../useField";
 import useFieldInput from "./useFieldInput";
 
+export interface FieldInputProps {
+  label: string
+  name: string
+  type: string
+  unstyled: boolean
+}
+
 export default defineComponent({
   props: {
     disableErrors: Boolean,

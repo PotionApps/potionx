@@ -10,7 +10,7 @@ import AdminFooter from 'root/components/AdminFooter/AdminFooter'
 import AdminHeader from 'root/components/AdminHeader/AdminHeader'
 import AdminHeaderBtnWrap from 'root/components/AdminHeaderBtnWrap/AdminHeaderBtnWrap';
 import AdminMain from 'root/components/AdminMain/AdminMain';
-import AdminTitle from 'root/components/AdminTitle/AdminTitle'
+import AdminHeaderTitle from 'root/components/AdminHeaderTitle/AdminHeaderTitle'
 import BtnIcon from 'root/components/Btn/BtnIcon';
 import BtnMobileMenu from 'root/components/Btn/BtnMobileMenu'
 import BtnSmallPrimary from 'root/components/Btn/BtnSmallPrimary';
@@ -97,7 +97,7 @@ export default defineComponent({
       return <AdminMain>
         <AdminHeader
           v-slots={{
-            btns: () => <>
+            btns: () => <div>
               <AdminHeaderBtnWrap>
                 <BtnSmallSecondary
                   click={deleteEntry}
@@ -112,7 +112,7 @@ export default defineComponent({
                   to={newEntryLink}
                 />
               </AdminHeaderBtnWrap>
-            </>
+            </div>
           }}
         >
           <div class="flex">
@@ -121,9 +121,9 @@ export default defineComponent({
               icon={faArrowLeft}
               to={{name: routeNames.__model_graphql_case__List}}
             />
-            <AdminTitle>
+            <AdminHeaderTitle>
               {title.value}
-            </AdminTitle>
+            </AdminHeaderTitle>
           </div>
         </AdminHeader>
         <AdminBody>

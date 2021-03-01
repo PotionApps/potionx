@@ -4,9 +4,16 @@ import FieldError from "../FieldError";
 import FieldLabel from "../FieldLabel";
 import useFieldRadio from "./useFieldRadio";
 
-export type FieldCheckboxOption = {
+export type FieldRadioOption = {
   label: string
   value: any
+}
+
+export interface FieldRadioProps {
+  label: string
+  name: string
+  options: FieldRadioOption
+  unstyled: boolean
 }
 
 export default defineComponent({
@@ -18,9 +25,8 @@ export default defineComponent({
       type: String
     },
     options: {
-      type: Array as PropType<FieldCheckboxOption[]>
+      type: Array as PropType<FieldRadioOption[]>
     },
-    type: String,
     unstyled: Boolean
   },
   setup (props, ctx) {

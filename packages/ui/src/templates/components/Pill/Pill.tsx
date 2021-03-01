@@ -3,37 +3,36 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@potionapps/utils';
 
 export interface PillProps {
-  bg?: string
-  borderColor?: string
-  color?: string
-  customBg?: string
-  customicon?: string
   icon?: {}
+  iconColor?: string
   label?: string
   remove?: () => void
-  size?: "large" 
 }
 
 export default defineComponent({
   name: "Pill",
   props: {
-    bg: String,
-    borderColor: String,
-    color: String,
-    customBg: String,
-    customIcon: String,
     icon: {} as any,
+    iconColor: String,
     label: String,
-    option: Boolean,
     remove: Function as PropType<PillProps['remove']>,
-    size: String as PropType<'large'>
   },
-  setup (props) {
+  setup (props, ctx) {
     return () => {
       return (
         <div class="bg-white border-1 border-gray-300 flex items-center px-2 py-0.5 rounded-2xl">
-          <FontAwesomeIcon class="flex-fit mr-1 text-gray-500 text-sm" icon={props.icon} />
-          <span class="font-semibold text-gray-900 text-sm">{props.label}</span>
+          {
+            props.icon &&
+            <FontAwesomeIcon
+              class={["flex-fit mr-1 text-sm", !props.iconColor && "text-gray-500"]}
+              icon={props.icon}
+            />
+          }
+          {ctx.slots.default && ctx.slots.default()}
+          {
+            props.label &&
+            <span class="font-semibold text-gray-900 text-sm">{props.label}</span>
+          }
           {props.remove && <div class="cursor-pointer ml-2" onClick={props.remove}>
             <FontAwesomeIcon class="text-base text-gray-400 hover:text-gray-900 transition" icon={faTimes} />
           </div>}

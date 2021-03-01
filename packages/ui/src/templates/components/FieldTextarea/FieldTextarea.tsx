@@ -3,16 +3,20 @@ import FieldError from "../FieldError/FieldError";
 import FieldLabel from "../FieldLabel/FieldLabel";
 import { useField, useFieldTextarea } from "@potionapps/forms";
 
+export interface FieldTextareaProps {
+  label: string
+  name: string
+  unstyled: boolean
+}
+
 export default defineComponent({
   name: "FieldTextarea",
   props: {
-    disableErrors: Boolean,
     label: String,
     name: {
       required: true,
       type: String
     },
-    type: String,
     unstyled: Boolean
   },
   setup (props, ctx) {

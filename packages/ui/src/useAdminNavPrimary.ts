@@ -24,7 +24,7 @@ const nav : Ref<SidebarNavItemProps[]> = ref([
     icon: faPlus,
     label: "New Message",
     notification: 14,
-    parentId: "Inbox",
+    isChild: true,
     to: {
       name: routeNames.login
     }
@@ -32,7 +32,7 @@ const nav : Ref<SidebarNavItemProps[]> = ref([
   {
     icon: faTags,
     label: "Categories",
-    parentId: "Inbox",
+    isChild: true,
     to: {
       name: routeNames.login
     }
@@ -47,7 +47,7 @@ const nav : Ref<SidebarNavItemProps[]> = ref([
   {
     icon: faPlus,
     label: "New Website",
-    parentId: "websites",
+    isChild: true,
     to: {
       name: routeNames.login
     }
@@ -55,7 +55,7 @@ const nav : Ref<SidebarNavItemProps[]> = ref([
   {
     icon: faTags,
     label: "Categories",
-    parentId: "Websites",
+    isChild: true,
     to: {
       name: routeNames.login
     }
@@ -77,7 +77,7 @@ const nav : Ref<SidebarNavItemProps[]> = ref([
   {
     icon: faPlus,
     label: "Invite User",
-    parentId: "People",
+    isChild: true,
     to: {
       name: routeNames.login
     }
@@ -86,7 +86,7 @@ const nav : Ref<SidebarNavItemProps[]> = ref([
     icon: faEnvelope,
     label: "Invites",
     notification: 8,
-    parentId: "People",
+    isChild: true,
     to: {
       name: routeNames.login
     }

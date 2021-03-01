@@ -4,15 +4,19 @@ import FieldError from "../FieldError";
 import FieldLabel from "../FieldLabel";
 import useFieldTextarea from "./useFieldTextarea";
 
+export interface FieldTextareaProps {
+  label: string
+  name: string
+  unstyled: boolean
+}
+
 export default defineComponent({
   props: {
-    disableErrors: Boolean,
     label: String,
     name: {
       required: true,
       type: String
     },
-    type: String,
     unstyled: Boolean
   },
   setup (props, ctx) {
