@@ -7,8 +7,6 @@
         "AdminMain",
         "AdminShell",
         "AdminSidebar",
-        "AdminSubtitle",
-        "AdminTitle",
         "Btn",
         "FieldCheckbox",
         "FieldError",
