@@ -4,23 +4,48 @@ module.exports = {
     description: 'Documentation for deploying apps on Potionx.',
     themeConfig: {
         nav: [
-            { text: 'Documentation', link: '/', activeMatch: '^/$|^/(conventions|docs|api)/' },
+            { text: 'Documentation', link: '/', activeMatch: '^/$|^/(conventions|docs)/' },
+            { text: 'API', link: '/potionx/overview', activeMatch: '^/(api|form|ui)/' },
             {
                 text: 'Github',
                 link: 'https://github.com/PotionApps/potionx'
-            },
-            // { text: 'Roadmap', link: '/roadmap' },
-            // // { text: 'Sponsor', link: '/sponsor' },
-            { text: 'Discord', link: 'https://discord.gg/JydTNZCS' },
-            { text: 'Twitter', link: 'https://twitter.com/Potionapps' }
+            }
         ],
         sidebar: {
-            '/api/': getDocsSidebar(),
+            '/potionx/': getApiSidebar(),
+            '/forms/': getApiSidebar(),
+            '/ui/': getApiSidebar(),
             '/conventions/': getDocsSidebar(),
             '/docs/': getDocsSidebar(),
             '/': getDocsSidebar()
         }
     }
+}
+
+function getApiSidebar() {
+    return [{
+            text: 'Potionx',
+            children: [
+                { text: 'Overview', link: '/potionx/overview' }
+            ]
+        },
+        {
+            text: 'Forms',
+            children: [
+                { text: 'Hooks', link: '/forms/hooks' },
+                { text: 'Validation', link: '/forms/validation' }
+            ]
+        },
+        {
+            text: 'UI',
+            children: [
+                { text: 'Overview', link: '/ui/overview' },
+                { text: 'Components', link: '/ui/components' },
+                { text: 'Hooks', link: '/ui/hooks' },
+                { text: 'Themes', link: '/ui/themes' }
+            ]
+        }
+    ]
 }
 
 function getDocsSidebar() {
@@ -41,14 +66,6 @@ function getDocsSidebar() {
                 { text: 'Data Layer', link: '/conventions/data-layer' },
                 { text: 'GraphQL Layer', link: '/conventions/graphql-layer' },
                 { text: 'Web Layer', link: '/conventions/web-layer' }
-            ]
-        },
-        {
-            text: 'API',
-            children: [
-                { text: 'Potionx', link: '/api/potionx' },
-                { text: 'Forms', link: '/api/forms' },
-                { text: 'UI', link: '/api/ui' },
             ]
         }
     ]

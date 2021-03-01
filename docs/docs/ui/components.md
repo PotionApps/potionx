@@ -1,22 +1,8 @@
-# UI
+# components
 
-## Introduction
-
-The UI packages comes with a collection of ready-made components that are automatically copied into your project upon creation. They can be found under ```/src/templates/components``` and referred to by referencing ```root/components```. 
-
-We are actively adding new components to our toolkit, so if you wish to access components that aren't in your current project, you can manually copy them over using the following command:
-```bash
-potionapps-ui component <some-component-name> --destination=<some-destination>
-```
-
-> **Warning:** Running this command for a component that is already in your project will overwrite your current file. 
-
-## Components
 All components are styled with tailwindcss and built to easily be edited to fit your projects needs. 
 
-<br />
-
-<!-- ### AccountToggle
+<!-- ## AccountToggle
 
 Used to display the current user and to toggle the secondary navigation for account related links and buttons (account, settings, log out, etc.).
 
@@ -36,7 +22,7 @@ import AccountToggle from "root/components/AccountToggle/AccountToggle";
 <br />
 <br /> -->
 
-### AdminBody
+## AdminBody
 
 Used to apply padding to match with the ```AdminHeader``` Component.
 
@@ -56,7 +42,7 @@ import AdminBody from "root/components/AdminBody/AdminBody";
 <br />
 <br />
 
-### AdminFooter
+## AdminFooter
 
 Used as a mobile footer navigation. Nest it within the ```AdminMain``` component for proper spacing, and use the ```BtnMobileMenu``` component for matching prestyled buttons.
 
@@ -82,7 +68,7 @@ Hide the toggle menu button
 <br />
 <br />
 
-### AdminHeader
+## AdminHeader
 
 Used as a header within ```AdminMain``` and shares common padding with ```AdminBody```. Other related components are ```AdminHeaderBtnWrap```, ```AdminHeaderTitle```, and ```AdminHeaderSubtitle```.
 
@@ -104,7 +90,7 @@ import AdminHeader from "root/components/AdminHeader/AdminHeader";
 <br />
 <br />
 
-### AdminHeaderBtnWrap
+## AdminHeaderBtnWrap
 
 Used to wrap the ```Btn``` component within ```AdminHeader``` (or any variation of ```Btn```, such as ```BtnSmall```).
 
@@ -124,7 +110,7 @@ import AdminHeaderBtnWrap from "root/components/AdminHeaderBtnWrap/AdminHeaderBt
 <br />
 <br />
 
-### AdminHeaderSubtitle
+## AdminHeaderSubtitle
 Used as a prestyle ```AdminHeader``` subtitle.
 
 #### Importing AdminHeaderSubtitle
@@ -141,7 +127,7 @@ import AdminHeaderSubtitle from "root/components/AdminHeaderSubtitle/AdminHeader
 <br />
 <br />
 
-### AdminHeaderTitle
+## AdminHeaderTitle
 Used as a prestyle ```AdminHeader``` title.
 
 #### Importing AdminHeaderTitle
@@ -158,7 +144,7 @@ import AdminHeaderTitle from "root/components/AdminHeaderTitle/AdminHeaderTitle"
 <br />
 <br />
 
-### AdminMain
+## AdminMain
 Used to nest ```AdminFooter``` with appropriate spacing for mobile.
 
 #### Importing AdminMain
@@ -177,7 +163,7 @@ import AdminMain from "root/components/AdminMain/AdminMain";
 <br />
 <br />
 
-### AdminShell
+## AdminShell
 Used as a wrapper component within your ```App.tsx``` file to apply proper layout styling. It's direct children components are ```AdminSidebar``` and ```AdminMain```.
 
 #### Importing AdminShell
@@ -196,7 +182,7 @@ import AdminShell from "root/components/AdminShell/AdminShell";
 <br />
 <br />
 
-### AdminSidebar
+## AdminSidebar
 Used as the admin navigation sidebar.
 
 #### Importing AdminSidebar
@@ -215,7 +201,7 @@ import AdminSidebar from "root/components/AdminSidebar/AdminSidebar";
 <br />
 <br />
 
-### Btn
+## Btn
 An unstyled link (or button) component with props to be used as a base for other link components. It can also be used within your project if you want to apply custom styling to an individual link. 
 
 Depending on which props you use, this component will either be an ```<a>```, a ```<router-link>```, or a ```<button>``` element.
@@ -279,7 +265,7 @@ Type applies to a ```<button>``` element when using the click prop
 <br />
 <br />
 
-<!-- ### Dropdown
+<!-- ## Dropdown
 A prestyled select element.
 
 #### Importing Dropdown
@@ -298,7 +284,7 @@ import Dropdown from "root/components/Dropdown/Dropdown";
 <br />
 <br /> -->
 
-### FieldCheckbox
+## FieldCheckbox
 A checkbox component used for forms.
 
 #### Importing FieldCheckbox
@@ -350,7 +336,7 @@ Option value
 <br />
 <br />
 
-### FieldError
+## FieldError
 A styled error message for form fields.
 
 #### Importing FieldError
@@ -369,7 +355,7 @@ import FieldError from "root/components/FieldError/FieldError";
 <br />
 <br />
 
-### FieldInput
+## FieldInput
 A styled input component used for forms.
 
 #### Importing FieldInput
@@ -407,7 +393,7 @@ Removes component styling
 <br />
 <br />
 
-### FieldLabel
+## FieldLabel
 A label component meant to compliment form fields.
 
 #### Importing FieldLabel
@@ -426,7 +412,7 @@ import FieldLabel from "root/components/FieldLabel/FieldLabel";
 <br />
 <br />
 
-### FieldRadio
+## FieldRadio
 A styled radio component for forms.
 
 #### Importing FieldRadio
@@ -479,7 +465,7 @@ Option value
 <br />
 <br />
 
-### FieldSelect
+## FieldSelect
 A styled select component for forms.
 
 #### Importing FieldSelect
@@ -516,7 +502,7 @@ Removes component styling
 <br />
 <br />
 
-### FieldTextarea
+## FieldTextarea
 A styled textarea component for forms.
 
 #### Importing FieldTextarea
@@ -549,7 +535,7 @@ Removes component styling
 <br />
 <br />
 
-### LoginError
+## LoginError
 A failed message component.
 
 #### Importing LoginError
@@ -564,7 +550,7 @@ import LoginError from "root/components/LoginError/LoginError";
 <br />
 <br />
 
-### Menu
+## Menu
 A menu component for mobile and tablet screen sizes.
 
 The route for the menu page works by default, as does the back button.
@@ -585,7 +571,7 @@ import Menu from "root/components/Menu/Menu";
 <br />
 <br />
 
-<!-- ### ModelTable
+<!-- ## ModelTable
 A table component for your models.
 
 #### Importing ModelTable
@@ -604,7 +590,7 @@ import ModelTable from "root/components/ModelTable/ModelTable";
 <br />
 <br /> -->
 
-### Pagination
+## Pagination
 A sticky pagination component for model pages.
 
 #### Importing Pagination
@@ -660,7 +646,7 @@ Go to the previous page of records
 <br />
 <br />
 
-### Pill
+## Pill
 An active filter pill component.
 
 #### Importing Pill
@@ -702,7 +688,7 @@ A function that actives the X icon, and removes the pill components
 <br />
 <br />
 
-### Search
+## Search
 A search bar component.
 
 #### Importing Search
@@ -741,7 +727,7 @@ Default search value
 <br />
 <br />
 
-### SidebarNavItem
+## SidebarNavItem
 A navigation item component. We use this by default in our themes in the ```AdminSidebar``` and ```Menu``` components. The component can be rendered as a ```<button>``` or a ```<router-link>``` depending on the props passed to it.
 
 #### Importing SidebarNavItem
@@ -791,7 +777,7 @@ The route the component should link to, and this makes the component a ```<route
 <br />
 <br />
 
-### StateEmpty
+## StateEmpty
 An empty state component, to be paired with the ```ModelTable``` component when there are no search results. If no props are passed down, the component will use it's default icon and label.
 
 #### Importing StateEmpty
@@ -815,7 +801,7 @@ The component text field
 <br />
 <br />
 
-### StateLoading
+## StateLoading
 An loading component.
 
 #### Importing StateLoading
@@ -830,7 +816,7 @@ import StateLoading from "root/components/StateLoading/StateLoading";
 <br />
 <br />
 
-<!-- ### Tabs
+<!-- ## Tabs
 A tab list component.
 
 #### Importing Tabs
@@ -849,7 +835,7 @@ import Tabs from "root/components/Tabs/Tabs";
 <br />
 <br /> -->
 
-### Wrapper
+## Wrapper
 A wrapper component for consistent horizontal padding.
 
 #### Importing Wrapper
