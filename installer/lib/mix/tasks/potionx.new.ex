@@ -195,13 +195,6 @@ defmodule Mix.Tasks.Potionx.New do
 
     maybe_cmd(
       project,
-      "cd #{relative_app_path(project.project_path)} && ls node_modules/@potionapps/ui/src/templates",
-      true,
-      System.find_executable("npm")
-    )
-
-    maybe_cmd(
-      project,
       "cd #{relative_app_path(project.project_path)}",
       true,
       System.find_executable("npm")
