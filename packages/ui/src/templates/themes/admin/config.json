@@ -3,6 +3,7 @@
         "AdminBody",
         "AdminHeader",
         "AdminHeaderBtnWrap",
+        "AdminHeaderTitle",
         "AdminFooter",
         "AdminMain",
         "AdminShell",
