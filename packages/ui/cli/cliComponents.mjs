@@ -75,7 +75,7 @@ const run = () => {
           src.includes('.stories.') ||
           src.includes(path.sep + 'config.json') ||
           src.includes('index.html') ||
-          src.includes('node_modules') ||
+          src.includes([context.componentName, 'node_modules'].join(path.sep)) ||
           src.includes('.dev.') ||
           src.includes('__') ||
           src.includes('package-lock')
