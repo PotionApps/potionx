@@ -4,8 +4,13 @@ all:
     BUILD +test-forms
     BUILD +test-ui
 
+all-frontend:
+    BUILD +test-forms
+    BUILD +test-ui
+
 all-test:
     BUILD --build-arg ELIXIR=1.11.3 --build-arg OTP=23.2.5 +test
+
 
 test:
     FROM +test-setup
