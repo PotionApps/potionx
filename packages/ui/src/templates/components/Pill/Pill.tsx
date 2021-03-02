@@ -1,4 +1,4 @@
-import { defineComponent, PropType } from "vue"
+import { computed, defineComponent, PropType } from "vue"
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@potionapps/utils';
 
@@ -18,6 +18,16 @@ export default defineComponent({
     remove: Function as PropType<PillProps['remove']>,
   },
   setup (props: PillProps, ctx) {
+
+    const iconStyle = computed(() => {
+      if (!props.iconColor) {
+        return null
+      }
+      return {
+        color: props.iconColor
+      }
+    })
+
     return () => {
       return (
         <div class="bg-white border-1 border-gray-300 flex items-center px-2 py-0.5 rounded-2xl">
@@ -26,6 +36,7 @@ export default defineComponent({
             <FontAwesomeIcon
               class={["flex-fit mr-1 text-sm", !props.iconColor && "text-gray-500"]}
               icon={props.icon}
+              style={iconStyle.value}
             />
           }
           {ctx.slots.default && ctx.slots.default()}
