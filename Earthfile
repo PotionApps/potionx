@@ -13,7 +13,7 @@ all-test:
 
 
 test:
-    FROM +test-setup
+    FROM +setup-test
     RUN MIX_ENV=test mix deps.compile
     COPY --dir config installer lib priv test ./
 
@@ -108,7 +108,7 @@ setup-base:
    ENV ELIXIR_ASSERT_TIMEOUT=10000
    WORKDIR /src
 
-test-setup:
+setup-test:
   FROM +setup-base
   COPY mix.exs .
   COPY mix.lock .

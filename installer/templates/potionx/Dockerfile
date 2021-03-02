@@ -20,7 +20,7 @@ COPY config config
 RUN mix do deps.get, deps.compile
 
 # build assets
-COPY frontend/admin/package.json frontent/admin/package-lock.json ./frontend/admin/
+COPY frontend/admin/package.json frontend/admin/package-lock.json ./frontend/admin/
 RUN npm --prefix ./frontend/admin ci --progress=false --no-audit --loglevel=error
 
 COPY priv priv

@@ -1,0 +1,80 @@
+all:
+  BUILD +test-and-build
+
+# get backend deps
+# get frontend deps
+
+backend-deps:
+  ARG ELIXIR=1.11.3
+  ARG OTP=23.2.5
+  FROM hexpm/elixir:$ELIXIR-erlang-$OTP-alpine-3.13.1
+  RUN apk add --no-progress --update git build-base python3
+  ENV ELIXIR_ASSERT_TIMEOUT=10000
+  WORKDIR /src
+  COPY mix.exs .
+  COPY mix.lock .
+  COPY .formatter.exs .
+  COPY package.json .
+  RUN mix local.rebar --force
+  RUN mix local.hex --force
+  RUN mix deps.get --only prod,test
+
+backend-test:
+    FROM +backend-deps
+    RUN apk add --no-progress --update docker docker-compose
+    # Install tooling needed to check if the DBs are actually up when performing integration tests
+    RUN apk add postgresql-client
+    RUN MIX_ENV=test mix deps.compile
+    COPY ./docker-compose.yml ./docker-compose.yml
+    COPY mix.exs ./
+    COPY config/config.exs ./config/config.exs
+    COPY --dir config lib test priv .
+
+    # Compiling here improves caching, but slows down GHA speed
+    # Removing until this feature exists https://github.com/earthly/earthly/issues/574
+    # RUN MIX_ENV=test mix deps.compile
+
+    WITH DOCKER
+        # Start docker compose
+        # In parallel start compiling tests
+        # Check for DB to be up x 3
+        # Run the database tests
+        RUN docker-compose up -d & \
+            MIX_ENV=test mix deps.compile && \
+            while ! pg_isready --host=localhost --port=5432 --quiet; do sleep 1; done; \
+            mix test
+    END
+
+
+frontend-deps:
+  FROM node:14.16.9-alpine3.13
+
+  WORKDIR /frontend/admin
+  COPY frontend/admin/package* ./frontend/admin
+  RUN npm install
+  SAVE ARTIFACT package-lock.json AS LOCAL ./package-lock.json
+
+frontend-build:
+  FROM +frontend-deps
+  COPY priv/static /priv/static
+  WORKDIR /frontend/admin
+  RUN npm run build
+  SAVE ARTIFACT admin_build /priv/static AS LOCAL admin_build
+
+release: 
+  FROM +backend-test
+  ENV MIX_ENV=prod
+  COPY +frontend-build/priv/static ./priv/static
+  RUN mix do compile, release
+  SAVE ARTIFACT backend_build /app/_build/prod/rel/<%= @app_name %> AS LOCAL release
+
+docker: 
+  FROM alpine:3.13 AS app
+  RUN apk add --no-cache openssl ncurses-libs
+  WORKDIR /app
+  RUN chown nobody:nobody /app
+  USER nobody:nobody
+  COPY +release/app/_build/prod/rel/<%= @app_name %> ._build/prod/rel/<%= @app_name %>
+  ENV HOME=/app
+  CMD bin/<%= @app_name %> eval "<%= @app_module %>.Release.migrate" && bin/<%= @app_name %> start
+  SAVE IMAGE potionx/backend/<%= @app_name %>:latest
