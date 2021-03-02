@@ -28,12 +28,21 @@ import * as pulumi from "@pulumi/pulumi";
 const appNamespace = (s: string) => "<%= @app_name %>" + s
 const config = new pulumi.Config();
 const appReplicaCount = config.getNumber("appReplicaCount") || 1;
-const cloudflareApiToken = config.get("cloudflare:apiToken");
-const domain = config.get("domain");
+const cloudflareConfig = new pulumi.Config('cloudflare')
+const cloudflareApiToken = cloudflareConfig.require("apiToken");
+const domain = config.require("domain");
 const subdomain = config.get("subdomain") || "www";
 const hostname = subdomain + "." + domain
 const nodeCount = config.getNumber("nodeCount") || 2;
 const tlsSecretName = appNamespace('cert')
+
+
+
+/**
+ * ==============================
+ * Provider-specific Config
+ * ================================
+ */
 
 // Provision a DigitalOcean Kubernetes cluster and export its resulting
 // kubeconfig to make it easy to access from the kubectl command line.
@@ -65,6 +74,13 @@ const kubeconfig = cluster.status.apply(status => {
 // by creating a new "Provider" object that uses our kubeconfig above,
 // so that any application objects deployed go to our new cluster.
 const provider = new k8s.Provider(appNamespace('k8s'), { kubeconfig });
+
+
+/**
+ * ===============================
+ * CERT MANAGEMENT
+ * ================================
+ */
 
 // certManager namespace
 const certManagerNamespace = new k8s.core.v1.Namespace('cert-manager', {
@@ -111,13 +127,19 @@ const certManagerIssuer = new k8s.yaml.ConfigFile(
     { provider }
 );
 
-const postgresSecret = new k8s.core.v1.Secret(
+/**
+ * ================================
+ * Secrets for Postgres and Redis
+ * ================================
+*/
+const dbSecrets = new k8s.core.v1.Secret(
     'db-secrets',
     {
         metadata: {
             name: 'db-secrets'
         },
         stringData: {
+            'redis-password': "AIWv1mw3Za1kp4uFTLMmykHG0T9xkhoZB2YqZXRY",
             'postgresql-password': "r3MCR8M1L4TlsG2Vrqr62CEevZ8TYp",
             'postgresql-replication-password': "W2LQbT44D1ahZx5sXyDh5USWzRS8NZ",
             'postgresql-ldap-password': "TvfTamLRL16GsXrKz2OuSmnTeyiBiA"
@@ -129,6 +151,13 @@ const postgresSecret = new k8s.core.v1.Secret(
     }
 )
 
+
+/**
+ * ================================
+ * Postgres
+ * ================================
+ */
+
 const postgres = new k8s.helm.v3.Chart("postgresql", {
     chart: "postgresql",
     fetchOpts: {
@@ -139,6 +168,32 @@ const postgres = new k8s.helm.v3.Chart("postgresql", {
         'image.tag': '13.2.0' 
     },
   }, { provider });
+
+  
+ /**
+  * ================================
+ * Redis
+ * ================================
+ */
+const redis = new k8s.helm.v3.Chart("redis", {
+    chart: "redis",
+    fetchOpts: {
+      repo: 'https://charts.bitnami.com/bitnami'
+    },
+    values: {
+        existingSecret: 'db-secrets',
+        existingSecretPasswordKey: 'redis-password',
+        'image.tag': '12.8.1' 
+    },
+  }, { provider })
+
+
+
+  /**
+ * ================================
+ * Networking
+ * ================================
+ */
 
 // Now create a Kubernetes Deployment using the "nginx" container
 // image from the Docker Hub, replicated a number of times, and a
@@ -217,6 +272,12 @@ const nginxIngress = new k8s.helm.v3.Chart("ingress-nginx",
 );
 
 
+/**
+ * ================================
+ * DNS
+ * ================================
+*/
+
 export const appIp = nginxIngress.getResourceProperty('v1/Service', 'ingress-nginx-controller', 'status')
     .apply(status => {
         return status.loadBalancer.ingress[0].ip
@@ -228,7 +289,7 @@ const cloudflareZone = cloudflare.getZones({
     }
 })
 
-const example = new cloudflare.Record(
+const site = new cloudflare.Record(
     hostname,
     {
       zoneId: cloudflareZone.then(z => {
@@ -240,20 +301,3 @@ const example = new cloudflare.Record(
       proxied: false
   }
 );
-
-// Finally, optionally set up a DigitalOcean DNS entry for our
-// resulting load balancer's IP address. This gives us a stable URL
-// for our cluster'sapplication.
-// if (domainName) {
-//     const domain = new digitalocean.Domain("do-domain", {
-//         name: domainName,
-//         ipAddress: ingressIp,
-//     });
-
-//     const cnameRecord = new digitalocean.DnsRecord("do-domain-cname", {
-//         domain: domain.name,
-//         type: "CNAME",
-//         name: "www",
-//         value: "@",
-//     });
-// }
