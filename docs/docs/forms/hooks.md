@@ -122,6 +122,8 @@ export default defineComponent({
   }
 })
 ```
+<br />
+
 ## useFieldCheckbox
 Provides convenience functions for checkboxes
 
@@ -251,7 +253,7 @@ export default defineComponent({
   }
 })
 ```
-
+<br />
 
 ## useFieldInput
 Provides convenience functions for a text-based input
@@ -358,6 +360,7 @@ export default defineComponent({
   }
 })
 ```
+<br />
 
 ## UseFieldRadio
 Provides convenience functions for a radio input
@@ -480,6 +483,7 @@ export default defineComponent({
   }
 })
 ```
+<br />
 
 ## useFieldSelect
 Provides convenience functions for a select input
@@ -583,6 +587,7 @@ export default defineComponent({
   }
 })
 ```
+<br />
 
 ## useFieldTextarea
 Provides convenience functions for a textarea
@@ -685,6 +690,7 @@ export default defineComponent({
   }
 })
 ```
+<br />
 
 ## useForm
 Sets up all variables needed by useField, holds form state and handles form validation and submission.
@@ -731,6 +737,7 @@ export interface UseFormArgs {
   // defaults to Validator Ecto
 }
 ```
+<br />
 
 ## useFormButton
 Provides convenience properties for use in a form submit button:
@@ -779,6 +786,7 @@ export default defineComponent({
   }
 })
 ```
+<br />
 
 ## FormSubmitStatus
 An enum containing the possible form states:

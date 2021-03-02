@@ -668,9 +668,7 @@ import ModelTable from "root/components/ModelTable/ModelTable";
 
 #### Using ModelTable
 ```tsx
-<ModelTable 
-  {...ModelTableProps}
-/>
+<ModelTable {...ModelTableProps} />
 ```
 <br />
 

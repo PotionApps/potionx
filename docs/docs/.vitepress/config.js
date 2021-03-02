@@ -5,7 +5,7 @@ module.exports = {
     themeConfig: {
         nav: [
             { text: 'Documentation', link: '/', activeMatch: '^/$|^/(conventions|docs)/' },
-            { text: 'API', link: '/potionx/overview', activeMatch: '^/(potionx|form|ui)/' },
+            { text: 'API', link: '/ui/overview', activeMatch: '^/(potionx|form|ui)/' },
             {
                 text: 'Github',
                 link: 'https://github.com/PotionApps/potionx'
@@ -27,19 +27,13 @@ module.exports = {
 }
 
 function getApiSidebar() {
-    return [{
-            text: 'Potionx',
-            children: [
-                { text: 'Overview', link: '/potionx/overview' }
-            ]
-        },
-        {
-            text: 'Forms',
-            children: [
-                { text: 'Hooks', link: '/forms/hooks' },
-                { text: 'Validation', link: '/forms/validation' }
-            ]
-        },
+    return [
+        // {
+        //     text: 'Potionx',
+        //     children: [
+        //         { text: 'Overview', link: '/potionx/overview' }
+        //     ]
+        // },
         {
             text: 'UI',
             children: [
@@ -47,6 +41,13 @@ function getApiSidebar() {
                 { text: 'Components', link: '/ui/components' },
                 { text: 'Hooks', link: '/ui/hooks' },
                 { text: 'Themes', link: '/ui/themes' }
+            ]
+        },
+        {
+            text: 'Forms',
+            children: [
+                { text: 'Hooks', link: '/forms/hooks' },
+                { text: 'Validation', link: '/forms/validation' }
             ]
         }
     ]
