@@ -1,11 +1,11 @@
 import { defineComponent, PropType, computed } from "vue";
 
-type HeadingLabel = {
+type HeadingLabelProps = {
   key: string, 
   label: string
 }
 
-export interface ModelRow {
+export interface ModelRowProps {
   id: string | null
   description?: string | null
   icon?: string | null
@@ -17,11 +17,11 @@ export interface ModelRow {
 }
 
 export interface ModelTableProps {
-  checkboxClick?: (row: ModelRow) => void,
+  checkboxClick?: (row: ModelRowProps) => void,
   columnOrder?: string[]
   excludeTimestamps?: boolean
-  headingLabels?: HeadingLabel[]
-  rows?: ModelRow[]
+  headingLabels?: HeadingLabelProps[]
+  rows?: ModelRowProps[]
 }
 
 export default defineComponent({

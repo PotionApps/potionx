@@ -658,8 +658,8 @@ import Menu from "root/components/Menu/Menu";
 <br />
 <br />
 
-<!-- ## ModelTable
-A table component for your models.
+## ModelTable
+A table component for your records.
 
 #### Importing ModelTable
 ```tsx
@@ -668,14 +668,80 @@ import ModelTable from "root/components/ModelTable/ModelTable";
 
 #### Using ModelTable
 ```tsx
-<ModelTable>
-  //
-  // Slot
-  //
-</ModelTable>
+<ModelTable 
+  {...ModelTableProps}
+/>
 ```
 <br />
-<br /> -->
+
+#### ModelTableProp
+
+**checkboxClick:** ```Function``` ```Optional``` \
+Action when the row checkbox is clicked
+<br />
+
+**columnOrder:** ```Array``` ```Optional``` \
+Column order for each row
+<br />
+
+**excludeTimestamps:** ```Boolean``` ```Optional``` \
+Excludes timestamps
+<br />
+
+**headingLabels:** ```HeadingLabel``` ```Array``` ```Optional``` \
+An array of labels to be used as column titles
+<br />
+
+**rows:** ```ModelRow``` ```Array``` ```Optional``` \
+An array of records
+<br />
+
+#### ModelRowProps
+
+**id:** ```String | null``` ```Required``` \
+The record Id
+<br />
+
+**description:** ```String | null``` ```Optional``` \
+The record description
+<br />
+
+**icon:** ```String | null``` ```Optional``` \
+A record icon field
+<br />
+
+**image:** ```String | null``` ```Optional``` \
+A record image
+<br />
+
+**insertedAt:** ```String | null``` ```Optional``` \
+The time the record was created at
+<br />
+
+**subtitle:** ```String | null``` ```Optional``` \
+The record subtitle
+<br />
+
+**title:** ```String | null``` ```Optional``` \
+The record title
+<br />
+
+**updatedAt:** ```String | null``` ```Optional``` \
+The time the record was last updated at
+<br />
+
+#### HeadingLabelProps
+
+**key:** ```String``` ```Required``` \
+The column title key
+<br />
+
+**label:** ```String``` ```Required``` \
+The column title label
+
+
+<br />
+<br />
 
 ## Pagination
 A sticky pagination component for model pages.
@@ -718,7 +784,7 @@ Go to the last page of the records
 <br />
 
 **limit:** ```Number``` ```Required``` \
-How many records to show per page
+How many records are shown per page
 <br />
 
 **next:** ```Function``` ```Required``` \
@@ -727,8 +793,6 @@ Go to the next page of records
 
 **prev:** ```Function``` ```Required``` \
 Go to the previous page of records
-
-> You can use the [usePagination](/api/ui.html#pagination-2) hooks for premade functions as props, rather than having to make your own.
 
 <br />
 <br />
@@ -762,7 +826,7 @@ A FontAwesomeIcon icon
 <br/>
 
 **iconColor:** ```String``` ```Optional``` \
-A custom icon color
+A custom icon color that is passed to a style tag
 <br/>
 
 **label:** ```String``` ```Optional``` \
