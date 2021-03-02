@@ -17,7 +17,7 @@ const nav : Ref<SidebarNavItemProps[]> = ref([
     label: "Inbox",
     notification: 1,
     to: {
-      name: routeNames.home
+      name: routeNames.login
     }
   },
   {

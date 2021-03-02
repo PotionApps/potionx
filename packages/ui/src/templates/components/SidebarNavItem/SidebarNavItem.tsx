@@ -25,10 +25,10 @@ export default defineComponent({
   setup (props: SidebarNavItemProps, ctx) {
 
     const classes = computed(() => {
-      return ["hover:bg-gray-700 block opacity-70 focus:opacity-100 hover:opacity-100 px-4 py-2 text-gray-100 transition-opacity w-full", props.isChild && "pl-4 text-xs"]
+      return ["hover:bg-gray-700 block opacity-70 focus:opacity-100 hover:opacity-100 text-gray-100 transition-opacity w-full", !props.isChild && "s1050m:border-t s1050m:first:border-t-0 s1050m:border-gray-700"]
     })
     return () => {
-      const slot = <div class="flex items-center justify-between">
+      const slot = <div class={["flex items-center justify-between px-2 py-2",  props.isChild && "s1050m:border-t s1050m:border-gray-700 s1050m:ml-4 s1050m:pl-0 s1050:pl-4 text-xs"]}>
         <div class="flex items-center">
           {props.icon && <div class={["flex items-center justify-center mr-2", props.isChild ? "w-4" : "w-5"]}>
             <FontAwesomeIcon icon={props.icon} />

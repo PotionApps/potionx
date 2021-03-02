@@ -79,7 +79,6 @@ export default defineComponent({
               class={["bg-gray-200 mb-2 p-2 rounded text-gray-900 text-xs s1050m:mr-2 s1050:ml-2", btn.hideBtnMobile && "s1050m:hidden"]}
           />})}
         </div>
-        <Tabs tabs={headerTabs} />
       </Wrapper>
       <Wrapper class="py-6">
         <div class="flex s650m:flex-wrap mb-2">

@@ -34,7 +34,7 @@ export default defineConfig({
     WindiCSS({
       safelist: 'prose prose-sm m-auto',
       scan: {
-        dirs: ['./src/playground', './src/templates/components'],
+        exclude: ["./src/templates/themes/**"],
         runOnStartup: true
       },
     })

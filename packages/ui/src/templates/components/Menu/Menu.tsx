@@ -8,6 +8,7 @@ export default defineComponent({
   setup (_, ctx) {
     const router = useRouter()
 
+    // This handles the previous page logic
     const mobileBtns = computed(() => [
       {
         click:() => {

@@ -50,11 +50,15 @@ export default defineComponent({
         {ctx.slots.default && ctx.slots.default()}
       </div>
 
+      if (!props.to && !props.click) {
+        return <a class={classes.value} href={props.toExternal} target="_blank">{slot}</a>
+      }
+
       const eventHandlers : any = {}
 
       if (!props.to) {
         if (props.click) eventHandlers.onClick = props.click
-        return <button class={classes.value} {...eventHandlers}>{slot}</button>
+        return <button class={classes.value} {...eventHandlers} type={props.type}>{slot}</button>
       }
       return <router-link
         class={classes.value}

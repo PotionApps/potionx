@@ -18,7 +18,11 @@ module.exports = {
             '/conventions/': getDocsSidebar(),
             '/docs/': getDocsSidebar(),
             '/': getDocsSidebar()
-        }
+        },
+        // algolia: {
+        //     apiKey: '25626fae796133dc1e734c6bcaaeac3c',
+        //     indexName: 'docsearch',
+        // }
     }
 }
 
