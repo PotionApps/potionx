@@ -47,3 +47,11 @@ helm install \
   --version v1.2.0 \
   --create-namespace \
   --set installCRDs=true
+
+
+
+### Github
+enable improved container support
+
+generate PAT (settings, developer settings)
+save PAT in secrets as CR_PAT
