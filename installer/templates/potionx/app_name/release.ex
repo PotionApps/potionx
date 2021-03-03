@@ -21,7 +21,7 @@ defmodule <%= @app_module %>.Release do
     Application.fetch_env!(@app, :ecto_repos)
   end
 
-  defp seed do
+  def seed do
     Repo.get_by(User, [email: <%= @email %>])
     |> case do
       nil ->
