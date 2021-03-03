@@ -109,7 +109,6 @@ defmodule Mix.Tasks.Potionx.NewTest do
       # frontend
       assert_file "potionx_blog/.gitignore", "node_modules"
       assert_file "potionx_blog/.gitignore", "potionx_blog-*.tar"
-      assert_file "potionx_blog/.gitignore", ~r/\n$/
       # assert_file "potionx_blog/frontend/admin/vite.config.ts", "./src/main.ts"
       assert_file "potionx_blog/config/dev.exs", fn file ->
         assert file =~ "lib/potionx_blog_web/(live|views)/.*(ex)"
