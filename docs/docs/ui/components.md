@@ -24,7 +24,7 @@ import AccountToggle from "root/components/AccountToggle/AccountToggle";
 
 ## AdminBody
 
-Used to apply padding to match with the ```AdminHeader``` Component.
+Used to apply padding to match with the `AdminHeader` Component.
 
 #### Importing AdminBody
 ```tsx
@@ -44,7 +44,7 @@ import AdminBody from "root/components/AdminBody/AdminBody";
 
 ## AdminFooter
 
-Used as a mobile footer navigation. Nest it within the ```AdminMain``` component for proper spacing, and use the ```BtnMobileMenu``` component for matching prestyled buttons.
+Used as a mobile footer navigation. Nest it within the `AdminMain` component for proper spacing, and use the `BtnMobileMenu` component for matching prestyled buttons.
 
 #### Importing AdminFooter
 ```tsx
@@ -62,7 +62,7 @@ import  from "root/components/AdminFooter/AdminFooter";
 <br />
 
 #### AdminFooterProps
-**hideMenuBtn:** ```boolean``` ```optional``` \
+**hideMenuBtn:** `boolean` `optional` \
 Hide the toggle menu button
 
 <br />
@@ -70,7 +70,7 @@ Hide the toggle menu button
 
 ## AdminHeader
 
-Used as a header within ```AdminMain``` and shares common padding with ```AdminBody```. Other related components are ```AdminHeaderBtnWrap```, ```AdminHeaderTitle```, and ```AdminHeaderSubtitle```.
+Used as a header within `AdminMain` and shares common padding with `AdminBody`. Other related components are `AdminHeaderBtnWrap`, `AdminHeaderTitle`, and `AdminHeaderSubtitle`.
 
 #### Importing AdminHeader
 ```tsx
@@ -92,7 +92,7 @@ import AdminHeader from "root/components/AdminHeader/AdminHeader";
 
 ## AdminHeaderBtnWrap
 
-Used to wrap the ```Btn``` component within ```AdminHeader``` (or any variation of ```Btn```, such as ```BtnSmall```).
+Used to wrap the `Btn` component within `AdminHeader` (or any variation of `Btn`, such as `BtnSmall`).
 
 #### Importing AdminHeaderBtnWrap
 ```tsx
@@ -111,7 +111,7 @@ import AdminHeaderBtnWrap from "root/components/AdminHeaderBtnWrap/AdminHeaderBt
 <br />
 
 ## AdminHeaderSubtitle
-Used as a prestyle ```AdminHeader``` subtitle.
+Used as a prestyle `AdminHeader` subtitle.
 
 #### Importing AdminHeaderSubtitle
 ```tsx
@@ -128,7 +128,7 @@ import AdminHeaderSubtitle from "root/components/AdminHeaderSubtitle/AdminHeader
 <br />
 
 ## AdminHeaderTitle
-Used as a prestyle ```AdminHeader``` title.
+Used as a prestyle `AdminHeader` title.
 
 #### Importing AdminHeaderTitle
 ```tsx
@@ -145,7 +145,7 @@ import AdminHeaderTitle from "root/components/AdminHeaderTitle/AdminHeaderTitle"
 <br />
 
 ## AdminMain
-Used to nest ```AdminFooter``` with appropriate spacing for mobile.
+Used to nest `AdminFooter` with appropriate spacing for mobile.
 
 #### Importing AdminMain
 ```tsx
@@ -164,7 +164,7 @@ import AdminMain from "root/components/AdminMain/AdminMain";
 <br />
 
 ## AdminShell
-Used as a wrapper component within your ```App.tsx``` file to apply proper layout styling. It's direct children components are ```AdminSidebar``` and ```AdminMain```.
+Used as a wrapper component within your `App.tsx` file to apply proper layout styling. It's direct children components are `AdminSidebar` and `AdminMain`.
 
 #### Importing AdminShell
 ```tsx
@@ -204,7 +204,7 @@ import AdminSidebar from "root/components/AdminSidebar/AdminSidebar";
 ## Btn
 An unstyled link (or button) component with props to be used as a base for other link components. It can also be used within your project if you want to apply custom styling to an individual link. 
 
-Depending on which props you use, this component will either be an ```<a>```, a ```<router-link>```, or a ```<button>``` element.
+Depending on which props you use, this component will either be an `<a>`, a `<router-link>`, or a `<button>` element.
 
 #### Importing Btn
 ```tsx
@@ -227,48 +227,48 @@ import Btn from "root/components/Btn/Btn";
 <br />
 
 #### BtnProps
-**click:** ```function``` ```Optional``` \
-Passing down a click function will make this component a ```<button>``` element
+**click:** `function` `Optional` \
+Passing down a click function will make this component a `<button>` element
 <br/>
 
-**disabled:** ```Boolean``` ```Optional``` \
+**disabled:** `Boolean` `Optional` \
 Makes it non-clickable and opaque
 <br/>
 
-**icon:** ```FontAwesomeIcon``` ```Object``` ```Optional``` \
+**icon:** `FontAwesomeIcon` `Object` `Optional` \
 A FontAwesomeIcon icon
 <br/>
 
-**id:** ```String``` ```Optional``` \
+**id:** `String` `Optional` \
 Component Id
 <br/>
 
-**label:** ```String``` ```Optional```\
+**label:** `String` `Optional`\
 The component text field
 <br/>
 
-**reverse:** ```Boolean``` ```Optional```\
+**reverse:** `Boolean` `Optional`\
 Reverse the order or the icon and label 
 <br/>
 
-**to:** ```RouteLocationRaw``` ```Optional```\
-Passing down a route will make this component a ```<router-link>``` element 
+**to:** `RouteLocationRaw` `Optional`\
+Passing down a route will make this component a `<router-link>` element 
 <br/>
 
-**toExternal:** ```String``` ```Optional```\
-Passing down an external link will make this an ```<a>``` element that opens a new tab 
+**toExternal:** `String` `Optional`\
+Passing down an external link will make this an `<a>` element that opens a new tab 
 <br/>
 
-**type:** ```String``` ```Optional``` \
-Type applies to a ```<button>``` element when using the click prop 
+**type:** `String` `Optional` \
+Type applies to a `<button>` element when using the click prop 
 <br/>
 <br/>
 
-We've created multiple prestyled Btn components to speed up the development process. They all share props with the ```Btn``` Component, although some only utilize a few.
+We've created multiple prestyled Btn components to speed up the development process. They all share props with the `Btn` Component, although some only utilize a few.
 
 ### BtnIcon
 
-A lighter version of the ```Btn``` component that displays only an icon.
+A lighter version of the `Btn` component that displays only an icon.
 
 #### Importing BtnIcon
 ```tsx
@@ -277,7 +277,7 @@ import BtnIcon from "root/components/Btn/BtnIcon";
 
 ### BtnLogin
 
-A button that is styled for the ```Login``` component.
+A button that is styled for the `Login` component.
 
 #### Importing BtnLogin
 ```tsx
@@ -286,7 +286,7 @@ import BtnLogin from "root/components/Btn/BtnLogin";
 
 ### BtnMobileMenu
 
-A button that is styled to match the menu toggle button in the ```Menu``` component.
+A button that is styled to match the menu toggle button in the `Menu` component.
 
 #### Importing BtnMobileMenu
 ```tsx
@@ -313,7 +313,7 @@ import BtnSecondary from "root/components/Btn/BtnSecondary";
 
 ### BtnSmall
 
-A smaller version of ```Btn```.
+A smaller version of `Btn`.
 
 #### Importing BtnSmall
 ```tsx
@@ -322,7 +322,7 @@ import BtnSmall from "root/components/Btn/BtnSmall";
 
 ### BtnSmallPrimary
 
-A smaller version of ```BtnPrimary```.
+A smaller version of `BtnPrimary`.
 
 #### Importing BtnSmallPrimary
 ```tsx
@@ -331,7 +331,7 @@ import BtnSmallPrimary from "root/components/Btn/BtnSmallPrimary";
 
 ### BtnSmallSecondary
 
-A smaller version of ```BtnSecondary```.
+A smaller version of `BtnSecondary`.
 
 #### Importing BtnSmallSecondary
 ```tsx
@@ -395,29 +395,29 @@ import FieldCheckbox from "root/components/FieldCheckbox/FieldCheckbox";
 
 #### FieldCheckboxProps
 
-**label:** ```String``` ```Optional``` \
+**label:** `String` `Optional` \
 Checkbox label
 <br />
 
-**name:** ```String``` ```Required``` \
+**name:** `String` `Required` \
 Checkbox name
 <br />
 
-**options:** ```FieldCheckboxOptionProps``` ```Array``` ```Required``` \
+**options:** `FieldCheckboxOptionProps` `Array` `Required` \
 Checkbox options
 <br />
 
-**unstyled:** ```Boolean``` ```Optional``` \
+**unstyled:** `Boolean` `Optional` \
 Removes component styling 
 <br />
 <br />
 
 #### FieldCheckboxOptionProps
-**label:** ```String``` ```Required``` \
+**label:** `String` `Required` \
 Option label 
 <br />
 
-**value:** ```Any``` ```Required``` \
+**value:** `Any` `Required` \
 Option value
 
 <br />
@@ -461,19 +461,19 @@ import FieldInput from "root/components/FieldInput/FieldInput";
 <br />
 
 #### FieldInputProps
-**label:** ```String``` ```Optional``` \
+**label:** `String` `Optional` \
 Input label
 <br />
 
-**name:** ```String``` ```Required``` \
+**name:** `String` `Required` \
 Input name
 <br />
 
-**type:** ```String``` ```Default: "text"``` ```Optional``` \
+**type:** `String` `Default: "text"` `Optional` \
 Input type
 <br />
 
-**unstyled:** ```Boolean``` ```Optional``` \
+**unstyled:** `Boolean` `Optional` \
 Removes component styling 
 <br />
 
@@ -523,29 +523,29 @@ import FieldRadio from "root/components/FieldRadio/FieldRadio";
 
 #### FieldRadioProps
 
-**label:** ```String``` ```Optional``` \
+**label:** `String` `Optional` \
 Radio label
 <br />
 
-**name:** ```String``` ```Required``` \
+**name:** `String` `Required` \
 Radio name
 <br />
 
-**options:** ```FieldRadioOptionProps``` ```Array``` ```Required``` \
+**options:** `FieldRadioOptionProps` `Array` `Required` \
 Radio options
 <br />
 
-**unstyled:** ```Boolean``` ```Optional``` \
+**unstyled:** `Boolean` `Optional` \
 Removes component styling 
 <br />
 <br />
 
 #### FieldRadioOptionProps
-**label:** ```String``` ```Required``` \
+**label:** `String` `Required` \
 Option label 
 <br />
 
-**value:** ```Any``` ```Required``` \
+**value:** `Any` `Required` \
 Option value
 
 
@@ -575,15 +575,15 @@ import FieldSelect from "root/components/FieldSelect/FieldSelect";
 
 #### FieldSelectProps
 
-**label:** ```String``` ```Optional``` \
+**label:** `String` `Optional` \
 Select label
 <br />
 
-**name:** ```String``` ```Required``` \
+**name:** `String` `Required` \
 Select name
 <br />
 
-**unstyled:** ```Boolean``` ```Optional``` \
+**unstyled:** `Boolean` `Optional` \
 Removes component styling 
 
 <br />
@@ -608,15 +608,15 @@ import FieldTextarea from "root/components/FieldTextarea/FieldTextarea";
 
 #### FieldTextareaProps
 
-**label:** ```String``` ```Optional``` \
+**label:** `String` `Optional` \
 Textarea label
 <br />
 
-**name:** ```String``` ```Required``` \
+**name:** `String` `Required` \
 Textarea name
 <br />
 
-**unstyled:** ```Boolean``` ```Optional``` \
+**unstyled:** `Boolean` `Optional` \
 Removes component styling 
 
 <br />
@@ -674,67 +674,67 @@ import ModelTable from "root/components/ModelTable/ModelTable";
 
 #### ModelTableProp
 
-**checkboxClick:** ```Function``` ```Optional``` \
+**checkboxClick:** `Function` `Optional` \
 Action when the row checkbox is clicked
 <br />
 
-**columnOrder:** ```Array``` ```Optional``` \
+**columnOrder:** `Array` `Optional` \
 Column order for each row
 <br />
 
-**excludeTimestamps:** ```Boolean``` ```Optional``` \
+**excludeTimestamps:** `Boolean` `Optional` \
 Excludes timestamps
 <br />
 
-**headingLabels:** ```HeadingLabel``` ```Array``` ```Optional``` \
+**headingLabels:** `HeadingLabel` `Array` `Optional` \
 An array of labels to be used as column titles
 <br />
 
-**rows:** ```ModelRow``` ```Array``` ```Optional``` \
+**rows:** `ModelRow` `Array` `Optional` \
 An array of records
 <br />
 
 #### ModelRowProps
 
-**id:** ```String | null``` ```Required``` \
+**id:** `String | null` `Required` \
 The record Id
 <br />
 
-**description:** ```String | null``` ```Optional``` \
+**description:** `String | null` `Optional` \
 The record description
 <br />
 
-**icon:** ```String | null``` ```Optional``` \
+**icon:** `String | null` `Optional` \
 A record icon field
 <br />
 
-**image:** ```String | null``` ```Optional``` \
+**image:** `String | null` `Optional` \
 A record image
 <br />
 
-**insertedAt:** ```String | null``` ```Optional``` \
+**insertedAt:** `String | null` `Optional` \
 The time the record was created at
 <br />
 
-**subtitle:** ```String | null``` ```Optional``` \
+**subtitle:** `String | null` `Optional` \
 The record subtitle
 <br />
 
-**title:** ```String | null``` ```Optional``` \
+**title:** `String | null` `Optional` \
 The record title
 <br />
 
-**updatedAt:** ```String | null``` ```Optional``` \
+**updatedAt:** `String | null` `Optional` \
 The time the record was last updated at
 <br />
 
 #### HeadingLabelProps
 
-**key:** ```String``` ```Required``` \
+**key:** `String` `Required` \
 The column title key
 <br />
 
-**label:** ```String``` ```Required``` \
+**label:** `String` `Required` \
 The column title label
 
 
@@ -765,31 +765,31 @@ import Pagination from "root/components/Pagination/Pagination";
 
 #### PaginationProps
 
-**count:** ```Number``` ```Required``` \
+**count:** `Number` `Required` \
 The amount of records you currently have loaded
 <br />
 
-**countBefore:** ```Number``` ```Required``` \
+**countBefore:** `Number` `Required` \
 The amount of records prior to loading the current record set
 <br />
 
-**goToFirst:** ```Function``` ```Required``` \
+**goToFirst:** `Function` `Required` \
 Go to the first page of the records
 <br />
 
-**goToLast:** ```Function``` ```Required``` \
+**goToLast:** `Function` `Required` \
 Go to the last page of the records
 <br />
 
-**limit:** ```Number``` ```Required``` \
+**limit:** `Number` `Required` \
 How many records are shown per page
 <br />
 
-**next:** ```Function``` ```Required``` \
+**next:** `Function` `Required` \
 Go to the next page of records
 <br />
 
-**prev:** ```Function``` ```Required``` \
+**prev:** `Function` `Required` \
 Go to the previous page of records
 
 <br />
@@ -819,19 +819,19 @@ import Pill from "root/components/Pill/Pill";
 
 #### PillProps
 
-**icon:** ```FontAwesomeIcon``` ```Object``` ```Optional``` \
+**icon:** `FontAwesomeIcon` `Object` `Optional` \
 A FontAwesomeIcon icon
 <br/>
 
-**iconColor:** ```String``` ```Optional``` \
+**iconColor:** `String` `Optional` \
 A custom icon color that is passed to a style tag
 <br/>
 
-**label:** ```String``` ```Optional``` \
+**label:** `String` `Optional` \
 The component text field
 <br/>
 
-**remove:** ```Function``` ```Optional``` \
+**remove:** `Function` `Optional` \
 A function that actives the X icon, and removes the pill components
 
 <br />
@@ -858,26 +858,26 @@ import Search from "root/components/Search/Search";
 
 #### SearchProps
 
-**change:** ```Function``` ```Required``` \
+**change:** `Function` `Required` \
 The action that happens when a search value is input
 <br/>
 
-**focusOnMount:** ```Boolean`` ```Required``` \
+**focusOnMount:** `Boolean` `Required` \
 Focuses the search input on page load
 <br/>
 
-**placeholder:** ```String``` ```Optional``` \
+**placeholder:** `String` `Optional` \
 Search bar placeholder text
 <br/>
 
-**val:** ```Function``` ```Required``` \
+**val:** `Function` `Required` \
 Default search value
 
 <br />
 <br />
 
 ## SidebarNavItem
-A navigation item component. We use this by default in our themes in the ```AdminSidebar``` and ```Menu``` components. The component can be rendered as a ```<button>``` or a ```<router-link>``` depending on the props passed to it.
+A navigation item component. We use this by default in our themes in the `AdminSidebar` and `Menu` components. The component can be rendered as a `<button>` or a `<router-link>` depending on the props passed to it.
 
 #### Importing SidebarNavItem
 ```tsx
@@ -896,38 +896,38 @@ import SidebarNavItem from "root/components/SidebarNavItem/SidebarNavItem";
 
 #### SidebarNavItemProps
 
-**click:** ```Function``` ```Optional``` \
-The action that happens on click, and this makes the component a ```<button>```
+**click:** `Function` `Optional` \
+The action that happens on click, and this makes the component a `<button>`
 <br/>
 
-**icon:** ```FontAwesomeIcon``` ```Object``` ```Optional``` \
+**icon:** `FontAwesomeIcon` `Object` `Optional` \
 A FontAwesomeIcon icon
 <br/>
 
-**id:** ```String``` ```Optional``` \
+**id:** `String` `Optional` \
 The component Id
 <br/>
 
-**isChild:** ```Boolean``` ```Optional``` \
+**isChild:** `Boolean` `Optional` \
 Styles the component as a sub-nav item
 <br/>
 
-**label:** ```String``` ```Optional``` \
+**label:** `String` `Optional` \
 The component text field
 <br/>
 
-**notification:** ```Number``` ```Optional``` \
+**notification:** `Number` `Optional` \
 An option to pass down notifications
 <br/>
 
-**to:** ```RouteLocationRaw``` ```Optional``` \
-The route the component should link to, and this makes the component a ```<router-link>```
+**to:** `RouteLocationRaw` `Optional` \
+The route the component should link to, and this makes the component a `<router-link>`
 
 <br />
 <br />
 
 ## StateEmpty
-An empty state component, to be paired with the ```ModelTable``` component when there are no search results. If no props are passed down, the component will use it's default icon and label.
+An empty state component, to be paired with the `ModelTable` component when there are no search results. If no props are passed down, the component will use it's default icon and label.
 
 #### Importing StateEmpty
 ```tsx
@@ -940,11 +940,11 @@ import StateEmpty from "root/components/StateEmpty/StateEmpty";
 ```
 <br/>
 
-**icon:** ```FontAwesomeIcon``` ```Object``` ```Optional``` \
+**icon:** `FontAwesomeIcon` `Object` `Optional` \
 A FontAwesomeIcon icon
 <br/>
 
-**label:** ```String``` ```Optional``` \
+**label:**``String` `Optional` \
 The component text field
 
 <br />

@@ -1,8 +1,9 @@
 # Getting Started
 
 ## Prerequisites
-- [Node version 12 or above](https://nodejs.org/en/)
-- [Elixir version 1.11 or above](https://elixir-lang.org/install.html)
+- [Node](https://nodejs.org/en/) version 12 or above
+- [Elixir](https://elixir-lang.org/install.html) version 1.11 or above
+- [PostgresQL](https://www.postgresql.org/) version 9.6 or above
 - Familiarity with [Elixir](https://elixir-lang.org/) and [Phoenix](https://www.phoenixframework.org/)
 - Familiarity with [Vue](https://vuejs.org/) and JSX
 
@@ -12,14 +13,16 @@
 mix archive.install hex potionx_new
 mix potionx.new some_project_name
 ```
-This will create a project, install dependencies and run migrations based on the [conventions and code structure here](https://docs.potionapps.com/conventions/overview.html#file-structure).
+> If this is your first time using Elixir, you probably don't have [Hex](https://hexdocs.pm/phoenix/installation.html) installed. It should offer to install it for you, or you can run `mix local.hex`.
 
-In order to log in, update `config/dev.secret.exs` with the social platform(s) of your choice.
-- [Apple instructions](https://developer.apple.com/documentation/authenticationservices)
-- [Github instructions](https://docs.github.com/en/developers/apps/authorizing-oauth-apps)
-- [Google instructions](https://developers.google.com/identity/protocols/oauth2)
-- [Microsoft instructions](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app)
-- [Twitter instructions](https://developer.twitter.com/en/docs/authentication/guides)
+> Phoenix may also ask to install [Rebar](https://hexdocs.pm/phoenix/up_and_running.html). Go ahead with the installation as Rebar is used to build Erlang packages or you can manually run `mix local.rebar`
+
+While running `mix potionx.new some_project_name`, you will be asked to provide some information:
+- What is the user for your local Postgres database? (Defaults to Postgres)
+- What is the password to your local Postgres database?
+- What email should the default user have? (If you want to login using a social platform, enter the email here. You can change this later on in your database)
+
+This will create a project, install dependencies and run migrations based on the [conventions and code structure here](https://docs.potionapps.com/conventions/overview.html#file-structure).
 
 To start your app's backend, run the following in your new directory:
 ```bash
@@ -31,3 +34,25 @@ To start your app's frontend, run the following in your new directory:
 cd frontend/admin
 npm run dev
 ```
+
+## Social Login
+
+In order to log in, update `config/dev.secret.exs` with the social platform(s) of your choice.
+<!-- - [Apple instructions](https://developer.apple.com/documentation/authenticationservices) -->
+<!-- - [Github instructions](https://docs.github.com/en/developers/apps/authorizing-oauth-apps) -->
+<!-- - [Twitter instructions](https://developer.twitter.com/en/docs/authentication/guides) -->
+<!-- - [Google instructions](https://developers.google.com/identity/protocols/oauth2) -->
+
+### Microsoft
+
+Microsofts instructions can be found [here](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app)
+
+**Steps:**
+- Log in or create an account
+- Follow the steps to [register an application](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application)
+- Follow the steps to [Add a client secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
+- Fill in the `azure_ad` section of the `dev.secret.exs` file
+  - `client_id` is found in your app under `Application (client) ID`
+  - `client_secret` is found in Certificates & Secrets under `Client secrets` > `Value`
+  - `tenant_id` is found in your app under `Directory (tenant) ID`
+- Save and refire `mix phx.server`

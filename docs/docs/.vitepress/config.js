@@ -40,7 +40,7 @@ function getApiSidebar() {
                 { text: 'Overview', link: '/ui/overview' },
                 { text: 'Components', link: '/ui/components' },
                 { text: 'Hooks', link: '/ui/hooks' },
-                { text: 'Themes', link: '/ui/themes' }
+                // { text: 'Themes', link: '/ui/themes' }
             ]
         },
         {

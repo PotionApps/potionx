@@ -15,7 +15,7 @@ mix potionx.gen.gql_for_model SomeContext SomeModel
 ```
 
 The result of this command would add the following to your project:
-<pre>
+```bash
 .
 ├─ frontend
 │  └─ admin
@@ -57,7 +57,7 @@ The result of this command would add the following to your project:
 │  │  │   └─ <b>some_model_mutations_test.exs</b>
 │  │  └─ queries
 │  │      └─ <b>some_model_queries_test.exs</b>
-</pre>
+```
 
 It will also modify the following files to make your model accessible and editable in the admin area
 - ```frontend/admin/src/useAdminNavPrimary.ts```
