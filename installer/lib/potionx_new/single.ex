@@ -82,6 +82,7 @@ defmodule Potionx.New.Single do
     {:eex, "potionx/deployment/certIssuer.yaml", :app, "deployment/certIssuer.yaml"},
     {:eex, "potionx/deployment/index.ts", :app, "deployment/index.ts"},
     {:eex, "potionx/deployment/Pulumi.yaml", :app, "deployment/Pulumi.yaml"},
+    {:eex, "potionx/.github/workflows/ci.yml", :app, ".github/workflows/ci.yml"},
     {:migration, "potionx/migrations/create_users.exs", :app, "priv/repo/migrations/{timestamp}_create_users.exs"},
     # {:eex, "potionx/test/app_name_web/controllers/authorization_controller_test.exs", :app, "test/:lib_web_name/controllers/authorization_controller_test.exs"},
     {:eex, "potionx/priv/repo/potionx_seed.exs", :app, "priv/repo/potionx_seed.exs"},
