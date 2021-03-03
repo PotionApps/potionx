@@ -9,8 +9,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      DOCKERHUB_USERNAME: ${{ github.actor }}
-      DOCKERHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GHCR_USERNAME: ${{ github.actor }}
+      GHCR_TOKEN: ${{ secrets.CR_PAT }}
       FORCE_COLOR: 1
     steps:
       - uses: actions/checkout@v2
@@ -24,10 +24,10 @@ jobs:
           fi
           git checkout -b "$branch" || true
       - name: Docker Login
-        run: docker login https://docker.pkg.github.com --username "$DOCKERHUB_USERNAME" --password "$DOCKERHUB_TOKEN"
+        run: docker login https://ghcr.io --username "$GHCR_USERNAME" --password "$GHCR_TOKEN"
       - name: Download latest earthly
         run: "sudo /bin/sh -c 'wget https://github.com/earthly/earthly/releases/download/v0.5.4/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'"
       - name: Earthly version
         run: earthly --version
       - name: Run build
-        run: earthly --push +all
+        run: earthly -P --build-arg GITHUB_SHA=${{ github.sha }} --build-arg GITHUB_REPO=${{ github.repository }} --push +all

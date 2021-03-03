@@ -30,8 +30,6 @@ backend-test:
   COPY ./docker-compose.yml ./docker-compose.yml
   COPY mix.exs ./
   COPY --dir config lib priv shared test .
-  RUN sed -i 's/.*username:.*/username: "postgres",/' config/test.secret.exs
-  RUN sed -i 's/.*password:.*/password: "postgres",/' config/test.secret.exs
 
   # Compiling here improves caching, but slows down GHA speed
   # Removing until this feature exists https://github.com/earthly/earthly/issues/574
@@ -43,9 +41,9 @@ backend-test:
       # Check for DB to be up x 3
       # Run the database tests
       RUN docker-compose up -d & \
-          MIX_ENV=test mix deps.compile && \
+          MIX_ENV=test DATABASE_URL="-" mix deps.compile && \
           while ! pg_isready --host=localhost --port=5432 --quiet; do sleep 1; done; \
-          mix test
+          DATABASE_URL="ecto://postgres:postgres@localhost/test" mix test
   END
 
 frontend-deps:
@@ -57,7 +55,7 @@ frontend-deps:
 
 frontend-build:
   FROM +frontend-deps
-  COPY priv/static /priv/static
+  RUN mkdir -p /priv/static
   COPY frontend/admin .
   COPY --dir shared /
   RUN npm run build
@@ -77,7 +75,8 @@ docker:
   RUN chown nobody:nobody /app
   USER nobody:nobody
   COPY +release/app/_build/prod/rel/<%= @app_name %> .
-  RUN ls -al
   ENV HOME=/app
   CMD bin/<%= @app_name %> eval "<%= @app_module %>.Release.migrate" && bin/<%= @app_name %> start
-  SAVE IMAGE <%= @app_name %>:latest
+  ARG GITHUB_REPO
+  ARG GITHUB_SHA
+  SAVE IMAGE --push ghcr.io/$GITHUB_REPO/<%= @app_name %>:$GITHUB_SHA

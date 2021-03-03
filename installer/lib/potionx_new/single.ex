@@ -21,7 +21,6 @@ defmodule Potionx.New.Single do
     {:eex,  "phx_web/telemetry.ex",                     :project, "lib/:lib_web_name/telemetry.ex"},
     {:eex,  "phx_single/lib/app_name_web.ex",           :project, "lib/:lib_web_name.ex"},
     {:eex,  "phx_single/formatter.exs",                 :project, ".formatter.exs"},
-    {:eex,  "phx_single/gitignore",                     :project, ".gitignore"},
     {:eex,  "phx_test/support/channel_case.ex",         :project, "test/support/channel_case.ex"},
     {:eex,  "phx_test/support/conn_case.ex",            :project, "test/support/conn_case.ex"},
     {:eex,  "phx_single/test/test_helper.exs",          :project, "test/test_helper.exs"},
@@ -92,7 +91,8 @@ defmodule Potionx.New.Single do
     {:eex, "potionx/package.json", :app, "package.json"},
     {:eex, "potionx/README.md", :app, "README.md"},
     {:keep, "potionx/frontend", :project, "frontend"},
-    {:keep, "potionx/shared", :project, "shared"}
+    {:keep, "potionx/shared", :project, "shared"},
+    {:eex,  "potionx/gitignore", :project, ".gitignore"}
   ]
 
   def prepare_project(%Project{app: app} = project) when not is_nil(app) do
