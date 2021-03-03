@@ -39,8 +39,7 @@ function getApiSidebar() {
             children: [
                 { text: 'Overview', link: '/ui/overview' },
                 { text: 'Components', link: '/ui/components' },
-                { text: 'Hooks', link: '/ui/hooks' },
-                // { text: 'Themes', link: '/ui/themes' }
+                { text: 'Hooks', link: '/ui/hooks' }
             ]
         },
         {

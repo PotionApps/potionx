@@ -1,3 +1,0 @@
-# Themes
-
-## Admin theme
