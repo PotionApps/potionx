@@ -34,25 +34,3 @@ To start your app's frontend, run the following in your new directory:
 cd frontend/admin
 npm run dev
 ```
-
-## Social Login
-
-In order to log in, update `config/dev.secret.exs` with the social platform(s) of your choice.
-<!-- - [Apple instructions](https://developer.apple.com/documentation/authenticationservices) -->
-<!-- - [Github instructions](https://docs.github.com/en/developers/apps/authorizing-oauth-apps) -->
-<!-- - [Twitter instructions](https://developer.twitter.com/en/docs/authentication/guides) -->
-<!-- - [Google instructions](https://developers.google.com/identity/protocols/oauth2) -->
-
-### Microsoft
-
-Microsofts instructions can be found [here](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app)
-
-**Steps:**
-- Log in or create an account
-- Follow the steps to [register an application](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application)
-- Follow the steps to [Add a client secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
-- Fill in the `azure_ad` section of the `dev.secret.exs` file
-  - `client_id` is found in your app under `Application (client) ID`
-  - `client_secret` is found in Certificates & Secrets under `Client secrets` > `Value`
-  - `tenant_id` is found in your app under `Directory (tenant) ID`
-- Save and refire `mix phx.server`
