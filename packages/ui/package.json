@@ -15,7 +15,6 @@
     "scripts": {
         "dev": "vite",
         "build": "tsdx build --name potionapps-ui --format 'cjs,esm,umd'",
-        "prepare": "node bumpVersion.mjs",
         "test": "jest"
     },
     "peerDependencies": {
