@@ -4,13 +4,14 @@ In order to log in, update `config/dev.secret.exs` with the social platform(s) o
 <!-- - [Apple instructions](https://developer.apple.com/documentation/authenticationservices) -->
 <!-- - [Github instructions](https://docs.github.com/en/developers/apps/authorizing-oauth-apps) -->
 <!-- - [Twitter instructions](https://developer.twitter.com/en/docs/authentication/guides) -->
-<!-- - [Google instructions](https://developers.google.com/identity/protocols/oauth2) -->
+
+> We are in the process of adding logins for Apple, Github and Twitter. If you have any requests, let us know on our [Discord](https://discord.gg/JydTNZCS)
 
 ## Google
 Google's instructions can be found [here](https://developers.google.com/identity/protocols/oauth2)
 
 **Steps:**
-- Log in or create an account
+- [Log in or create an account](https://console.developers.google.com)
 - Search for "create a project"
 - Create a project
 - Return to the [main page](https://console.developers.google.com) and select `Credentials` from the left menu
@@ -30,7 +31,7 @@ Google's instructions can be found [here](https://developers.google.com/identity
 Microsoft's instructions can be found [here](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app)
 
 **Steps:**
-- Log in or create an account
+- [Log in or create an account](https://portal.azure.com/)
 - Follow the steps to [register an application](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application)
 - Follow the steps to [Add a client secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
 - Fill in the `azure_ad` section of the `dev.secret.exs` file
