@@ -72,7 +72,7 @@ defmodule Mix.Tasks.Potionx.New do
       Mix.shell().prompt("\nWhat is the user for your local Postgres database? (defaults to: postgres)")
       |> String.trim
 
-    %{project | local_db_user: user !== "" && user || "db"}
+    %{project | local_db_user: user !== "" && user || "postgres"}
   end
   def ask_for_local_db_user(%Project{} = project), do: project
 
