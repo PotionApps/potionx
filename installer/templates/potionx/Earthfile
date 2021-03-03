@@ -6,7 +6,6 @@ all:
   BUILD +release
   BUILD +docker
 
-
 backend-deps:
   ARG ELIXIR=1.11.3
   ARG OTP=23.2.5
@@ -48,7 +47,6 @@ backend-test:
           while ! pg_isready --host=localhost --port=5432 --quiet; do sleep 1; done; \
           mix test
   END
-
 
 frontend-deps:
   FROM node:14.16.0-alpine3.13

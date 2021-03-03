@@ -30,4 +30,4 @@ jobs:
       - name: Earthly version
         run: earthly --version
       - name: Run build
-        run: earthly --push +test-and-build
+        run: earthly --push +all

@@ -4,27 +4,6 @@ import * as digitalocean from "@pulumi/digitalocean";
 import * as k8s from "@pulumi/kubernetes";
 import * as pulumi from "@pulumi/pulumi";
 
-//
-// Install Helm?
-// https://helm.sh/
-///
-// install doctl or other
-// doctl auth init
-// doctl kubernetes cluster kubeconfig
-// doctl kubernetes cluster kubeconfig save potionx-do
-// Install pulumi
-// pulumi login --local
-// pulumi stack init <NAME>
-// pulumi config set digitalocean:token <YOUR_TOKEN_HERE> --secret
-// pulumi config set cloudflare:apiToken <token> --secret
-// pulumi config set subdomain <YOUR_SUBDOMAIN_NAME> (optional)
-// pulumi config set domain <YOUR_DOMAIN_NAME> (optional)
-// pulumi up
-// # wait a while (20+mins)
-// kubectl get pods --namespace cert-manager
-// handle email
-
-// Enable some configurable parameters.
 const appNamespace = (s: string) => "<%= @app_name %>" + s
 const config = new pulumi.Config();
 const appReplicaCount = config.getNumber("appReplicaCount") || 1;
@@ -35,7 +14,6 @@ const subdomain = config.get("subdomain") || "www";
 const hostname = subdomain + "." + domain
 const nodeCount = config.getNumber("nodeCount") || 2;
 const tlsSecretName = appNamespace('cert')
-
 
 
 /**
