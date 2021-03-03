@@ -22,8 +22,7 @@
     "graphql": "^15.5.0",
     "lodash-es": "^4.17.20",
     "vue": "^3.0.5",
-    "vue-router": "^4.0.4",
-    "@potionapps/ui": "0.0.19"
+    "vue-router": "^4.0.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.0.4",
