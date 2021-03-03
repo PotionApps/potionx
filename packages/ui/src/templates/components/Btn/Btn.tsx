@@ -50,7 +50,7 @@ export default defineComponent({
         {ctx.slots.default && ctx.slots.default()}
       </div>
 
-      if (!props.to && !props.click) {
+      if (props.toExternal) {
         return <a class={classes.value} href={props.toExternal} target="_blank">{slot}</a>
       }
 
