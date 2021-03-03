@@ -21,7 +21,7 @@ Google's instructions can be found [here](https://developers.google.com/identity
   - Select the type
   - Choose a name
   - Authorized Javascript origins: `http://localhost:4000`
-  - Authorized redirect URIs: `http:localhost:4000/api/v1/auth/google/callback`
+  - Authorized redirect URIs: `http://localhost:4000/api/v1/auth/google/callback`
 - Click create, and fill in the `google` section of the `dev.secret.exs` file:
   - client_id
   - client_secret

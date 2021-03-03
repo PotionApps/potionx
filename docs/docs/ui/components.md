@@ -24,7 +24,7 @@ import AccountToggle from "root/components/AccountToggle/AccountToggle";
 
 ## AdminBody
 
-Used to apply padding to match with the `AdminHeader` Component.
+Used to apply padding to match with the [AdminHeader](/ui/components.html#adminheader) Component.
 
 #### Importing AdminBody
 ```tsx
@@ -44,7 +44,7 @@ import AdminBody from "root/components/AdminBody/AdminBody";
 
 ## AdminFooter
 
-Used as a mobile footer navigation. Nest it within the `AdminMain` component for proper spacing, and use the `BtnMobileMenu` component for matching prestyled buttons.
+Used as a mobile footer navigation. Nest it within the [AdminMain](/ui/components.html#adminmain) component for proper spacing, and use the [BtnMobileMenu](/ui/components.html#btnmobilemenu) component for matching prestyled buttons.
 
 #### Importing AdminFooter
 ```tsx
@@ -62,6 +62,7 @@ import  from "root/components/AdminFooter/AdminFooter";
 <br />
 
 #### AdminFooterProps
+
 **hideMenuBtn:** `boolean` `optional` \
 Hide the toggle menu button
 
@@ -70,7 +71,7 @@ Hide the toggle menu button
 
 ## AdminHeader
 
-Used as a header within `AdminMain` and shares common padding with `AdminBody`. Other related components are `AdminHeaderBtnWrap`, `AdminHeaderTitle`, and `AdminHeaderSubtitle`.
+Used as a header within [AdminMain](/ui/components.html#adminmain) and shares common padding with [AdminBody](/ui/components.html#adminbody). Other related components are [AdminHeaderBtnWrap](/ui/components.html#adminheaderbtnwrap), [AdminHeaderTitle](/ui/components.html#adminheadertitle), and [AdminHeaderSubtitle](/ui/components.html#adminheadersubtitle).
 
 #### Importing AdminHeader
 ```tsx
@@ -92,7 +93,7 @@ import AdminHeader from "root/components/AdminHeader/AdminHeader";
 
 ## AdminHeaderBtnWrap
 
-Used to wrap the `Btn` component within `AdminHeader` (or any variation of `Btn`, such as `BtnSmall`).
+Used to wrap the [Btn](/ui/components.html#btn) component within [AdminHeader](/ui/components.html#adminheader) (or any variation of [Btn](/ui/components.html#btn), such as [BtnSmall](/ui/components.html#btnsmall)).
 
 #### Importing AdminHeaderBtnWrap
 ```tsx
@@ -111,7 +112,7 @@ import AdminHeaderBtnWrap from "root/components/AdminHeaderBtnWrap/AdminHeaderBt
 <br />
 
 ## AdminHeaderSubtitle
-Used as a prestyle `AdminHeader` subtitle.
+Used as a prestyle [AdminHeader](/ui/components.html#adminheader) subtitle.
 
 #### Importing AdminHeaderSubtitle
 ```tsx
@@ -128,7 +129,7 @@ import AdminHeaderSubtitle from "root/components/AdminHeaderSubtitle/AdminHeader
 <br />
 
 ## AdminHeaderTitle
-Used as a prestyle `AdminHeader` title.
+Used as a prestyle [AdminHeader](/ui/components.html#adminheader) title.
 
 #### Importing AdminHeaderTitle
 ```tsx
@@ -145,7 +146,7 @@ import AdminHeaderTitle from "root/components/AdminHeaderTitle/AdminHeaderTitle"
 <br />
 
 ## AdminMain
-Used to nest `AdminFooter` with appropriate spacing for mobile.
+Used to nest [AdminFooter](/ui/components.html#adminfooter) with appropriate spacing for mobile.
 
 #### Importing AdminMain
 ```tsx
@@ -164,7 +165,7 @@ import AdminMain from "root/components/AdminMain/AdminMain";
 <br />
 
 ## AdminShell
-Used as a wrapper component within your `App.tsx` file to apply proper layout styling. It's direct children components are `AdminSidebar` and `AdminMain`.
+Used as a wrapper component within your `App.tsx` file to apply proper layout styling. It's direct children components are [AdminSidebar](/ui/components.html#adminsidebar) and [AdminMain](/ui/components.html#adminmain).
 
 #### Importing AdminShell
 ```tsx
@@ -264,11 +265,11 @@ Type applies to a `<button>` element when using the click prop
 <br/>
 <br/>
 
-We've created multiple prestyled Btn components to speed up the development process. They all share props with the `Btn` Component, although some only utilize a few.
+We've created multiple prestyled Btn components to speed up the development process. They all share props with the [Btn](/ui/components.html#btn) Component, although some only utilize a few.
 
 ### BtnIcon
 
-A lighter version of the `Btn` component that displays only an icon.
+A lighter version of the [Btn](/ui/components.html#btn) component that displays only an icon.
 
 #### Importing BtnIcon
 ```tsx
@@ -277,7 +278,7 @@ import BtnIcon from "root/components/Btn/BtnIcon";
 
 ### BtnLogin
 
-A button that is styled for the `Login` component.
+A button that is styled for the login route.
 
 #### Importing BtnLogin
 ```tsx
@@ -286,7 +287,7 @@ import BtnLogin from "root/components/Btn/BtnLogin";
 
 ### BtnMobileMenu
 
-A button that is styled to match the menu toggle button in the `Menu` component.
+A button that is styled to match the menu toggle button in the [Menu](/ui/components.html#menu) component.
 
 #### Importing BtnMobileMenu
 ```tsx
@@ -313,7 +314,7 @@ import BtnSecondary from "root/components/Btn/BtnSecondary";
 
 ### BtnSmall
 
-A smaller version of `Btn`.
+A smaller version of [Btn](/ui/components.html#btn).
 
 #### Importing BtnSmall
 ```tsx
@@ -322,7 +323,7 @@ import BtnSmall from "root/components/Btn/BtnSmall";
 
 ### BtnSmallPrimary
 
-A smaller version of `BtnPrimary`.
+A smaller version of [BtnPrimary](/ui/components.html#btnprimary).
 
 #### Importing BtnSmallPrimary
 ```tsx
@@ -331,7 +332,7 @@ import BtnSmallPrimary from "root/components/Btn/BtnSmallPrimary";
 
 ### BtnSmallSecondary
 
-A smaller version of `BtnSecondary`.
+A smaller version of [BtnSecondary](/ui/components.html#btnsecondary).
 
 #### Importing BtnSmallSecondary
 ```tsx
@@ -877,7 +878,7 @@ Default search value
 <br />
 
 ## SidebarNavItem
-A navigation item component. We use this by default in our themes in the `AdminSidebar` and `Menu` components. The component can be rendered as a `<button>` or a `<router-link>` depending on the props passed to it.
+A navigation item component. We use this by default in our themes in the [AdminSidebar](/ui/components.html#adminsidebar) and [Menu](/ui/components.html#menu) components. The component can be rendered as a `<button>` or a `<router-link>` depending on the props passed to it.
 
 #### Importing SidebarNavItem
 ```tsx
@@ -927,7 +928,7 @@ The route the component should link to, and this makes the component a `<router-
 <br />
 
 ## StateEmpty
-An empty state component, to be paired with the `ModelTable` component when there are no search results. If no props are passed down, the component will use it's default icon and label.
+An empty state component, to be paired with the [ModelTable](/ui/components.html#modeltable) component when there are no search results. If no props are passed down, the component will use it's default icon and label.
 
 #### Importing StateEmpty
 ```tsx

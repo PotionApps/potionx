@@ -7,4 +7,4 @@ We are actively adding new components to our toolkit, so if you wish to access c
 potionapps-ui component <some-component-name> --destination=<some-destination>
 ```
 
-> **Warning:** Running this command for a component that is already in your project will overwrite your current file. 
+> **Warning:** Running this command for a component that is already in your project will overwrite your current file.
