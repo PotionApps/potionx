@@ -24,7 +24,6 @@ import FieldTextarea from 'root/components/FieldTextarea/FieldTextarea';
 import mutation from 'shared/models/__context__/__model__/__model_graphql_case__Mutation.gql'
 import schema from 'shared/models/__context__/__model__/__model_graphql_case__.json'
 import single from 'shared/models/__context__/__model__/__model_graphql_case__Single.gql'
-import FieldError from 'root/components/FieldError/FieldError';
 
 export default defineComponent({
   setup () {

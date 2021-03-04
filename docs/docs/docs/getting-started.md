@@ -20,7 +20,7 @@ mix potionx.new some_project_name
 While running `mix potionx.new some_project_name`, you will be asked to provide some information:
 - What is the user for your local Postgres database? (Defaults to Postgres)
 - What is the password to your local Postgres database?
-- What email should the default user have? (If you want to login using a social platform, enter the email here. You can change this later on in your database)
+- What email should the default user have? (This needs to be the email you use to log into one of the [social logins](/docs/social.html) we offer)
 
 This will create a project, install dependencies and run migrations based on the [conventions and code structure here](https://docs.potionapps.com/conventions/overview.html#file-structure).
 

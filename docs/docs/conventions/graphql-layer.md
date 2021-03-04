@@ -5,7 +5,7 @@ It receives JSON from the web layer containing GraphQL queries and transforms th
 ![architecture](./graphql-layer.svg)
 
 ## Default Middleware
-By default, Potionx adds the following middleware to ```schema.ex```:
+By default, Potionx adds the following middleware to `schema.ex`:
 
 ### Potionx.Middleware.Mutation
 This normalizes the results of mutations to return a map containing the result assigned to the node property:
@@ -16,7 +16,7 @@ For example, a user mutation would return:
 ```
 
 ### Potionx.Middleware.ServiceContext
-This converts incoming variables to a ```Potionx.Context.Service``` struct.
+This converts incoming variables to a `Potionx.Context.Service` struct.
 
 For example: 
 ```elixir
@@ -34,10 +34,10 @@ gets converted to:
 ```
 
 ### Potionx.Middleware.Scope
-This middleware uses the data layer's ```repo.ex``` to set variables required for user/organization multitenancy based on the ideas from [Ecto's Multi tenancy with foreign keys](https://hexdocs.pm/ecto/multi-tenancy-with-foreign-keys.html)
+This middleware uses the data layer's `repo.ex` to set variables required for user/organization multitenancy based on the ideas from [Ecto's Multi tenancy with foreign keys](https://hexdocs.pm/ecto/multi-tenancy-with-foreign-keys.html)
 
 ## Default Types
-Potionx adds the following types by default which are used by the [generators](/generators/model):
+Potionx adds the following types by default which are used by the [generators](/docs/generators.html#generating-backend-and-frontend-scaffold-code-for-data-models-ecto-schemas):
 
 ```elixir
  enum :sort_order do
@@ -88,8 +88,8 @@ user_types.ex
 ```
 
 ## Permissions
-Potionx includes a ```Potionx.Middleware.RolesAuthorization``` module to handle authorization at the GraphQL level.
-It authorizes requests based on roles in the ```Potionx.Service.Context``` passed in. It is set to :admin for all mutations and queries by default.
+Potionx includes a `Potionx.Middleware.RolesAuthorization` module to handle authorization at the GraphQL level.
+It authorizes requests based on roles in the `Potionx.Service.Context` passed in. It is set to `:admin` for all mutations and queries by default.
 
 For example:
 ```elixir
@@ -115,4 +115,4 @@ end
 ```
 
 ## Collections and Relay
-By default collection queries (requests several models) adhere to the [Relay specification](https://hexdocs.pm/absinthe/relay.html). Offset pagination is used at the moment but will be swapped to [cursor pagination soon](https://use-the-index-luke.com/blog/2013-07/pagination-done-the-postgresql-way). 
+By default collection queries (requests several models) adhere to the [Relay specification](https://hexdocs.pm/absinthe/relay.html). Offset pagination is used at the moment but will be swapped to [cursor pagination](https://use-the-index-luke.com/blog/2013-07/pagination-done-the-postgresql-way) soon. 

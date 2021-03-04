@@ -15,6 +15,8 @@ mix phx.gen.schema SomeContext.SomeModel some_models title:string views:integer
 mix potionx.gen.gql_for_model SomeContext SomeModel
 ```
 
+> You will need to run `mix ecto.migrate` after running this command
+
 The result of this command would add the following to your project:
 ```bash
 .
@@ -64,23 +66,6 @@ It will also modify the following files to make your model accessible and editab
 - ```frontend/admin/src/useAdminNavPrimary.ts```
 - ```frontend/admin/src/routes/index.ts```
 - ```frontend/admin/src/routes/routeNames.ts``` 
-
-## Generating UI components
-We are actively building a collection of ready-made UI components ready to be copied over to your project.
-
-The following command can be used to copy over a UI component to your project:
-```bash
-potionapps-ui component <some-component-name> --destination=<some-destination>
-```
-
-Example usage: 
-```
-potionapps-ui component Btn --destination=./frontend/admin/components
-```
-This would move the ```Btn``` component to your project.
-
-See the [UI generators section](/api/ui.html) for a list of available components.
-
 
 ## Generating GraphQL Typescript Definitions for your Mutations, Queries and Types
 Potionx includes a convenience command to generate types for your GraphQL schema. To do so, make sure your server is started with ```mix phx.server``` and then open another terminal and navigate to the ```shared``` folder.

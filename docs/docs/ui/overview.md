@@ -1,10 +1,7 @@
 # UI
 
-The UI packages comes with a collection of ready-made components that are automatically copied into your project upon creation. They can be found under `frontend/admin/src/components` and referred to by referencing `root/components`. 
+We are actively building a collection of ready-made UI components and themes that can easily be ported over to your project. 
 
-We are actively adding new components to our toolkit, so if you wish to access components that aren't in your current project, you can manually copy them over using the following command:
-```bash
-potionapps-ui component <some-component-name> --destination=<some-destination>
-```
+Components can be found under `frontend/admin/src/components` and referred to by referencing `root/components`.
 
-> **Warning:** Running this command for a component that is already in your project will overwrite your current file.
+Check out the [roadmap](/roadmap.html#components) to see the upcoming components, or suggest some by joining our [Discord](https://discord.gg/sUuDw9Jtxm) or our [Hellonext](https://potion.hellonext.co/) board.

@@ -29,6 +29,12 @@ We're working on deployment for:
 
 Status: `In progress`
 
+### Pagination
+
+Swap offset pagination will be swapped to [cursor pagination](https://use-the-index-luke.com/blog/2013-07/pagination-done-the-postgresql-way)
+
+Status: `Coming soon`
+
 ### Social Logins
 
 - Apple

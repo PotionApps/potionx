@@ -1,5 +1,5 @@
 # Web Layer
-This layer receives HTTP requests and manages web sockets. It is mostly contains [Phoenix's](https://www.phoenixframework.org/) defaults. It communicates with the GraphQL layer via HTTP and Websocket JSON requests.
+This layer receives HTTP requests and manages web sockets. It mostly contains [Phoenix's](https://www.phoenixframework.org/) defaults. It communicates with the GraphQL layer via HTTP and Websocket JSON requests.
 
 ![architecture](./web-layer.svg)
 
