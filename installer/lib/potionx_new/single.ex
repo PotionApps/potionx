@@ -85,7 +85,7 @@ defmodule Potionx.New.Single do
     {:migration, "potionx/migrations/create_users.exs", :app, "priv/repo/migrations/{timestamp}_create_users.exs"},
     # {:eex, "potionx/test/app_name_web/controllers/authorization_controller_test.exs", :app, "test/:lib_web_name/controllers/authorization_controller_test.exs"},
     {:eex, "potionx/priv/repo/potionx_seed.exs", :app, "priv/repo/potionx_seed.exs"},
-    {:eex, "potionx/build.sh", :app, "build.sh"},
+    {:eex, "potionx/docker-compose.yml", :app, "docker-compose.yml"},
     {:eex, "potionx/Earthfile", :app, "Earthfile"},
     {:eex, "potionx/.earthignore", :app, ".earthignore"},
     {:eex, "potionx/package.json", :app, "package.json"},
