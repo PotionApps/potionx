@@ -52,5 +52,6 @@ pulumi config set passwordDb A-STRONG-PASSWORD --secret # Choose a very strong p
 pulumi config set passwordRedis A-STRONG-PASSWORD --secret # Choose a very strong password for your Redis user, mix phx.gen.secret can help
 pulumi config set secretKeyBase A-STRONG-PASSWORD --secret # Choose a very strong password for your Redis user, mix phx.gen.secret can help
 ```
+Then, add your Pulumi ```stack``` name to https://github.com/USERNAME-OR-ORG/PROJECT-NAME/settings/secrets/actions in a variable called ```PULUMI_STACK```.
 
 ## Push your code to Github
