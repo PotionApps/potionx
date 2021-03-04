@@ -2,7 +2,7 @@
 
 ## API/GraphQL Permissions
 
-Permissions for mutations and queries are handled at the ```GraphQL layer``` of your app.
+Permissions for mutations and queries are handled at the `GraphQL layer` of your app.
 ```bash
 .
 ├─ config
@@ -22,7 +22,7 @@ Permissions for mutations and queries are handled at the ```GraphQL layer``` of 
 │  ├─ some_project_name_web
 ```
 
-The permission system that comes with Potionx is based on roles, a property of users. You can see them in your ```user.ex``` file:
+The permission system that comes with Potionx is based on roles, a property of users. You can see them in your `user.ex` file:
 
 ```elixir
 defmodule SomeProject.Users.User do
@@ -42,7 +42,7 @@ end
 
 To alter mutation or query permissions for a particular model, open the mutation or query file for that model and edit the roles:
 
-For example, to allow the role ```:guest``` to query users, open ```user_queries.ex``` and add ```:guest``` to the roles list:
+For example, to allow the role `:guest` to query users, open `user_queries.ex` and add `:guest` to the roles list:
 ```elixir
 defmodule SomeProjectGraphQl.Schema.UserQueries do
   use Absinthe.Schema.Notation
@@ -67,10 +67,13 @@ defmodule SomeProjectGraphQl.Schema.UserQueries do
 end
 ````
 
-The ```roles``` option of the ```Potionx.Middleware.RolesAuthorization``` middleware expects a list of roles that are allowed to access or mutation the resource of interest.
+The `roles` option of the `Potionx.Middleware.RolesAuthorization` middleware expects a list of roles that are allowed to access or mutation the resource of interest.
 
-To learn more about the ```Potionx.Middleware.RolesAuthorization``` middleware and the GraphQL layer, see the [architecture section on GraphQL](/conventions/graphql-layer.html).
+To learn more about the `Potionx.Middleware.RolesAuthorization` middleware and the GraphQL layer, see the [architecture section on GraphQL](/conventions/graphql-layer.html).
 
 
 ## Restricting access to routes on the frontend
+
 Coming soon...
+
+Check out our [Roadmap](/roadmap.html#documentation) for more details

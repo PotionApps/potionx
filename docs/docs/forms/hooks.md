@@ -64,7 +64,15 @@ import FieldLabel from "../FieldLabel";
 import useField from "../../useField";
 import useFieldInput from "./useFieldInput";
 
+export interface FieldInputProps {
+  label?: string
+  name: string
+  type?: string
+  unstyled?: boolean
+}
+
 export default defineComponent({
+  name: "FieldInput",
   props: {
     disableErrors: Boolean,
     label: String,
@@ -78,7 +86,7 @@ export default defineComponent({
     },
     unstyled: Boolean
   },
-  setup (props, ctx) {
+  setup (props: FieldInputProps, ctx) {
     const {
       change,
       errors,
@@ -90,7 +98,6 @@ export default defineComponent({
     })
 
     const {
-      classes,
       internalValue,
       onInput
     } = useFieldInput({
@@ -100,10 +107,15 @@ export default defineComponent({
       val
     })
 
+    const classes = computed(() => {
+      const base = "rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full "
+      return base + (showErrors?.value ? "border-red-300 text-red-800" : "border-gray-300")
+    })
+
     return () => <>
       {
         props.label &&
-        <FieldLabel class="block mb-1">{props.label}</FieldLabel>
+        <FieldLabel>{props.label}</FieldLabel>
       }
       <input
         class={classes.value}
@@ -116,7 +128,7 @@ export default defineComponent({
       />
       {
         showErrors.value &&
-        <FieldError class="mt-1">{errors.value.join(", ")}</FieldError>
+        <FieldError>{errors.value.join(", ")}</FieldError>
       }
     </>
   }
@@ -174,27 +186,32 @@ export default (args: UseFieldCheckboxArgs) => {
 Example usage:
 ```tsx
 import { computed, defineComponent, PropType } from "vue";
-import FieldError from "../FieldError/FieldError";
-import FieldLabel from "../FieldLabel/FieldLabel";
-import { useField, useFieldCheckbox } from "@potionapps/forms";
+import FieldError from "../FieldError";
+import FieldLabel from "../FieldLabel";
+import useField from "../../useField";
+import useFieldCheckbox from "./useFieldCheckbox";
 
 export type FieldCheckboxOptionProps = {
   label: string
   value: any
 }
 
+export interface FieldCheckboxProps {
+  label?: string
+  name: string
+  options?: FieldCheckboxOptionProps[]
+  unstyled?: boolean
+}
+
 export default defineComponent({
+  name: "FieldCheckbox",
   props: {
-    disableErrors: Boolean,
     label: String,
     name: {
       required: true,
       type: String
     },
-    options: {
-      type: Array as PropType<FieldCheckboxOptionProps[]>
-    },
-    type: String,
+    options: Array as PropType<FieldCheckboxOptionProps[]>,
     unstyled: Boolean
   },
   setup (props, ctx) {
@@ -209,7 +226,6 @@ export default defineComponent({
     })
     
     const {
-      classes,
       internalValue,
       onChange,
     } = useFieldCheckbox({
@@ -217,6 +233,11 @@ export default defineComponent({
       name: props.name,
       showErrors,
       val
+    })
+
+    const classes = computed(() => {
+      const base = "rounded text-blue-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
+      return base + (showErrors?.value ? "border-red-300 text-red-800" : "border-gray-300")
     })
     
     return () => <>
@@ -247,7 +268,7 @@ export default defineComponent({
       }
       {
         showErrors.value &&
-        <FieldError class="mt-1">{errors.value.join(", ")}</FieldError>
+        <FieldError>{errors.value.join(", ")}</FieldError>
       }
     </>
   }
@@ -403,30 +424,35 @@ export default (args: UseFieldRadioArgs) => {
 Example usage:
 ```tsx
 import { computed, defineComponent, PropType } from "vue";
-import { useField, useFieldRadio } from "@potionapps/forms";
-import FieldError from "../FieldError/FieldError";
-import FieldLabel from "../FieldLabel/FieldLabel";
+import useField from "../../useField";
+import FieldError from "../FieldError";
+import FieldLabel from "../FieldLabel";
+import useFieldRadio from "./useFieldRadio";
 
-export type FieldCheckboxOptionProps = {
+export type FieldRadioOptionProps = {
   label: string
   value: any
 }
 
+export interface FieldRadioProps {
+  label?: string
+  name: string
+  options?: FieldRadioOptionProps[]
+  unstyled?: boolean
+}
+
 export default defineComponent({
+  name: "FieldRadio",
   props: {
-    disableErrors: Boolean,
     label: String,
     name: {
       required: true,
       type: String
     },
-    options: {
-      type: Array as PropType<FieldCheckboxOptionProps[]>
-    },
-    type: String,
+    options: Array as PropType<FieldRadioOptionProps[]>,
     unstyled: Boolean
   },
-  setup (props, ctx) {
+  setup (props: FieldRadioProps, ctx) {
     const {
       change,
       errors,
@@ -438,7 +464,6 @@ export default defineComponent({
     })
     
     const {
-      classes,
       internalValue,
       onChange
     } = useFieldRadio({
@@ -446,6 +471,11 @@ export default defineComponent({
       name: props.name,
       showErrors,
       val
+    })
+
+    const classes = computed(() => {
+      const base = "border-gray-300 text-blue-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
+      return base + (showErrors?.value ? "border-red-300 text-red-800" : "border-gray-300")
     })
    
     return () => <>
@@ -477,7 +507,7 @@ export default defineComponent({
       }
        {
         showErrors.value &&
-        <FieldError class="mt-1">{errors.value.join(", ")}</FieldError>
+        <FieldError>{errors.value.join(", ")}</FieldError>
       }
     </>
   }
@@ -527,22 +557,29 @@ export default (args: UseFieldSelectArgs) => {
 Example usage:
 ```tsx
 import { computed, defineComponent } from "vue";
-import { useField, useFieldSelect } from "@potionapps/forms";
-import FieldError from "../FieldError/FieldError";
-import FieldLabel from "../FieldLabel/FieldLabel";
+import FieldError from "../FieldError";
+import FieldLabel from "../FieldLabel";
+import useField from "../../useField";
+import useFieldSelect from "./useFieldSelect";
+
+export interface FieldSelectProps {
+  name: string
+  label?: string
+  unstyled?: boolean
+}
+
 
 export default defineComponent({
+  name: "FieldSelect",
   props: {
-    disableErrors: Boolean,
     label: String,
     name: {
       required: true,
       type: String
     },
-    type: String,
     unstyled: Boolean
   },
-  setup (props, ctx) {
+  setup (props: FieldSelectProps, ctx) {
     const {
       change,
       errors,
@@ -552,9 +589,8 @@ export default defineComponent({
     } = useField({
       name: computed(() => props.name)
     })
-    
+   
     const {
-      classes,
       internalValue,
       onChange
     } = useFieldSelect({
@@ -563,11 +599,16 @@ export default defineComponent({
       showErrors,
       val
     })
+ 
+    const classes = computed(() => {
+      const base = "block rounded-md shadow-sm focus:border-indigo-300 p-2 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full "
+      return base + (showErrors?.value ? "border-red-300 text-red-800" : "border-gray-300")
+    })
 
     return () => <>
       {
         props.label &&
-        <FieldLabel class="block mb-1">{props.label}</FieldLabel>
+        <FieldLabel>{props.label}</FieldLabel>
       }
       <select
         class={classes.value}
@@ -581,7 +622,7 @@ export default defineComponent({
       </select>
       {
         showErrors.value &&
-        <FieldError class="mt-1">{errors.value.join(", ")}</FieldError>
+        <FieldError>{errors.value.join(", ")}</FieldError>
       }
     </>
   }
@@ -630,23 +671,29 @@ export default (args: UseFieldTextareaArgs) => {
 
 Example usage:
 ```tsx
-import { computed, defineComponent } from "vue";
-import FieldError from "../FieldError/FieldError";
-import FieldLabel from "../FieldLabel/FieldLabel";
-import { useField, useFieldTextarea } from "@potionapps/forms";
+import { computed, defineComponent, ref, watch } from "vue";
+import useField from "../../useField";
+import FieldError from "../FieldError";
+import FieldLabel from "../FieldLabel";
+import useFieldTextarea from "./useFieldTextarea";
+
+export interface FieldTextareaProps {
+  label?: string
+  name: string
+  unstyled?: boolean
+}
 
 export default defineComponent({
+  name: "FieldTextarea",
   props: {
-    disableErrors: Boolean,
     label: String,
     name: {
       required: true,
       type: String
     },
-    type: String,
     unstyled: Boolean
   },
-  setup (props, ctx) {
+  setup (props: FieldTextareaProps, ctx) {
     const {
       change,
       errors,
@@ -658,7 +705,6 @@ export default defineComponent({
     })
     
     const {
-      classes,
       internalValue,
       onInput
     } = useFieldTextarea({
@@ -668,10 +714,15 @@ export default defineComponent({
       val
     })
 
+    const classes = computed(() => {
+      const base = "rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full "
+      return base + (showErrors?.value ? "border-red-300 text-red-800" : "border-gray-300")
+    })
+
     return () => <>
       {
         props.label &&
-        <FieldLabel class="block mb-1">{props.label}</FieldLabel>
+        <FieldLabel>{props.label}</FieldLabel>
       }
       <textarea
         class={classes.value}
@@ -684,7 +735,7 @@ export default defineComponent({
       </textarea>
       {
         showErrors.value &&
-        <FieldError class="mt-1">{errors.value.join(", ")}</FieldError>
+        <FieldError>{errors.value.join(", ")}</FieldError>
       }
     </>
   }

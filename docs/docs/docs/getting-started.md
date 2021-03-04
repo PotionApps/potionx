@@ -13,9 +13,9 @@
 mix archive.install hex potionx_new
 mix potionx.new some_project_name
 ```
-> If this is your first time using Elixir, you probably don't have [Hex](https://hexdocs.pm/phoenix/installation.html) installed. It should offer to install it for you, or you can run `mix local.hex`.
+> If this is your first time using Phoenix, it will offer to install [Hex](https://hexdocs.pm/phoenix/installation.html) for you, or you can manually run `mix local.hex`.
 
-> Phoenix may also ask to install [Rebar](https://hexdocs.pm/phoenix/up_and_running.html). Go ahead with the installation as Rebar is used to build Erlang packages or you can manually run `mix local.rebar`
+> Phoenix may also ask to install [Rebar](https://hexdocs.pm/phoenix/up_and_running.html). Go ahead with the installation as Rebar is used to build Erlang packages, or you can manually run `mix local.rebar`
 
 While running `mix potionx.new some_project_name`, you will be asked to provide some information:
 - What is the user for your local Postgres database? (Defaults to Postgres)
@@ -24,12 +24,12 @@ While running `mix potionx.new some_project_name`, you will be asked to provide 
 
 This will create a project, install dependencies and run migrations based on the [conventions and code structure here](https://docs.potionapps.com/conventions/overview.html#file-structure).
 
-To start your app's backend, run the following in your new directory:
+To start your app's backend, run the following command in your new directory:
 ```bash
 mix phx.server
 ```
 
-To start your app's frontend, run the following in your new directory:
+To start your app's frontend, run the following commands in your new directory:
 ```
 cd frontend/admin
 npm run dev

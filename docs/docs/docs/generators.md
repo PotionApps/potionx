@@ -1,7 +1,8 @@
 # Generators
 
 ## Generating backend and frontend scaffold code for data models (Ecto Schemas)
-Potionx includes a cli tool to quickly produce boilerplate frontend and backend code for an Ecto schema.
+
+Potionx includes a CLI tool to quickly produce boilerplate frontend and backend code for an Ecto schema.
 
 The command accepts a context name and a model name corresponding to a Phoenix context and an Ecto Schema:
 ```bash

@@ -1,4 +1,5 @@
 # Deployment
+
 Coming soon...
 
-AWS, Google, Azure, Linode, OVH, Digital Ocean
+Check out our [Roadmap](/roadmap.html#deployment) for more details

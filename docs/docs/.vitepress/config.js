@@ -6,17 +6,16 @@ module.exports = {
         nav: [
             { text: 'Documentation', link: '/', activeMatch: '^/$|^/(conventions|docs)/' },
             { text: 'API', link: '/ui/overview', activeMatch: '^/(potionx|form|ui)/' },
-            {
-                text: 'Github',
-                link: 'https://github.com/PotionApps/potionx'
-            }
+            { text: 'Roadmap', link: '/roadmap' },
+            { text: 'Github', link: 'https://github.com/PotionApps/potionx' }
         ],
         sidebar: {
-            '/potionx/': getApiSidebar(),
-            '/forms/': getApiSidebar(),
-            '/ui/': getApiSidebar(),
             '/conventions/': getDocsSidebar(),
             '/docs/': getDocsSidebar(),
+            '/forms/': getApiSidebar(),
+            '/potionx/': getApiSidebar(),
+            '/roadmap': getRoadmapSidebar(),
+            '/ui/': getApiSidebar(),
             '/': getDocsSidebar()
         },
         // algolia: {
@@ -74,4 +73,15 @@ function getDocsSidebar() {
             ]
         }
     ]
+}
+
+function getRoadmapSidebar() {
+    return [{
+        children: [
+            { text: 'Documentation', link: '/' },
+            { text: 'Conventions', link: '/conventions/overview' },
+            { text: 'UI', link: '/ui/overview' },
+            { text: 'Forms', link: '/forms/hooks' }
+        ]
+    }]
 }
