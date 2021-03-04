@@ -8,7 +8,7 @@ import Logo from '../../assets/logo.svg'
 export default defineComponent({
   setup () {
     const links = [
-      {icon: faDiscord, url: "https://discord.gg/JydTNZCS"},
+      {icon: faDiscord, url: "https://discord.gg/sUuDw9Jtxm"},
       {icon: faGithub, url: "https://github.com/PotionApps/potionx"},
       {icon: faTwitter, url: "https://twitter.com/Potionapps"},
       {icon: faYoutube, url: "https://www.youtube.com/channel/UCQwh1NM_EpDmY7tEnNb3xdA/featured"}
