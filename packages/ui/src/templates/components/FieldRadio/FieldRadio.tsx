@@ -81,7 +81,7 @@ export default defineComponent({
       }
        {
         showErrors.value &&
-        <FieldError class="mt-1">{errors.value.join(", ")}</FieldError>
+        <FieldError>{errors.value.join(", ")}</FieldError>
       }
     </>
   }

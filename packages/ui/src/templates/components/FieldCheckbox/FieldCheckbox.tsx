@@ -63,7 +63,7 @@ export default defineComponent({
         value: internalValue.value
       })}
       {
-        props.options.map((opt: FieldCheckboxOptionProps) => {
+        props.options?.map((opt: FieldCheckboxOptionProps) => {
           return <label class="block">
             <input
               checked={internalValue.value.includes(opt.value)}
@@ -80,7 +80,7 @@ export default defineComponent({
       }
       {
         showErrors.value &&
-        <FieldError class="mt-1">{errors.value.join(", ")}</FieldError>
+        <FieldError>{errors.value.join(", ")}</FieldError>
       }
     </>
   }

@@ -55,7 +55,7 @@ export default defineComponent({
     return () => <>
       {
         props.label &&
-        <FieldLabel class="block mb-1">{props.label}</FieldLabel>
+        <FieldLabel>{props.label}</FieldLabel>
       }
       <input
         class={classes.value}
@@ -68,7 +68,7 @@ export default defineComponent({
       />
       {
         showErrors.value &&
-        <FieldError class="mt-1">{errors.value.join(", ")}</FieldError>
+        <FieldError>{errors.value.join(", ")}</FieldError>
       }
     </>
   }

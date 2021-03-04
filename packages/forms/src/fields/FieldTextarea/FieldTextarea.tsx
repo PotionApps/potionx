@@ -49,7 +49,7 @@ export default defineComponent({
     return () => <>
       {
         props.label &&
-        <FieldLabel class="block mb-1">{props.label}</FieldLabel>
+        <FieldLabel>{props.label}</FieldLabel>
       }
       <textarea
         class={classes.value}
@@ -62,7 +62,7 @@ export default defineComponent({
       </textarea>
       {
         showErrors.value &&
-        <FieldError class="mt-1">{errors.value.join(", ")}</FieldError>
+        <FieldError>{errors.value.join(", ")}</FieldError>
       }
     </>
   }
