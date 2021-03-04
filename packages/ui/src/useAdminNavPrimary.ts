@@ -15,15 +15,14 @@ const nav : Ref<SidebarNavItemProps[]> = ref([
   {
     icon: faInbox,
     label: "Inbox",
-    notification: 1,
+    notification: 7,
     to: {
-      name: routeNames.login
+      name: routeNames.home
     }
   },
   {
     icon: faPlus,
     label: "New Message",
-    notification: 14,
     isChild: true,
     to: {
       name: routeNames.login

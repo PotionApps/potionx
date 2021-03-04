@@ -11,7 +11,7 @@ export default defineComponent({
               <div class="flex flex-full items-center s1050:max-w-500 s1450:max-w-600 pb-3 pr-2">
                 {ctx.slots.default && ctx.slots.default()}
               </div>
-              {ctx.slots.btns && <div class="flex">{ctx.slots.btns()}</div>}
+              {ctx.slots.btns && ctx.slots.btns()}
             </div>
           </div>
         </div>

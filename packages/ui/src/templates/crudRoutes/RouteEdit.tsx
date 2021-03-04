@@ -97,7 +97,7 @@ export default defineComponent({
       return <AdminMain>
         <AdminHeader
           v-slots={{
-            btns: () => <div>
+            btns: () => <div class="flex">
               <AdminHeaderBtnWrap>
                 <BtnSmallSecondary
                   click={deleteEntry}

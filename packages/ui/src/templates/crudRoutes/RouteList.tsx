@@ -9,7 +9,7 @@ import AdminHeaderBtnWrap from "root/components/AdminHeaderBtnWrap/AdminHeaderBt
 import AdminMain from "root/components/AdminMain/AdminMain";
 import AdminHeaderTitle from 'root/components/AdminHeaderTitle/AdminHeaderTitle'
 import BtnMobileMenu from 'root/components/Btn/BtnMobileMenu'
-import BtnPrimary from "root/components/Btn/BtnPrimary";
+import BtnSmallPrimary from "root/components/Btn/BtnSmallPrimary";
 import collection from 'shared/models/__context__/__model__/__model_graphql_case__Collection.gql'
 import ModelTable, { ModelTableProps } from 'root/components/ModelTable/ModelTable'
 import Pagination from "root/components/Pagination/Pagination";
@@ -81,7 +81,7 @@ export default defineComponent({
           v-slots={{
             btns: () => 
             <AdminHeaderBtnWrap>
-              <BtnPrimary
+              <BtnSmallPrimary
                 label="New __model__"
                 reverse={true}
                 to={newEntryLink}
