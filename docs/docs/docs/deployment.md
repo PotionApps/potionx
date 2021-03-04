@@ -20,88 +20,37 @@ The following prerequisites are required for a success
 2. Create a token with read/write scope here: [https://cloud.digitalocean.com/account/api/tokens](https://cloud.digitalocean.com/account/api/tokens)
 3. Save the token somewhere, you'll need it later
 
+### Github
+1. Sign up to Github
+2. Set up a repository to push your code to
+3. Grab a personal access token here with ```read/write``` permissions for ```packages```: [https://github.com/settings/tokens](https://github.com/settings/tokens)
+4. Save the token somewhere, you'll need it later
+5. Navigate to your project's actions secrets settings page https://github.com/USERNAME-OR-ORG/PROJECT-NAME/settings/secrets/actions
+6. Create a new repository secret called ```CR_PAT``
+7. Add your token from step #5 to it
+
 ### Pulumi
 1. Sign up to Pulumi
 2. Select the Kubernetes option
 3. Install the Pulumi CLI: [https://www.pulumi.com/docs/get-started/install/](https://www.pulumi.com/docs/get-started/install/)
 4. Create a Pulumi access token: [https://app.pulumi.com/account/tokens](https://app.pulumi.com/account/tokens)
 5. Save the token somewhere, you'll need it later
+6. Back in Github, navigate to your project's actions secrets settings page https://github.com/USERNAME-OR-ORG/PROJECT-NAME/settings/secrets/actions
+7. Create a new repository secret called ```PULUMI_TOKEN```
+8. Add your token from step #4 or create a new token and add it to the Github secret
 
 ## Setting up your Pulumi config
 Navigate to your ```deployment``` folder and run the following commands:
 ```sh
 pulumi login # enter your access token from Pulumi step #4 when asked
-pulumi stack # Create a new stack when asked
+pulumi stack # Create a new stack when asked in the format organization-name/stack, where organization-name is your username by default
+pulumi config set domain YOUR-DOMAIN --secret # the domain you added to Cloudflare
+pulumi config set subdomain YOUR-SUBDOMAIN --secret # www for example
+pulumi config set cloudflare:apiToken YOUR-CLOUDFLARE-TOKEN --secret # from step 5 of the Cloudflare set up
+pulumi config set digitalocean:token YOUR-DIGITALOCEAN-TOKEN --secret # from step 3 of the DigitalOcean set up
+pulumi config set passwordDb A-STRONG-PASSWORD --secret # Choose a very strong password for your database user, mix phx.gen.secret can help
+pulumi config set passwordRedis A-STRONG-PASSWORD --secret # Choose a very strong password for your Redis user, mix phx.gen.secret can help
+pulumi config set secretKeyBase A-STRONG-PASSWORD --secret # Choose a very strong password for your Redis user, mix phx.gen.secret can help
 ```
 
-## Commit
-
-
-### Linux
-curl -fsSL https://get.pulumi.com | sh
-### Mac
-brew install pulumi
-### Windows
-choco install pulumi
-
-## Pick Cloud
-
-### DigitalOcean
-
-#### Mac
-```bash
-brew install doctl
-```
-
-#### Windows
-```bash
-https://github.com/digitalocean/doctl/releases
-doctl-1.57.0-windows-amd64.zip
-...add to path
-
-```
-Unzip, add to path
-
-```bash
-doctl kubernetes cluster kubeconfig save use_your_cluster_name
-```
-
-### GKE
-
-
-### before you start
-- Cloudflare account
-- Cloudflare Token
-- Domain pointing to Cloudflare
-
-
-
-
-- Github account
-- Github PAT token
-- Digital Ocean account
-- Digital Ocean token
-- Pulumi account
-- Pulumi token
-
-
-# before you start, need to set up Kubectl
-
-kubectl create namespace cert-manager
-helm repo add jetstack https://charts.jetstack.io
-helm repo update
-
-helm install \
-  cert-manager jetstack/cert-manager \
-  --namespace cert-manager \
-  --version v1.2.0 \
-  --create-namespace \
-  --set installCRDs=true
-
-
-
-### Github
-enable improved container support
-
-generate PAT (settings, developer settings)
-save PAT in secrets as CR_PAT
+## Push your code to Github
