@@ -12,7 +12,7 @@ export type FieldCheckboxOptionProps = {
 export interface FieldCheckboxProps {
   label?: string
   name: string
-  options: FieldCheckboxOptionProps[]
+  options?: FieldCheckboxOptionProps[]
   unstyled?: boolean
 }
 
@@ -24,10 +24,7 @@ export default defineComponent({
       required: true,
       type: String
     },
-    options: {
-      required: true,
-      type: Array as PropType<FieldCheckboxOptionProps[]>
-    },
+    options: Array as PropType<FieldCheckboxOptionProps[]>,
     unstyled: Boolean
   },
   setup (props, ctx) {

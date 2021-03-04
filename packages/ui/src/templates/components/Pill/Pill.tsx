@@ -30,7 +30,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class="bg-white border-1 border-gray-300 flex items-center px-2 py-0.5 rounded-2xl">
+        <div class="bg-white border-1 border-gray-300 inline-flex items-center px-2 py-0.5 rounded-2xl">
           {
             props.icon &&
             <FontAwesomeIcon

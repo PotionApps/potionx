@@ -11,7 +11,7 @@ export type FieldRadioOptionProps = {
 export interface FieldRadioProps {
   label?: string
   name: string
-  options: FieldRadioOptionProps[]
+  options?: FieldRadioOptionProps[]
   unstyled?: boolean
 }
 
@@ -23,10 +23,7 @@ export default defineComponent({
       required: true,
       type: String
     },
-    options: {
-      required: true,
-      type: Array as PropType<FieldRadioOptionProps[]>
-    },
+    options: Array as PropType<FieldRadioOptionProps[]>,
     unstyled: Boolean
   },
   setup (props: FieldRadioProps, ctx) {

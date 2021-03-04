@@ -66,6 +66,10 @@ import  from "root/components/AdminFooter/AdminFooter";
 **hideMenuBtn:** `boolean` `optional` \
 Hide the toggle menu button
 
+#### Demo
+
+![admin-footer](./admin-footer.png)
+
 <br />
 <br />
 
@@ -88,6 +92,10 @@ import AdminHeader from "root/components/AdminHeader/AdminHeader";
   //
 </AdminHeader>
 ```
+#### Demo
+
+![admin-header](./admin-header.png)
+
 <br />
 <br />
 
@@ -276,6 +284,10 @@ A lighter version of the [Btn](/ui/components.html#btn) component that displays 
 import BtnIcon from "root/components/Btn/BtnIcon";
 ```
 
+#### Demo
+
+![btn-icon](./btn-icon.png)
+
 ### BtnLogin
 
 A button that is styled for the login route.
@@ -284,6 +296,10 @@ A button that is styled for the login route.
 ```tsx
 import BtnLogin from "root/components/Btn/BtnLogin";
 ```
+
+#### Demo
+
+![btn-login](./btn-login.png)
 
 ### BtnMobileMenu
 
@@ -294,6 +310,10 @@ A button that is styled to match the menu toggle button in the [Menu](/ui/compon
 import BtnMobileMenu from "root/components/Btn/BtnMobileMenu";
 ```
 
+#### Demo
+
+![btn-mobile-menu](./admin-footer.png)
+
 ### BtnPrimary
 
 A styled button to be used as the primary button.
@@ -303,6 +323,10 @@ A styled button to be used as the primary button.
 import BtnPrimary from "root/components/Btn/BtnPrimary";
 ```
 
+#### Demo
+
+![btn-primary](./btn-primary.png)
+
 ### BtnSecondary
 
 A styled button to be used as the secondary button, in contrast with the primary button.
@@ -311,6 +335,10 @@ A styled button to be used as the secondary button, in contrast with the primary
 ```tsx
 import BtnSecondary from "root/components/Btn/BtnSecondary";
 ```
+
+#### Demo
+
+![btn-secondary](./btn-secondary.png)
 
 ### BtnSmall
 
@@ -330,6 +358,10 @@ A smaller version of [BtnPrimary](/ui/components.html#btnprimary).
 import BtnSmallPrimary from "root/components/Btn/BtnSmallPrimary";
 ```
 
+#### Demo
+
+![btn-small-primary](./btn-small-primary.png)
+
 ### BtnSmallSecondary
 
 A smaller version of [BtnSecondary](/ui/components.html#btnsecondary).
@@ -338,6 +370,10 @@ A smaller version of [BtnSecondary](/ui/components.html#btnsecondary).
 ```tsx
 import BtnSmallSecondary from "root/components/Btn/BtnSmallSecondary";
 ```
+
+#### Demo
+
+![btn-small-secondary](./btn-small-secondary.png)
 
 ### BtnSubmit
 
@@ -348,10 +384,12 @@ A submit button to be used with forms.
 import BtnSubmit from "root/components/Btn/BtnSubmit";
 ```
 
+#### Demo
+
+![btn-submit](./btn-submit.png)
+
 <br />
 <br />
-
-
 
 <!-- ## Dropdown
 A prestyled select element.
@@ -421,6 +459,10 @@ Option label
 **value:** `Any` `Required` \
 Option value
 
+#### Demo
+
+![field-checkbox](./field-checkbox.png)
+
 <br />
 <br />
 
@@ -477,6 +519,10 @@ Input type
 **unstyled:** `Boolean` `Optional` \
 Removes component styling 
 <br />
+
+#### Demo
+
+![field-input](./field-input.png)
 
 <br />
 <br />
@@ -549,6 +595,10 @@ Option label
 **value:** `Any` `Required` \
 Option value
 
+#### Demo
+
+![field-radio](./field-radio.png)
+
 <br />
 <br />
 
@@ -586,6 +636,10 @@ Select name
 **unstyled:** `Boolean` `Optional` \
 Removes component styling 
 
+#### Demo
+
+![field-select](./field-select.png)
+
 <br />
 <br />
 
@@ -618,6 +672,10 @@ Textarea name
 
 **unstyled:** `Boolean` `Optional` \
 Removes component styling 
+
+#### Demo
+
+![field-textarea](./field-textarea.png)
 
 <br />
 <br />
@@ -792,6 +850,10 @@ Go to the next page of records
 **prev:** `Function` `Required` \
 Go to the previous page of records
 
+#### Demo
+
+![pagination](./pagination.png)
+
 <br />
 <br />
 
@@ -834,6 +896,10 @@ The component text field
 **remove:** `Function` `Optional` \
 A function that actives the X icon, and removes the pill components
 
+#### Demo
+
+![pill](./pill.png)
+
 <br />
 <br />
 
@@ -872,6 +938,10 @@ Search bar placeholder text
 
 **val:** `Function` `Required` \
 Default search value
+
+#### Demo
+
+![search](./search.png)
 
 <br />
 <br />
@@ -923,6 +993,10 @@ An option to pass down notifications
 **to:** `RouteLocationRaw` `Optional` \
 The route the component should link to, and this makes the component a `<router-link>`
 
+#### Demo
+
+![sidebar-nav-item](./sidebar-nav-item.png)
+
 <br />
 <br />
 
@@ -944,14 +1018,18 @@ import StateEmpty from "root/components/StateEmpty/StateEmpty";
 A FontAwesomeIcon icon
 <br/>
 
-**label:**``String` `Optional` \
+**label:** `String` `Optional` \
 The component text field
+
+#### Demo
+
+![state-empty](./state-empty.png)
 
 <br />
 <br />
 
 ## StateLoading
-An loading component.
+An animated loading component.
 
 #### Importing StateLoading
 ```tsx
@@ -962,6 +1040,11 @@ import StateLoading from "root/components/StateLoading/StateLoading";
 ```tsx
 <StateLoading />
 ```
+
+#### Demo
+
+![state-loading](./state-loading.png)
+
 <br />
 <br />
 
