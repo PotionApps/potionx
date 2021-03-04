@@ -9,5 +9,6 @@ config :<%= @app_name %>, <%= @endpoint_module %>,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
-# Finally import the config/test.secret.exs
-import_config "test.secret.exs"
+if System.get_env("DATABASE_URL") === nil do
+  import_config "test.secret.exs"
+end
