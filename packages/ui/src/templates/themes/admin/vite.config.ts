@@ -25,6 +25,9 @@ export default defineConfig({
   plugins: [
     jsx(),
     WindiCSS({
+       preflight: {
+        enableAll: true // temporary forms fix for: https://github.com/windicss/windicss/issues/56
+      },
       scan: {
         dirs: ['../../components', './src'],
         runOnStartup: true
