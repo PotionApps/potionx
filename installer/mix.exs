@@ -6,7 +6,7 @@ end
 defmodule Potionx.New.MixProject do
   use Mix.Project
 
-  @version "0.0.18"
+  @version "0.0.19"
   @github_path "potionapps/potionx"
   @url "https://github.com/#{@github_path}"
 
