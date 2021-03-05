@@ -1,6 +1,7 @@
 # Social Login
 
 In order to log in, update `config/dev.secret.exs` with the social platform(s) of your choice.
+
 <!-- - [Apple instructions](https://developer.apple.com/documentation/authenticationservices) -->
 <!-- - [Github instructions](https://docs.github.com/en/developers/apps/authorizing-oauth-apps) -->
 <!-- - [Twitter instructions](https://developer.twitter.com/en/docs/authentication/guides) -->
