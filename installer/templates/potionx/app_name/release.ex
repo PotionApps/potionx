@@ -3,10 +3,20 @@ defmodule <%= @app_module %>.Release do
   alias <%= @app_module %>.Repo
   alias <%= @app_module %>.Users.User
 
+  defp ensure_repo_created(repo) do
+    IO.puts "create #{inspect repo} database if it doesn't exist"
+    case repo.__adapter__.storage_up(repo.config) do
+      :ok -> :ok
+      {:error, :already_up} -> :ok
+      {:error, term} -> {:error, term}
+    end
+  end
+
   def migrate do
     load_app()
 
     for repo <- repos() do
+      :ok = ensure_repo_created(repo)
       {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :up, all: true))
       {:ok, _, _} = Ecto.Migrator.with_repo(repo, fn repo ->
         seed(repo)

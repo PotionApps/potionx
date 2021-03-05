@@ -273,9 +273,9 @@ const site = new cloudflare.Record(
       zoneId: cloudflareZone.then(z => {
           return z.zones[0].id
       }),
-      name: "test",
+      name: subdomain,
       value: appIp,
       type: "A",
-      proxied: false
+      proxied: true
   }
 );
