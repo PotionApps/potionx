@@ -106,7 +106,7 @@ export default defineComponent({
           }
         </div>
         {
-          pageInfo.value && data.value?.__model_graphql_case__Collection?.count &&
+          pageInfo.value && !!data.value?.__model_graphql_case__Collection?.count &&
           <Pagination
             count={data.value?.__model_graphql_case__Collection?.count}
             countBefore={data.value?.__model_graphql_case__Collection?.countBefore}
