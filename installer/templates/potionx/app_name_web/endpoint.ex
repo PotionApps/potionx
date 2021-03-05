@@ -23,7 +23,7 @@ defmodule <%= @endpoint_module %> do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: Mix.env() === :prod && :potionx_one || "frontend/admin",
+    from: Mix.env() === :prod && :<%= @app_name %> || "frontend/admin",
     gzip: Mix.env() === :prod,
     only: ~w(assets css fonts images js favicon.ico robots.txt node_modules src)
 
