@@ -7,6 +7,8 @@ In order to log in, update `config/dev.secret.exs` with the social platform(s) o
 
 > We are in the [process](/roadmap.html#social-logins) of adding logins for Apple, Github and Twitter. If you have any requests, let us know on our [Discord](https://discord.gg/sUuDw9Jtxm) or post it to our feedback board on [Hellonext](https://potion.hellonext.co/)
 
+We include them all by default, however, feel free to remove the logins you don't plan on offering in the `frontend/admin/src/routes/RouteLogin.tsx` file under `loginOptions`, so they don't show up when you deploy your project.
+
 ## Google
 Google's instructions can be found [here](https://developers.google.com/identity/protocols/oauth2)
 

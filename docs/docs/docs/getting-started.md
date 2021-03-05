@@ -1,13 +1,5 @@
 # Getting Started
 
-## Prerequisites
-- [Node](https://nodejs.org/en/) version 12 or above
-- [Elixir](https://elixir-lang.org/install.html) version 1.11 or above
-- [PostgresQL](https://www.postgresql.org/) version 9.6 or above
-- Familiarity with [Elixir](https://elixir-lang.org/) and [Phoenix](https://www.phoenixframework.org/)
-- Familiarity with [Vue](https://vuejs.org/) and [JSX](https://github.com/vuejs/jsx-next)
-
-
 ## Generating a project
 ```bash
 mix archive.install hex potionx_new
