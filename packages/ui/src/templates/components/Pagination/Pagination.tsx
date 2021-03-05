@@ -78,7 +78,7 @@ export default defineComponent({
           <BtnSecondary
             class="ml-4 mr-2"
             click={props.next}
-            disabled={hasNext.value}
+            disabled={!hasNext.value}
             icon={faAngleRight}
             label="Next"
             reverse={true}
