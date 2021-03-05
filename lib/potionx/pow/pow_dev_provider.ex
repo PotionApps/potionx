@@ -21,7 +21,7 @@ defmodule Potionx.Pow.Provider.Dev do
       :ok,
       %{
         token: %{"access_token" => "access_token"},
-        user: %{"sub" => 1, "name" => "name", "email" => email}
+        user: %{"sub" => email, "name" => "name", "email" => email}
       }
     }
   end
