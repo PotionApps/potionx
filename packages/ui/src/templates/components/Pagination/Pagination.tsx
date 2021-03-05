@@ -44,7 +44,7 @@ export default defineComponent({
   name: "Pagination",
   setup (props: PaginationProps) {
     const hasNext = computed(() => {
-      return (props.countBefore || 0) + (props.limit || 0) === (props.count || 0)
+      return (props.countBefore || 0) + (props.limit || 0) < (props.count || 0)
     })
 
     return () => {
