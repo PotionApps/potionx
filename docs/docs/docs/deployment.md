@@ -62,3 +62,4 @@ Then, add your Pulumi ```stack``` name to https://github.com/USERNAME-OR-ORG/PRO
 *Remember to add the right callback URLs to your authentication providers*
 
 ## Push your code to Github
+https://cert-manager.io/docs/concepts/webhook/#webhook-connection-problems-shortly-after-cert-manager-installation
