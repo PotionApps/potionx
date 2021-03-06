@@ -1,4 +1,4 @@
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, watch, watchEffect } from 'vue'
 import { faArrowLeft, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Field, useForm } from '@potionapps/forms'
 import { RootQueryType, RootMutationType__model__MutationArgs, RootMutationType } from "shared/types";
@@ -43,6 +43,7 @@ export default defineComponent({
     })
 
     const model = computed(() => {
+      if (route.params.id === "new") return {}
       return data.value?.__model_graphql_case__Single
     })
 
