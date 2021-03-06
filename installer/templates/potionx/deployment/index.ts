@@ -106,7 +106,7 @@ const certManagerIssuer = new k8s.yaml.ConfigFile(
     {
         file: "certIssuer.yaml"
     },
-    { provider }
+    { provider, dependsOn: certManager }
 );
 
 /**
