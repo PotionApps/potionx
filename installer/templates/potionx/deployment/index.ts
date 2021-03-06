@@ -4,15 +4,28 @@ import * as digitalocean from "@pulumi/digitalocean";
 import * as k8s from "@pulumi/kubernetes";
 import * as pulumi from "@pulumi/pulumi";
 
+interface AuthProviders {
+  google: {
+    clientId: string
+    clientSecret: string
+  }
+}
+
 const appNamespace = (s: string) => "<%= @app_name %>" + s
 const config = new pulumi.Config();
+const appImageName = config.require('appImage')
 const appReplicaCount = config.getNumber("appReplicaCount") || 1;
 const cloudflareConfig = new pulumi.Config('cloudflare')
 const cloudflareApiToken = cloudflareConfig.require("apiToken");
+const dbName = config.get("dbName") || "<%= @app_name %>";
 const domain = config.require("domain");
 const subdomain = config.get("subdomain") || "www";
 const hostname = subdomain + "." + domain
 const nodeCount = config.getNumber("nodeCount") || 2;
+const passwordDb = config.requireSecret('passwordDb')
+const passwordRedis = config.requireSecret('passwordRedis')
+const authProviders = config.requireSecretObject<AuthProviders>("authProviders");
+const secretKeyBase = config.requireSecret('secretKeyBase')
 const tlsSecretName = appNamespace('cert')
 
 
@@ -60,31 +73,22 @@ const provider = new k8s.Provider(appNamespace('k8s'), { kubeconfig });
  * ================================
  */
 
-// certManager namespace
-const certManagerNamespace = new k8s.core.v1.Namespace('cert-manager', {
-    metadata: { 
-        name: 'cert-manager'
-    }
-}, { provider })
+const certManagerNamespace = 'cert-manager'
+const certManager = new k8s.yaml.ConfigFile(
+    appNamespace('cert-manager'),
+    {
+        file: "https://github.com/jetstack/cert-manager/releases/download/v1.2.0/cert-manager.yaml"
+    },
+    { provider }
+);
 
-const certManager = new k8s.helm.v3.Chart("cert-manager", {
-  chart: "cert-manager",
-  fetchOpts: {
-    repo: 'https://charts.jetstack.io'
-  },
-  namespace: certManagerNamespace.metadata.name,
-  version: "v1.2.0",
-  values: {
-    installCRDs: true
-  },
-}, { provider });
 
 const dnsSecret = new k8s.core.v1.Secret(
     'cloudflare-api-token-secret',
     {
         metadata: {
             name: 'cloudflare-api-token-secret',
-            namespace: certManagerNamespace.metadata.name
+            namespace: certManagerNamespace
         },
         stringData: {
             apiToken: cloudflareApiToken
@@ -117,10 +121,12 @@ const dbSecrets = new k8s.core.v1.Secret(
             name: 'db-secrets'
         },
         stringData: {
-            'redis-password': "AIWv1mw3Za1kp4uFTLMmykHG0T9xkhoZB2YqZXRY",
-            'postgresql-password': "r3MCR8M1L4TlsG2Vrqr62CEevZ8TYp",
-            'postgresql-replication-password': "W2LQbT44D1ahZx5sXyDh5USWzRS8NZ",
-            'postgresql-ldap-password': "TvfTamLRL16GsXrKz2OuSmnTeyiBiA"
+            'redis-password': passwordRedis,
+            'postgresql-password': passwordDb,
+            'postgresql-replication-password': passwordDb,
+            'postgresql-ldap-password': passwordDb,
+            'DATABASE_URL': pulumi.interpolate `ecto://postgres:${passwordDb}@postgresql-headless/${dbName}`,
+            "REDIS_URL": pulumi.interpolate `redis://:${passwordRedis}@redis-headless`,
         },
         type: 'opaque'
     },
@@ -128,7 +134,6 @@ const dbSecrets = new k8s.core.v1.Secret(
         provider
     }
 )
-
 
 /**
  * ================================
@@ -142,7 +147,7 @@ const postgres = new k8s.helm.v3.Chart("postgresql", {
       repo: 'https://charts.bitnami.com/bitnami'
     },
     values: {
-        existingSecret: 'db-secrets',
+        existingSecret: dbSecrets.metadata.name,
         'image.tag': '13.2.0' 
     },
   }, { provider });
@@ -159,7 +164,7 @@ const redis = new k8s.helm.v3.Chart("redis", {
       repo: 'https://charts.bitnami.com/bitnami'
     },
     values: {
-        existingSecret: 'db-secrets',
+        existingSecret: dbSecrets.metadata.name,
         existingSecretPasswordKey: 'redis-password',
         'image.tag': '12.8.1' 
     },
@@ -176,27 +181,119 @@ const redis = new k8s.helm.v3.Chart("redis", {
 // Now create a Kubernetes Deployment using the "nginx" container
 // image from the Docker Hub, replicated a number of times, and a
 // load balanced Service in front listening for traffic on port 80.
-const appLabels = { "app": "app-nginx" };
-const app = new k8s.apps.v1.Deployment(appNamespace("dep"), {
+const ghcrAuth = Buffer.from(process.env.GHCR_USERNAME + ":" + process.env.GHCR_PASSWORD).toString('base64')
+const imagePullSecrets = new k8s.core.v1.Secret(
+    "ghcr",
+    {
+        metadata: {
+            name: 'ghcr-secret'
+        },
+        type: "kubernetes.io/dockerconfigjson",
+        stringData: {
+            ".dockerconfigjson": `{"auths":{"https://ghcr.io":{"auth":"${ghcrAuth}"}}}`
+        },
+    },
+    {
+        provider
+    }
+);
+const appSecrets = new k8s.core.v1.Secret(
+    'app-secrets',
+    {
+        metadata: {
+            name: 'app-secrets'
+        },
+        stringData: {
+            "AUTH_CALLBACK_ORIGIN": pulumi.interpolate`https://${hostname}`,
+            "ASSENT_GOOGLE_CLIENT_ID": authProviders.google.clientId, 
+            "ASSENT_GOOGLE_CLIENT_SECRET": authProviders.google.clientSecret,
+            "SECRET_KEY_BASE": secretKeyBase
+        },
+        type: 'opaque'
+    },
+    {
+        provider
+    }
+)
+const appLabels = { "app": "main-app" };
+const app = new k8s.apps.v1.Deployment(appNamespace("main-app"), {
     spec: {
         selector: { matchLabels: appLabels },
         replicas: appReplicaCount,
         template: {
             metadata: { labels: appLabels },
             spec: {
-                containers: [{
-                    name: "nginx",
-                    image: "nginx",
-                }],
+                containers: [
+                    {
+                        name: "main-app",
+                        image: appImageName,
+                        envFrom: [
+                            {
+                                secretRef: {
+                                    name: appSecrets.metadata.name,
+                                    optional: false
+                                }
+                            },
+                            {
+                                secretRef: {
+                                    name: dbSecrets.metadata.name,
+                                    optional: false
+                                }
+                            }
+                        ],
+                        livenessProbe: {
+                            httpGet: {
+                                path: '/_k8s/liveness',
+                                port: 4000
+                            },
+                            periodSeconds: 10,
+                            failureThreshold: 1
+                        },
+                        ports: [
+                            {
+                                name: 'http',
+                                containerPort: 4000, 
+                                protocol: 'TCP'
+                            }
+                        ],
+                        readinessProbe: {
+                            httpGet: {
+                                path: "/_k8s/readiness",
+                                port: 4000
+                            },
+                            periodSeconds: 10,
+                            failureThreshold: 1
+                        },
+                        startupProbe: {
+                            httpGet: {
+                                path: "/_k8s/startup",
+                                port: 4000
+                            },
+                            periodSeconds: 10,
+                            failureThreshold: 1
+                        }
+                    }
+                ],
+                imagePullSecrets: [
+                    {
+                        name: imagePullSecrets.metadata.name
+                    }
+                ]
             },
         },
     },
 }, { provider });
 const appService = new k8s.core.v1.Service(appNamespace("service"), {
+    metadata: {
+        name: 'app-service'
+    },
     spec: {
         type: "ClusterIP",
         selector: app.spec.template.metadata.labels,
-        ports: [{ port: 80 }],
+        ports: [{
+            port: 4000,
+            targetPort: 4000
+        }],
     },
 }, { provider });
 const appIngress = new k8s.networking.v1.Ingress(appNamespace("ingress"), {
@@ -219,7 +316,7 @@ const appIngress = new k8s.networking.v1.Ingress(appNamespace("ingress"), {
                                 service: {
                                     name: appService.metadata.name,
                                     port: {
-                                        number: 80
+                                        number: 4000
                                     }
                                 }
                             },

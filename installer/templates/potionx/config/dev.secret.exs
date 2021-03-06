@@ -2,9 +2,6 @@ import Config
 
 config :<%= @app_name %>, :pow_assent,
   providers: [
-    # github: [
-    #   strategy: Assent.Strategy.Github
-    # ],
     azure_ad: [
       client_id: "",
       client_secret: "",
@@ -20,8 +17,5 @@ config :<%= @app_name %>, :pow_assent,
         access_type: "offline",
         scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
       ]
-    ],
-    # twitter: [
-    #   strategy: Assent.Strategy.Twitter
-    # ]
+    ]
   ]

@@ -1,4 +1,4 @@
-all:
+test-and-build:
   BUILD +backend-deps
   BUILD +backend-test
   BUILD +frontend-deps
@@ -70,7 +70,8 @@ release:
 
 docker: 
   FROM alpine:3.13
-  RUN apk add --no-cache openssl ncurses-libs
+  RUN apk update && \
+    apk add --no-cache openssl ncurses-libs
   WORKDIR /app
   RUN chown nobody:nobody /app
   USER nobody:nobody
@@ -79,4 +80,22 @@ docker:
   CMD bin/<%= @app_name %> eval "<%= @app_module %>.Release.migrate" && bin/<%= @app_name %> start
   ARG GITHUB_REPO
   ARG GITHUB_SHA
-  SAVE IMAGE --push ghcr.io/$GITHUB_REPO/<%= @app_name %>:$GITHUB_SHA
+  SAVE IMAGE --push ghcr.io/$GITHUB_REPO:$GITHUB_SHA
+
+deploy:
+  FROM node:14.16.0-alpine3.13
+  RUN apk update && \
+    apk add --no-cache curl libc6-compat
+  ENV PATH=$PATH:/root/.pulumi/bin
+  ARG PULUMI_STACK
+  ARG GITHUB_REPO
+  ARG GITHUB_SHA
+  COPY package* .
+  RUN curl -fsSL https://get.pulumi.com | sh
+  RUN npm install
+  COPY --dir deployment /
+  WORKDIR /deployment
+  RUN --secret PULUMI_ACCESS_TOKEN=+secrets/PULUMI_TOKEN pulumi login --non-interactive
+  RUN pulumi stack select $PULUMI_STACK
+  RUN pulumi config set appImage "ghcr.io/$GITHUB_REPO:$GITHUB_SHA"
+  RUN --secret GHCR_USERNAME=+secrets/GHCR_USERNAME --secret GHCR_PASSWORD=+secrets/GHCR_PASSWORD pulumi up --yes --non-interactive 
