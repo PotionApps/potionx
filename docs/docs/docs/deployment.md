@@ -59,4 +59,6 @@ pulumi config set --path "authProviders.google.clientSecret" YOUR-GOOGLE-SOCIAL-
 ```
 Then, add your Pulumi ```stack``` name to https://github.com/USERNAME-OR-ORG/PROJECT-NAME/settings/secrets/actions in a variable called ```PULUMI_STACK```.
 
+*Remember to add the right callback URLs to your authentication providers*
+
 ## Push your code to Github
