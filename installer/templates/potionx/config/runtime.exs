@@ -19,30 +19,9 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  _host =
-    # System.get_env("HOST") ||
-    #   System.get_env("RENDER_EXTERNAL_HOSTNAME") ||
-    #   raise """
-    #   environment variable URL is missing.
-    #   """
-
- _certfile =
-    # System.get_env("SSL_CERT_PATH") ||
-    #   raise """
-    #   environment variable SSL_CERT_PATH is missing.
-    #   """
-
- _keyfile =
-    # System.get_env("SSL_KEY_PATH") ||
-    #   raise """
-    #   environment variable SSL_KEY_PATH is missing.
-    #   """
-
   config :<%= @app_name %>, :pow_assent,
+    callback_origin: System.get_env("AUTH_CALLBACK_ORIGIN"),
     providers: [
-      # github: [
-      #   strategy: Assent.Strategy.Github
-      # ],
       azure_ad: [
         client_id: System.get_env("ASSENT_AZURE_CLIENT_ID"),
         client_secret: System.get_env("ASSENT_AZURE_CLIENT_SECRET"),
@@ -58,17 +37,14 @@ if config_env() == :prod do
           access_type: "offline",
           scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
         ]
-      ],
-      # twitter: [
-      #   strategy: Assent.Strategy.Twitter
-      # ]
+      ]
     ]
 
 
   config :<%= @app_name %>, <%= @endpoint_module %>,
     http: [
       :inet6,
-      port: String.to_integer(System.get_env("PORT") || "80"),
+      port: String.to_integer(System.get_env("PORT") || "4000"),
     ],
     # https: [
     #   # Enable IPv6 and bind on all interfaces.

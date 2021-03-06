@@ -6,12 +6,13 @@ import Config
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
+port = 4000
 config :<%= @app_name %>, <%= @endpoint_module %>,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [
     ip: {127, 0, 0, 1},
-    port: 4000
+    port: port
   ],
   debug_errors: true,
   code_reloader: true,
@@ -59,6 +60,7 @@ config :<%= @app_name %>, <%= @endpoint_module %>,
   ]<% end %>
 
 config :<%= @app_name %>, :pow_assent,
+  callback_origin: "http://localhost:" <> port,
   providers: [
     dev: [
       strategy: Potionx.Pow.Provider.Dev
