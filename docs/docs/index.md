@@ -9,6 +9,7 @@ Potionx is a set of generators and modules that speeds up the process of setting
 ## Prerequisites
 - [Node](https://nodejs.org/en/) version 12 or above
 - [Elixir](https://elixir-lang.org/install.html) version 1.11 or above
+- [Hex](https://hex.pm/docs/usage) the Elixir package manager 
 - [PostgresQL](https://www.postgresql.org/) version 9.6 or above
 - Familiarity with [Elixir](https://elixir-lang.org/) and [Phoenix](https://www.phoenixframework.org/)
 - Familiarity with [Vue](https://vuejs.org/) and [JSX](https://github.com/vuejs/jsx-next)

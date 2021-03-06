@@ -6,7 +6,7 @@ module.exports = {
         nav: [
             { text: 'Documentation', link: '/', activeMatch: '^/$|^/(conventions|docs)/' },
             { text: 'API', link: '/ui/overview', activeMatch: '^/(potionx|forms|ui)/' },
-            { text: 'Roadmap', link: '/roadmap' },
+            { text: 'Issues/Requests/Roadmap', link: 'https://potion.hellonext.co/' },
             { text: 'Github', link: 'https://github.com/PotionApps/potionx' }
         ],
         sidebar: {

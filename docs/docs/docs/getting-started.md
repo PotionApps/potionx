@@ -7,9 +7,7 @@ First, you will need the Potionx installer
 ```bash
 mix archive.install hex potionx_new
 ```
-> If this is your first time using Phoenix, it will offer to install [Hex](https://hexdocs.pm/phoenix/installation.html) for you, or you can manually run `mix local.hex`.
-
-> Phoenix may also ask to install [Rebar](https://hexdocs.pm/phoenix/up_and_running.html). Go ahead with the installation as Rebar is used to build Erlang packages, or you can manually run `mix local.rebar`
+> If you have installed ```hex``` before, you'll need to install it with: `mix local.hex`.
 
 ## Generating a project
 
@@ -23,7 +21,7 @@ You will be prompted with the following questions:
 - What is the user for your local Postgres database? (Defaults to Postgres)
 - What is the password to your local Postgres database?
 - What email should the default user have? 
-> (An email is required to log in. It either needs to be the email you use to log in to one of the [social logins](/docs/social.html) we offer, or you can use any email for temporary development login)
+> (An email is required to log in. In production the email needs to be the email you use to log in to one of the [social logins](/docs/social.html). In development, any email may be used
 
 This will create a project, install dependencies and run migrations based on the [conventions and code structure here](https://docs.potionapps.com/conventions/overview.html#file-structure).
 
