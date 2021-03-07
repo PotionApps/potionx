@@ -86,3 +86,9 @@ export const interpolateFilesAndPaths = async (context, values) => {
       })
     })
 }
+
+export const snakeCaseToModuleCase = (snake_case) => {
+  return snake_case.split('_').map(k =>{
+    return k.slice(0, 1).toUpperCase() + k.slice(1)
+  }).join('');
+}
