@@ -14,7 +14,6 @@ module.exports = {
             '/docs/': getDocsSidebar(),
             '/forms/': getApiSidebar(),
             '/potionx/': getApiSidebar(),
-            '/roadmap': getRoadmapSidebar(),
             '/ui/': getApiSidebar(),
             '/': getDocsSidebar()
         },
@@ -74,15 +73,4 @@ function getDocsSidebar() {
             ]
         }
     ]
-}
-
-function getRoadmapSidebar() {
-    return [{
-        children: [
-            { text: 'Documentation', link: '/' },
-            { text: 'Conventions', link: '/conventions/overview' },
-            { text: 'UI', link: '/ui/overview' },
-            { text: 'Forms', link: '/forms/hooks' }
-        ]
-    }]
 }
