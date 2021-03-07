@@ -9,3 +9,8 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+alias <%= @app_module %>.Release
+alias <%= @app_module %>.Repo
+
+Release.seed(Repo)

@@ -175,7 +175,6 @@ defmodule Mix.Tasks.Potionx.New do
     |> install_deps(path)
     |> install_pow_assent(path)
     |> run_migrations(path)
-    |> run_seed(path)
   end
 
   defp generate_frontend(%{no_frontend: true} = project, _path), do: project
@@ -280,17 +279,6 @@ defmodule Mix.Tasks.Potionx.New do
     path = Map.fetch!(project, path_key)
     maybe_cd(path, fn ->
       cmd(project, "mix ecto.setup")
-    end)
-
-    project
-  end
-  def run_seed(%Project{no_migrations: true} = project, _path_key) do
-    project
-  end
-  def run_seed(%Project{} = project, path_key) do
-    path = Map.fetch!(project, path_key)
-    maybe_cd(path, fn ->
-      cmd(project, "mix run priv/repo/potionx_seed.exs")
     end)
 
     project

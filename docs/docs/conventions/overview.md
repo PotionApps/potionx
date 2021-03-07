@@ -139,8 +139,7 @@ Here's an overview of what a Potionx project looks like. It's what a project dir
 │  │  │  ├─ DATE_create_users.exs # default user migration generated
 │  │  │  └─ DATE_create_user_identities.exs
 │  │  │  # default user_identities migration generated
-│  │  ├─ potionx_seed.exs # runs release.ex and runs during initial project creation
-│  │  └─ seed.exs # Best place to put your own database seeding. Empty by default.
+│  │  └─ seeds.exs # Best place to put your own database seeding.
 ├─ shared # shared frontend/backend code
 │  ├─ src
 │  │  ├─ models

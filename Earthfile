@@ -73,7 +73,9 @@ integration-test:
             while ! pg_isready --host=localhost --port=5432 --quiet; do sleep 1; done; \
             mix potionx.new alpha --default-email=test@potionapps.com \
               --db-password=postgres --db-user=postgres --potionx-dep='path: "../../"' --ui-package="../../packages/ui" && \
-            cd alpha && mix test && \
+            cd alpha && \
+            mix potionx.gen.gql_for_model Users User && \
+            mix test && \
             cd ./frontend/admin && \
             npm run build
     END

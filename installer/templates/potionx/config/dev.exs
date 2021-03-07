@@ -60,7 +60,7 @@ config :<%= @app_name %>, <%= @endpoint_module %>,
   ]<% end %>
 
 config :<%= @app_name %>, :pow_assent,
-  callback_origin: "http://localhost:" <> port,
+  callback_origin: "http://localhost:" <> to_string(port),
   providers: [
     dev: [
       strategy: Potionx.Pow.Provider.Dev

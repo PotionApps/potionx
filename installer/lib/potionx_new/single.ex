@@ -55,7 +55,6 @@ defmodule Potionx.New.Single do
     {:eex,  "phx_ecto/repo.ex",              :app, "lib/:app/repo.ex"},
     {:keep, "phx_ecto/priv/repo/migrations", :app, "priv/repo/migrations"},
     {:eex,  "phx_ecto/formatter.exs",        :app, "priv/repo/migrations/.formatter.exs"},
-    {:eex,  "phx_ecto/seeds.exs",            :app, "priv/repo/seeds.exs"},
     {:eex,  "phx_ecto/data_case.ex",         :app, "test/support/data_case.ex"},
   ]
 
@@ -84,7 +83,7 @@ defmodule Potionx.New.Single do
     {:eex, "potionx/.github/workflows/ci.yml", :app, ".github/workflows/ci.yml"},
     {:migration, "potionx/migrations/create_users.exs", :app, "priv/repo/migrations/{timestamp}_create_users.exs"},
     # {:eex, "potionx/test/app_name_web/controllers/authorization_controller_test.exs", :app, "test/:lib_web_name/controllers/authorization_controller_test.exs"},
-    {:eex, "potionx/priv/repo/potionx_seed.exs", :app, "priv/repo/potionx_seed.exs"},
+    {:eex, "potionx/priv/repo/seeds.exs", :app, "priv/repo/seeds.exs"},
     {:eex, "potionx/docker-compose.yml", :app, "docker-compose.yml"},
     {:eex, "potionx/Earthfile", :app, "Earthfile"},
     {:eex, "potionx/.earthignore", :app, ".earthignore"},

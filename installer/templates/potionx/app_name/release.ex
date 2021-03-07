@@ -33,11 +33,11 @@ defmodule <%= @app_module %>.Release do
     Application.fetch_env!(@app, :ecto_repos)
   end
 
-  def seed do
-    Repo.get_by(User, [email: <%= @email %>])
+  def seed(repo) do
+    repo.get_by(User, [email: <%= @email %>])
     |> case do
       nil ->
-        Repo.insert! %User{
+        repo.insert! %User{
           email: <%= @email %>,
           roles: [:admin]
         }
