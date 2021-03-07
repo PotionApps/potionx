@@ -55,12 +55,7 @@ defmodule Potionx.New.Single do
     {:eex,  "phx_ecto/repo.ex",              :app, "lib/:app/repo.ex"},
     {:keep, "phx_ecto/priv/repo/migrations", :app, "priv/repo/migrations"},
     {:eex,  "phx_ecto/formatter.exs",        :app, "priv/repo/migrations/.formatter.exs"},
-    copyToDestination(context)
-    interpolateFilesAndPaths(
-      context, {
-        app_module: "Theta",
-        app_name: "theta"
-      }){:eex,  "phx_ecto/data_case.ex",         :app, "test/support/data_case.ex"},
+    {:eex,  "phx_ecto/data_case.ex",         :app, "test/support/data_case.ex"},
   ]
 
   template :webpack, []
