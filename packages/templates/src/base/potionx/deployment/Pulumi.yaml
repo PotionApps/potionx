@@ -1,0 +1,3 @@
+name: <%= app_module %>
+runtime: nodejs
+description: Provision a DigitalOcean Kubernetes cluster and deploy to it

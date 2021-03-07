@@ -1,0 +1,25 @@
+{
+    "name": "@potionapps/templates",
+    "version": "0.0.0",
+    "files": [
+        "cli",
+        "src/templates"
+    ],
+    "bin": {
+        "potionapps-templates": "./cli/cli.mjs"
+    },
+    "main": "./dist/potionapps-templates.esm.js",
+    "module": "./dist/potionapps-templates.esm.js",
+    "typings": "dist/index.d.ts",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsdx build --name potionapps-templates --format 'cjs,esm,umd'",
+        "test": "jest"
+    },
+    "dependencies": {
+        "ejs": "^3.1.6",
+        "fs-extra": "^9.1.0",
+        "klaw": "^3.0.0",
+        "yargs": "^16.2.0"
+    }
+}

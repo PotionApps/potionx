@@ -1,0 +1,101 @@
+test-and-build:
+  BUILD +backend-deps
+  BUILD +backend-test
+  BUILD +frontend-deps
+  BUILD +frontend-build
+  BUILD +release
+  BUILD +docker
+
+backend-deps:
+  ARG ELIXIR=1.11.3
+  ARG OTP=23.2.5
+  FROM hexpm/elixir:$ELIXIR-erlang-$OTP-alpine-3.13.1
+  RUN apk add --no-progress --update git build-base python3
+  ENV ELIXIR_ASSERT_TIMEOUT=10000
+  WORKDIR /src
+  COPY mix.exs .
+  COPY mix.lock .
+  COPY .formatter.exs .
+  COPY package.json .
+  RUN mix local.rebar --force
+  RUN mix local.hex --force
+  RUN mix deps.get --only prod,test
+
+backend-test:
+  FROM +backend-deps
+  RUN apk add --no-progress --update docker docker-compose
+  # Install tooling needed to check if the DBs are actually up when performing integration tests
+  RUN apk add postgresql-client
+  RUN MIX_ENV=test mix deps.compile
+  COPY ./docker-compose.yml ./docker-compose.yml
+  COPY mix.exs ./
+  COPY --dir config lib priv shared test .
+
+  # Compiling here improves caching, but slows down GHA speed
+  # Removing until this feature exists https://github.com/earthly/earthly/issues/574
+  # RUN MIX_ENV=test mix deps.compile
+
+  WITH DOCKER
+      # Start docker compose
+      # In parallel start compiling tests
+      # Check for DB to be up x 3
+      # Run the database tests
+      RUN docker-compose up -d & \
+          MIX_ENV=test DATABASE_URL="-" mix deps.compile && \
+          while ! pg_isready --host=localhost --port=5432 --quiet; do sleep 1; done; \
+          DATABASE_URL="ecto://postgres:postgres@localhost/test" mix test
+  END
+
+frontend-deps:
+  FROM node:14.16.0-alpine3.13
+  WORKDIR /frontend/admin
+  COPY frontend/admin/package* .
+  RUN npm install
+  SAVE ARTIFACT package-lock.json AS LOCAL ./package-lock.json
+
+frontend-build:
+  FROM +frontend-deps
+  RUN mkdir -p /priv/static
+  COPY frontend/admin .
+  COPY --dir shared /
+  RUN npm run build
+  SAVE ARTIFACT /priv/static /priv/static AS LOCAL admin_build
+
+release: 
+  FROM +backend-test
+  ENV MIX_ENV=prod
+  COPY +frontend-build/priv/static ./priv/static
+  RUN mix do compile, release
+  SAVE ARTIFACT /src/_build/prod/rel/<%= app_name %> /app/_build/prod/rel/<%= app_name %> AS LOCAL release
+
+docker: 
+  FROM alpine:3.13
+  RUN apk update && \
+    apk add --no-cache openssl ncurses-libs
+  WORKDIR /app
+  RUN chown nobody:nobody /app
+  USER nobody:nobody
+  COPY +release/app/_build/prod/rel/<%= app_name %> .
+  ENV HOME=/app
+  CMD bin/<%= app_name %> eval "<%= app_module %>.Release.migrate" && bin/<%= app_name %> start
+  ARG GITHUB_REPO
+  ARG GITHUB_SHA
+  SAVE IMAGE --push ghcr.io/$GITHUB_REPO:$GITHUB_SHA
+
+deploy:
+  FROM node:14.16.0-alpine3.13
+  RUN apk update && \
+    apk add --no-cache curl libc6-compat
+  ENV PATH=$PATH:/root/.pulumi/bin
+  ARG PULUMI_STACK
+  ARG GITHUB_REPO
+  ARG GITHUB_SHA
+  COPY package* .
+  RUN curl -fsSL https://get.pulumi.com | sh
+  RUN npm install
+  COPY --dir deployment /
+  WORKDIR /deployment
+  RUN --secret PULUMI_ACCESS_TOKEN=+secrets/PULUMI_TOKEN pulumi login --non-interactive
+  RUN pulumi stack select $PULUMI_STACK
+  RUN pulumi config set appImage "ghcr.io/$GITHUB_REPO:$GITHUB_SHA"
+  RUN --secret GHCR_USERNAME=+secrets/GHCR_USERNAME --secret GHCR_PASSWORD=+secrets/GHCR_PASSWORD pulumi up --yes --non-interactive 
