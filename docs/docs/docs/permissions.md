@@ -75,5 +75,3 @@ To learn more about the `Potionx.Middleware.RolesAuthorization` middleware and t
 ## Restricting access to routes on the frontend
 
 Coming soon...
-
-Check out our [Roadmap](/roadmap.html#documentation) for more details
