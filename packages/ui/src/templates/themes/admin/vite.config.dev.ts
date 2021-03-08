@@ -18,7 +18,7 @@ export default defineConfig({
     jsx(),
     WindiCSS({
       preflight: {
-        enableAll: true // temporary forms fix for: https://github.com/windicss/windicss/issues/56
+        safelist: ['[type="text"]', '[type="number"]', '[type="email"]']
       },
       scan: {
         dirs: ['../../components', './src', "../../crudRoutes"],
