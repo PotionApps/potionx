@@ -17,10 +17,10 @@ module.exports = {
             '/ui/': getApiSidebar(),
             '/': getDocsSidebar()
         },
-        // algolia: {
-        //     apiKey: '25626fae796133dc1e734c6bcaaeac3c',
-        //     indexName: 'docsearch',
-        // }
+        algolia: {
+            apiKey: 'd8859c9fe1863fa59d35b9fc7f807452',
+            indexName: 'potionapps',
+        }
     }
 }
 
