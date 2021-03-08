@@ -15,10 +15,10 @@ export const checkDirectoryExists = (folder, errorMsg) => {
   }
 }
 
-export const copyToDestination = (context) => {
+export const copyToDestination = (context, name) => {
   fs.copySync(
     context.source,
-      path.join(context.destination, context.componentName),
+      path.join(context.destination, name),
     {
       filter: (src, dest) => {
         if (
@@ -55,9 +55,10 @@ export const interpolateFile = async(filePath, values) => {
   }
 }
 
-export const interpolateFilesAndPaths = async (context, values) => {
+export const interpolateFilesAndPaths = async (context, name, values) => {
+  values = {...values, dot: "."}
   const items = [] // files, directories, symlinks, etc
-  await klaw(path.join(context.destination, context.componentName))
+  await klaw(path.join(context.destination, name))
     .on('data', item => {
       items.push(item.path)
     })

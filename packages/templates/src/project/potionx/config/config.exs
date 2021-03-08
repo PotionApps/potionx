@@ -7,20 +7,20 @@
 # General application configuration
 import Config
 
-config :<%= app_name %>, env: config_env()
+config :<%= appName %>, env: config_env()
 
-config :<%= app_name %>,
-  ecto_repos: [<%= app_module %>.Repo]
+config :<%= appName %>,
+  ecto_repos: [<%= appModule %>.Repo]
 
 # Configures the endpoint
-config :<%= app_name %>, <%= endpoint_module %>,
+config :<%= appName %>, <%= endpointModule %>,
   url: [host: "localhost"],
-  secret_key_base: "<%= secret_key_base %>",
-  render_errors: [view: <%= web_namespace %>.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: <%= app_module %>.PubSub,
-  live_view: [signing_salt: "<%= lv_signing_salt %>"]
+  secret_key_base: "<%= secretKeyBase %>",
+  render_errors: [view: <%= webNamespace %>.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: <%= appModule %>.PubSub,
+  live_view: [signing_salt: "<%= lvSigningSalt %>"]
 
-config :<%= app_name %>, :pow_assent,
+config :<%= appName %>, :pow_assent,
   http_adapter: Assent.HTTPAdapter.Mint
 
 # Configures Elixir's Logger
@@ -31,9 +31,9 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-config :<%= app_name %>, :pow,
-  user: <%= app_module %>.Users.User,
-  repo: <%= app_module %>.Repo
+config :<%= appName %>, :pow,
+  user: <%= appModule %>.Users.User,
+  repo: <%= appModule %>.Repo
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

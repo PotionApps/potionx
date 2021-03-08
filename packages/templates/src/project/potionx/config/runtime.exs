@@ -1,7 +1,7 @@
 import Config
 
 if config_env() == :test and System.get_env("DATABASE_URL") !== nil do
-  config :<%= app_name %>, <%= app_module %>.Repo,
+  config :<%= appName %>, <%= appModule %>.Repo,
     pool: Ecto.Adapters.SQL.Sandbox,
     url: System.get_env("DATABASE_URL")
 end
@@ -19,7 +19,7 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  config :<%= app_name %>, :pow_assent,
+  config :<%= appName %>, :pow_assent,
     callback_origin: System.get_env("AUTH_CALLBACK_ORIGIN"),
     providers: [
       azure_ad: [
@@ -41,7 +41,7 @@ if config_env() == :prod do
     ]
 
 
-  config :<%= app_name %>, <%= endpoint_module %>,
+  config :<%= appName %>, <%= endpointModule %>,
     http: [
       :inet6,
       port: String.to_integer(System.get_env("PORT") || "4000"),
@@ -52,7 +52,7 @@ if config_env() == :prod do
     #   ip: {0, 0, 0, 0, 0, 0, 0, 0},
     #   port: String.to_integer(System.get_env("PORT") || "443"),
     #   cipher_suite: :strong,
-    #   otp_app: :<%= app_name %>,
+    #   otp_app: :<%= appName %>,
     #   keyfile: keyfile,
     #   certfile: certfile
     # ],
@@ -64,14 +64,14 @@ if config_env() == :prod do
   # to start each relevant endpoint:
   #
 
-  config :<%= web_app_name %>, <%= endpoint_module %>, server: true
+  config :<%= webAppName %>, <%= endpointModule %>, server: true
 
   redis_url = System.get_env("REDIS_URL") ||
     raise """
     REDIS_URL environment variable is missing.
     """
 
-  config :<%= app_name %>, :redix,
+  config :<%= appName %>, :redix,
     url: redis_url
   #
   # Then you can assemble a release by calling `mix release`.

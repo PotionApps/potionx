@@ -1,9 +1,9 @@
-defmodule <%= app_module %>.MixProject do
+defmodule <%= appModule %>.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :<%= app_name %>,
+      app: :<%= appName %>,
       version: "0.1.0",
       elixir: "~> 1.11",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -19,7 +19,7 @@ defmodule <%= app_module %>.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {<%= app_module %>.Application, []},
+      mod: {<%= appModule %>.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -43,7 +43,7 @@ defmodule <%= app_module %>.MixProject do
       {:mint, "~> 1.0"},
       {:phoenix, "~> 1.5.7"},
       {:phoenix_ecto, "~> 4.1"},
-      {:potionx, <%= potionx_dep %>},
+      {:potionx, <%- potionxDep %>},
       {:pow, "~> 1.0.21"},
       {:pow_assent, "~> 0.4.10"},
       {:redix, "~> 1.0.0"},

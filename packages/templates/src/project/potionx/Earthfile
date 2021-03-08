@@ -66,7 +66,7 @@ release:
   ENV MIX_ENV=prod
   COPY +frontend-build/priv/static ./priv/static
   RUN mix do compile, release
-  SAVE ARTIFACT /src/_build/prod/rel/<%= app_name %> /app/_build/prod/rel/<%= app_name %> AS LOCAL release
+  SAVE ARTIFACT /src/_build/prod/rel/<%= appName %> /app/_build/prod/rel/<%= appName %> AS LOCAL release
 
 docker: 
   FROM alpine:3.13
@@ -75,9 +75,9 @@ docker:
   WORKDIR /app
   RUN chown nobody:nobody /app
   USER nobody:nobody
-  COPY +release/app/_build/prod/rel/<%= app_name %> .
+  COPY +release/app/_build/prod/rel/<%= appName %> .
   ENV HOME=/app
-  CMD bin/<%= app_name %> eval "<%= app_module %>.Release.migrate" && bin/<%= app_name %> start
+  CMD bin/<%= appName %> eval "<%= appModule %>.Release.migrate" && bin/<%= appName %> start
   ARG GITHUB_REPO
   ARG GITHUB_SHA
   SAVE IMAGE --push ghcr.io/$GITHUB_REPO:$GITHUB_SHA

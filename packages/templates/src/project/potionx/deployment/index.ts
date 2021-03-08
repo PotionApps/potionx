@@ -11,13 +11,13 @@ interface AuthProviders {
   }
 }
 
-const appNamespace = (s: string) => "<%= app_name %>" + s
+const appNamespace = (s: string) => "<%= appName %>" + s
 const config = new pulumi.Config();
 const appImageName = config.require('appImage')
 const appReplicaCount = config.getNumber("appReplicaCount") || 1;
 const cloudflareConfig = new pulumi.Config('cloudflare')
 const cloudflareApiToken = cloudflareConfig.require("apiToken");
-const dbName = config.get("dbName") || "<%= app_name %>";
+const dbName = config.get("dbName") || "<%= appName %>";
 const domain = config.require("domain");
 const subdomain = config.get("subdomain") || "www";
 const hostname = subdomain + "." + domain

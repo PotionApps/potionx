@@ -1,6 +1,6 @@
 import Config
 
-config :<%= app_name %>, :pow_assent,
+config :<%= appName %>, :pow_assent,
   providers: [
     azure_ad: [
       client_id: "",

@@ -75,13 +75,14 @@ export const getValues = async (context, prompt, initialValues) => {
     ...collected,
     adapterApp: "postgrex",
     appModule: appNameModuleCase,
-    endpointModule: "ThetaEndpoint",
+    endpointModule: appNameModuleCase + "Web.Endpoint",
     graphqlNamespace: appNameModuleCase + "GraphQl",
     libWebName: appName + "_web",
     lvSigningSalt: crypto.randomBytes(8).toString('hex'),
     potionxDep: `"~> ${potionx_version}"`,
     secretKeyBase: crypto.randomBytes(64).toString('hex'),
     signingSalt: crypto.randomBytes(8).toString('hex'),
+    webAppName: appName,
     webNamespace: appNameModuleCase + "Web"
   }
 }

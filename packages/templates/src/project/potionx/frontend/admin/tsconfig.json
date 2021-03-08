@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "lib": ["esnext", "dom"],
+    "types": ["vite/client"],
+    "paths": {
+      "root/*": ["./src/*"],
+      "shared/*": ["../../shared/src/*"]
+    },
+    "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }],
+    "resolveJsonModule": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "../../shared/**/*.gql",
+    "../../shared/**/*.ts"
+  ]
+}

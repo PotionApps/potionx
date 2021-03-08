@@ -7,7 +7,7 @@ import Config
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 port = 4000
-config :<%= app_name %>, <%= endpoint_module %>,
+config :<%= appName %>, <%= endpointModule %>,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [
@@ -49,17 +49,17 @@ config :<%= app_name %>, <%= endpoint_module %>,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :<%= app_name %>, <%= endpoint_module %>,
+config :<%= appName %>, <%= endpointModule %>,
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/<%= lib_web_name %>/(live|views)/.*(ex)$",
-      ~r"lib/<%= lib_web_name %>/templates/.*(eex)$"
+      ~r"lib/<%= libWebName %>/(live|views)/.*(ex)$",
+      ~r"lib/<%= libWebName %>/templates/.*(eex)$"
     ]
   ]
 
-config :<%= app_name %>, :pow_assent,
+config :<%= appName %>, :pow_assent,
   callback_origin: "http://localhost:" <> to_string(port),
   providers: [
     dev: [
