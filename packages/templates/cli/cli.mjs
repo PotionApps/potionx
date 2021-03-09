@@ -3,7 +3,7 @@ import fs from 'fs-extra'
 import path from 'path'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
-const scriptName = "potionapps-templates"
+const scriptName = "templates"
 import { fileURLToPath } from 'url';
 import { checkDirectoryExists, getSourcePath } from '../lib/common.mjs'
 import projectMjs from '../lib/project.mjs'
@@ -18,7 +18,7 @@ const run = async () => {
     .command('project', 'Initialize a base project')
     .command('component', 'Copy a component to a destination of your choice')
     .command('theme', 'Copy a theme to a destination of your choice')
-    .demandCommand(2)
+    // .demandCommand(2)
     // .demandOption("destination", "Please add destination path")
     .usage(`Usage: $0 <command> <component-name> [options]`)
   
@@ -26,5 +26,4 @@ const run = async () => {
     projectMjs(yargsInitial)
   }
 }
-
 run()

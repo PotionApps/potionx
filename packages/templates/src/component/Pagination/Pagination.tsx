@@ -47,10 +47,6 @@ export default defineComponent({
       return (props.countBefore || 0) + (props.limit || 0) < (props.count || 0)
     })
 
-    console.log(
-      props
-    )
-
     return () => {
       return (
         <div class="bg-white bottom-0 s1050m:bottom-8 flex items-center justify-center mt-4 s750:mt-8 pb-12 pt-2 sticky z-3">
@@ -89,7 +85,7 @@ export default defineComponent({
           />
           <div
             class={
-              (hasNext.value ? "opacity-40 pointer-events-none" : "opacity-80") +
+              (!hasNext.value ? "opacity-40 pointer-events-none" : "opacity-80") +
               " cursor-pointer focus:opacity-100 hover:opacity-100 px-1 transition-opacity"
             }
             onClick={props.goToLast}

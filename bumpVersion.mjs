@@ -13,5 +13,5 @@ fs.writeFileSync(
 
 fs.writeFileSync(
   './packages/templates/src/project/potionx/template.config.mjs',
-  project.replace(/potionx_version = "(.*)"/, `potionx_version = "${version}"`)
+  project2.replace(/potionx_version = "(.*)"/, `potionx_version = "${version}"`)
 )

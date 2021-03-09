@@ -6,7 +6,7 @@
         "src/templates"
     ],
     "bin": {
-        "potionapps-templates": "./cli/cli.mjs"
+        "templates": "./cli/cli.mjs"
     },
     "main": "./dist/potionapps-templates.esm.js",
     "module": "./dist/potionapps-templates.esm.js",

@@ -1,5 +1,9 @@
 import crypto from 'crypto'
 import { snakeCaseToModuleCase } from '../../../lib/common.mjs';
+import { fileURLToPath } from 'url';
+import fs from 'fs-extra';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export const callback = async (context, prompt, values) => {
   const { installDeps } = await prompt(
@@ -16,6 +20,13 @@ export const callback = async (context, prompt, values) => {
       type: "question"
     }
   )
+}
+
+export const components = async () => {
+  return {
+    components: fs.readJSONSync(path.resolve(__dirname, './frontend/admin/config.json')),
+    path: "./frontend/admin"
+  }
 }
 
 export const getValues = async (context, prompt, initialValues) => {
@@ -62,7 +73,7 @@ export const getValues = async (context, prompt, initialValues) => {
   }
 
   const collected = await prompt(toCollect);
-  const potionx_version = "0.2.17";
+  const potionx_version = "0.2.18";
 
 
   // confirm directory

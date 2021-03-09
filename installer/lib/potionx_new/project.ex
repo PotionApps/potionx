@@ -17,7 +17,7 @@ defmodule Potionx.New.Project do
             no_migrations: false,
             no_users: false,
             potionx_dep: nil,
-            potionx_version: "0.2.17",
+            potionx_version: "0.2.18",
             root_app: nil,
             root_mod: nil,
             project_path: nil,

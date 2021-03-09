@@ -1,0 +1,30 @@
+{
+  "component": [
+      "AdminBody",
+      "AdminHeader",
+      "AdminHeaderBtnWrap",
+      "AdminHeaderTitle",
+      "AdminFooter",
+      "AdminMain",
+      "AdminShell",
+      "AdminSidebar",
+      "Btn",
+      "FieldCheckbox",
+      "FieldError",
+      "FieldInput",
+      "FieldLabel",
+      "FieldRadio",
+      "FieldSelect",
+      "FieldTextarea",
+      "LoginError",
+      "Menu",
+      "ModelTable",
+      "Pagination",
+      "SidebarNavItem",
+      "StateEmpty",
+      "StateLoading"
+  ],
+  "hook": [
+      "usePagination.ts"
+  ]
+}
