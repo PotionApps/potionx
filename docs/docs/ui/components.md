@@ -8,7 +8,7 @@ Used to display the current user and to toggle the secondary navigation for acco
 
 #### Importing AccountToggle
 ```tsx
-import AccountToggle from "root/components/AccountToggle/AccountToggle";
+import AccountToggle from "components/AccountToggle/AccountToggle";
 ```
 
 #### Using AccountToggle
@@ -28,7 +28,7 @@ Used to apply padding to match with the [AdminHeader](/ui/components.html#adminh
 
 #### Importing AdminBody
 ```tsx
-import AdminBody from "root/components/AdminBody/AdminBody";
+import AdminBody from "components/AdminBody/AdminBody";
 ```
 
 #### Using AdminBody
@@ -48,7 +48,7 @@ Used as a mobile footer navigation. Nest it within the [AdminMain](/ui/component
 
 #### Importing AdminFooter
 ```tsx
-import  from "root/components/AdminFooter/AdminFooter";
+import  from "components/AdminFooter/AdminFooter";
 ```
 
 #### Using AdminFooter
@@ -79,7 +79,7 @@ Used as a header within [AdminMain](/ui/components.html#adminmain) and shares co
 
 #### Importing AdminHeader
 ```tsx
-import AdminHeader from "root/components/AdminHeader/AdminHeader";
+import AdminHeader from "components/AdminHeader/AdminHeader";
 ```
 
 #### Using AdminHeader
@@ -105,7 +105,7 @@ Used to wrap the [Btn](/ui/components.html#btn) component within [AdminHeader](/
 
 #### Importing AdminHeaderBtnWrap
 ```tsx
-import AdminHeaderBtnWrap from "root/components/AdminHeaderBtnWrap/AdminHeaderBtnWrap";
+import AdminHeaderBtnWrap from "components/AdminHeaderBtnWrap/AdminHeaderBtnWrap";
 ```
 
 #### Using AdminHeaderBtnWrap
@@ -124,7 +124,7 @@ Used as a prestyle [AdminHeader](/ui/components.html#adminheader) subtitle.
 
 #### Importing AdminHeaderSubtitle
 ```tsx
-import AdminHeaderSubtitle from "root/components/AdminHeaderSubtitle/AdminHeaderSubtitle";
+import AdminHeaderSubtitle from "components/AdminHeaderSubtitle/AdminHeaderSubtitle";
 ```
 
 #### Using AdminHeaderSubtitle
@@ -141,7 +141,7 @@ Used as a prestyle [AdminHeader](/ui/components.html#adminheader) title.
 
 #### Importing AdminHeaderTitle
 ```tsx
-import AdminHeaderTitle from "root/components/AdminHeaderTitle/AdminHeaderTitle";
+import AdminHeaderTitle from "components/AdminHeaderTitle/AdminHeaderTitle";
 ```
 
 #### Using AdminHeaderTitle
@@ -158,7 +158,7 @@ Used to nest [AdminFooter](/ui/components.html#adminfooter) with appropriate spa
 
 #### Importing AdminMain
 ```tsx
-import AdminMain from "root/components/AdminMain/AdminMain";
+import AdminMain from "components/AdminMain/AdminMain";
 ```
 
 #### Using AdminMain
@@ -177,7 +177,7 @@ Used as a wrapper component within your `App.tsx` file to apply proper layout st
 
 #### Importing AdminShell
 ```tsx
-import AdminShell from "root/components/AdminShell/AdminShell";
+import AdminShell from "components/AdminShell/AdminShell";
 ```
 
 #### Using AdminShell
@@ -196,7 +196,7 @@ Used as the admin navigation sidebar.
 
 #### Importing AdminSidebar
 ```tsx
-import AdminSidebar from "root/components/AdminSidebar/AdminSidebar";
+import AdminSidebar from "components/AdminSidebar/AdminSidebar";
 ```
 
 #### Using AdminSidebar
@@ -217,7 +217,7 @@ Depending on which props you use, this component will either be an `<a>`, a `<ro
 
 #### Importing Btn
 ```tsx
-import Btn from "root/components/Btn/Btn";
+import Btn from "components/Btn/Btn";
 ```
 
 #### Using Btn
@@ -281,7 +281,7 @@ A lighter version of the [Btn](/ui/components.html#btn) component that displays 
 
 #### Importing BtnIcon
 ```tsx
-import BtnIcon from "root/components/Btn/BtnIcon";
+import BtnIcon from "components/Btn/BtnIcon";
 ```
 
 #### Demo
@@ -294,7 +294,7 @@ A button that is styled for the login route.
 
 #### Importing BtnLogin
 ```tsx
-import BtnLogin from "root/components/Btn/BtnLogin";
+import BtnLogin from "components/Btn/BtnLogin";
 ```
 
 #### Demo
@@ -307,7 +307,7 @@ A button that is styled to match the menu toggle button in the [Menu](/ui/compon
 
 #### Importing BtnMobileMenu
 ```tsx
-import BtnMobileMenu from "root/components/Btn/BtnMobileMenu";
+import BtnMobileMenu from "components/Btn/BtnMobileMenu";
 ```
 
 #### Demo
@@ -320,7 +320,7 @@ A styled button to be used as the primary button.
 
 #### Importing BtnPrimary
 ```tsx
-import BtnPrimary from "root/components/Btn/BtnPrimary";
+import BtnPrimary from "components/Btn/BtnPrimary";
 ```
 
 #### Demo
@@ -333,7 +333,7 @@ A styled button to be used as the secondary button, in contrast with the primary
 
 #### Importing BtnSecondary
 ```tsx
-import BtnSecondary from "root/components/Btn/BtnSecondary";
+import BtnSecondary from "components/Btn/BtnSecondary";
 ```
 
 #### Demo
@@ -346,7 +346,7 @@ A smaller version of [Btn](/ui/components.html#btn).
 
 #### Importing BtnSmall
 ```tsx
-import BtnSmall from "root/components/Btn/BtnSmall";
+import BtnSmall from "components/Btn/BtnSmall";
 ```
 
 ### BtnSmallPrimary
@@ -355,7 +355,7 @@ A smaller version of [BtnPrimary](/ui/components.html#btnprimary).
 
 #### Importing BtnSmallPrimary
 ```tsx
-import BtnSmallPrimary from "root/components/Btn/BtnSmallPrimary";
+import BtnSmallPrimary from "components/Btn/BtnSmallPrimary";
 ```
 
 #### Demo
@@ -368,7 +368,7 @@ A smaller version of [BtnSecondary](/ui/components.html#btnsecondary).
 
 #### Importing BtnSmallSecondary
 ```tsx
-import BtnSmallSecondary from "root/components/Btn/BtnSmallSecondary";
+import BtnSmallSecondary from "components/Btn/BtnSmallSecondary";
 ```
 
 #### Demo
@@ -381,7 +381,7 @@ A submit button to be used with forms.
 
 #### Importing BtnSubmit
 ```tsx
-import BtnSubmit from "root/components/Btn/BtnSubmit";
+import BtnSubmit from "components/Btn/BtnSubmit";
 ```
 
 #### Demo
@@ -396,7 +396,7 @@ A prestyled select element.
 
 #### Importing Dropdown
 ```tsx
-import Dropdown from "root/components/Dropdown/Dropdown";
+import Dropdown from "components/Dropdown/Dropdown";
 ```
 
 #### Using Dropdown
@@ -415,7 +415,7 @@ A checkbox component used for forms.
 
 #### Importing FieldCheckbox
 ```tsx
-import FieldCheckbox from "root/components/FieldCheckbox/FieldCheckbox";
+import FieldCheckbox from "components/FieldCheckbox/FieldCheckbox";
 ```
 
 #### Using FieldCheckbox
@@ -471,7 +471,7 @@ A styled error message for form fields.
 
 #### Importing FieldError
 ```tsx
-import FieldError from "root/components/FieldError/FieldError";
+import FieldError from "components/FieldError/FieldError";
 ```
 
 #### Using FieldError
@@ -495,7 +495,7 @@ A styled input component used for forms.
 
 #### Importing FieldInput
 ```tsx
-import FieldInput from "root/components/FieldInput/FieldInput";
+import FieldInput from "components/FieldInput/FieldInput";
 ```
 
 #### Using FieldInput
@@ -537,7 +537,7 @@ A label component meant to compliment form fields.
 
 #### Importing FieldLabel
 ```tsx
-import FieldLabel from "root/components/FieldLabel/FieldLabel";
+import FieldLabel from "components/FieldLabel/FieldLabel";
 ```
 
 #### Using FieldLabel
@@ -561,7 +561,7 @@ A styled radio component for forms.
 
 #### Importing FieldRadio
 ```tsx
-import FieldRadio from "root/components/FieldRadio/FieldRadio";
+import FieldRadio from "components/FieldRadio/FieldRadio";
 ```
 
 #### Using FieldRadio
@@ -617,7 +617,7 @@ A styled select component for forms.
 
 #### Importing FieldSelect
 ```tsx
-import FieldSelect from "root/components/FieldSelect/FieldSelect";
+import FieldSelect from "components/FieldSelect/FieldSelect";
 ```
 
 #### Using FieldSelect
@@ -658,7 +658,7 @@ A styled textarea component for forms.
 
 #### Importing FieldTextarea
 ```tsx
-import FieldTextarea from "root/components/FieldTextarea/FieldTextarea";
+import FieldTextarea from "components/FieldTextarea/FieldTextarea";
 ```
 
 #### Using FieldTextarea
@@ -695,7 +695,7 @@ A failed message component.
 
 #### Importing LoginError
 ```tsx
-import LoginError from "root/components/LoginError/LoginError";
+import LoginError from "components/LoginError/LoginError";
 ```
 
 #### Using LoginError
@@ -712,7 +712,7 @@ The route for the menu page works by default, as does the back button.
 
 #### Importing Menu
 ```tsx
-import Menu from "root/components/Menu/Menu";
+import Menu from "components/Menu/Menu";
 ```
 
 #### Using 
@@ -731,7 +731,7 @@ A table component for your records.
 
 #### Importing ModelTable
 ```tsx
-import ModelTable from "root/components/ModelTable/ModelTable";
+import ModelTable from "components/ModelTable/ModelTable";
 ```
 
 #### Using ModelTable
@@ -814,7 +814,7 @@ A sticky pagination component for model pages.
 
 #### Importing Pagination
 ```tsx
-import Pagination from "root/components/Pagination/Pagination";
+import Pagination from "components/Pagination/Pagination";
 ```
 
 #### Using Pagination
@@ -872,7 +872,7 @@ An active filter pill component.
 
 #### Importing Pill
 ```tsx
-import Pill from "root/components/Pill/Pill";
+import Pill from "components/Pill/Pill";
 ```
 
 #### Using Pill
@@ -918,7 +918,7 @@ A search bar component.
 
 #### Importing Search
 ```tsx
-import Search from "root/components/Search/Search";
+import Search from "components/Search/Search";
 ```
 
 #### Using Search
@@ -961,7 +961,7 @@ A navigation item component. We use this by default in our themes in the [AdminS
 
 #### Importing SidebarNavItem
 ```tsx
-import SidebarNavItem from "root/components/SidebarNavItem/SidebarNavItem";
+import SidebarNavItem from "components/SidebarNavItem/SidebarNavItem";
 ```
 
 #### Using SidebarNavItem
@@ -1015,7 +1015,7 @@ An empty state component, to be paired with the [ModelTable](/ui/components.html
 
 #### Importing StateEmpty
 ```tsx
-import StateEmpty from "root/components/StateEmpty/StateEmpty";
+import StateEmpty from "components/StateEmpty/StateEmpty";
 ```
 
 #### Using StateEmpty
@@ -1043,7 +1043,7 @@ An animated loading component.
 
 #### Importing StateLoading
 ```tsx
-import StateLoading from "root/components/StateLoading/StateLoading";
+import StateLoading from "components/StateLoading/StateLoading";
 ```
 
 #### Using StateLoading
@@ -1063,7 +1063,7 @@ A tab list component.
 
 #### Importing Tabs
 ```tsx
-import Tabs from "root/components/Tabs/Tabs";
+import Tabs from "components/Tabs/Tabs";
 ```
 
 #### Using Tabs
@@ -1082,7 +1082,7 @@ A wrapper component for consistent horizontal padding.
 
 #### Importing Wrapper
 ```tsx
-import Wrapper from "root/components/Wrapper/Wrapper";
+import Wrapper from "components/Wrapper/Wrapper";
 ```
 
 #### Using Wrapper

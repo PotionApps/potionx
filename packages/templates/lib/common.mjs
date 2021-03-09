@@ -25,7 +25,7 @@ export const copyToDestination = (context, name) => {
           src.includes('.stories.') ||
           src.includes(path.sep + 'config.json') ||
           src.split(path.sep).pop() ==='index.html' ||
-          src.includes([context.componentName, 'node_modules'].join(path.sep)) ||
+          src.includes('node_modules') ||
           src.includes('.dev.') ||
           src.includes('__') ||
           src.includes('package-lock')

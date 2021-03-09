@@ -5,22 +5,22 @@ import { RootQueryType, RootMutationTypeUserMutationArgs, RootMutationType } fro
 import { routeNames } from 'root/routes/routeNames'
 import { useQuery, useMutation } from "@urql/vue";
 import { useRoute, useRouter } from 'vue-router'
-import AdminBody from 'root/components/AdminBody/AdminBody'
-import AdminFooter from 'root/components/AdminFooter/AdminFooter'
-import AdminHeader from 'root/components/AdminHeader/AdminHeader'
-import AdminHeaderBtnWrap from 'root/components/AdminHeaderBtnWrap/AdminHeaderBtnWrap';
-import AdminMain from 'root/components/AdminMain/AdminMain';
-import AdminHeaderTitle from 'root/components/AdminHeaderTitle/AdminHeaderTitle'
-import BtnIcon from 'root/components/Btn/BtnIcon';
-import BtnMobileMenu from 'root/components/Btn/BtnMobileMenu'
-import BtnSmallPrimary from 'root/components/Btn/BtnSmallPrimary';
-import BtnSmallSecondary from 'root/components/Btn/BtnSmallSecondary';
-import BtnSubmit from 'root/components/Btn/BtnSubmit'
-import FieldCheckbox from 'root/components/FieldCheckbox/FieldCheckbox';
-import FieldInput from 'root/components/FieldInput/FieldInput';
-import FieldRadio from 'root/components/FieldRadio/FieldRadio';
-import FieldSelect from 'root/components/FieldSelect/FieldSelect';
-import FieldTextarea from 'root/components/FieldTextarea/FieldTextarea';
+import AdminBody from 'components/AdminBody/AdminBody'
+import AdminFooter from 'components/AdminFooter/AdminFooter'
+import AdminHeader from 'components/AdminHeader/AdminHeader'
+import AdminHeaderBtnWrap from 'components/AdminHeaderBtnWrap/AdminHeaderBtnWrap';
+import AdminMain from 'components/AdminMain/AdminMain';
+import AdminHeaderTitle from 'components/AdminHeaderTitle/AdminHeaderTitle'
+import BtnIcon from 'components/Btn/BtnIcon';
+import BtnMobileMenu from 'components/Btn/BtnMobileMenu'
+import BtnSmallPrimary from 'components/Btn/BtnSmallPrimary';
+import BtnSmallSecondary from 'components/Btn/BtnSmallSecondary';
+import BtnSubmit from 'components/Btn/BtnSubmit'
+import FieldCheckbox from 'components/FieldCheckbox/FieldCheckbox';
+import FieldInput from 'components/FieldInput/FieldInput';
+import FieldRadio from 'components/FieldRadio/FieldRadio';
+import FieldSelect from 'components/FieldSelect/FieldSelect';
+import FieldTextarea from 'components/FieldTextarea/FieldTextarea';
 import mutation from 'shared/models/Users/User/userMutation.gql'
 import schema from 'shared/models/Users/User/user.json'
 import single from 'shared/models/Users/User/userSingle.gql'
@@ -97,7 +97,7 @@ export default defineComponent({
       return <AdminMain>
         <AdminHeader
           v-slots={{
-            btns: () => <div>
+            btns: () => <div class="flex">
               <AdminHeaderBtnWrap>
                 <BtnSmallSecondary
                   click={deleteEntry}

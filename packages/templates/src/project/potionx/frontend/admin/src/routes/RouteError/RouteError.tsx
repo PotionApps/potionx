@@ -1,7 +1,7 @@
-import AdminMain from "root/components/AdminMain/AdminMain";
-import AdminFooter from "root/components/AdminFooter/AdminFooter";
-import BtnMobileMenu from "root/components/Btn/BtnMobileMenu";
-import BtnPrimary from "root/components/Btn/BtnPrimary";
+import AdminMain from "components/AdminMain/AdminMain";
+import AdminFooter from "components/AdminFooter/AdminFooter";
+import BtnMobileMenu from "components/Btn/BtnMobileMenu";
+import BtnPrimary from "components/Btn/BtnPrimary";
 import { defineComponent } from "vue";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { routeNames } from "root/routes/routeNames";

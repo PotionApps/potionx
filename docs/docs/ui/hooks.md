@@ -103,7 +103,7 @@ import { computed, defineComponent } from "vue"
 import { RootQueryType } from "shared/types";
 import { useQuery } from "@urql/vue";
 import collection from 'shared/models/__context__/__model__/__model_graphql_case__Collection.gql'
-import Pagination from "root/components/Pagination/Pagination";
+import Pagination from "components/Pagination/Pagination";
 import usePagination from "root/hooks/usePagination";
 
 export default defineComponent({

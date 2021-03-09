@@ -1,5 +1,5 @@
-import AdminFooter from 'root/components/AdminFooter/AdminFooter'
-import AdminMain from 'root/components/AdminMain/AdminMain'
+import AdminFooter from 'components/AdminFooter/AdminFooter'
+import AdminMain from 'components/AdminMain/AdminMain'
 import { defineComponent } from 'vue'
 import { faDiscord, faGithub, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@potionapps/utils'

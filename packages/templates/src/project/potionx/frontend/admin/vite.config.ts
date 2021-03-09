@@ -8,6 +8,10 @@ export default defineConfig({
   resolve: {
     alias: {
       // @ts-ignore
+      'components': resolve(__dirname, './src/components'),
+      // @ts-ignore
+      'hooks': resolve(__dirname, './src/hooks'),
+      // @ts-ignore
       'root': resolve(__dirname, './src'),
       // @ts-ignore
       'shared': resolve(__dirname, '../../shared/src')
@@ -25,6 +29,9 @@ export default defineConfig({
   plugins: [
     jsx(),
     WindiCSS({
+      preflight: {
+        safelist: ['[type="text"]', '[type="number"]', '[type="email"]']
+      },
       scan: {
         dirs: [ './src'],
         runOnStartup: true

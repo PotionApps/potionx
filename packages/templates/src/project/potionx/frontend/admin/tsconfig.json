@@ -11,6 +11,8 @@
     "lib": ["esnext", "dom"],
     "types": ["vite/client"],
     "paths": {
+      "components/*": ["../../../../component/*"],
+      "hooks/*": ["../../../../hook/*"],
       "root/*": ["./src/*"],
       "shared/*": ["../../shared/src/*"]
     },

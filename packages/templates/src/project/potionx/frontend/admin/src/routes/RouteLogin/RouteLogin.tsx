@@ -1,6 +1,6 @@
 import { defineComponent } from "vue";
 import { faGoogle, faMicrosoft } from "@fortawesome/free-brands-svg-icons"
-import BtnLogin from 'root/components/Btn/BtnLogin'
+import BtnLogin from 'components/Btn/BtnLogin'
 import signIn from 'shared/signIn'
 
 export default defineComponent({

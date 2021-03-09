@@ -1,5 +1,5 @@
-import AdminFooter from "root/components/AdminFooter/AdminFooter";
-import BtnMobileMenu from "root/components/Btn/BtnMobileMenu";
+import AdminFooter from "components/AdminFooter/AdminFooter";
+import BtnMobileMenu from "components/Btn/BtnMobileMenu";
 import { defineComponent, computed } from "vue";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "vue-router"

@@ -3,20 +3,20 @@ import { RootQueryType } from "shared/types";
 import { routeNames } from 'root/routes/routeNames'
 import { useQuery } from "@urql/vue";
 import { useRouter } from "vue-router";
-import AdminFooter from 'root/components/AdminFooter/AdminFooter'
-import AdminHeader from 'root/components/AdminHeader/AdminHeader'
-import AdminHeaderBtnWrap from "root/components/AdminHeaderBtnWrap/AdminHeaderBtnWrap";
-import AdminMain from "root/components/AdminMain/AdminMain";
-import AdminHeaderTitle from 'root/components/AdminHeaderTitle/AdminHeaderTitle'
-import BtnMobileMenu from 'root/components/Btn/BtnMobileMenu'
-import BtnPrimary from "root/components/Btn/BtnPrimary";
+import AdminFooter from 'components/AdminFooter/AdminFooter'
+import AdminHeader from 'components/AdminHeader/AdminHeader'
+import AdminHeaderBtnWrap from "components/AdminHeaderBtnWrap/AdminHeaderBtnWrap";
+import AdminMain from "components/AdminMain/AdminMain";
+import AdminHeaderTitle from 'components/AdminHeaderTitle/AdminHeaderTitle'
+import BtnMobileMenu from 'components/Btn/BtnMobileMenu'
+import BtnPrimary from "components/Btn/BtnPrimary";
 import collection from 'shared/models/Users/User/userCollection.gql'
-import ModelTable, { ModelTableProps } from 'root/components/ModelTable/ModelTable'
-import Pagination from "root/components/Pagination/Pagination";
+import ModelTable, { ModelTableProps } from 'components/ModelTable/ModelTable'
+import Pagination from "components/Pagination/Pagination";
 import schema from 'shared/models/Users/User/user.json'
-import StateEmpty from 'root/components/StateEmpty/StateEmpty'
-import StateLoading from 'root/components/StateLoading/StateLoading'
-import usePagination from "root/hooks/usePagination";
+import StateEmpty from 'components/StateEmpty/StateEmpty'
+import StateLoading from 'components/StateLoading/StateLoading'
+import usePagination from "hooks/usePagination";
 
 export default defineComponent({
   setup () {

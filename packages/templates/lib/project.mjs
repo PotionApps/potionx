@@ -46,6 +46,7 @@ export default async (yargs) => {
           )
         })
       })
+      await config.callback(context, enquirer.prompt, values)
     }
   } catch (e) {
     console.log(e)

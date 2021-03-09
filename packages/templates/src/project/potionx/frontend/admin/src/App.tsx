@@ -1,10 +1,10 @@
 import { computed, defineComponent } from 'vue'
 import { routeNames } from './routes/routeNames'
 import { useRoute } from 'vue-router'
-import AdminShell from 'root/components/AdminShell/AdminShell'
-import AdminSidebar from 'root/components/AdminSidebar/AdminSidebar'
-import Menu from 'root/components/Menu/Menu';
-import SidebarNavItem from 'root/components/SidebarNavItem/SidebarNavItem'
+import AdminShell from 'components/AdminShell/AdminShell'
+import AdminSidebar from 'components/AdminSidebar/AdminSidebar'
+import Menu from 'components/Menu/Menu';
+import SidebarNavItem from 'components/SidebarNavItem/SidebarNavItem'
 import useAdminNavPrimary from "./useAdminNavPrimary";
 import useAdminNavSecondary from "./useAdminNavSecondary";
 
