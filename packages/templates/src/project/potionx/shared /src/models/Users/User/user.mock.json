@@ -1,0 +1,10 @@
+{
+  "deletedAt": "2010-04-17T14:00:00Z",
+  "email": "test@example.com",
+  "id": "some id",
+  "insertedAt": "2010-04-17T14:00:00",
+  "nameFirst": "some name_first",
+  "nameLast": "some name_last",
+  "roles": [],
+  "updatedAt": "2010-04-17T14:00:00"
+}

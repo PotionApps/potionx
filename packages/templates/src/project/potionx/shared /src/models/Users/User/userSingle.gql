@@ -1,0 +1,18 @@
+query userSingle(
+  $filters: UserFiltersSingle
+) {
+  userSingle(
+    filters: $filters
+  ) {
+    deletedAt
+    email
+    id
+    insertedAt
+    nameFirst
+    nameLast
+    roles
+    title
+    updatedAt
+    
+  }
+}

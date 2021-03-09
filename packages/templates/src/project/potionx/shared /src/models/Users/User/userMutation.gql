@@ -1,0 +1,27 @@
+mutation userMutation(
+  $changes: UserInput,
+  $filters: UserFiltersSingle
+) {
+  userMutation(
+    changes: $changes,
+    filters: $filters
+  ) {
+    errors
+    errorsFields {
+      field
+      message
+    }
+    node {
+      deletedAt
+      email
+      id
+      insertedAt
+      nameFirst
+      nameLast
+      roles
+      title
+      updatedAt
+      
+    }
+  }
+}

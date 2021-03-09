@@ -1,0 +1,34 @@
+mutation userDelete(
+  $filters: UserFiltersSingle
+) {
+  userDelete(
+    filters: $filters
+  ) {
+    errors
+    errorsFields {
+      field
+      message
+    }
+    node {
+    
+      deletedAt
+    
+      email
+    
+      id
+    
+      insertedAt
+    
+      nameFirst
+    
+      nameLast
+    
+      roles
+    
+      title
+    
+      updatedAt
+    
+    }
+  }
+}

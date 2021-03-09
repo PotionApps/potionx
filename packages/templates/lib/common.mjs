@@ -24,7 +24,7 @@ export const copyToDestination = (context, name) => {
         if (
           src.includes('.stories.') ||
           src.includes(path.sep + 'config.json') ||
-          src.includes('index.html') ||
+          src.split(path.sep).pop() ==='index.html' ||
           src.includes([context.componentName, 'node_modules'].join(path.sep)) ||
           src.includes('.dev.') ||
           src.includes('__') ||

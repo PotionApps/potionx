@@ -1,0 +1,30 @@
+[
+  {
+    "name": "id",
+    "type": "id",
+    "validations": []
+  },
+  {
+    "name": "provider",
+    "type": "string",
+    "validations": [
+      {
+        "name": "required"
+      }
+    ]
+  },
+  {
+    "name": "uid",
+    "type": "string",
+    "validations": [
+      {
+        "name": "required"
+      }
+    ]
+  },
+  {
+    "name": "userId",
+    "type": "id",
+    "validations": []
+  }
+]

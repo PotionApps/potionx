@@ -1,0 +1,53 @@
+[
+  {
+    "name": "deletedAt",
+    "type": "utcDatetime",
+    "validations": []
+  },
+  {
+    "name": "email",
+    "type": "string",
+    "validations": [
+      {
+        "name": "required"
+      },
+      {
+        "name": "emailFormat"
+      }
+    ]
+  },
+  {
+    "name": "id",
+    "type": "id",
+    "validations": []
+  },
+  {
+    "name": "nameFirst",
+    "type": "string",
+    "validations": []
+  },
+  {
+    "name": "nameLast",
+    "type": "string",
+    "validations": []
+  },
+  {
+    "name": "roles",
+    "options": [
+      "admin",
+      "guest"
+    ],
+    "type": "checkbox",
+    "validations": [
+      {
+        "name": "subset",
+        "params": {
+          "values": [
+            "admin",
+            "guest"
+          ]
+        }
+      }
+    ]
+  }
+]

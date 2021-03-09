@@ -1,0 +1,8 @@
+{
+  "id": "some id",
+  "insertedAt": "2010-04-17T14:00:00",
+  "provider": "some provider",
+  "uid": "some uid",
+  "updatedAt": "2010-04-17T14:00:00",
+  "userId": "some user_id"
+}

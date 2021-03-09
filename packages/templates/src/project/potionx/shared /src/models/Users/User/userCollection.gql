@@ -1,0 +1,39 @@
+query userCollection(
+  $after: String,
+  $before: String,
+  $first: Int,
+  $last: Int,
+  $filters: UserFilters
+) {
+  userCollection(
+    after: $after,
+    before: $before,
+    first: $first,
+    filters: $filters,
+    last: $last
+  ) {
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
+    count
+    countBefore
+    edges {
+      node {
+        deletedAt
+        email
+        id
+        insertedAt
+        nameFirst
+        nameLast
+        roles
+        title
+        updatedAt
+        
+      }
+      cursor
+    }
+  }
+}
