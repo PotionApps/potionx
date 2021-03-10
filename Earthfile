@@ -33,7 +33,7 @@ integration-test:
     RUN apk add --no-progress --update docker docker-compose
 
     # Install tooling needed to check if the DBs are actually up when performing integration tests
-    RUN apk add postgresql-client
+    RUN apk add postgresql-client inotify-tools
 
     # Integration test deps
     COPY /integration_test/docker-compose.yml ./integration_test/docker-compose.yml
@@ -45,12 +45,12 @@ integration-test:
     RUN mix local.hex --force
     RUN mix deps.get
     RUN mix local.rebar --force
-    RUN mkdir -p packages/ui
+    RUN mkdir -p packages/templates
     COPY packages/templates/package* packages/templates
     WORKDIR packages/templates
     RUN npm install
     WORKDIR /src
-    COPY --dir config installer lib packages test priv /src
+    COPY --dir config installer packages lib test priv /src
     WORKDIR /src/integration_test
 
     # Compile phoenix
@@ -58,11 +58,12 @@ integration-test:
     # Compiling here improves caching, but slows down GHA speed
     # Removing until this feature exists https://github.com/earthly/earthly/issues/574
     # RUN MIX_ENV=test mix deps.compile
-    RUN npm install '../packages/templates'
+    RUN npm install '/src/packages/templates'
+
 
     # Run integration tests
-    COPY integration_test/test  ./test
-    COPY integration_test/config/config.exs  ./config/config.exs
+    # COPY integration_test/test  ./test
+    # COPY integration_test/config/config.exs  ./config/config.exs
 
     WITH DOCKER
         # Start docker compose
@@ -71,8 +72,10 @@ integration-test:
         # Run the database tests
         RUN docker-compose up -d & \
             while ! pg_isready --host=localhost --port=5432 --quiet; do sleep 1; done; \
-            npm templates project alpha node --localDbPassword=postgres --localDbUser=postgres --email=vince@potionapps.com --runMigrations --installDeps
+            npx @potionapps/templates project --appName=alpha --localDbPassword=postgres --localDbUser=postgres \
+            --email=vince@potionapps.com --installDeps --runMigrations && \
             cd alpha && \
+            ls priv/repo/migrations && \
             mix test && \
             cd ./frontend/admin && \
             npm run build
@@ -84,7 +87,7 @@ test-forms:
     RUN mkdir -p packages/forms
     # Copy package.json + lockfile separatelly to improve caching (JS changes don't trigger `npm install` anymore)
     COPY packages/forms/package* packages/forms
-    WORKDIR packages/forms
+    WORKDIR packages/forms`
     RUN npm install
     COPY packages/forms/ .
     RUN npm test
@@ -104,7 +107,7 @@ setup-base:
    ARG ELIXIR=1.11.3
    ARG OTP=23.2.5
    FROM hexpm/elixir:$ELIXIR-erlang-$OTP-alpine-3.13.1
-   RUN apk add --no-progress --update git build-base npm nodejs
+   RUN apk add --no-progress --update bash git build-base npm nodejs
    ENV ELIXIR_ASSERT_TIMEOUT=10000
    WORKDIR /src
 

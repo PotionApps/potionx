@@ -30,7 +30,7 @@ export default async (yargs) => {
       throw new Error(`directory ${values.appName} already exists in destination`)
     } else {
       copyToDestination(context, values.appName)
-      interpolateFilesAndPaths(
+      const interpolation = await interpolateFilesAndPaths(
         context,
         values.appName,
         values

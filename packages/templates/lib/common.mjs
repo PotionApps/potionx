@@ -40,13 +40,13 @@ export const getSourcePath = ({componentName, componentType}) => {
   return path.resolve(__dirname, '../src/', componentType, componentName)
 }
 
-export const interpolateFile = async(filePath, values) => {
+export const interpolateFile = (filePath, values) => {
   const fileContent = fs.readFileSync(filePath, { encoding: 'utf-8'})
   if (fileContent.includes('<%')) {
     try {
       fs.writeFileSync(
         filePath,
-        ejs.render(fileContent, values),
+        ejs.render(fileContent, values)
       )
     } catch (e) {
       console.log(e)
@@ -58,9 +58,13 @@ export const interpolateFile = async(filePath, values) => {
 export const interpolateFilesAndPaths = async (context, name, values) => {
   values = {...values, dot: "."}
   const items = [] // files, directories, symlinks, etc
-  await klaw(path.join(context.destination, name))
+  return new Promise((resolve, reject) => {
+    klaw(path.join(context.destination, name))
     .on('data', item => {
       items.push(item.path)
+    })
+    .on('error', (e) => {
+      reject(e)
     })
     .on('end', () => {
       items.sort((a, b) => {
@@ -84,8 +88,10 @@ export const interpolateFilesAndPaths = async (context, name, values) => {
             )
           }
         }
+        resolve(true)
       })
     })
+  }) 
 }
 
 export const snakeCaseToModuleCase = (snake_case) => {

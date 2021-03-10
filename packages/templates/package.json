@@ -8,9 +8,6 @@
     "bin": {
         "templates": "./cli/cli.mjs"
     },
-    "main": "./dist/potionapps-templates.esm.js",
-    "module": "./dist/potionapps-templates.esm.js",
-    "typings": "dist/index.d.ts",
     "scripts": {
         "dev": "vite",
         "build": "tsdx build --name potionapps-templates --format 'cjs,esm,umd'",

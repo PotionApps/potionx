@@ -18,13 +18,15 @@ export const callback = async (context, prompt, values) => {
       }
     )
     values.installDeps = installDeps
+    
   }
+
   if (values.installDeps) {
-    const depsRes = spawnSync('mix', ['deps.get'], { cwd: path.join(context.destination, values.appName), shell: true })
+    const depsRes = spawnSync('mix', ['deps.get'], { cwd: path.join(context.destination, values.appName), encoding: 'utf-8', shell: true })
+    console.log(path.join(context.destination, values.appName))
     if (depsRes.status !== 0) console.log("Elixir dependency fetching failed")
-    console.log("installing JS deps...")
-    const jsRes = spawnSync('npm', ['i'], { cwd: path.join(context.destination, values.appName, "frontend", "admin"), shell: true })
-    if (jsRes.status !== 0) console.log("Elixir dependency fetching failed")
+    const jsRes = spawnSync('npm', ['install'], { cwd: path.join(context.destination, values.appName, "frontend", "admin"), shell: true, encoding: 'utf-8'})
+    if (jsRes.status !== 0) console.log("JS deps fetching failed")
   }
   if (values.runMigrations === undefined) {
     const { migration } = await prompt(
@@ -37,9 +39,10 @@ export const callback = async (context, prompt, values) => {
     values.runMigrations = migration
   }
   if (values.runMigrations) {
-    console.log("Running database set up...")
-    const migrationRes = spawnSync('mix', ['ecto.setup'], { cwd: path.join(context.destination, values.appName), shell: true })
-    if (migrationRes.status !== 0) console.log("Database set up failed. (this may be long due to compilation)")
+    console.log("Running database set up... (this may be long due to compilation)")
+    const migrationRes = spawnSync('mix', ['ecto.setup'], { cwd: path.join(context.destination, values.appName), shell: true, encoding: 'utf-8' })
+    console.log(migrationRes)
+    if (migrationRes.status !== 0) console.log("Database set up failed.")
   }
 }
 
@@ -48,6 +51,10 @@ export const components = async () => {
     components: fs.readJSONSync(path.resolve(__dirname, './frontend/admin/config.json')),
     path: "./frontend/admin/src"
   }
+}
+
+const dateToTimestamp = (date) => {
+  return date.toISOString().replace(/T|:|-/g, '').split('.')[0]
 }
 
 export const getValues = async (context, prompt, initialValues) => {
@@ -102,6 +109,8 @@ export const getValues = async (context, prompt, initialValues) => {
   // ask if deps should be installed
   // install deps 
   // ask if migrations should be run
+  const timestamp = new Date()
+  const timestamp2 = new Date(timestamp.getTime() + 1000)
   return {
     ...initialValues,
     ...collected,
@@ -114,6 +123,8 @@ export const getValues = async (context, prompt, initialValues) => {
     potionxDep: `"~> ${potionx_version}"`,
     secretKeyBase: crypto.randomBytes(64).toString('hex'),
     signingSalt: crypto.randomBytes(8).toString('hex'),
+    timestamp: dateToTimestamp(timestamp),
+    timestamp2: dateToTimestamp(timestamp2),
     webAppName: appName,
     webNamespace: appNameModuleCase + "Web"
   }
@@ -135,3 +146,4 @@ const fixConfigPaths = (context, values) => {
     )
   )
 }
+
