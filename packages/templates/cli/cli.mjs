@@ -1,13 +1,12 @@
 #!/usr/bin/env node
-import fs from 'fs-extra'
 import path from 'path'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 const scriptName = "templates"
 import { fileURLToPath } from 'url';
-import { checkDirectoryExists, getSourcePath } from '../lib/common.mjs'
 import projectMjs from '../lib/project.mjs'
 import modelMjs from '../lib/model.mjs'
+import componentMjs from '../lib/component.mjs'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,6 +24,8 @@ const run = async () => {
     projectMjs(yargsInitial)
   } else if (yargsInitial.argv._[0] === "model") {
     modelMjs(yargsInitial)
+  } else if (yargsInitial.argv._[0] === "component") {
+    componentMjs(yargsInitial)
   }
 }
 run()
