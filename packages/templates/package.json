@@ -14,13 +14,14 @@
         "test": "jest"
     },
     "devDependencies": {
-        "@potionapps/utils": "0.0.1",
-        "@fortawesome/vue-fontawesome": "^3.0.0-3",
         "@fortawesome/fontawesome-svg-core": "^1.2.34",
         "@fortawesome/free-brands-svg-icons": "^5.15.2",
         "@fortawesome/free-regular-svg-icons": "^5.15.2",
         "@fortawesome/free-solid-svg-icons": "^5.15.2",
-        "@potionapps/forms": "file:../forms"
+        "@fortawesome/vue-fontawesome": "^3.0.0-3",
+        "@potionapps/forms": "file:../forms",
+        "@potionapps/utils": "0.0.1",
+        "jest": "^26.6.3"
     },
     "dependencies": {
         "ejs": "^3.1.6",

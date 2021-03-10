@@ -3,7 +3,6 @@ import { fileURLToPath } from 'url';
 import fs from 'fs-extra'
 import path from 'path'
 import enquirer from 'enquirer'
-const potionx_version = "0.2.17"
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 

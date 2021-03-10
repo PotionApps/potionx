@@ -2,7 +2,7 @@ const fs = require('fs-extra')
 const { spawnSync } = require('child_process')
 
 afterEach(() => {
-  fs.removeSync('./test/tmpRoutes')
+  // fs.removeSync('./test/tmpRoutes')
 });
 
 test('Generates a CRUD Route in the target directory', () => {
@@ -11,22 +11,23 @@ test('Generates a CRUD Route in the target directory', () => {
   const dest = './test/tmpRoutes/src'
 
   fs.copyFileSync(
-    './src/templates/themes/admin/src/useAdminNavPrimary.ts',
+    './src/project/potionx/frontend/admin/src/useAdminNavPrimary.ts',
     `${dest}/useAdminNavPrimary.ts`
   ) 
   fs.copyFileSync(
-    './src/templates/themes/admin/src/routes/index.ts',
+    './src/project/potionx/frontend/admin/src/routes/index.ts',
     `${dest}/routes/index.ts`
   ) 
   fs.copyFileSync(
-    './src/templates/themes/admin/src/routes/routeNames.ts',
+    './src/project/potionx/frontend/admin/src/routes/routeNames.ts',
     `${dest}/routes/routeNames.ts`
   ) 
   // routes
   // routeNames
 
-
-  spawnSync('node', ['./cli/cliRoutes.mjs', 'Users', 'User', '--destination=./test/tmpRoutes'])
+  spawnSync('node', ['./cli/cli.mjs', 'model', 'Users', 'User', '--destination=./test/tmpRoutes'], {
+    encoding: "utf-8"
+  })
   ;[
     'RouteUserEdit',
     'RouteUserList'
