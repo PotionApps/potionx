@@ -2,12 +2,11 @@ all:
     BUILD +all-test
     BUILD +all-integration-test
     BUILD +test-forms
-    BUILD +test-ui
+    BUILD +test-templates
 
 all-frontend:
     BUILD +test-forms
     BUILD +test-templates
-    BUILD +test-ui
 
 all-test:
     BUILD --build-arg ELIXIR=1.11.3 --build-arg OTP=23.2.5 +test
