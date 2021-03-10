@@ -87,7 +87,7 @@ test-forms:
     RUN mkdir -p packages/forms
     # Copy package.json + lockfile separatelly to improve caching (JS changes don't trigger `npm install` anymore)
     COPY packages/forms/package* packages/forms
-    WORKDIR packages/forms`
+    WORKDIR packages/forms
     RUN npm install
     COPY packages/forms/ .
     RUN npm test
