@@ -111,7 +111,7 @@ export const getValues = async (context, prompt, initialValues) => {
   }
 
   const collected = await prompt(toCollect);
-  const potionx_version = "0.2.18";
+  const potionx_version = "0.3.0";
 
 
   // confirm directory
