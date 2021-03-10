@@ -6,6 +6,7 @@ all:
 
 all-frontend:
     BUILD +test-forms
+    BUILD +test-templates
     BUILD +test-ui
 
 all-test:
@@ -90,6 +91,17 @@ test-forms:
     WORKDIR packages/forms
     RUN npm install
     COPY packages/forms/ .
+    RUN npm test
+
+test-templates:
+    FROM node:14.16.0-alpine3.12
+    WORKDIR /src
+    RUN mkdir -p packages/templates
+    # Copy package.json + lockfile separatelly to improve caching (JS changes don't trigger `npm install` anymore)
+    COPY packages/templates/package* packages/templates
+    WORKDIR packages/templates
+    RUN npm install
+    COPY packages/templates/ .
     RUN npm test
 
 test-ui:
