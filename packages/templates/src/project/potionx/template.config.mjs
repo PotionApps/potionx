@@ -24,6 +24,7 @@ export const callback = async (context, prompt, values) => {
 
   if (values.installDeps) {
     const depsRes = spawnSync('mix', ['deps.get'], { cwd: path.join(context.destination, values.appName), encoding: 'utf-8', shell: true })
+    console.log("Installing Deps...")
     if (depsRes.status !== 0) {
       console.log("Elixir dependency fetching failed. Log:")
       console.log(depsRes.stdout)
