@@ -12,6 +12,7 @@ export const callback = async (context, prompt, values) => {
   if (values.installDeps === undefined) {
     const { installDeps } = await prompt(
       {
+        initial: true,
         name: 'installDeps',
         message: "Install dependencies?",
         type: "confirm"
@@ -36,6 +37,7 @@ export const callback = async (context, prompt, values) => {
   if (values.runMigrations === undefined) {
     const { migration } = await prompt(
       {
+        initial: true,
         name: 'migration',
         message: "Run database preparation?",
         type: "confirm"
