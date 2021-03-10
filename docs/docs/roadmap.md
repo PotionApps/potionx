@@ -53,6 +53,7 @@ Status: `Coming soon`
 
 We plan on releasing products related to our open source base.
 - CMS
+- Shopify integration
 - Project/task management
 
 Status: `Coming soon`

@@ -2,6 +2,7 @@ import AdminFooter from 'components/AdminFooter/AdminFooter'
 import AdminMain from 'components/AdminMain/AdminMain'
 import { defineComponent } from 'vue'
 import { faDiscord, faGithub, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons'
+import { faVoteYea } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@potionapps/utils'
 import Logo from '../../assets/logo.svg'
 
@@ -11,7 +12,8 @@ export default defineComponent({
       {icon: faDiscord, url: "https://discord.gg/JydTNZCS"},
       {icon: faGithub, url: "https://github.com/PotionApps/potionx"},
       {icon: faTwitter, url: "https://twitter.com/Potionapps"},
-      {icon: faYoutube, url: "https://www.youtube.com/channel/UCQwh1NM_EpDmY7tEnNb3xdA/featured"}
+      {icon: faYoutube, url: "https://www.youtube.com/channel/UCQwh1NM_EpDmY7tEnNb3xdA/featured"},
+      {icon: faVoteYea, url: "https://potion.hellonext.co/"}
     ]
     return () => <AdminMain>
       <div class="pt-24 px-6 text-center">
