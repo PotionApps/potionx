@@ -1,20 +1,9 @@
 # Getting Started
 
-## Potionx_new installer
-
-First, you will need the Potionx installer
-
-```bash
-mix archive.install hex potionx_new
-```
-> If you have installed ```hex``` before, you'll need to install it with: `mix local.hex`.
-
 ## Generating a project
 
-Once the installer is installed, you can generate a Potionx project by running the following command
-
 ```bash
-mix potionx.new some_project_name
+npx @potionapps/templates project
 ```
 
 You will be prompted with the following questions:
