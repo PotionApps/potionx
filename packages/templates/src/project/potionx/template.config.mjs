@@ -23,10 +23,15 @@ export const callback = async (context, prompt, values) => {
 
   if (values.installDeps) {
     const depsRes = spawnSync('mix', ['deps.get'], { cwd: path.join(context.destination, values.appName), encoding: 'utf-8', shell: true })
-    console.log(path.join(context.destination, values.appName))
-    if (depsRes.status !== 0) console.log("Elixir dependency fetching failed")
+    if (depsRes.status !== 0) {
+      console.log("Elixir dependency fetching failed. Log:")
+      console.log(depsRes.stdout)
+    }
     const jsRes = spawnSync('npm', ['install'], { cwd: path.join(context.destination, values.appName, "frontend", "admin"), shell: true, encoding: 'utf-8'})
-    if (jsRes.status !== 0) console.log("JS deps fetching failed")
+    if (jsRes.status !== 0) {
+      console.log("JS deps fetching failed. Log:")
+      console.log(migrationRes.stdout)
+    }
   }
   if (values.runMigrations === undefined) {
     const { migration } = await prompt(
@@ -41,8 +46,10 @@ export const callback = async (context, prompt, values) => {
   if (values.runMigrations) {
     console.log("Running database set up... (this may be long due to compilation)")
     const migrationRes = spawnSync('mix', ['ecto.setup'], { cwd: path.join(context.destination, values.appName), shell: true, encoding: 'utf-8' })
-    console.log(migrationRes)
-    if (migrationRes.status !== 0) console.log("Database set up failed.")
+    if (migrationRes.status !== 0) {
+      console.log("Database set up failed. Log:")
+      console.log(migrationRes.stdout)
+    }
   }
 }
 
