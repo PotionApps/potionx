@@ -116,6 +116,7 @@ export const getValues = async (context, prompt, initialValues) => {
     ...collected,
     adapterApp: "postgrex",
     appModule: appNameModuleCase,
+    appName,
     endpointModule: appNameModuleCase + "Web.Endpoint",
     graphqlNamespace: appNameModuleCase + "GraphQl",
     libWebName: appName + "_web",

@@ -1,9 +1,10 @@
 {
     "name": "@potionapps/templates",
-    "version": "0.0.0",
+    "version": "0.0.2",
     "files": [
         "cli",
-        "src/templates"
+        "lib",
+        "src"
     ],
     "bin": {
         "templates": "./cli/cli.mjs"
