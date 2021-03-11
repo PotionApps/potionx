@@ -11,7 +11,6 @@ all-frontend:
 all-test:
     BUILD --build-arg ELIXIR=1.11.3 --build-arg OTP=23.2.5 +test
 
-
 test:
     FROM +setup-test
     RUN MIX_ENV=test mix deps.compile
