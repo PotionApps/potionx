@@ -1,30 +1,34 @@
 {
-  "component": [
-      "AdminBody",
-      "AdminHeader",
-      "AdminHeaderBtnWrap",
-      "AdminHeaderTitle",
-      "AdminFooter",
-      "AdminMain",
-      "AdminShell",
-      "AdminSidebar",
-      "Btn",
-      "FieldCheckbox",
-      "FieldError",
-      "FieldInput",
-      "FieldLabel",
-      "FieldRadio",
-      "FieldSelect",
-      "FieldTextarea",
-      "LoginError",
-      "Menu",
-      "ModelTable",
-      "Pagination",
-      "SidebarNavItem",
-      "StateEmpty",
-      "StateLoading"
-  ],
-  "hook": [
-      "usePagination.ts"
-  ]
+    "component": [
+        "AdminBody",
+        "AdminHeader",
+        "AdminHeaderBtnWrap",
+        "AdminHeaderSubTitle",
+        "AdminHeaderTitle",
+        "AdminFooter",
+        "AdminMain",
+        "AdminShell",
+        "AdminSidebar",
+        "Btn",
+        "FieldCheckbox",
+        "FieldError",
+        "FieldInput",
+        "FieldLabel",
+        "FieldRadio",
+        "FieldSelect",
+        "FieldTextarea",
+        "LoginError",
+        "Menu",
+        "ModelTable",
+        "Pagination",
+        "Pill",
+        "Search",
+        "SidebarNavItem",
+        "StateEmpty",
+        "StateLoading",
+        "Wrapper"
+    ],
+    "hook": [
+        "usePagination.ts"
+    ]
 }
