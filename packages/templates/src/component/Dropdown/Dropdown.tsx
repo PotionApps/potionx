@@ -2,14 +2,14 @@ import { defineComponent } from "vue";
 import { FontAwesomeIcon } from '@potionapps/utils';
 
 export interface DropdownProps {
-  icon?: Object
+  icon?: {}
   label: string
 }
 
 export default defineComponent({
   name: "Dropdown",
   props: {
-    icon: {},
+    icon: Object,
     label: String
   },
   setup (props: DropdownProps) {
