@@ -107,7 +107,7 @@ export default defineComponent({
                   label="Delete __model__"
                 />
               </AdminHeaderBtnWrap>
-              <AdminHeaderBtnWrap hide={true}>
+              <AdminHeaderBtnWrap hidden={true}>
                 <BtnSmallPrimary
                   label="New __model__"
                   icon={faPlus}

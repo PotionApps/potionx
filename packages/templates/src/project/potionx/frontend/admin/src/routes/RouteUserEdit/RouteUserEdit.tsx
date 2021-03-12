@@ -106,7 +106,7 @@ export default defineComponent({
                   label="Delete User"
                 />
               </AdminHeaderBtnWrap>
-              <AdminHeaderBtnWrap hide={true}>
+              <AdminHeaderBtnWrap hidden={true}>
                 <BtnSmallPrimary
                   label="New User"
                   icon={faPlus}

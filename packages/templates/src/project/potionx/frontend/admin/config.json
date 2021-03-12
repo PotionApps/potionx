@@ -1,6 +1,7 @@
 {
     "component": [
         "AdminBody",
+        "AdminForm",
         "AdminHeader",
         "AdminHeaderBtnWrap",
         "AdminHeaderSubtitle",
@@ -10,6 +11,7 @@
         "AdminShell",
         "AdminSidebar",
         "Btn",
+        "Dropdown",
         "FieldCheckbox",
         "FieldError",
         "FieldInput",
