@@ -8,8 +8,9 @@ defmodule Potionx.Context.Service do
     field :filters, map(), default: %{}
     field :organization, struct()
     field :pagination, Potionx.Repo.Pagination.t(), default: %Potionx.Repo.Pagination{}
+    field :redirect_uri, String.t()
     field :roles, [String.t()], default: []
-    field :session_fingerprint, String.t()
+    field :session, struct()
     field :user, struct()
   end
 
