@@ -7,6 +7,7 @@ import { useQuery, useMutation } from "@urql/vue";
 import { useRoute, useRouter } from 'vue-router'
 import AdminBody from 'components/AdminBody/AdminBody'
 import AdminFooter from 'components/AdminFooter/AdminFooter'
+import AdminForm from 'components/AdminForm/AdminForm';
 import AdminHeader from 'components/AdminHeader/AdminHeader'
 import AdminHeaderBtnWrap from 'components/AdminHeaderBtnWrap/AdminHeaderBtnWrap';
 import AdminMain from 'components/AdminMain/AdminMain';
@@ -128,7 +129,7 @@ export default defineComponent({
           </div>
         </AdminHeader>
         <AdminBody>
-          <form class="m-auto max-w-500 w-full s750:pt-6" onSubmit={form.submit}>
+          <AdminForm submit={form.submit}>
           {
             schema.map((s: Field) => {
               let component
@@ -176,7 +177,7 @@ export default defineComponent({
             })
           }
           <BtnSubmit class="mt-6" />
-        </form>
+        </AdminForm>
         </AdminBody>
         <AdminFooter>
           <BtnMobileMenu

@@ -48,7 +48,7 @@ Used as a mobile footer navigation. Nest it within the [AdminMain](/ui/component
 
 #### Importing AdminFooter
 ```tsx
-import  from "components/AdminFooter/AdminFooter";
+import AdminFooter from "components/AdminFooter/AdminFooter";
 ```
 
 #### Using AdminFooter
@@ -69,6 +69,33 @@ Hide the toggle menu button
 #### Demo
 
 ![admin-footer](./admin-footer.png)
+
+<br />
+<br />
+
+## AdminForm
+
+A form component.
+
+#### Importing AdminForm
+```tsx
+import AdminForm from "components/AdminForm/AdminForm";
+```
+
+#### Using AdminForm
+```tsx
+<AdminForm submit={submitFunction}>
+  //
+  // Slot
+  //
+</AdminForm>
+```
+<br />
+
+#### AdminFormProps
+
+**onSubmit:** `function` `required` \
+The form submit action
 
 <br />
 <br />
@@ -411,8 +438,8 @@ import BtnSubmit from "components/Btn/BtnSubmit";
 <br />
 <br />
 
-<!-- ## Dropdown
-A prestyled select element.
+## Dropdown
+A dropdown component.
 
 #### Importing Dropdown
 ```tsx
@@ -428,7 +455,13 @@ import Dropdown from "components/Dropdown/Dropdown";
 </Dropdown>
 ```
 <br />
-<br /> -->
+
+#### Demo
+
+![dropdown](./dropdown.png)
+
+<br />
+<br />
 
 ## FieldCheckbox
 A checkbox component used for forms.
