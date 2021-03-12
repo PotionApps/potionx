@@ -26,23 +26,32 @@ defmodule Potionx.Auth.Assent do
 
   end
 
+  def renew() do
+    # get renewal
+    # delete access and renewal
+    # generate new access and new renewal
+  end
 
-  def resolver(_parent, %{provider: provider}, %{context: %Service{redirect_uri: redirect_uri}}) do
-    redirect_uri = redirect_uri || Keyword.fetch!(@assent || [], :redirect_uri)
+  def resolve(opts \\ []) do
+    fn _parent, %{provider: provider}, %{context: %Service{redirect_uri: redirect_uri}} ->
+      redirect_uri = redirect_uri || Keyword.fetch!(@assent || [], :redirect_uri)
+      strategies = Keyword.get(opts, :strategies) || @assent[:strategies]
 
-    @assent[:strategies]
-    |> Keyword.fetch(String.to_existing_atom(provider))
-    |> case do
-      {:ok, config} ->
-        strategy = Keyword.fetch!(config, :strategy)
-        config
-        |> Keyword.delete(:strategy)
-        |> Keyword.put(:redirect_uri, redirect_uri)
-        |> strategy.authorize_url()
-        |> IO.inspect(label: "authorizing")
-        # session params returned include a variety of things...
-      _ ->
-        {:error, "Missing Provider"}
+      strategies
+      |> Keyword.fetch(String.to_existing_atom(provider))
+      |> case do
+        {:ok, config} ->
+          strategy = Keyword.fetch!(config, :strategy)
+          config
+          |> Keyword.delete(:strategy)
+          |> Keyword.put(:redirect_uri, redirect_uri)
+          |> strategy.authorize_url()
+
+          # save state
+          # set cookie in before send?
+        _ ->
+          {:error, "Missing Provider"}
+      end
     end
   end
 end

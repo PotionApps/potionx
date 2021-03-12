@@ -9,4 +9,9 @@ defmodule Potionx.Types do
     field :field, :string
     field :message, :string
   end
+
+  object :sign_in_provider_result do
+    field :error, :string
+    field :url, :string
+  end
 end

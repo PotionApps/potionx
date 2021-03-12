@@ -15,7 +15,7 @@ defmodule Potionx.Redis do
     )
   end
 
-  def put((%{model_name: _, id: _, value: value} = params) do, ttl_ms) do
+  def put(%{model_name: _, id: _, value: value} = params, ttl_ms) do
     Redix.command!(
       @redix_instance_name,
       ["SET", to_global_id(params), value, "PX", ttl_ms]
