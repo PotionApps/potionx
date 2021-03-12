@@ -25,7 +25,7 @@ export default defineComponent({
 
     return () => <div class="bg-gray-800 min-h-screen s1050m:pb-14 w-full">
       {ctx.slots.default && ctx.slots.default()}
-      <AdminFooter hideMenuBtn={true}>
+      <AdminFooter hidden={true}>
         {
           mobileBtns.value.map(btn => {
             return <BtnMobileMenu {...btn} />

@@ -1,7 +1,0 @@
-query {
-  userCollection {
-    nodes {
-      id
-    }
-  }
-}

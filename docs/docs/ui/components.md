@@ -63,7 +63,7 @@ import  from "components/AdminFooter/AdminFooter";
 
 #### AdminFooterProps
 
-**hideMenuBtn:** `boolean` `optional` \
+**hidden:** `boolean` `optional` \
 Hide the toggle menu button
 
 #### Demo
@@ -116,6 +116,13 @@ import AdminHeaderBtnWrap from "components/AdminHeaderBtnWrap/AdminHeaderBtnWrap
   //
 </AdminHeaderBtnWrap>
 ```
+<br />
+
+#### AdminHeaderBtnWrapProps
+
+**hidden:** `boolean` `optional` \
+Hide this button on mobile
+
 <br />
 <br />
 
@@ -300,6 +307,19 @@ import BtnLogin from "components/Btn/BtnLogin";
 #### Demo
 
 ![btn-login](./btn-login.png)
+
+### BtnIconMobileMenu
+
+An icon only button that is styled like the menu toggle button in the [Menu](/ui/components.html#menu) component.
+
+#### Importing BtnIconMobileMenu
+```tsx
+import BtnIconMobileMenu from "components/Btn/BtnIconMobileMenu";
+```
+
+#### Demo
+
+![btn-icon-mobile-menu](./btn-icon-mobile-menu.png)
 
 ### BtnMobileMenu
 

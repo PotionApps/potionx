@@ -106,7 +106,7 @@ export default defineComponent({
                   label="Delete __model__"
                 />
               </AdminHeaderBtnWrap>
-              <AdminHeaderBtnWrap class="s1050m:hidden">
+              <AdminHeaderBtnWrap hide={true}>
                 <BtnSmallPrimary
                   label="New __model__"
                   icon={faPlus}
@@ -116,15 +116,15 @@ export default defineComponent({
             </div>
           }}
         >
-          <div class="flex">
+          <div class="flex items-center">
             <BtnIcon
               class="mr-2 s1050m:hidden"
               icon={faArrowLeft}
               to={{name: routeNames.__model_graphql_case__List}}
             />
-            <AdminHeaderTitle>
-              {title.value}
-            </AdminHeaderTitle>
+            <div>
+              <AdminHeaderTitle>{title.value}</AdminHeaderTitle>
+            </div>
           </div>
         </AdminHeader>
         <AdminBody>

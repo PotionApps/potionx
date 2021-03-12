@@ -1,13 +1,13 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "AdminHeaderBtnWrap",
+  name: "AdminForm",
   setup (_, ctx) {
     return () => {
       return (
-        <div class="mb-3 ml-3 first:ml-0">
+        <form class="m-auto max-w-500 s750:pt-6 w-full">
           {ctx.slots.default && ctx.slots.default()}
-        </div>
+        </form>
       )
     }
   }

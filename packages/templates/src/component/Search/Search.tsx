@@ -66,7 +66,7 @@ export default defineComponent({
             <FontAwesomeIcon class={["opacity-50", searchText.value ? "w-4" : "w-5"]} icon={searchText.value ? faTimes : faSearch} />
           </div>
           <input 
-            class="bg-white border-1 border-gray-300 focus:border-blue-400 focus:bg-gray-100 outline-none py-2 pl-3 pr-10 rounded-md transition w-full"
+            class="bg-white border-1 border-gray-300 outline-none py-2 pl-3 pr-10 rounded-md transition w-full"
             onBlur={blur}
             onFocus={focus}
             onInput={onChange}
