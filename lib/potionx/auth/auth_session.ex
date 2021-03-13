@@ -7,17 +7,16 @@ defmodule Potionx.Auth.Session do
       params, [
         :data,
         :deleted_at,
-        :expires_at,
         :ip,
-        :ttl,
+        :sign_in_provider,
+        :ttl_access_seconds,
+        :ttl_renewal_seconds,
         :uuid_access,
         :uuid_renewal
       ]
     )
     |> validate_required([
-      :expires_at,
-      :ip,
-      :ttl,
+      :ttl_access_seconds,
       :uuid_access
     ])
   end

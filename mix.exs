@@ -21,6 +21,7 @@ defmodule Potionx.MixProject do
       {:typed_struct, "~> 0.2.1"},
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
+      {:ecto_network, "~> 1.3.0", only: :test},
       {:ecto_sql, "~> 3.5", only: :test},
       {:ex_doc, "~> 0.22", only: :dev, runtime: false},
       {:postgrex, ">= 0.0.0", only: :test}
@@ -28,7 +29,7 @@ defmodule Potionx.MixProject do
   end
 
   # Specifies which paths to compile per environment.
-  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(:test), do: ["lib", "test/repo", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
 
   defp package do

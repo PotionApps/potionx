@@ -48,6 +48,7 @@ defmodule <%= appModule %>.MixProject do
       {:pow_assent, "~> 0.4.10"},
       {:redix, "~> 1.0.0"},
       {:typed_struct, "~> 0.2.1"},
+      {:ecto_network, "~> 1.3.0"},
       {:ecto_sql, "~> 3.5"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.11"},

@@ -15,12 +15,43 @@ defmodule Potionx.Auth.Test do
     end
 
     @impl true
-    def callback(_config, %{"code" => "valid"}), do: {:ok, %{user: %{"sub" => 1, "name" => "name", "email" => "test@example.com"}, token: %{"access_token" => "access_token"}}}
+    def callback(_config, %{"a" => 1}), do: {:ok, %{user: %{"sub" => 1, "name" => "name", "email" => "test@example.com"}, token: %{"access_token" => "access_token"}}}
     def callback(_config, _params), do: {:error, "Invalid params"}
 
     def url do
       "https://provider.example.com/oauth/authorize"
     end
+  end
+
+  defmodule Session do
+    import Ecto.Changeset
+    use Ecto.Schema
+  
+    schema "sessions" do
+      field :data, :map
+      field :deleted_at, :utc_datetime
+      field :expires_at, :utc_datetime
+      field :ip, EctoNetwork.INET
+      field :sign_in_provider, :string
+      field :ttl_access_seconds, :integer
+      field :ttl_renewal_seconds, :integer
+      field :uuid_access, Ecto.UUID
+      field :uuid_renewal, Ecto.UUID
+
+      timestamps()
+    end
+
+    def changeset(struct, params) do
+      Potionx.Auth.Session.changeset(struct, params)
+    end
+  end
+
+  defmodule SessionService do
+    use Potionx.Auth.SessionService, [
+      repo: PotionxTest.Repo,
+      session_schema: Session,
+      use_redis: false
+    ]
   end
 
   defmodule Schema do
@@ -47,13 +78,15 @@ defmodule Potionx.Auth.Test do
               context: %{context | redirect_uri: Potionx.Auth.Test.redirect_uri()}
           }
         end
-        resolve Potionx.Auth.Assent.resolve([
+        resolve Potionx.Auth.Assent.resolve_sign_in([
+          session_service: SessionService,
           strategies: [
             test: [
               strategy: TestProvider
             ]
           ]
         ])
+        middleware &Potionx.Auth.Assent.middleware_sign_in/2
       end
     end
   end
@@ -68,20 +101,22 @@ defmodule Potionx.Auth.Test do
     plug :match
     plug :dispatch
 
-    forward "/graphql", to: Absinthe.Plug, init_opts: [schema: Schema]
+    forward "/graphql",
+      init_opts: [before_send: {Potionx.Auth.Assent, :before_send}, schema: Schema],
+      to: Absinthe.Plug
 
     post "/auth/:provider/callback" do
-      send_resp(conn, 200, "world")
-    end
-    get "hello" do
-      send_resp(conn, 200, "world")
+      Potionx.Auth.Assent.callback(conn, [
+        session_service: SessionService,
+        strategies: [
+          test: [
+            strategy: TestProvider
+          ]
+        ]
+      ])
     end
   end
 
-
-  # need absinthe
-  # need redis
-  # need conn
 
   describe "Auth Assent" do
     setup do
@@ -98,12 +133,58 @@ defmodule Potionx.Auth.Test do
         }
       """
       url = TestProvider.url()
+      conn1 =
+        conn(:post, "/graphql", %{variables: %{}, query: query})
+        |> Router.call(Router.init([]))
       assert %{"data" => %{"signInProvider" => %{"url" => ^url}}} =
+        conn1
+        |> sent_resp
+        |> elem(2)
+        |> Jason.decode!
+      assert conn1.resp_cookies[Potionx.Auth.token_config().sign_in_token.name]
+      assert PotionxTest.Repo.one(Session)
+    end
+
+    test "Should return an error" do
+      query = """
+        mutation {
+          signInProvider (provider: "invalid") {
+            error
+            url
+          }
+        }
+      """
+      assert %{"data" => %{"signInProvider" => %{"error" => err}}} =
         conn(:post, "/graphql", %{variables: %{}, query: query})
         |> Router.call(Router.init([]))
         |> sent_resp
         |> elem(2)
         |> Jason.decode!
+      assert err
+    end
+
+    test "Should sign a user in" do
+      query = """
+        mutation {
+          signInProvider (provider: "test") {
+            error
+            url
+          }
+        }
+      """
+      secret_key_base =  :crypto.strong_rand_bytes(64) |> Base.encode64 |> binary_part(0, 64)
+      conn1 =
+        conn(:post, "/graphql", %{variables: %{}, query: query})
+        |> Map.replace(:secret_key_base, secret_key_base)
+        |> Router.call(Router.init([]))
+
+      conn2 =
+        conn(:post, "/auth/test/callback")
+        |> Map.replace(:secret_key_base, secret_key_base)
+      conn2 = Plug.Test.recycle_cookies(conn2, conn1)
+
+      conn2
+      |> Router.call(Router.init([]))
     end
   end
 end

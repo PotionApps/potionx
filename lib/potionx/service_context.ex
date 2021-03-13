@@ -3,9 +3,11 @@ defmodule Potionx.Context.Service do
   @behaviour Access
 
   typedstruct do
+    field :assigns, map()
     field :changes, map(), default: %{}
     field :files, [Plug.Upload.t()]
     field :filters, map(), default: %{}
+    field :ip, :string
     field :organization, struct()
     field :pagination, Potionx.Repo.Pagination.t(), default: %Potionx.Repo.Pagination{}
     field :redirect_uri, String.t()
