@@ -1,11 +1,5 @@
 ExUnit.start()
 
-defmodule PotionxTest.Repo do
-  use Ecto.Repo,
-    otp_app: :potionx,
-    adapter: Ecto.Adapters.Postgres
-end
-
 alias PotionxTest.Repo
 # This cleans up the test database and loads the schema
 Mix.Task.run("ecto.create", ["--quiet"])
