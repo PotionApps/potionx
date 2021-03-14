@@ -48,7 +48,7 @@ defmodule Potionx.Auth.Test do
       assert err
     end
 
-    test "Should sign a user in" do
+    test "Should sign a user in and sign them out" do
       %PotionxTest.User{
         email: TestProvider.email()
       }
@@ -62,7 +62,81 @@ defmodule Potionx.Auth.Test do
           }
         }
       """
-      secret_key_base =  :crypto.strong_rand_bytes(64) |> Base.encode64 |> binary_part(0, 64)
+      secret_key_base = :crypto.strong_rand_bytes(64) |> Base.encode64 |> binary_part(0, 64)
+      conn1 =
+        conn(:post, "/graphql", %{variables: %{}, query: query})
+        |> Map.replace(:secret_key_base, secret_key_base)
+        |> Router.call(Router.init([]))
+
+      conn2 =
+        conn(:post, "/auth/test/callback")
+        |> Map.replace(:secret_key_base, secret_key_base)
+      conn2 = Plug.Test.recycle_cookies(conn2, conn1)
+
+      conn2 =
+        conn2
+        |> Router.call(Router.init([]))
+      conn2
+      |> (fn res ->
+        assert "test" ===
+          res
+          |> sent_resp
+          |> elem(2)
+        assert res.resp_cookies[Potionx.Auth.token_config().access_token.name].max_age === 60 * 30 # 30 minutes
+        assert res.resp_cookies[Potionx.Auth.token_config().renewal_token.name].max_age === 60 * 60 * 24 * 30 # 30 days
+      end).()
+
+      query = """
+        mutation {
+          signOut {
+            error
+          }
+        }
+      """
+      conn3 =
+        conn(:post, "/graphql", %{variables: %{}, query: query})
+        |> Map.replace(:secret_key_base, secret_key_base)
+      Plug.Test.recycle_cookies(conn3, conn2)
+      |> Router.call(Router.init([]))
+      |> (fn conn ->
+        res =
+          conn
+          |> sent_resp
+          |> elem(2)
+          |> Jason.decode!
+        assert Enum.all?(Map.values(conn.resp_cookies), &(&1.max_age === 0))
+        refute res["data"]["signOut"]["error"]
+        assert PotionxTest.Repo.all(PotionxTest.Session)
+          |> Enum.find(fn s ->
+            # make sure the deleted session is the user session with uuid_renewal
+            # sign in sessions don't have a renewal token
+            not is_nil(s.deleted_at) and not is_nil(s.uuid_renewal)
+          end)
+      end).()
+    end
+
+    test "Should sign a user in with an existing identity" do
+      user = %PotionxTest.User{
+        email: TestProvider.email()
+      }
+      |> Ecto.Changeset.cast(%{}, [])
+      |> PotionxTest.Repo.insert!
+      %PotionxTest.Identity{
+        provider: "test",
+        uid: "1",
+        user_id: user.id
+      }
+      |> Ecto.Changeset.cast(%{}, [])
+      |> PotionxTest.Repo.insert
+      query = """
+        mutation {
+          signInProvider (provider: "test") {
+            error
+            url
+          }
+        }
+      """
+      secret_key_base = :crypto.strong_rand_bytes(64) |> Base.encode64 |> binary_part(0, 64)
       conn1 =
         conn(:post, "/graphql", %{variables: %{}, query: query})
         |> Map.replace(:secret_key_base, secret_key_base)
@@ -83,6 +157,76 @@ defmodule Potionx.Auth.Test do
         assert res.resp_cookies[Potionx.Auth.token_config().access_token.name].max_age === 60 * 30 # 30 minutes
         assert res.resp_cookies[Potionx.Auth.token_config().renewal_token.name].max_age === 60 * 60 * 24 * 30 # 30 days
       end).()
+    end
+
+    test "Sign in should fail for a user that doesn't exist" do
+      query = """
+        mutation {
+          signInProvider (provider: "test") {
+            error
+            url
+          }
+        }
+      """
+      secret_key_base = :crypto.strong_rand_bytes(64) |> Base.encode64 |> binary_part(0, 64)
+      conn1 =
+        conn(:post, "/graphql", %{variables: %{}, query: query})
+        |> Map.replace(:secret_key_base, secret_key_base)
+        |> Router.call(Router.init([]))
+
+      conn2 =
+        conn(:post, "/auth/test/callback")
+        |> Map.replace(:secret_key_base, secret_key_base)
+      conn2 = Plug.Test.recycle_cookies(conn2, conn1)
+
+      conn2
+      |> Router.call(Router.init([]))
+      |> (fn res ->
+        assert res.assigns.potionx_auth_error === "user_not_found"
+      end).()
+    end
+
+    test "Sign in should fail for a user trying to sign in with a different provider" do
+      user = %PotionxTest.User{
+        email: TestProvider.email()
+      }
+      |> Ecto.Changeset.cast(%{}, [])
+      |> PotionxTest.Repo.insert!
+      %PotionxTest.Identity{
+        provider: "other",
+        user_id: user.id,
+        uid: "1"
+      }
+      |> Ecto.Changeset.cast(%{}, [])
+      |> PotionxTest.Repo.insert
+      query = """
+        mutation {
+          signInProvider (provider: "test") {
+            error
+            url
+          }
+        }
+      """
+      secret_key_base = :crypto.strong_rand_bytes(64) |> Base.encode64 |> binary_part(0, 64)
+      conn1 =
+        conn(:post, "/graphql", %{variables: %{}, query: query})
+        |> Map.replace(:secret_key_base, secret_key_base)
+        |> Router.call(Router.init([]))
+
+      conn2 =
+        conn(:post, "/auth/test/callback")
+        |> Map.replace(:secret_key_base, secret_key_base)
+      conn2 = Plug.Test.recycle_cookies(conn2, conn1)
+
+      conn2
+      |> Router.call(Router.init([]))
+      |> (fn res ->
+        assert res.assigns.potionx_auth_error === "invalid_provider"
+      end).()
+    end
+    
+    test "Should renew access" do
+
     end
   end
 end

@@ -52,6 +52,7 @@ defmodule <%= appModule %>.Users.UserService do
       )
     )
     |> order_by([desc: :id])
+    |> where([u], is_nil(u.deleted_at))
   end
   def query(q, _args), do: q
 end

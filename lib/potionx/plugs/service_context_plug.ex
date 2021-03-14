@@ -4,9 +4,10 @@ defmodule Potionx.Plug.ServiceContext do
   def init(opts), do: opts
 
   def call(conn, _) do
-    Absinthe.Plug.put_options(
-      conn,
-      context: build_context(conn)
+    conn
+    |> Plug.Conn.assign(
+      :context,
+      build_context(conn)
     )
   end
 

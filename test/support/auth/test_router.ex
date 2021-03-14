@@ -5,6 +5,8 @@ defmodule PotionxTest.Router do
     parsers: [:urlencoded, :json],
     json_decoder: Jason
   plug Potionx.Plug.ServiceContext
+  plug Potionx.Plug.Auth, auth_optional: true, session_service: PotionxTest.SessionService
+  plug Potionx.Plug.Absinthe
   plug :match
   plug :dispatch
 

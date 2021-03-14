@@ -10,8 +10,6 @@ defmodule Potionx.Auth.SessionService do
   # renewal
   # test expiry
   # test redis
-  # test multi provider?
-  # multiprovider error
   # need to be logged in with original provider to add provider
 
   defmacro __using__(opts) do
@@ -56,19 +54,7 @@ defmodule Potionx.Auth.SessionService do
         end)
         |> Multi.run(:identity, fn
           _, %{user: %{id: user_id}} ->
-              @identity_service.one(%Service{filters: %{user_id: user_id}})
-              |> case do
-                nil ->
-                  @identity_service.create(%Service{
-                    changes: changes.identity |> Map.put("user_id", user_id)
-                  })
-                identity -> 
-                  if identity.provider !== changes.identity.provider do
-                    {:error, "invalid_provider"}
-                  else
-                    {:ok, identity}
-                  end
-              end
+            process_identity(changes.identity, user_id)
           _, _ -> {:ok, nil}
         end)
         |> Multi.run(:session, fn _, %{user: user} ->
@@ -136,10 +122,15 @@ defmodule Potionx.Auth.SessionService do
 
       def one(%Service{} = ctx) do
         query(ctx)
+        |> preload([:user])
         |> @repo.one
       end
 
-      def one_from_cache(%Service{filters: %{token: token}} = ctx) do
+      def one_from_cache(%Service{} = ctx) do
+        token = case ctx.filters do
+          %{uuid_access: token} -> token
+          %{uuid_renewal: token} -> token
+        end
         if (@use_redis) do
           Potionx.Redis.get(token)
           |> case do
@@ -153,6 +144,25 @@ defmodule Potionx.Auth.SessionService do
         end
       end
 
+      def process_identity(changes, user_id) do
+        @identity_service.query(%Service{filters: %{user_id: user_id}})
+        |> @repo.all
+        |> (fn identities ->
+          existing_identity =
+            Enum.find(identities, fn i -> i.provider === changes["provider"] end)
+          cond do 
+            Enum.count(identities) === 0 ->
+              @identity_service.create(%Service{
+                changes: changes |> Map.put("user_id", user_id)
+              })
+            not is_nil(existing_identity) ->
+              {:ok, existing_identity}
+            true -> 
+              {:error, "invalid_provider"}
+          end
+        end).()
+      end
+
       def query(%Service{} = ctx) do
         @session_schema
         |> where(
@@ -162,6 +172,7 @@ defmodule Potionx.Auth.SessionService do
           )
         )
         |> order_by([desc: :id])
+        |> where([s], is_nil(s.deleted_at))
       end
       def query(q, _args), do: q
 

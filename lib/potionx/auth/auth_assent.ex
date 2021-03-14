@@ -11,47 +11,67 @@ defmodule Potionx.Auth.Assent do
           assigns: %{
             tokens_to_cookies: true
           },
-          session: s
+          session: session
         }
       }
     }
-  ) when not is_nil(s) do
+  ) when not is_nil(session) do
     conn
     |> Potionx.Auth.set_cookie(%{
       name: Potionx.Auth.token_config().sign_in_token.name,
-      token: s.uuid_access,
-      ttl_seconds: s.ttl_access_seconds
+      token: session.uuid_access,
+      ttl_seconds: session.ttl_access_seconds
+    })
+  end
+  def before_send(
+    conn,
+    %Absinthe.Blueprint{
+      execution: %{
+        context: %{
+          assigns: %{
+            sign_out: true
+          },
+          session: session
+        }
+      }
+    }
+  ) when not is_nil(session) do
+    conn
+    |> Potionx.Auth.delete_cookie(%{
+      name: Potionx.Auth.token_config().access_token.name,
+      ttl_seconds: session.ttl_access_seconds
+    })
+    |> Potionx.Auth.delete_cookie(%{
+      name: Potionx.Auth.token_config().renewal_token.name,
+      ttl_seconds: session.ttl_renewal_seconds
     })
   end
   def before_send(conn, _) do
     conn
   end
 
-  def callback(conn, opts) do
+  def callback(%{assigns: %{context: %Service{session: session}}} = conn, opts) do
     session_service = Keyword.fetch!(opts, :session_service)
-    cookie_name = Potionx.Auth.token_config().sign_in_token.name
 
-   conn
-    |> Plug.Conn.fetch_cookies(
-      signed: Enum.map(Map.values(Potionx.Auth.token_config()), &(&1.name))
-    )
-    |> fetch_session_from_conn(cookie_name, session_service)
-    |> verify_providers_match(conn)
-    |> case do
-      {:ok, session} ->
-        process_callback(session, opts)
-        |> parse_callback_response(session.sign_in_provider)
-        |> create_user_session(session, session_service)
-      err -> err
-    end
+    conn
+    |> verify_providers_match(session)
+    |> process_callback(opts)
+    |> parse_callback_response(session.sign_in_provider)
+    |> create_user_session(session, session_service)
     |> handle_user_session_cookies(conn)
     |> case do
       %Plug.Conn{} = conn ->
         conn   
-      _ ->
+      {:error, _, msg, _} ->
+        {:error, msg}
+      err -> err
+    end
+    |> case do 
+      {:error, msg} ->
         conn
         |> Plug.Conn.put_status(401)
-        |> Plug.Conn.halt
+        |> Plug.Conn.assign(:potionx_auth_error, msg)
+      res -> res
     end
   end
 
@@ -74,22 +94,6 @@ defmodule Potionx.Auth.Assent do
     )
   end
   def create_user_session(err, _, _), do: err
-
-  def fetch_session_from_conn(conn, cookie_name, session_service) do
-    conn
-    |> case do
-      %{req_cookies: %{^cookie_name => token}} ->
-        session_service.one(
-          %Service{
-            filters: %{
-              uuid_access: token
-            }
-          }
-        )
-      _ ->
-        {:error, "no_cookie"}
-    end
-  end
   
   defp handle_user_identity_params({user_identity_params, user_params}, other_params, provider) do
     user_identity_params = Map.put(user_identity_params, "provider", provider)
@@ -129,7 +133,18 @@ defmodule Potionx.Auth.Assent do
         value: Map.delete(value, :session)
     }
   end
-  def middleware(res, _), do: res
+  def middleware_sign_in(res, _), do: res
+
+  def middleware_sign_out(%{context: ctx, value: value} = res, _) when is_map(value) do
+    %{
+      res |
+        context: %{
+          ctx |
+            assigns: %{sign_out: true}
+        }
+    }
+  end
+  def middleware_sign_out(res, _), do: res
 
   defp normalize_username(%{"preferred_username" => username} = params) do
     params
@@ -214,6 +229,23 @@ defmodule Potionx.Auth.Assent do
       end
     end
   end
+  def resolve_sign_out(opts \\ []) do
+    session_service = Keyword.get(opts, :session_service)
+    if !session_service do
+      raise "Potionx.Auth.Assent resolve function requires a session_service"
+    end
+
+    fn 
+      _parent, _, %{context: %{session: nil}} ->
+        {:ok, %{error: "not_signed_in"}}
+      _parent, _, %{context: %{session: session}} ->
+      session_service.delete(%Service{filters: %{id: session.id}})
+      |> case do
+        {:ok, _} -> {:ok, %{}}
+        err -> err
+      end
+    end
+  end
 
   defp split_user_identity_params(%{"sub" => uid} = params) do
     user_params = Map.delete(params, "sub")
@@ -221,11 +253,11 @@ defmodule Potionx.Auth.Assent do
     {%{"uid" => uid}, user_params}
   end
 
-  def verify_providers_match(%{sign_in_provider: provider} = session, %{path_params: %{"provider" => provider2}}) do
+  def verify_providers_match(%{path_params: %{"provider" => provider2}}, %{sign_in_provider: provider} = session) do
     if provider === provider2 do
-      {:ok, session}
+      session
     else
-      {:errors, "provider_mismatch"}
+      {:error, "provider_mismatch"}
     end
   end
 end
