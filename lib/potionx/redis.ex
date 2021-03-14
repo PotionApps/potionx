@@ -1,28 +1,24 @@
 defmodule Potionx.Redis do
   @redix_instance_name :redix
 
-  def delete(%{model_name: _, id: _} = params) do
+  def delete(id) do
     Redix.command!(
       @redix_instance_name,
-      ["DEL", to_global_id(params)]
+      ["DEL", id]
      )
   end
 
-  def get(%{model_name: _, id: _} = params) do
+  def get(id) do
     Redix.command!(
       @redix_instance_name,
-      ["GET", to_global_id(params)]
+      ["GET", id]
     )
   end
 
-  def put(%{model_name: _, id: _, value: value} = params, ttl_ms) do
+  def put(key, value, ttl_ms) do
     Redix.command!(
       @redix_instance_name,
-      ["SET", to_global_id(params), value, "PX", ttl_ms]
+      ["SET", key, value, "PX", ttl_ms]
     )
-  end
-
-  def to_global_id(%{model_name: model_name, id: id}) when not is_nil(id) do
-    Enum.join([model_name, id], ":")
   end
 end

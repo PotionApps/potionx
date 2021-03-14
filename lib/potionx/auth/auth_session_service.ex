@@ -2,12 +2,22 @@ defmodule Potionx.Auth.SessionService do
   alias Potionx.Context.Service
   alias Ecto.Multi
 
+  @callback create(Potionx.Context.Service.t()) :: {:ok, struct()} | {:error, map()}
   @callback delete(Potionx.Context.Service.t()) :: {:ok, struct()} | {:error, String.t()}
   @callback one(Potionx.Context.Service.t()) :: struct()
   @callback one_from_cache(Potionx.Context.Service.t()) :: struct() | map() | nil
-  @callback mutation(Potionx.Context.Service.t()) :: {:ok, struct()} | {:error, map()}
+
+  # renewal
+  # test expiry
+  # test redis
+  # test multi provider?
+  # multiprovider error
+  # need to be logged in with original provider to add provider
 
   defmacro __using__(opts) do
+    if !Keyword.get(opts, :identity_service) do
+      raise "Potionx.Auth.SessionService requires an identity service"
+    end
     if !Keyword.get(opts, :repo) do
       raise "Potionx.Auth.SessionService requires a repo"
     end
@@ -17,16 +27,83 @@ defmodule Potionx.Auth.SessionService do
     if is_nil(Keyword.get(opts, :use_redis)) do
       raise "Potionx.Auth.SessionService requires a use_redis setting"
     end
-    if !Keyword.get(opts, :user_schema) do
-      raise "Potionx.Auth.SessionService requires a user schema"
+    if !Keyword.get(opts, :user_service) do
+      raise "Potionx.Auth.SessionService requires a user service"
     end
 
     quote do
       @behaviour Potionx.Auth.SessionService
       @repo unquote(opts[:repo])
+      @identity_service unquote(opts[:identity_service])
       @session_schema unquote(opts[:session_schema])
       @use_redis unquote(opts[:use_redis])
+      @user_service unquote(opts[:user_service])
       import Ecto.Query
+
+      def create(%Service{changes: %{session: _} = changes, filters: filters}) do
+        Multi.new
+        |> Multi.run(:user, fn _, _ ->
+          case changes do
+            %{user: %{"email" => email}} ->
+              @user_service.one(%Service{filters: %{email: email}})
+              |> case do
+                nil -> {:error, "user_not_found"}
+                user -> {:ok, user}
+              end
+            _ ->
+              {:ok, nil}
+          end
+        end)
+        |> Multi.run(:identity, fn
+          _, %{user: %{id: user_id}} ->
+              @identity_service.one(%Service{filters: %{user_id: user_id}})
+              |> case do
+                nil ->
+                  @identity_service.create(%Service{
+                    changes: changes.identity |> Map.put("user_id", user_id)
+                  })
+                identity -> 
+                  if identity.provider !== changes.identity.provider do
+                    {:error, "invalid_provider"}
+                  else
+                    {:ok, identity}
+                  end
+              end
+          _, _ -> {:ok, nil}
+        end)
+        |> Multi.run(:session, fn _, %{user: user} ->
+          struct(@session_schema)
+          |> @session_schema.changeset(
+            Map.put(
+              changes.session,
+              :user_id,
+              Map.get(user || %{}, :id)
+            )
+          )
+          |> @repo.insert
+        end)
+        |> Multi.run(:redis, fn _, %{session: session} ->
+          if (@use_redis) do
+            [{:uuid_access, :ttl_access_seconds}, {:uuid_renewal, :ttl_renewal_seconds}]
+            |> Enum.map(fn {key, ttl_key} ->
+              Potionx.Redis.put(
+                Map.get(session, key),
+                Jason.encode(session),
+                Map.get(session, ttl_key)
+              )
+            end)
+            |> Potionx.Utils.Ecto.reduce_results
+          else
+            {:ok, nil}
+          end
+        end)
+        |> @repo.transaction
+      end
+      def create(%Service{changes: changes} = srv) do
+        create(%{
+          srv | changes: %{session: changes}
+        })
+      end
 
       def delete(%Service{filters: %{id: id}}) do
         Multi.new
@@ -57,42 +134,14 @@ defmodule Potionx.Auth.SessionService do
         |> @repo.transaction
       end
 
-      def mutation(%Service{changes: changes, filters: filters}) do
-        id = Map.get(filters, :id)
-        session = id && @repo.get(@session_schema, id) || struct(@session_schema)
-        Multi.new
-        |> Multi.run(:user)
-        |> Multi.run(:identity)
-        |> Multi.run(:session, fn _, _ ->
-          session
-          |> @session_schema.changeset(changes.session)
-          |> @repo.insert_or_update
-        end)
-        |> Multi.run(:redis, fn _, %{session: session} ->
-          if (@use_redis) do
-            Potionx.Redis.put(
-              %{model_name: :session, id: session.id},
-              Jason.encode(session)
-            )
-          else
-            {:ok, nil}
-          end
-        end)
-        |> @repo.transaction
-      end
-      def mutation(%Service{changes: changes} = srv) do
-        mutation(%{
-          srv | changes: %{session: changes}
-        })
-      end
-
       def one(%Service{} = ctx) do
         query(ctx)
         |> @repo.one
       end
-      def one_from_cache(%Service{filters: %{id: id}} = ctx) do
+
+      def one_from_cache(%Service{filters: %{token: token}} = ctx) do
         if (@use_redis) do
-          Potionx.Redis.get(%{model_name: :session, id: id})
+          Potionx.Redis.get(token)
           |> case do
             {:ok, res} ->
               struct!(@session_schema, Jason.decode!(res, keys: :atoms!))

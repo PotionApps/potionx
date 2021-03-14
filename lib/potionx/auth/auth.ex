@@ -20,7 +20,7 @@ defmodule Potionx.Auth do
       Potionx.Auth.cookie_options(
         conn, 
         [sign: true],
-        ttl_seconds * 1000
+        ttl_seconds
       )
     )
   end
@@ -38,7 +38,7 @@ defmodule Potionx.Auth do
         },
         renewal_token: %{
           name: "r_app",
-          ttl_seconds: 60 * 24 * 30 # 30 days
+          ttl_seconds: 60 * 60 * 24 * 30 # 30 days
         },
         sign_in_token: %{
           name: "a_app",

@@ -2,11 +2,6 @@ defmodule Potionx.Auth.Assent do
   @assent Application.get_env(:potionx, :assent)
   alias Potionx.Context.Service
 
-  # renewal
-  # test expiry
-  # test redis
-  # test multi provider?
-
   @spec before_send(Plug.Conn.t(), Absinthe.Blueprint.t()) :: any
   def before_send(
     conn,
@@ -28,25 +23,31 @@ defmodule Potionx.Auth.Assent do
       ttl_seconds: s.ttl_access_seconds
     })
   end
-  def before_send(conn, bp) do
+  def before_send(conn, _) do
     conn
   end
 
   def callback(conn, opts) do
     session_service = Keyword.fetch!(opts, :session_service)
     cookie_name = Potionx.Auth.token_config().sign_in_token.name
-    conn
+
+   conn
     |> Plug.Conn.fetch_cookies(
       signed: Enum.map(Map.values(Potionx.Auth.token_config()), &(&1.name))
     )
     |> fetch_session_from_conn(cookie_name, session_service)
-    |> process_callback(conn, opts)
-    |> create_user_session(session, session_service)
-    # |> handle_user_session_cookies(conn)
+    |> verify_providers_match(conn)
     |> case do
-      {:ok, conn} ->
+      {:ok, session} ->
+        process_callback(session, opts)
+        |> parse_callback_response(session.sign_in_provider)
+        |> create_user_session(session, session_service)
+      err -> err
+    end
+    |> handle_user_session_cookies(conn)
+    |> case do
+      %Plug.Conn{} = conn ->
         conn   
-        |> Plug.Conn.send_resp(200, "hello")
       _ ->
         conn
         |> Plug.Conn.put_status(401)
@@ -54,14 +55,14 @@ defmodule Potionx.Auth.Assent do
     end
   end
 
-  def create_user_session({:ok, user_identity_params, user_params}, %{id: _} = previous_session, session_service) do
+  def create_user_session({:ok, user_identity_params, user_params}, previous_session, session_service) do
     # create user
-    session_service.mutation(
+    session_service.create(
       %Service{
         changes: %{
-          identity: user_identity_params,
+          identity: %{user_identity_params | "uid" => to_string(user_identity_params["uid"])},
           session: %{
-            sign_in_provider: previous_session.provider,
+            sign_in_provider: previous_session.sign_in_provider,
             ttl_access_seconds: Potionx.Auth.token_config().access_token.ttl_seconds,
             uuid_access: Ecto.UUID.generate(),
             uuid_renewal: Ecto.UUID.generate(),
@@ -102,19 +103,20 @@ defmodule Potionx.Auth.Assent do
     {:ok, user_identity_params, user_params}
   end
 
-  def handle_user_session_cookies(%{id: _} = session, conn) do
+  def handle_user_session_cookies({:ok, %{session: session}}, conn) do
     conn
-    |> Potionx.Auth.Session.set_cookie(%{
+    |> Potionx.Auth.set_cookie(%{
       name: Potionx.Auth.token_config().access_token.name,
       token: session.uuid_access,
-      ttl: session.ttl_access_seconds
+      ttl_seconds: session.ttl_access_seconds
     })
-    |> Potionx.Auth.Session.set_cookie(%{
+    |> Potionx.Auth.set_cookie(%{
       name: Potionx.Auth.token_config().renewal_token.name,
       token: session.uuid_renewal,
-      ttl: session.ttl_renewal_seconds
+      ttl_seconds: session.ttl_renewal_seconds
     })
   end
+  def handle_user_session_cookies(err, _conn), do: err
 
   def middleware_sign_in(%{context: ctx, value: value} = res, _) when is_map(value) do
     %{
@@ -149,8 +151,8 @@ defmodule Potionx.Auth.Assent do
   end
   defp parse_callback_response({:error, error}, _provider), do: {:error, error}
 
-  def process_callback(session, conn), do: process_callback(session, conn, [])
-  def process_callback(%{data: data}, %{path_params: %{"provider" => provider}}, opts) do
+  def process_callback(session), do: process_callback(session, [])
+  def process_callback(%{data: data, sign_in_provider: provider}, opts) do
     strategies = Keyword.get(opts, :strategies) || @assent[:strategies]
     strategy_config = Keyword.fetch!(strategies, String.to_existing_atom(provider))
 
@@ -158,9 +160,8 @@ defmodule Potionx.Auth.Assent do
       strategy_config,
       data
     )
-    |> parse_callback_response(provider)
   end
-  def process_callback(err, _conn, _opts) do
+  def process_callback(err, _opts) do
     err
   end
 
@@ -191,7 +192,7 @@ defmodule Potionx.Auth.Assent do
           |> strategy.authorize_url()
           |> case do
             {:ok, %{session_params: params, url: url}} ->
-              session_service.mutation(
+              session_service.create(
                 %Service{
                   changes: %{
                     data: params,
@@ -218,5 +219,13 @@ defmodule Potionx.Auth.Assent do
     user_params = Map.delete(params, "sub")
 
     {%{"uid" => uid}, user_params}
+  end
+
+  def verify_providers_match(%{sign_in_provider: provider} = session, %{path_params: %{"provider" => provider2}}) do
+    if provider === provider2 do
+      {:ok, session}
+    else
+      {:errors, "provider_mismatch"}
+    end
   end
 end

@@ -15,16 +15,50 @@ defmodule Potionx.Auth.Test do
     end
 
     @impl true
-    def callback(_config, %{"a" => 1}), do: {:ok, %{user: %{"sub" => 1, "name" => "name", "email" => "test@example.com"}, token: %{"access_token" => "access_token"}}}
+    def callback(_config, %{"a" => 1}), do: {:ok, %{user: %{"sub" => 1, "name" => "name", "email" => email()}, token: %{"access_token" => "access_token"}}}
     def callback(_config, _params), do: {:error, "Invalid params"}
+    
+    def email, do: "test@potionapps.com"
 
     def url do
       "https://provider.example.com/oauth/authorize"
     end
   end
 
-  defmodule Session do
+  defmodule User do
     import Ecto.Changeset
+    use Ecto.Schema
+    use Potionx.Users.User
+  
+    schema "users" do
+      field :deleted_at, :utc_datetime
+      field :email, :string
+      field :name_first, :string
+      field :name_last, :string
+      field :roles, {:array, Ecto.Enum}, values: [:admin, :guest]
+  
+      timestamps()
+    end
+  end
+
+  defmodule Identity do
+    import Ecto.Changeset
+    use Ecto.Schema
+
+    schema "user_identities" do
+      field :provider, :string
+      field :uid, :string
+      belongs_to :user, User
+
+      timestamps()
+    end
+
+    def changeset(struct, params) do
+      Potionx.Auth.Identity.changeset(struct, params)
+    end
+  end
+
+  defmodule Session do
     use Ecto.Schema
   
     schema "sessions" do
@@ -37,6 +71,7 @@ defmodule Potionx.Auth.Test do
       field :ttl_renewal_seconds, :integer
       field :uuid_access, Ecto.UUID
       field :uuid_renewal, Ecto.UUID
+      belongs_to :user, User
 
       timestamps()
     end
@@ -46,13 +81,40 @@ defmodule Potionx.Auth.Test do
     end
   end
 
-  defmodule SessionService do
-    use Potionx.Auth.SessionService, [
+  defmodule IdentityService do
+    use Potionx.Auth.IdentityService, [
       repo: PotionxTest.Repo,
-      session_schema: Session,
-      use_redis: false
+      identity_schema: Identity
     ]
   end
+  defmodule UserService do
+    import Ecto.Query
+    def one(ctx) do
+      query(ctx)
+      |> PotionxTest.Repo.one
+    end
+    def query(ctx) do
+      User
+      |> where(
+        ^(
+          ctx.filters
+          |> Map.to_list
+        )
+      )
+      |> order_by([desc: :id])
+    end
+    def query(q, _args), do: q
+  end
+  defmodule SessionService do
+    use Potionx.Auth.SessionService, [
+      identity_service: IdentityService,
+      repo: PotionxTest.Repo,
+      session_schema: Session,
+      use_redis: false,
+      user_service: UserService
+    ]
+  end
+
 
   defmodule Schema do
     use Absinthe.Schema
@@ -114,6 +176,7 @@ defmodule Potionx.Auth.Test do
           ]
         ]
       ])
+      |> Plug.Conn.send_resp(200, "test")
     end
   end
 
@@ -164,6 +227,11 @@ defmodule Potionx.Auth.Test do
     end
 
     test "Should sign a user in" do
+      %User{
+        email: TestProvider.email()
+      }
+      |> Ecto.Changeset.cast(%{}, [])
+      |> PotionxTest.Repo.insert
       query = """
         mutation {
           signInProvider (provider: "test") {
@@ -185,6 +253,14 @@ defmodule Potionx.Auth.Test do
 
       conn2
       |> Router.call(Router.init([]))
+      |> (fn res ->
+        assert "test" ===
+          res
+          |> sent_resp
+          |> elem(2)
+        assert res.resp_cookies[Potionx.Auth.token_config().access_token.name].max_age === 60 * 30 # 30 minutes
+        assert res.resp_cookies[Potionx.Auth.token_config().renewal_token.name].max_age === 60 * 60 * 24 * 30 # 30 days
+      end).()
     end
   end
 end
