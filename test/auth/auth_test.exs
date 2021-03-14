@@ -5,10 +5,12 @@ defmodule Potionx.Auth.Test do
 
   describe "Auth Assent" do
     setup do
-      {:ok, %{}}
+      {:ok, %{
+        secret_key_base: :crypto.strong_rand_bytes(64) |> Base.encode64 |> binary_part(0, 64)
+      }}
     end
 
-    test "Should return a redirect_uri" do
+    test "Should return a redirect_uri", %{secret_key_base: secret_key_base} do
       query = """
         mutation {
           signInProvider (provider: "test") {
@@ -20,6 +22,7 @@ defmodule Potionx.Auth.Test do
       url = TestProvider.url()
       conn1 =
         conn(:post, "/graphql", %{variables: %{}, query: query})
+        |> Map.replace(:secret_key_base, secret_key_base)
         |> Router.call(Router.init([]))
       assert %{"data" => %{"signInProvider" => %{"url" => ^url}}} =
         conn1
@@ -30,7 +33,7 @@ defmodule Potionx.Auth.Test do
       assert PotionxTest.Repo.one(PotionxTest.Session)
     end
 
-    test "Should return an error" do
+    test "Should return an error", %{secret_key_base: _secret_key_base} do
       query = """
         mutation {
           signInProvider (provider: "invalid") {
@@ -48,7 +51,7 @@ defmodule Potionx.Auth.Test do
       assert err
     end
 
-    test "Should sign a user in and sign them out" do
+    test "Should sign a user in and sign them out", %{secret_key_base: secret_key_base} do
       %PotionxTest.User{
         email: TestProvider.email()
       }
@@ -62,7 +65,6 @@ defmodule Potionx.Auth.Test do
           }
         }
       """
-      secret_key_base = :crypto.strong_rand_bytes(64) |> Base.encode64 |> binary_part(0, 64)
       conn1 =
         conn(:post, "/graphql", %{variables: %{}, query: query})
         |> Map.replace(:secret_key_base, secret_key_base)
@@ -106,16 +108,25 @@ defmodule Potionx.Auth.Test do
           |> Jason.decode!
         assert Enum.all?(Map.values(conn.resp_cookies), &(&1.max_age === 0))
         refute res["data"]["signOut"]["error"]
-        assert PotionxTest.Repo.all(PotionxTest.Session)
-          |> Enum.find(fn s ->
-            # make sure the deleted session is the user session with uuid_renewal
-            # sign in sessions don't have a renewal token
-            not is_nil(s.deleted_at) and not is_nil(s.uuid_renewal)
-          end)
+
+        # check that old cookie is no longer available
+        conn = Plug.Conn.fetch_cookies(
+          conn,
+          signed: [
+            Potionx.Auth.token_config().access_token.name,
+            Potionx.Auth.token_config().renewal_token.name
+          ]
+        )
+        assert PotionxTest.SessionService.one_from_cache(
+          %Potionx.Context.Service{filters: %{
+            uuid_access: Map.get(conn.cookies, Potionx.Auth.token_config().access_token.name),
+            uuid_renewal: Map.get(conn.cookies, Potionx.Auth.token_config().renewal_token.name)
+          }}
+        ) === nil
       end).()
     end
 
-    test "Should sign a user in with an existing identity" do
+    test "Should sign a user in with an existing identity", %{secret_key_base: _secret_key_base} do
       user = %PotionxTest.User{
         email: TestProvider.email()
       }
@@ -186,7 +197,7 @@ defmodule Potionx.Auth.Test do
       end).()
     end
 
-    test "Sign in should fail for a user trying to sign in with a different provider" do
+    test "Sign in should fail for a user trying to sign in with a different provider", %{secret_key_base: _secret_key_base} do
       user = %PotionxTest.User{
         email: TestProvider.email()
       }
@@ -225,8 +236,82 @@ defmodule Potionx.Auth.Test do
       end).()
     end
     
-    test "Should renew access" do
+    test "Should renew access", %{secret_key_base: secret_key_base} do
+      %PotionxTest.User{
+        email: TestProvider.email()
+      }
+      |> Ecto.Changeset.cast(%{}, [])
+      |> PotionxTest.Repo.insert
+      query = """
+        mutation {
+          signInProvider (provider: "test") {
+            error
+            url
+          }
+        }
+      """
+      conn1 =
+        conn(:post, "/graphql", %{variables: %{}, query: query})
+        |> Map.replace(:secret_key_base, secret_key_base)
+        |> Router.call(Router.init([]))
 
+      conn2 =
+        conn(:post, "/auth/test/callback")
+        |> Map.replace(:secret_key_base, secret_key_base)
+      conn2 = Plug.Test.recycle_cookies(conn2, conn1)
+
+      conn2 =
+        conn2
+        |> Router.call(Router.init([]))
+
+
+        query = """
+        mutation {
+          sessionRenew {
+            error
+          }
+        }
+      """
+      conn3 =
+        conn(:post, "/graphql", %{variables: %{}, query: query})
+        |> Map.replace(:secret_key_base, secret_key_base)
+      Plug.Test.recycle_cookies(conn3, conn2)
+      |> Router.call(Router.init([]))
+      |> (fn conn ->
+        # check that old cookie is no longer available
+        conn = Plug.Conn.fetch_cookies(
+          conn,
+          signed: [
+            Potionx.Auth.token_config().access_token.name,
+            Potionx.Auth.token_config().renewal_token.name
+          ]
+        )
+        assert PotionxTest.SessionService.one_from_cache(
+          %Potionx.Context.Service{filters: %{
+            uuid_access: Map.get(conn.cookies, Potionx.Auth.token_config().access_token.name),
+            uuid_renewal: Map.get(conn.cookies, Potionx.Auth.token_config().renewal_token.name)
+          }}
+        ) === nil
+
+        assert conn.resp_cookies[Potionx.Auth.token_config().access_token.name] &&
+          conn.resp_cookies[Potionx.Auth.token_config().renewal_token.name]
+        recycle_cookies(conn(:post, "/graphql"), conn)
+        |> Map.replace(:secret_key_base, secret_key_base)
+        |> fetch_cookies([
+          signed: [
+            Potionx.Auth.token_config().access_token.name,
+            Potionx.Auth.token_config().renewal_token.name
+          ]
+        ])
+        |> (fn conn -> 
+          assert PotionxTest.SessionService.one_from_cache(
+            %Potionx.Context.Service{filters: %{
+              uuid_access: Map.get(conn.cookies, Potionx.Auth.token_config().access_token.name),
+              uuid_renewal: Map.get(conn.cookies, Potionx.Auth.token_config().renewal_token.name)
+            }}
+          )
+        end).()
+      end).()
     end
   end
 end

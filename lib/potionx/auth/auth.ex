@@ -8,7 +8,7 @@ defmodule Potionx.Auth do
       max_age: max_age,
       secure: conn.scheme === :https,
       same_site: "strict"
-    ] ++ (config[:cookie_options] || [])
+    ] ++ (config || [])
   end
 
   def delete_cookie(conn, %{name: name, ttl_seconds: ttl_seconds}) do
@@ -42,21 +42,25 @@ defmodule Potionx.Auth do
       %{
         access_token: %{
           name: "a_app",
+          ttl_key: :ttl_access_seconds,
           ttl_seconds: 60 * 30, # 30 minutes,
           uuid_key: :uuid_access
         },
         frontend: %{
           name: "frontend",
+          ttl_key: nil,
           ttl_seconds: 60 * 30, # 30 minutes
           uuid_key: nil
         },
         renewal_token: %{
           name: "r_app",
+          ttl_key: :ttl_renewal_seconds,
           ttl_seconds: 60 * 60 * 24 * 30, # 30 days
           uuid_key: :uuid_renewal
         },
         sign_in_token: %{
           name: "a_app",
+          ttl_key: :ttl_access_seconds,
           ttl_seconds: 60 * 5, # 5 minutes
           uuid_key: :uuid_access
         }

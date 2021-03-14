@@ -31,7 +31,7 @@ defmodule Potionx.Plug.Auth do
       )
     conn
     |> case do
-      %{req_cookies: %{^cookie_name => token}} ->
+      %{cookies: %{^cookie_name => token}} ->
         session_service.one_from_cache(
           %Service{
             filters: Map.put(%{}, key, token)

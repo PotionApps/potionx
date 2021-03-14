@@ -7,12 +7,12 @@ defmodule PotionxTest.Schema do
   end
 
   mutation do
-    # def session_renew do
-    # end
-    # def sign_in_provider do
-    # end
-    # def sign_out do
-    # end
+    field :session_renew, type: :sign_in_provider_result do
+      resolve Potionx.Auth.Assent.resolve_renew([
+        session_service: PotionxTest.SessionService
+      ])
+      middleware &Potionx.Auth.Assent.middleware_renew/2
+    end
 
     field :sign_out, type: :sign_in_provider_result do
       resolve Potionx.Auth.Assent.resolve_sign_out([

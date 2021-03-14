@@ -16,12 +16,19 @@ defmodule Potionx.Auth.Assent do
       }
     }
   ) when not is_nil(session) do
-    conn
-    |> Potionx.Auth.set_cookie(%{
-      name: Potionx.Auth.token_config().sign_in_token.name,
-      token: session.uuid_access,
-      ttl_seconds: session.ttl_access_seconds
-    })
+    [:access_token, :renewal_token]
+    |> Enum.reduce(conn, fn key, acc ->
+      config = Potionx.Auth.token_config()[key]
+      if (Map.get(session, config.uuid_key)) do
+        Potionx.Auth.set_cookie(acc, %{
+          name: config.name,
+          token: Map.get(session, config.uuid_key),
+          ttl_seconds: Map.get(session, config.ttl_key)
+        })
+      else
+        acc
+      end
+    end)
   end
   def before_send(
     conn,
@@ -76,7 +83,6 @@ defmodule Potionx.Auth.Assent do
   end
 
   def create_user_session({:ok, user_identity_params, user_params}, previous_session, session_service) do
-    # create user
     session_service.create(
       %Service{
         changes: %{
@@ -121,6 +127,19 @@ defmodule Potionx.Auth.Assent do
     })
   end
   def handle_user_session_cookies(err, _conn), do: err
+
+  def middleware_renew(%{context: ctx, value: value} = res, _) when is_map(value) do
+    %{
+      res |
+        context: %{
+          ctx |
+            assigns: %{tokens_to_cookies: true},
+            session: Map.get(value, :session)
+        },
+        value: Map.delete(value, :session)
+    }
+  end
+  def middleware_renew(res, _), do: res
 
   def middleware_sign_in(%{context: ctx, value: value} = res, _) when is_map(value) do
     %{
@@ -180,10 +199,32 @@ defmodule Potionx.Auth.Assent do
     err
   end
 
-  def renew do
-    # get renewal
-    # delete access and renewal
-    # generate new access and new renewal
+  def resolve_renew(opts) do
+    session_service = Keyword.get(opts, :session_service)
+    if !session_service do
+      raise "Potionx.Auth.Assent resolve function requires a session_service"
+    end
+
+    fn _parent, _, %{context: %Service{session: %{id: id}}} ->
+      session_service.patch(
+        %Service{
+          changes: %{
+            ttl_access_seconds: Potionx.Auth.token_config().access_token.ttl_seconds,
+            uuid_access: Ecto.UUID.generate(),
+            uuid_renewal: Ecto.UUID.generate(),
+            ttl_renewal_seconds: Potionx.Auth.token_config().renewal_token.ttl_seconds
+          },
+          filters: %{
+            id: id
+          }
+        }
+      )
+      |> case do
+        {:ok, %{session_patch: session}} ->
+          {:ok, %{session: session}}
+        err -> err
+       end
+    end
   end
 
   def resolve_sign_in(opts \\ []) do

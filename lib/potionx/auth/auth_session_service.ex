@@ -6,11 +6,7 @@ defmodule Potionx.Auth.SessionService do
   @callback delete(Potionx.Context.Service.t()) :: {:ok, struct()} | {:error, String.t()}
   @callback one(Potionx.Context.Service.t()) :: struct()
   @callback one_from_cache(Potionx.Context.Service.t()) :: struct() | map() | nil
-
-  # renewal
-  # test expiry
-  # test redis
-  # need to be logged in with original provider to add provider
+  @callback patch(Potionx.Context.Service.t()) :: {:ok, struct()} | {:error, map()}
 
   defmacro __using__(opts) do
     if !Keyword.get(opts, :identity_service) do
@@ -112,14 +108,20 @@ defmodule Potionx.Auth.SessionService do
         )
         |> Multi.run(:redis, fn _, %{session: session} ->
           if (@use_redis) do
-            Potionx.Redis.delete(%{model_name: :session, id: session.id})
+            [{:uuid_access, :ttl_access_seconds}, {:uuid_renewal, :ttl_renewal_seconds}]
+            |> Enum.map(fn {key, ttl_key} ->
+              Potionx.Redis.delete(
+                Map.get(session, key)
+              )
+            end)
+            |> Potionx.Utils.Ecto.reduce_results
           else
             {:ok, nil}
           end
         end)
         |> @repo.transaction
-      end
-
+      end 
+      
       def one(%Service{} = ctx) do
         query(ctx)
         |> preload([:user])
@@ -142,6 +144,55 @@ defmodule Potionx.Auth.SessionService do
         else
           one(ctx)
         end
+      end
+
+      def patch(%Service{filters: %{id: id}} = ctx) when not is_nil(id) do
+        # make sure old keys are deleted from Redis!!!
+        Multi.new
+        |> Multi.run(:session_old, fn _, _ ->
+          @repo.get(@session_schema, id)
+          |> case do
+            nil -> {:error, "missing_session"}
+            session -> {:ok, session}
+          end
+        end)
+        |> Multi.run(
+          :session_patch,
+          fn _repo, %{session_old: session} ->
+            session
+            |> @session_schema.changeset(ctx.changes)
+            |> @repo.update
+          end
+        )
+        |> Multi.run(:redis_old, fn _, %{session_old: session} ->
+          if (@use_redis) do
+            [{:uuid_access, :ttl_access_seconds}, {:uuid_renewal, :ttl_renewal_seconds}]
+            |> Enum.map(fn {key, ttl_key} ->
+              Potionx.Redis.delete(
+                Map.get(session, key)
+              )
+            end)
+            |> Potionx.Utils.Ecto.reduce_results
+          else
+            {:ok, nil}
+          end
+        end)
+        |> Multi.run(:redis, fn _, %{session_patch: session} ->
+          if (@use_redis) do
+            [{:uuid_access, :ttl_access_seconds}, {:uuid_renewal, :ttl_renewal_seconds}]
+            |> Enum.map(fn {key, ttl_key} ->
+              Potionx.Redis.put(
+                Map.get(session, key),
+                Jason.encode(session),
+                Map.get(session, ttl_key)
+              )
+            end)
+            |> Potionx.Utils.Ecto.reduce_results
+          else
+            {:ok, nil}
+          end
+        end)
+        |> @repo.transaction
       end
 
       def process_identity(changes, user_id) do
