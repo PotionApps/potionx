@@ -7,7 +7,7 @@ defmodule Potionx.Auth do
       domain: conn.host,
       max_age: max_age,
       secure: conn.scheme === :https,
-      same_site: "strict"
+      same_site: "strict" # strict prevents CSRF
     ] ++ (config || [])
   end
 
@@ -16,7 +16,7 @@ defmodule Potionx.Auth do
     |> Plug.Conn.delete_resp_cookie(
       name,
       Potionx.Auth.cookie_options(
-        conn, 
+        conn,
         [sign: true],
         ttl_seconds
       )
@@ -30,7 +30,7 @@ defmodule Potionx.Auth do
       name,
       token,
       Potionx.Auth.cookie_options(
-        conn, 
+        conn,
         [sign: true],
         ttl_seconds
       )
