@@ -1,5 +1,7 @@
 defmodule PotionxTest.Session do
+  @derive Jason.Encoder
   use Ecto.Schema
+  alias __MODULE__
 
   schema "sessions" do
     field :data, :map
@@ -14,6 +16,15 @@ defmodule PotionxTest.Session do
     belongs_to :user, PotionxTest.User
 
     timestamps()
+  end
+
+  defimpl Jason.Encoder, for: Session do
+    def encode(s, opts) do
+      s
+      |> Map.from_struct()
+      |> Map.drop([:__meta__])
+      |> Jason.Encode.map(opts)
+    end
   end
 
   def changeset(struct, params) do

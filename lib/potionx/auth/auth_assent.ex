@@ -57,7 +57,7 @@ defmodule Potionx.Auth.Assent do
     conn
   end
 
-  def callback(%{assigns: %{context: %Service{session: session}}} = conn, opts) do
+  def callback(%{assigns: %{context: %Service{session: %{id: _} = session}}} = conn, opts) do
     session_service = Keyword.fetch!(opts, :session_service)
 
     conn
@@ -68,7 +68,7 @@ defmodule Potionx.Auth.Assent do
     |> handle_user_session_cookies(conn)
     |> case do
       %Plug.Conn{} = conn ->
-        url = 
+        url =
           URI.parse(Plug.Conn.request_url(conn))
           |> Map.put(:query, nil)
           |> Map.put(:path, "/")
@@ -84,18 +84,23 @@ defmodule Potionx.Auth.Assent do
           </html>
           """
         )
-        
+
       {:error, _, msg, _} ->
         {:error, msg}
       err -> err
     end
-    |> case do 
+    |> case do
       {:error, msg} ->
         conn
         |> Plug.Conn.put_status(401)
         |> Plug.Conn.assign(:potionx_auth_error, msg)
       res -> res
     end
+  end
+  def callback(conn, _) do
+    conn
+    |> Plug.Conn.put_status(401)
+    |> Plug.Conn.assign(:potionx_auth_error, "missing_session")
   end
 
   def create_user_session({:ok, user_identity_params, user_params}, previous_session, session_service) do
@@ -112,11 +117,12 @@ defmodule Potionx.Auth.Assent do
           },
           user: user_params
         }
-      }
+      },
+      previous_session
     )
   end
   def create_user_session(err, _, _), do: err
-  
+
   defp handle_user_identity_params({user_identity_params, user_params}, other_params, provider) do
     user_identity_params = Map.put(user_identity_params, "provider", provider)
     other_params         = for {key, value} <- other_params, into: %{}, do: {Atom.to_string(key), value}
@@ -272,7 +278,8 @@ defmodule Potionx.Auth.Assent do
                     ttl_access_seconds: Potionx.Auth.token_config().sign_in_token.ttl_seconds,
                     uuid_access: Ecto.UUID.generate()
                   }
-                }
+                },
+                nil
               )
               |> case do
                 {:ok, %{session: session}} ->
@@ -292,7 +299,7 @@ defmodule Potionx.Auth.Assent do
       raise "Potionx.Auth.Assent resolve function requires a session_service"
     end
 
-    fn 
+    fn
       _parent, _, %{context: %{session: nil}} ->
         {:ok, %{error: "not_signed_in"}}
       _parent, _, %{context: %{session: session}} ->

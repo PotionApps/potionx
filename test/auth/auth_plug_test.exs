@@ -31,15 +31,24 @@ defmodule Potionx.Plug.Auth.Test do
         |> Router.call(Router.init([]))
 
       conn2 =
-        conn(:post, "/test")
+        conn(:post, "/auth/test/callback")
         |> Map.replace(:secret_key_base, secret_key_base)
-      conn2 = Plug.Test.recycle_cookies(conn2, conn1)
 
-     assert {_, _, "ok"} =
-        conn2
+      conn2 =
+        Plug.Test.recycle_cookies(conn2, conn1)
+        |> Router.call(Router.init([]))
+
+      conn3 = conn(:post, "/test")
+      conn3 = Plug.Test.recycle_cookies(conn3, conn2)
+
+      conn3 =
+        conn3
+        |> Map.replace(:secret_key_base, secret_key_base)
         |> RouterAuthRequired.call(Router.init([]))
-        |> sent_resp
+      assert {_, _, "ok"} = sent_resp(conn3)
+      assert %{user: %{id: _}} = conn3.assigns.context
     end
+
     test "Should block an unknown user" do
       assert %{halted: true, status: 401} =
         conn(:post, "/test")

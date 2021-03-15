@@ -1,6 +1,8 @@
 defmodule PotionxTest.User do
+  @derive Jason.Encoder
   import Ecto.Changeset
   use Ecto.Schema
+  alias __MODULE__
 
   schema "users" do
     field :deleted_at, :utc_datetime
@@ -10,5 +12,14 @@ defmodule PotionxTest.User do
     field :roles, {:array, Ecto.Enum}, values: [:admin, :guest]
 
     timestamps()
+  end
+
+  defimpl Jason.Encoder, for: User do
+    def encode(s, opts) do
+      s
+      |> Map.from_struct()
+      |> Map.drop([:__meta__])
+      |> Jason.Encode.map(opts)
+    end
   end
 end

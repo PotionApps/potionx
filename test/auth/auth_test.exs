@@ -228,7 +228,7 @@ defmodule Potionx.Auth.Test do
         assert res.assigns.potionx_auth_error === "invalid_provider"
       end).()
     end
-    
+
     test "Should renew access", %{secret_key_base: secret_key_base} do
       %PotionxTest.User{
         email: TestProvider.email()
@@ -296,7 +296,7 @@ defmodule Potionx.Auth.Test do
             Potionx.Auth.token_config().renewal_token.name
           ]
         ])
-        |> (fn conn -> 
+        |> (fn conn ->
           assert PotionxTest.SessionService.one_from_cache(
             %Potionx.Context.Service{filters: %{
               uuid_access: Map.get(conn.cookies, Potionx.Auth.token_config().access_token.name),

@@ -27,9 +27,9 @@ test:
         # Run the database tests
         RUN docker-compose up -d & \
             while ! pg_isready --host=localhost --port=5432 --quiet; do sleep 1; done; \
-            mix test
-            # MIX_ENV=test mix clean && \
-            # REDIS_URL="redis://localhost:6379/" mix test
+            mix test && \
+            MIX_ENV=test mix clean && \
+            REDIS_URL="redis://localhost:6379/" mix test
     END
 
 

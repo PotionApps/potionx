@@ -9,7 +9,7 @@ Mix.Task.run("ecto.migrate", ["--quiet"])
 
 redis_url = System.get_env("REDIS_URL")
 if (redis_url) do
-  {:ok, conn} = Redix.start_link(redis_url, name: :redix)
+  {:ok, _conn} = Redix.start_link(redis_url, name: :redix)
 end
 
 # Start a process ONLY for our test run.

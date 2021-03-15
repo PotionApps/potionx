@@ -11,15 +11,33 @@ defmodule Potionx.Plug.Auth do
     |> case do
       %{id: _} = session ->
         conn
-        |> Plug.Conn.assign(:context, %{ctx | session: session})
+        |> Plug.Conn.assign(
+          :context, %{
+            ctx |
+              roles: (Map.get(session, :user) || %{roles: nil}).roles,
+              session: session,
+              user: session.user
+          }
+        )
       _ ->
         if (opts.auth_optional) do
           conn
-        else 
+        else
           conn
           |> Plug.Conn.put_status(401)
           |> Plug.Conn.halt
         end
+    end
+    |> case do
+      %{assigns: %{context: %{session: %{user: nil}}}} = conn ->
+        if opts.user_required do
+          conn
+          |> Plug.Conn.put_status(401)
+          |> Plug.Conn.halt
+        else
+          conn
+        end
+      conn -> conn
     end
   end
 
@@ -47,7 +65,11 @@ defmodule Potionx.Plug.Auth do
       raise "Potionx.Auth.Plug requires a session service"
     end
     Keyword.merge(
-      [auth_optional: false, uuid_key: :uuid_access],
+      [
+        auth_optional: false,
+        uuid_key: :uuid_access,
+        user_required: false
+      ],
       opts
     )
     |> Enum.into(%{})
