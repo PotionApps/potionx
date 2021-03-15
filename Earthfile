@@ -13,15 +13,25 @@ all-test:
 
 test:
     FROM +setup-test
+    RUN apk add --no-progress --update docker docker-compose
+    RUN apk add postgresql-client inotify-tools
     RUN MIX_ENV=test mix deps.compile
     COPY --dir config installer lib priv test ./
+    COPY ./docker-compose.yml ./docker-compose.yml
+    ENV DATABASE_URL="ecto://postgres:postgres@localhost/potionx_test"
 
-    # Run unit tests
-    RUN mix test
+    WITH DOCKER
+        # Start docker compose
+        # In parallel start compiling tests
+        # Check for DB to be up x 3
+        # Run the database tests
+        RUN docker-compose up -d & \
+            while ! pg_isready --host=localhost --port=5432 --quiet; do sleep 1; done; \
+            mix test
+            # REDIS
+    END
 
-    # Run installer tests
-    WORKDIR /src/installer
-    RUN mix test
+
 
 all-integration-test:
     BUILD --build-arg ELIXIR=1.11.3 --build-arg OTP=23.2.5 +integration-test
@@ -35,14 +45,14 @@ integration-test:
     RUN apk add postgresql-client inotify-tools
 
     # Integration test deps
-    COPY /integration_test/docker-compose.yml ./integration_test/docker-compose.yml
-    COPY mix.exs ./
-    COPY /.formatter.exs ./
-    COPY /installer/mix.exs ./installer/mix.exs
-    COPY /integration_test/mix.exs ./integration_test/mix.exs
-    COPY /integration_test/config/config.exs ./integration_test/config/config.exs
+    COPY ./docker-compose.yml ./integration_test/docker-compose.yml
+    # COPY mix.exs ./
+    # COPY /.formatter.exs ./
+    # COPY /installer/mix.exs ./installer/mix.exs
+    # COPY /integration_test/mix.exs ./integration_test/mix.exs
+    # COPY /integration_test/config/config.exs ./integration_test/config/config.exs
     RUN mix local.hex --force
-    RUN mix deps.get
+    # RUN mix deps.get
     RUN mix local.rebar --force
     RUN mkdir -p packages/templates
     COPY packages/templates/package* packages/templates
@@ -58,11 +68,6 @@ integration-test:
     # Removing until this feature exists https://github.com/earthly/earthly/issues/574
     # RUN MIX_ENV=test mix deps.compile
     RUN npm install '/src/packages/templates'
-
-
-    # Run integration tests
-    # COPY integration_test/test  ./test
-    # COPY integration_test/config/config.exs  ./config/config.exs
 
     WITH DOCKER
         # Start docker compose

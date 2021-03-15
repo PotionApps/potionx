@@ -1,6 +1,5 @@
 defmodule Potionx.Auth.IdentityService do
   alias Potionx.Context.Service
-  alias Ecto.Multi
 
   @callback create(Potionx.Context.Service.t()) :: {:ok, struct()} | {:error, map()}
   @callback one(Potionx.Context.Service.t()) :: struct()
