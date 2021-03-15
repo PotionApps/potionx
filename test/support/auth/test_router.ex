@@ -23,6 +23,23 @@ defmodule PotionxTest.Router do
         ]
       ]
     ])
-    |> Plug.Conn.send_resp(200, "test")
+  end
+end
+
+defmodule PotionxTest.RouterAuthRequired do
+  use Plug.Router
+
+  plug Plug.Parsers,
+    parsers: [:urlencoded, :json],
+    json_decoder: Jason
+  plug Potionx.Plug.ServiceContext
+  plug Potionx.Plug.Auth, auth_optional: false, session_service: PotionxTest.SessionService
+  plug Potionx.Plug.Absinthe
+  plug :match
+  plug :dispatch
+
+  post "/test" do
+    conn
+    |> Plug.Conn.send_resp(200, "ok")
   end
 end

@@ -7,6 +7,10 @@ Mix.Task.run("ecto.migrate", ["--quiet"])
 
 {:ok, _} = Ecto.Adapters.Postgres.ensure_all_started(Repo, :temporary)
 
+redis_url = System.get_env("REDIS_URL")
+if (redis_url) do
+  {:ok, conn} = Redix.start_link(redis_url, name: :redix)
+end
 
 # Start a process ONLY for our test run.
 {:ok, _pid} = Repo.start_link()

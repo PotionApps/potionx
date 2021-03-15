@@ -68,7 +68,23 @@ defmodule Potionx.Auth.Assent do
     |> handle_user_session_cookies(conn)
     |> case do
       %Plug.Conn{} = conn ->
-        conn   
+        url = 
+          URI.parse(Plug.Conn.request_url(conn))
+          |> Map.put(:query, nil)
+          |> Map.put(:path, "/")
+          |> to_string
+        conn
+        |> Plug.Conn.put_resp_content_type("text/html")
+        |> Plug.Conn.send_resp(
+          200,
+          """
+          <html>
+            <head><meta http-equiv="refresh" content="0;URL='#{url}'"/></head>
+            <body></body>
+          </html>
+          """
+        )
+        
       {:error, _, msg, _} ->
         {:error, msg}
       err -> err

@@ -3,7 +3,7 @@ defmodule Potionx.Auth.Test do
   alias PotionxTest.Router
   alias PotionxTest.TestProvider
 
-  describe "Auth Assent" do
+  describe "Authentication test" do
     setup do
       {:ok, %{
         secret_key_base: :crypto.strong_rand_bytes(64) |> Base.encode64 |> binary_part(0, 64)
@@ -74,16 +74,12 @@ defmodule Potionx.Auth.Test do
         conn(:post, "/auth/test/callback")
         |> Map.replace(:secret_key_base, secret_key_base)
       conn2 = Plug.Test.recycle_cookies(conn2, conn1)
-
       conn2 =
         conn2
         |> Router.call(Router.init([]))
       conn2
       |> (fn res ->
-        assert "test" ===
-          res
-          |> sent_resp
-          |> elem(2)
+        assert elem(sent_resp(res), 2) =~ "refresh"
         assert res.resp_cookies[Potionx.Auth.token_config().access_token.name].max_age === 60 * 30 # 30 minutes
         assert res.resp_cookies[Potionx.Auth.token_config().renewal_token.name].max_age === 60 * 60 * 24 * 30 # 30 days
       end).()
@@ -161,10 +157,7 @@ defmodule Potionx.Auth.Test do
       conn2
       |> Router.call(Router.init([]))
       |> (fn res ->
-        assert "test" ===
-          res
-          |> sent_resp
-          |> elem(2)
+        assert elem(sent_resp(res), 2) =~ "refresh"
         assert res.resp_cookies[Potionx.Auth.token_config().access_token.name].max_age === 60 * 30 # 30 minutes
         assert res.resp_cookies[Potionx.Auth.token_config().renewal_token.name].max_age === 60 * 60 * 24 * 30 # 30 days
       end).()
