@@ -9,7 +9,7 @@ all-frontend:
     BUILD +test-templates
 
 all-test:
-    BUILD --build-arg ELIXIR=1.11.3 --build-arg OTP=23.2.5 +test
+    BUILD --build-arg ELIXIR=1.11.3 --build-arg OTP=23.2.5 -P +test
 
 test:
     FROM +setup-test
@@ -46,13 +46,7 @@ integration-test:
 
     # Integration test deps
     COPY ./docker-compose.yml ./integration_test/docker-compose.yml
-    # COPY mix.exs ./
-    # COPY /.formatter.exs ./
-    # COPY /installer/mix.exs ./installer/mix.exs
-    # COPY /integration_test/mix.exs ./integration_test/mix.exs
-    # COPY /integration_test/config/config.exs ./integration_test/config/config.exs
     RUN mix local.hex --force
-    # RUN mix deps.get
     RUN mix local.rebar --force
     RUN mkdir -p packages/templates
     COPY packages/templates/package* packages/templates
