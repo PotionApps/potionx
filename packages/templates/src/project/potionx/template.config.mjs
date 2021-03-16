@@ -114,13 +114,9 @@ export const getValues = async (context, prompt, initialValues) => {
   const potionx_version = "0.3.0";
 
 
-  // confirm directory
-  // allow to skip process by passing parsed args into context
-  // ask if deps should be installed
-  // install deps 
-  // ask if migrations should be run
   const timestamp = new Date()
   const timestamp2 = new Date(timestamp.getTime() + 1000)
+  const timestamp3 = new Date(timestamp2.getTime() + 1000)
   return {
     ...initialValues,
     ...collected,
@@ -136,6 +132,7 @@ export const getValues = async (context, prompt, initialValues) => {
     signingSalt: crypto.randomBytes(8).toString('hex'),
     timestamp: dateToTimestamp(timestamp),
     timestamp2: dateToTimestamp(timestamp2),
+    timestamp3: dateToTimestamp(timestamp3),
     webAppName: appName,
     webNamespace: appNameModuleCase + "Web"
   }

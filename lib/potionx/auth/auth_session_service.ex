@@ -7,6 +7,7 @@ defmodule Potionx.Auth.SessionService do
   @callback one(Potionx.Context.Service.t()) :: struct()
   @callback one_from_cache(Potionx.Context.Service.t()) :: struct() | map() | nil
   @callback patch(Potionx.Context.Service.t()) :: {:ok, struct()} | {:error, map()}
+  @callback use_redis() :: boolean()
 
   defmacro __using__(opts) do
     if !Keyword.get(opts, :identity_service) do
@@ -18,9 +19,6 @@ defmodule Potionx.Auth.SessionService do
     if !Keyword.get(opts, :session_schema) do
       raise "Potionx.Auth.SessionService requires a session schema"
     end
-    if is_nil(Keyword.get(opts, :use_redis)) do
-      raise "Potionx.Auth.SessionService requires a use_redis setting"
-    end
     if !Keyword.get(opts, :user_service) do
       raise "Potionx.Auth.SessionService requires a user service"
     end
@@ -30,7 +28,6 @@ defmodule Potionx.Auth.SessionService do
       @repo unquote(opts[:repo])
       @identity_service unquote(opts[:identity_service])
       @session_schema unquote(opts[:session_schema])
-      @use_redis unquote(opts[:use_redis])
       @user_service unquote(opts[:user_service])
       import Ecto.Query
 
@@ -78,7 +75,7 @@ defmodule Potionx.Auth.SessionService do
         end)
         |> Multi.run(:redis, fn _, %{session: session, user: user} ->
           session = %{session | user: user}
-          if (@use_redis) do
+          if (use_redis()) do
             [{:uuid_access, :ttl_access_seconds}, {:uuid_renewal, :ttl_renewal_seconds}]
             |> Enum.reduce([], fn {key, ttl_key}, acc ->
               if Map.get(session, key) do
@@ -139,7 +136,7 @@ defmodule Potionx.Auth.SessionService do
       end
 
       def delete_from_redis(%{uuid_access: _} = session) do
-        if (@use_redis) do
+        if (use_redis()) do
           [{:uuid_access, :ttl_access_seconds}, {:uuid_renewal, :ttl_renewal_seconds}]
           |> Enum.reduce([], fn {key, ttl_key}, acc ->
             if Map.get(session, key) do
@@ -169,7 +166,7 @@ defmodule Potionx.Auth.SessionService do
           %{uuid_access: token} -> token
           %{uuid_renewal: token} -> token
         end
-        if (@use_redis) do
+        if (use_redis()) do
           Potionx.Redis.get(token)
           |> case do
             {:ok, nil} -> nil
@@ -206,7 +203,7 @@ defmodule Potionx.Auth.SessionService do
           end
         )
         |> Multi.run(:redis_old, fn _, %{session_old: session} ->
-          if (@use_redis) do
+          if (use_redis()) do
             [{:uuid_access, :ttl_access_seconds}, {:uuid_renewal, :ttl_renewal_seconds}]
             |> Enum.map(fn {key, ttl_key} ->
               Potionx.Redis.delete(
@@ -219,7 +216,7 @@ defmodule Potionx.Auth.SessionService do
           end
         end)
         |> Multi.run(:redis, fn _, %{session_patch: session} ->
-          if (@use_redis) do
+          if (use_redis()) do
             [{:uuid_access, :ttl_access_seconds}, {:uuid_renewal, :ttl_renewal_seconds}]
             |> Enum.map(fn {key, ttl_key} ->
               Potionx.Redis.put(
@@ -268,6 +265,7 @@ defmodule Potionx.Auth.SessionService do
       end
       def query(q, _args), do: q
 
+
       def transform_keys_to_atoms(session) do
         session
         |> Map.new(fn {k, v} ->
@@ -283,6 +281,10 @@ defmodule Potionx.Auth.SessionService do
             }
           session -> session
         end
+      end
+
+      def use_redis do
+        Application.get_env(:redix, :url) !== nil
       end
 
       defoverridable(Potionx.Auth.SessionService)
