@@ -7,17 +7,23 @@ defmodule <%= webNamespace %>.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug Potionx.Plug.ApiAuth, otp_app: :<%= appName %>
-    plug Potionx.Plug.MaybeRequireAuth, [
+    plug Potionx.Plug.Auth,
       login_path: "/login",
-      public_urls: []
-    ]
+      public_hosts: [], # www.example.com for example
+      session_optional: false,
+      session_service: <%= appModule %>.SessionService,
+      user_required: true
+    # plug Potionx.Plug.ApiAuth, otp_app: :<%= appName %>
+    # plug Potionx.Plug.MaybeRequireAuth, [
+    #   login_path: "/login",
+    #   public_urls: []
+    # ]
   end
 
   pipeline :graphql do
     plug :accepts, ["json"]
     plug Potionx.Plug.Auth,
-      auth_optional: true,
+      session_optional: true,
       session_service:<%= appModule %>.SessionService
     plug Potionx.Plug.ServiceContext
     if Mix.env() in [:prod] do
@@ -25,19 +31,16 @@ defmodule <%= webNamespace %>.Router do
     end
   end
 
-  pipeline :api do
+  pipeline :auth_callback do
     plug :accepts, ["json"]
-    plug Potionx.Plug.ApiAuth, otp_app: :<%= appName %>
+    plug Potionx.Plug.Auth,
+      session_optional: false,
+      session_service: <%= appModule %>.SessionService
   end
 
   pipeline :api_protected do
     plug Pow.Plug.RequireAuthenticated, error_handler: Potionx.Plug.ApiAuthErrorHandler
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", <%= webNamespace %> do
-  #   pipe_through :api
-  # end
 
   # Enables LiveDashboard only for development
   #
@@ -65,13 +68,12 @@ defmodule <%= webNamespace %>.Router do
 
 
   scope "/api/v1", <%= webNamespace %>, as: :api_v1 do
-    pipe_through :api
-
-    get "/auth/:provider/new", AuthorizationController, :new
-    get "/auth/:provider/callback", AuthorizationController, :callback
-    post "/auth/:provider/callback", AuthorizationController, :callback
-    get "/session/delete", AuthController, :delete
-    post "/session/renew", AuthController, :renew
+    pipe_through :auth_callback
+    post "/auth/:provider/callback" do
+      Potionx.Auth.Assent.callback(conn, [
+        session_service: <%= appModule %>.Sessions.SessionService
+      ])
+    end
   end
 
   scope "/", <%= webNamespace %> do

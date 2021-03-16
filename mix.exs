@@ -11,8 +11,9 @@ defmodule Potionx.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:absinthe, "~> 1.6.0"},
+      {:absinthe, "~> 1.6.0", override: true},
       {:absinthe_plug, "~> 1.5.4"},
+      {:absinthe_relay, "~> 1.5.0"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.0"},
       {:pow, "~> 1.0.22"},

@@ -20,7 +20,7 @@ defmodule Potionx.Plug.Auth do
           }
         )
       _ ->
-        if (opts.auth_optional) do
+        if (opts.session_optional) do
           conn
         else
           conn
@@ -66,7 +66,7 @@ defmodule Potionx.Plug.Auth do
     end
     Keyword.merge(
       [
-        auth_optional: false,
+        session_optional: false,
         uuid_key: :uuid_access,
         user_required: false
       ],

@@ -1,6 +1,5 @@
 defmodule PotionxTest.User do
   @derive Jason.Encoder
-  import Ecto.Changeset
   use Ecto.Schema
   alias __MODULE__
 

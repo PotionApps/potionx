@@ -16,11 +16,16 @@ defmodule <%= appModule %>.Users.User do
 
   def changeset(user_or_changeset, attrs) do
     user_or_changeset
-    |> cast(attrs, [:name_first, :name_last, :roles])
-    |> Pow.Ecto.Schema.Changeset.user_id_field_changeset(attrs, [])
+    |> cast(attrs, [
+      :email,
+      :name_first,
+      :name_last,
+      :roles
+    ])
     |> validate_subset(
       :roles,
       Ecto.Enum.values(__MODULE__, :roles)
     )
+    |> validate_required([:email])
   end
 end
