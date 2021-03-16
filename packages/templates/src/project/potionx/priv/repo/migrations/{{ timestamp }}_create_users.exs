@@ -1,4 +1,4 @@
-defmodule <%= graphqlNamespace %>.Repo.Migrations.CreateUsers do
+defmodule <%= appModule %>.Repo.Migrations.CreateUsers do
   use Ecto.Migration
 
   def change do
