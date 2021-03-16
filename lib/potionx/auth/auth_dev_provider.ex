@@ -1,4 +1,4 @@
-defmodule Potionx.Pow.Provider.Dev do
+defmodule Potionx.Auth.Provider.Dev do
   @moduledoc false
   @behaviour Assent.Strategy
 

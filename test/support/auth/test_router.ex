@@ -11,7 +11,10 @@ defmodule PotionxTest.Router do
   plug :dispatch
 
   forward "/graphql",
-    init_opts: [before_send: {Potionx.Auth.Assent, :before_send}, schema: PotionxTest.Schema],
+    init_opts: [
+      before_send: {Potionx.Auth.Assent, :before_send},
+      schema: PotionxTest.Schema
+    ],
     to: Absinthe.Plug
 
   post "/auth/:provider/callback" do

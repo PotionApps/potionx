@@ -16,7 +16,9 @@ defmodule <%= webNamespace %>.Router do
 
   pipeline :graphql do
     plug :accepts, ["json"]
-    plug Potionx.Plug.ApiAuth, otp_app: :<%= appName %>
+    plug Potionx.Plug.Auth,
+      auth_optional: true,
+      session_service:<%= appModule %>.SessionService
     plug Potionx.Plug.ServiceContext
     if Mix.env() in [:prod] do
       plug Potionx.Plug.MaybeDisableIntrospection, [roles: [:admin]]
@@ -57,6 +59,7 @@ defmodule <%= webNamespace %>.Router do
     pipe_through :graphql
 
     forward "/", Absinthe.Plug,
+      before_send: {Potionx.Auth.Assent, :before_send},
       schema: <%= graphqlNamespace %>.Schema
   end
 
