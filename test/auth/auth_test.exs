@@ -10,7 +10,7 @@ defmodule Potionx.Auth.Test do
       }}
     end
 
-    test "heya" do
+    test "Blocks introspection" do
       query = """
       {
         __schema {
@@ -21,9 +21,9 @@ defmodule Potionx.Auth.Test do
       }
       """
 
-      conn(:post, "/graphql", %{variables: %{}, query: query})
-      |> Router.call(Router.init([]))
-      |> IO.inspect
+      assert %{status: 403, halted: true} =
+        conn(:post, "/graphql", %{variables: %{}, query: query})
+        |> Router.call(Router.init([]))
     end
 
     test "Should return a redirect_uri", %{secret_key_base: secret_key_base} do

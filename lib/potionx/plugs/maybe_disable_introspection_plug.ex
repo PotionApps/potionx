@@ -15,19 +15,13 @@ defmodule Potionx.Plug.MaybeDisableIntrospection do
   def call(%Plug.Conn{params: %{"query" => q}} = conn, config) do
     if (String.contains?(q, "__schema")) do
       conn
-      |> maybe_refuse(conn, config)
+      |> maybe_refuse(config)
     else
       conn
     end
   end
   def call(conn, _) do
     conn
-  end
-
-  def maybe_refuse(nil, conn, _) do
-    conn
-    |> Conn.put_status(:unauthorized)
-    |> Conn.halt
   end
 
   def maybe_refuse(%{assigns: %{context: %Service{roles: roles}}} = conn, %{roles_allowed: roles_allowed}) when is_list(roles) do

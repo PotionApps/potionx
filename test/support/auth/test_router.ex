@@ -9,6 +9,7 @@ defmodule PotionxTest.Router do
     session_optional: true,
     session_service: PotionxTest.SessionService,
     user_optional: true
+  plug Potionx.Plug.MaybeDisableIntrospection, [roles: [:admin]]
   plug Potionx.Plug.Absinthe
   plug :match
   plug :dispatch
