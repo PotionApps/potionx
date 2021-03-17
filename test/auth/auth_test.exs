@@ -19,7 +19,7 @@ defmodule Potionx.Auth.Test do
           }
         }
       }
-      """
+      ""
 
       assert %{status: 403, halted: true} =
         conn(:post, "/graphql", %{variables: %{}, query: query})

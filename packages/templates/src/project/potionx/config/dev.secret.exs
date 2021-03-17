@@ -2,7 +2,7 @@ import Config
 
 # Configure your database
 config :<%= appName %>,
-  admin_email: <%= email %>
+  admin_email: "<%= email %>"
 
 config :<%= appName %>, <%= appModule %>.Repo,
   username: "<%= localDbUser %>",

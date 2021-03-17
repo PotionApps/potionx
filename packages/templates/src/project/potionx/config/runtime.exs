@@ -70,7 +70,7 @@ if config_env() == :prod do
     REDIS_URL environment variable is missing.
     """
   config :redix,
-    url: System.get_env("REDIS_URL")
+    url: redis_url
 
   #
   # Then you can assemble a release by calling `mix release`.

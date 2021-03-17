@@ -15,7 +15,7 @@ defmodule Potionx.Auth.Provider.Test do
 
   def email, do: "test@example.com"
 
-  def redirect_uri, do: "/"
+  def redirect_url, do: "/"
 
   def url do
     "https://provider.example.com/oauth/authorize"

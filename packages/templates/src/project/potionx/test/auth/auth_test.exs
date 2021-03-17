@@ -1,16 +1,9 @@
 defmodule <%= webNamespace %>.Auth.Test do
   use <%= webNamespace %>.ConnCase
-  alias <%= webNamespace %>.Router
+  use Plug.Test
   alias Potionx.Auth.Provider
 
-  describe "Authentication test" do
-    setup do
-      {:ok, %{
-        secret_key_base: :crypto.strong_rand_bytes(64) |> Base.encode64 |> binary_part(0, 64)
-      }}
-    end
-
-    test "Blocks introspection" do
+    test "Blocks introspection", %{conn: conn} do
       query = """
       {
         __schema {
@@ -22,11 +15,10 @@ defmodule <%= webNamespace %>.Auth.Test do
       """
 
       assert %{status: 403, halted: true} =
-        conn(:post, "/graphql", %{variables: %{}, query: query})
-        |> Router.call(Router.init([]))
+        post(conn, "/graphql/v1", %{variables: %{}, query: query})
     end
 
-    test "Should return a redirect_uri", %{secret_key_base: secret_key_base} do
+    test "Should return a redirect_url", %{conn: conn} do
       query = """
         mutation {
           signInProvider (provider: "test") {
@@ -37,19 +29,18 @@ defmodule <%= webNamespace %>.Auth.Test do
       """
       url = Provider.Test.url()
       conn1 =
-        conn(:post, "/graphql", %{variables: %{}, query: query})
-        |> Map.replace(:secret_key_base, secret_key_base)
-        |> Router.call(Router.init([]))
+        post(conn, "/graphql/v1", %{variables: %{}, query: query})
+        
       assert %{"data" => %{"signInProvider" => %{"url" => ^url}}} =
         conn1
         |> sent_resp
         |> elem(2)
         |> Jason.decode!
       assert conn1.resp_cookies[Potionx.Auth.token_config().sign_in_token.name]
-      assert PotionxTest.Repo.one(PotionxTest.Session)
+      assert <%= appModule %>.Repo.one(<%= appModule %>.Sessions.Session)
     end
 
-    test "Should return an error", %{secret_key_base: _secret_key_base} do
+    test "Should return an error", %{conn: conn} do
       query = """
         mutation {
           signInProvider (provider: "invalid") {
@@ -59,20 +50,17 @@ defmodule <%= webNamespace %>.Auth.Test do
         }
       """
       assert %{"data" => %{"signInProvider" => %{"error" => err}}} =
-        conn(:post, "/graphql", %{variables: %{}, query: query})
-        |> Router.call(Router.init([]))
-        |> sent_resp
-        |> elem(2)
-        |> Jason.decode!
+        post(conn, "/graphql/v1", %{variables: %{}, query: query})
+        |> json_response(200)
       assert err
     end
 
-    test "Should sign a user in and sign them out", %{secret_key_base: secret_key_base} do
-      %PotionxTest.User{
+    test "Should sign a user in and sign them out", %{conn: conn} do
+      %<%= appModule %>.Users.User{
         email: Provider.Test.email()
       }
       |> Ecto.Changeset.cast(%{}, [])
-      |> PotionxTest.Repo.insert
+      |> <%= appModule %>.Repo.insert
       query = """
         mutation {
           signInProvider (provider: "test") {
@@ -82,20 +70,15 @@ defmodule <%= webNamespace %>.Auth.Test do
         }
       """
       conn1 =
-        conn(:post, "/graphql", %{variables: %{}, query: query})
-        |> Map.replace(:secret_key_base, secret_key_base)
-        |> Router.call(Router.init([]))
+        post(conn, "/graphql/v1", %{variables: %{}, query: query})
 
+      conn2 = recycle(conn1)
       conn2 =
-        conn(:post, "/auth/test/callback")
-        |> Map.replace(:secret_key_base, secret_key_base)
-      conn2 = Plug.Test.recycle_cookies(conn2, conn1)
-      conn2 =
-        conn2
-        |> Router.call(Router.init([]))
+        post(conn2, "/api/v1/auth/test/callback")
+
       conn2
       |> (fn res ->
-        assert elem(sent_resp(res), 2) =~ "refresh"
+        assert html_response(res, 200) =~ "refresh"
         assert res.resp_cookies[Potionx.Auth.token_config().access_token.name].max_age === 60 * 30 # 30 minutes
         assert res.resp_cookies[Potionx.Auth.token_config().renewal_token.name].max_age === 60 * 60 * 24 * 30 # 30 days
       end).()
@@ -107,17 +90,10 @@ defmodule <%= webNamespace %>.Auth.Test do
           }
         }
       """
-      conn3 =
-        conn(:post, "/graphql", %{variables: %{}, query: query})
-        |> Map.replace(:secret_key_base, secret_key_base)
-      Plug.Test.recycle_cookies(conn3, conn2)
-      |> Router.call(Router.init([]))
+      recycle(conn2)
+      |> post("/graphql/v1", %{variables: %{}, query: query})
       |> (fn conn ->
-        res =
-          conn
-          |> sent_resp
-          |> elem(2)
-          |> Jason.decode!
+        res = json_response(conn, 200)
         assert Enum.all?(Map.values(conn.resp_cookies), &(&1.max_age === 0))
         refute res["data"]["signOut"]["error"]
 
@@ -129,7 +105,7 @@ defmodule <%= webNamespace %>.Auth.Test do
             Potionx.Auth.token_config().renewal_token.name
           ]
         )
-        assert PotionxTest.SessionService.one_from_cache(
+        assert <%= appModule %>.Sessions.SessionService.one_from_cache(
           %Potionx.Context.Service{filters: %{
             uuid_access: Map.get(conn.cookies, Potionx.Auth.token_config().access_token.name),
             uuid_renewal: Map.get(conn.cookies, Potionx.Auth.token_config().renewal_token.name)
@@ -138,19 +114,19 @@ defmodule <%= webNamespace %>.Auth.Test do
       end).()
     end
 
-    test "Should sign a user in with an existing identity", %{secret_key_base: _secret_key_base} do
-      user = %PotionxTest.User{
+    test "Should sign a user in with an existing identity", %{conn: conn} do
+      user = %<%= appModule %>.Users.User{
         email: Provider.Test.email()
       }
       |> Ecto.Changeset.cast(%{}, [])
-      |> PotionxTest.Repo.insert!
-      %PotionxTest.Identity{
+      |> <%= appModule %>.Repo.insert!
+      %<%= appModule %>.UserIdentities.UserIdentity{
         provider: "test",
         uid: "1",
         user_id: user.id
       }
       |> Ecto.Changeset.cast(%{}, [])
-      |> PotionxTest.Repo.insert
+      |> <%= appModule %>.Repo.insert
       query = """
         mutation {
           signInProvider (provider: "test") {
@@ -159,27 +135,19 @@ defmodule <%= webNamespace %>.Auth.Test do
           }
         }
       """
-      secret_key_base = :crypto.strong_rand_bytes(64) |> Base.encode64 |> binary_part(0, 64)
       conn1 =
-        conn(:post, "/graphql", %{variables: %{}, query: query})
-        |> Map.replace(:secret_key_base, secret_key_base)
-        |> Router.call(Router.init([]))
+        post(conn, "/graphql/v1", %{variables: %{}, query: query})
 
-      conn2 =
-        conn(:post, "/auth/test/callback")
-        |> Map.replace(:secret_key_base, secret_key_base)
-      conn2 = Plug.Test.recycle_cookies(conn2, conn1)
-
-      conn2
-      |> Router.call(Router.init([]))
+      recycle(conn1)
+      |> post("/api/v1/auth/test/callback")
       |> (fn res ->
-        assert elem(sent_resp(res), 2) =~ "refresh"
+        assert html_response(res, 200) =~ "refresh"
         assert res.resp_cookies[Potionx.Auth.token_config().access_token.name].max_age === 60 * 30 # 30 minutes
         assert res.resp_cookies[Potionx.Auth.token_config().renewal_token.name].max_age === 60 * 60 * 24 * 30 # 30 days
       end).()
     end
 
-    test "Sign in should fail for a user that doesn't exist" do
+    test "Sign in should fail for a user that doesn't exist", %{conn: conn} do
       query = """
         mutation {
           signInProvider (provider: "test") {
@@ -188,37 +156,28 @@ defmodule <%= webNamespace %>.Auth.Test do
           }
         }
       """
-      secret_key_base = :crypto.strong_rand_bytes(64) |> Base.encode64 |> binary_part(0, 64)
-      conn1 =
-        conn(:post, "/graphql", %{variables: %{}, query: query})
-        |> Map.replace(:secret_key_base, secret_key_base)
-        |> Router.call(Router.init([]))
+      conn1 = post(conn, "/graphql/v1", %{variables: %{}, query: query})
 
-      conn2 =
-        conn(:post, "/auth/test/callback")
-        |> Map.replace(:secret_key_base, secret_key_base)
-      conn2 = Plug.Test.recycle_cookies(conn2, conn1)
-
-      conn2
-      |> Router.call(Router.init([]))
+      recycle(conn1)
+      |> post("/api/v1/auth/test/callback")
       |> (fn res ->
         assert res.assigns.potionx_auth_error === "user_not_found"
       end).()
     end
 
-    test "Sign in should fail for a user trying to sign in with a different provider", %{secret_key_base: _secret_key_base} do
-      user = %PotionxTest.User{
+    test "Sign in should fail for a user trying to sign in with a different provider", %{conn: conn} do
+      user = %<%= appModule %>.Users.User{
         email: Provider.Test.email()
       }
       |> Ecto.Changeset.cast(%{}, [])
-      |> PotionxTest.Repo.insert!
-      %PotionxTest.Identity{
+      |> <%= appModule %>.Repo.insert!
+      %<%= appModule %>.UserIdentities.UserIdentity{
         provider: "other",
         user_id: user.id,
         uid: "1"
       }
       |> Ecto.Changeset.cast(%{}, [])
-      |> PotionxTest.Repo.insert
+      |> <%= appModule %>.Repo.insert
       query = """
         mutation {
           signInProvider (provider: "test") {
@@ -227,100 +186,78 @@ defmodule <%= webNamespace %>.Auth.Test do
           }
         }
       """
-      secret_key_base = :crypto.strong_rand_bytes(64) |> Base.encode64 |> binary_part(0, 64)
       conn1 =
-        conn(:post, "/graphql", %{variables: %{}, query: query})
-        |> Map.replace(:secret_key_base, secret_key_base)
-        |> Router.call(Router.init([]))
+        post(conn, "/graphql/v1", %{variables: %{}, query: query})
 
-      conn2 =
-        conn(:post, "/auth/test/callback")
-        |> Map.replace(:secret_key_base, secret_key_base)
-      conn2 = Plug.Test.recycle_cookies(conn2, conn1)
-
-      conn2
-      |> Router.call(Router.init([]))
+      recycle(conn1)
+      |> post("/api/v1/auth/test/callback")
       |> (fn res ->
         assert res.assigns.potionx_auth_error === "invalid_provider"
       end).()
     end
 
-    test "Should renew access", %{secret_key_base: secret_key_base} do
-      %PotionxTest.User{
-        email: Provider.Test.email()
+  test "Should renew access", %{conn: conn} do
+    %<%= appModule %>.Users.User{
+      email: Provider.Test.email()
+    }
+    |> Ecto.Changeset.cast(%{}, [])
+    |> <%= appModule %>.Repo.insert
+    query = """
+      mutation {
+        signInProvider (provider: "test") {
+          error
+          url
+        }
       }
-      |> Ecto.Changeset.cast(%{}, [])
-      |> PotionxTest.Repo.insert
-      query = """
-        mutation {
-          signInProvider (provider: "test") {
-            error
-            url
-          }
+    """
+    conn1 = post(conn, "/graphql/v1", %{variables: %{}, query: query})
+    conn2 = recycle(conn1) |> post("/api/v1/auth/test/callback")
+
+    query = """
+      mutation {
+        sessionRenew {
+          error
         }
-      """
-      conn1 =
-        conn(:post, "/graphql", %{variables: %{}, query: query})
-        |> Map.replace(:secret_key_base, secret_key_base)
-        |> Router.call(Router.init([]))
+      }
+    """
 
-      conn2 =
-        conn(:post, "/auth/test/callback")
-        |> Map.replace(:secret_key_base, secret_key_base)
-      conn2 = Plug.Test.recycle_cookies(conn2, conn1)
+    recycle(conn2)
+    |> post("/graphql/v1", %{variables: %{}, query: query})
+    |> (fn conn ->
+      # check that old cookie is no longer available
+      conn = Plug.Conn.fetch_cookies(
+        conn,
+        signed: [
+          Potionx.Auth.token_config().access_token.name,
+          Potionx.Auth.token_config().renewal_token.name
+        ]
+      )
+      assert <%= appModule %>.Sessions.SessionService.one_from_cache(
+        %Potionx.Context.Service{filters: %{
+          uuid_access: Map.get(conn.cookies, Potionx.Auth.token_config().access_token.name),
+          uuid_renewal: Map.get(conn.cookies, Potionx.Auth.token_config().renewal_token.name)
+        }}
+      ) === nil
 
-      conn2 =
-        conn2
-        |> Router.call(Router.init([]))
-
-
-        query = """
-        mutation {
-          sessionRenew {
-            error
-          }
-        }
-      """
-      conn3 =
-        conn(:post, "/graphql", %{variables: %{}, query: query})
-        |> Map.replace(:secret_key_base, secret_key_base)
-      Plug.Test.recycle_cookies(conn3, conn2)
-      |> Router.call(Router.init([]))
+      assert conn.resp_cookies[Potionx.Auth.token_config().access_token.name] &&
+        conn.resp_cookies[Potionx.Auth.token_config().renewal_token.name]
+      
+      recycle(conn)
+      |> post("/graphql/v1")
+      |> fetch_cookies([
+        signed: [
+          Potionx.Auth.token_config().access_token.name,
+          Potionx.Auth.token_config().renewal_token.name
+        ]
+      ])
       |> (fn conn ->
-        # check that old cookie is no longer available
-        conn = Plug.Conn.fetch_cookies(
-          conn,
-          signed: [
-            Potionx.Auth.token_config().access_token.name,
-            Potionx.Auth.token_config().renewal_token.name
-          ]
-        )
-        assert PotionxTest.SessionService.one_from_cache(
+        assert <%= appModule %>.Sessions.SessionService.one_from_cache(
           %Potionx.Context.Service{filters: %{
             uuid_access: Map.get(conn.cookies, Potionx.Auth.token_config().access_token.name),
             uuid_renewal: Map.get(conn.cookies, Potionx.Auth.token_config().renewal_token.name)
           }}
-        ) === nil
-
-        assert conn.resp_cookies[Potionx.Auth.token_config().access_token.name] &&
-          conn.resp_cookies[Potionx.Auth.token_config().renewal_token.name]
-        recycle_cookies(conn(:post, "/graphql"), conn)
-        |> Map.replace(:secret_key_base, secret_key_base)
-        |> fetch_cookies([
-          signed: [
-            Potionx.Auth.token_config().access_token.name,
-            Potionx.Auth.token_config().renewal_token.name
-          ]
-        ])
-        |> (fn conn ->
-          assert PotionxTest.SessionService.one_from_cache(
-            %Potionx.Context.Service{filters: %{
-              uuid_access: Map.get(conn.cookies, Potionx.Auth.token_config().access_token.name),
-              uuid_renewal: Map.get(conn.cookies, Potionx.Auth.token_config().renewal_token.name)
-            }}
-          )
-        end).()
+        )
       end).()
-    end
+    end).()
   end
 end

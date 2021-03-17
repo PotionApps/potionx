@@ -19,7 +19,7 @@ defmodule <%= appModule %>.Users.UserService do
       entry ->
         entry
         |> User.changeset(%{})
-        |> put_change(
+        |> Ecto.Changeset.put_change(
           :deleted_at, 
           NaiveDateTime.truncate(NaiveDateTime.utc_now, :second)
         )

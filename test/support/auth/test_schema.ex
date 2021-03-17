@@ -9,5 +9,5 @@ defmodule PotionxTest.Schema do
   mutation do
     import_fields :auth_mutations
   end
-  import_types Potionx.Auth.Mutations
+  import_types PotionxTest.Mutations
 end

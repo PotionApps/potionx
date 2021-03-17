@@ -71,6 +71,9 @@ defmodule Potionx.Plug.Auth do
         conn
     end
   end
+  def maybe_allow(%{assigns: %{context: %{session: %{id: id}}}} = conn, %{user_optional: true}) when not is_nil(id) do
+    conn
+  end
 
   def maybe_allow(%Plug.Conn{host: host, method: method, request_path: path} = conn, opts) do
     cond do

@@ -1,5 +1,5 @@
 defmodule Potionx.Auth.Assent do
-  @assent Application.get_env(:potionx, :assent)
+  @auth Application.get_env(:potionx, :auth)
   alias Potionx.Context.Service
 
   @spec before_send(Plug.Conn.t(), Absinthe.Blueprint.t()) :: any
@@ -55,6 +55,10 @@ defmodule Potionx.Auth.Assent do
   end
   def before_send(conn, _) do
     conn
+  end
+
+  def call(conn, opts) do
+    callback(conn, opts)
   end
 
   def callback(%{assigns: %{context: %Service{session: %{id: _} = session}}} = conn, opts) do
@@ -122,6 +126,8 @@ defmodule Potionx.Auth.Assent do
     )
   end
   def create_user_session(err, _, _), do: err
+  
+  def init(opts), do: opts
 
   defp handle_user_identity_params({user_identity_params, user_params}, other_params, provider) do
     user_identity_params = Map.put(user_identity_params, "provider", provider)
@@ -209,7 +215,7 @@ defmodule Potionx.Auth.Assent do
 
   def process_callback(session), do: process_callback(session, [])
   def process_callback(%{data: data, sign_in_provider: provider}, opts) do
-    strategies = Keyword.get(opts, :strategies) || @assent[:strategies]
+    strategies = Keyword.get(opts, :strategies) || @auth[:strategies]
     strategy_config = Keyword.fetch!(strategies, String.to_existing_atom(provider))
 
     Keyword.fetch!(strategy_config, :strategy).callback(
@@ -255,9 +261,8 @@ defmodule Potionx.Auth.Assent do
       raise "Potionx.Auth.Assent resolve function requires a session_service"
     end
 
-    fn _parent, %{provider: provider}, %{context: %Service{redirect_uri: redirect_uri}} ->
-      redirect_uri = redirect_uri || Keyword.fetch!(@assent || [], :redirect_uri)
-      strategies = Keyword.get(opts, :strategies) || @assent[:strategies]
+    fn _parent, %{provider: provider}, %{context: %Service{redirect_url: redirect_url}} ->
+      strategies = Keyword.get(opts, :strategies) || @auth[:strategies]
 
       strategies
       |> Keyword.fetch(String.to_existing_atom(provider))
@@ -266,7 +271,7 @@ defmodule Potionx.Auth.Assent do
           strategy = Keyword.fetch!(config, :strategy)
           config
           |> Keyword.delete(:strategy)
-          |> Keyword.put(:redirect_uri, redirect_uri)
+          |> Keyword.put(:redirect_url, redirect_url)
           |> strategy.authorize_url()
           |> case do
             {:ok, %{session_params: params, url: url}} ->

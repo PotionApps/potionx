@@ -36,7 +36,7 @@ defmodule <%= appModule %>GraphQl.Schema do
 
   subscription do
   end
-  import_types Potionx.Auth.Mutations
+  import_types <%= appModule %>GraphQl.Schema.AuthMutations
   import_types <%= appModule %>GraphQl.Schema.UserIdentityTypes
   import_types <%= appModule %>GraphQl.Schema.UserMutations
   import_types <%= appModule %>GraphQl.Schema.UserQueries

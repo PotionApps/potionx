@@ -7,29 +7,34 @@ defmodule <%= webNamespace %>.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Potionx.Plug.ServiceContext
     plug Potionx.Plug.Auth,
       login_path: "/login",
       public_hosts: [], # www.example.com for example
       session_optional: false,
-      session_service: <%= appModule %>.SessionService
+      session_service: <%= appModule %>.Sessions.SessionService
   end
 
   pipeline :graphql do
     plug :accepts, ["json"]
+    plug Potionx.Plug.ServiceContext
     plug Potionx.Plug.Auth,
       session_optional: true,
-      session_service:<%= appModule %>.SessionService
-    plug Potionx.Plug.ServiceContext
-    if Mix.env() in [:prod] do
+      session_service: <%= appModule %>.Sessions.SessionService,
+      user_optional: true
+    if Mix.env() in [:prod, :test] do
       plug Potionx.Plug.MaybeDisableIntrospection, [roles: [:admin]]
     end
+    plug Potionx.Plug.Absinthe
   end
 
   pipeline :auth_callback do
     plug :accepts, ["json"]
+    plug Potionx.Plug.ServiceContext
     plug Potionx.Plug.Auth,
       session_optional: false,
-      session_service: <%= appModule %>.SessionService
+      session_service: <%= appModule %>.Sessions.SessionService,
+      user_optional: true
   end
 
   #
@@ -58,13 +63,13 @@ defmodule <%= webNamespace %>.Router do
   end
 
 
-  scope "/api/v1", <%= webNamespace %>, as: :api_v1 do
+  scope "/api/v1", as: :api_v1 do
     pipe_through :auth_callback
-    post "/auth/:provider/callback" do
-      Potionx.Auth.Assent.callback(conn, [
+    post "/auth/:provider/callback",
+      Potionx.Auth.Assent,
+      [
         session_service: <%= appModule %>.Sessions.SessionService
-      ])
-    end
+      ]
   end
 
   scope "/", <%= webNamespace %> do

@@ -1,6 +1,5 @@
 defmodule <%= appModule %>.Release do
   @app :<%= appName %>
-  alias <%= appModule %>.Repo
   alias <%= appModule %>.Users.User
 
   defp ensure_repo_created(repo) do
