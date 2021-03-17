@@ -37,16 +37,18 @@ The following prerequisites are required:
 
 ### Pulumi
 1. Sign up to Pulumi
-2. Select the Kubernetes option
+2. Create a new project and select the Kubernetes option + typescript
 3. Install the Pulumi CLI: [https://www.pulumi.com/docs/get-started/install/](https://www.pulumi.com/docs/get-started/install/)
 4. Create a Pulumi access token: [https://app.pulumi.com/account/tokens](https://app.pulumi.com/account/tokens)
 5. Save the token somewhere, you'll need it later
 6. Back in Github, navigate to your project's actions secrets settings page https://github.com/USERNAME-OR-ORG/PROJECT-NAME/settings/secrets/actions
-7. Create a new repository secret called `PULUMI_TOKEN`
-8. Add your token from step #4 or create a new token and add it to the Github secret
+7. Create a new repository secret called `PULUMI_TOKEN` and add your Pulumi secret token from step #4
 
 ## Setting up your Pulumi config
 Navigate to your `deployment` folder and run the following commands:
+
+> Don't forget to change the commands with the appropriate information as marked, including the Digital Ocean and Cloudflare tokens
+
 ```sh
 pulumi login # enter your access token from Pulumi step #4 when asked
 pulumi stack # Create a new stack when asked in the format organization-name/stack, where organization-name is your username by default
@@ -63,9 +65,9 @@ pulumi config set --path "authProviders.azureAd.tenantId" YOUR-AZURE-SOCIAL-LOGI
 pulumi config set --path "authProviders.google.clientId" YOUR-GOOGLE-SOCIAL-LOGIN-CLIENT-ID --secret
 pulumi config set --path "authProviders.google.clientSecret" YOUR-GOOGLE-SOCIAL-LOGIN-CLIENT-SECRET --secret
 ```
-Then, add your Pulumi `stack` name to https://github.com/USERNAME-OR-ORG/PROJECT-NAME/settings/secrets/actions in a variable called `PULUMI_STACK`.
+Then, add a secret called `PULUMI_STACK` with the value of your Pulumi `stack to https://github.com/USERNAME-OR-ORG/PROJECT-NAME/settings/secrets/actions.
 
-*Remember to add the right callback URLs to your authentication providers*
+> Remember to add the right callback URLs to your authentication providers
 
 ## Push your code to Github
 Pushing your code to Github will run your tests, build a Docker image for your app and create your deplyoment. Subsequent pushes will update the app image used in your deployment.
