@@ -21,14 +21,14 @@ defmodule Potionx.Auth.Mutations do
       middleware fn %{context: context} = res, _ ->
         %{
           res |
-            context: %{context | redirect_uri: PotionxTest.TestProvider.redirect_uri()}
+            context: %{context | redirect_uri: Potionx.Auth.Provider.Test.redirect_uri()}
         }
       end
       resolve Potionx.Auth.Assent.resolve_sign_in([
         session_service: PotionxTest.SessionService,
         strategies: [
           test: [
-            strategy: PotionxTest.TestProvider
+            strategy: Potionx.Auth.Provider.Test
           ]
         ]
       ])

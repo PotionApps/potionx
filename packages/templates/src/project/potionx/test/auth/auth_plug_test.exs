@@ -1,7 +1,6 @@
-defmodule Potionx.Plug.Auth.Test do
-  use Potionx.ConnCase
-  alias PotionxTest.Router
-  alias PotionxTest.RouterAuthRequired
+defmodule <%= webNamespace %>.AuthPlugTest do
+  use <%= webNamespace %>.ConnCase
+  alias <%= webNamespace %>.Router
   alias Potionx.Auth.Provider
 
   describe "Authentication plug test" do

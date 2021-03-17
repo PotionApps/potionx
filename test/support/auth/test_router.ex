@@ -26,7 +26,7 @@ defmodule PotionxTest.Router do
       session_service: PotionxTest.SessionService,
       strategies: [
         test: [
-          strategy: PotionxTest.TestProvider
+          strategy: Potionx.Auth.Provider.Test
         ]
       ]
     ])

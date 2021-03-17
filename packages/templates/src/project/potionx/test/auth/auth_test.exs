@@ -1,6 +1,6 @@
-defmodule Potionx.Auth.Test do
-  use Potionx.ConnCase
-  alias PotionxTest.Router
+defmodule <%= webNamespace %>.Auth.Test do
+  use <%= webNamespace %>.ConnCase
+  alias <%= webNamespace %>.Router
   alias Potionx.Auth.Provider
 
   describe "Authentication test" do
