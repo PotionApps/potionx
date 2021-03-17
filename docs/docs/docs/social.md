@@ -1,9 +1,9 @@
 # Social Login
 Potionx uses [Pow/Pow Assent](https://github.com/pow-auth/pow_assent) for authentication and authorization. 
 
-To set up the providers of your choice from [Assent](https://github.com/pow-auth/assent), you'll need to edit `config/dev.secret.exs` and `config/runtime.exs` with the appropriate credentials. Included below are instructions for how to do this for the Google and Microsoft (Azure) platforms which are included are strategies by default.
+To set up the providers of your choice from [Assent](https://github.com/pow-auth/assent), you'll need to edit `config/dev.secret.exs` with the appropriate credentials. Included below are instructions for how to do this for the Google and Microsoft (Azure) platforms which are included are strategies by default.
 
-Feel free to remove the Google and Microsoft strategies from: `frontend/admin/src/routes/RouteLogin.tsx`, `config/dev.secret.exs` and `config/runtime.exs` if you don't plan on using them.
+You'll have to remove the providers you don't plan on using from: `deployment/index.ts`, `frontend/admin/src/routes/RouteLogin.tsx`, `config/dev.secret.exs` and `config/runtime.exs`.
 
 **Note: In development mode, a bypass provider is added to log in without the need for a social provider**
 

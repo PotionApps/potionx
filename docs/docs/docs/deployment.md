@@ -34,6 +34,8 @@ The following prerequisites are required:
 5. Navigate to your project's actions secrets settings page https://github.com/USERNAME-OR-ORG/PROJECT-NAME/settings/secrets/actions
 6. Create a new repository secret called `CR_PAT`
 7. Add your token from step #5 to it
+8. Hover the account dropdown on the top right and select "feature preview"
+9. Enable `Improved container support`
 
 ### Pulumi
 1. Sign up to Pulumi
@@ -45,7 +47,7 @@ The following prerequisites are required:
 7. Create a new repository secret called `PULUMI_TOKEN` and add your Pulumi secret token from step #4
 
 ## Setting up your Pulumi config
-Navigate to your `deployment` folder and run the following commands:
+1. Navigate to your `deployment` folder and run the following commands:
 
 > Don't forget to change the commands with the appropriate information as marked, including the Digital Ocean and Cloudflare tokens
 
@@ -65,7 +67,7 @@ pulumi config set --path "authProviders.azureAd.tenantId" YOUR-AZURE-SOCIAL-LOGI
 pulumi config set --path "authProviders.google.clientId" YOUR-GOOGLE-SOCIAL-LOGIN-CLIENT-ID --secret
 pulumi config set --path "authProviders.google.clientSecret" YOUR-GOOGLE-SOCIAL-LOGIN-CLIENT-SECRET --secret
 ```
-Then, add a secret called `PULUMI_STACK` with the value of your Pulumi `stack to https://github.com/USERNAME-OR-ORG/PROJECT-NAME/settings/secrets/actions.
+2. Then, add a secret called `PULUMI_STACK` with the value of your Pulumi `stack to https://github.com/USERNAME-OR-ORG/PROJECT-NAME/settings/secrets/actions.
 
 > Remember to add the right callback URLs to your authentication providers
 
