@@ -19,9 +19,8 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  config :<%= appName %>, :pow_assent,
-    callback_origin: System.get_env("AUTH_CALLBACK_ORIGIN"),
-    providers: [
+  config :potionx,
+    strategies: [
       azure_ad: [
         client_id: System.get_env("ASSENT_AZURE_CLIENT_ID"),
         client_secret: System.get_env("ASSENT_AZURE_CLIENT_SECRET"),

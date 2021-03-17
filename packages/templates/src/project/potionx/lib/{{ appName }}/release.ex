@@ -34,11 +34,13 @@ defmodule <%= appModule %>.Release do
   end
 
   def seed(repo) do
-    repo.get_by(User, [email: "<%= email %>"])
+    email = Application.fetch_env!(@app, :admin_email)
+
+    repo.get_by(User, [email: email])
     |> case do
       nil ->
         repo.insert! %User{
-          email: "<%= email %>",
+          email: email,
           roles: [:admin]
         }
       _ -> :ok

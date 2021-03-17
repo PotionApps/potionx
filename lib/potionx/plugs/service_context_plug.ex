@@ -12,7 +12,6 @@ defmodule Potionx.Plug.ServiceContext do
   end
 
   def build_context(conn) do
-    # user = Pow.Plug.current_user(conn)
 
     ctx = %Potionx.Context.Service{
       changes: Map.get(conn.body_params, :changes, %{}),

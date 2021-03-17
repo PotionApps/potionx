@@ -1,6 +1,9 @@
 import Config
 
 # Configure your database
+config :<%= appName %>,
+  admin_email: <%= email %>
+
 config :<%= appName %>, <%= appModule %>.Repo,
   username: "<%= localDbUser %>",
   password: "<%= localDbPassword %>",
@@ -10,8 +13,8 @@ config :<%= appName %>, <%= appModule %>.Repo,
   pool_size: 10
 
   
-config :<%= appName %>, :pow_assent,
-  providers: [
+config :potionx,
+  strategies: [
     azure_ad: [
       client_id: "",
       client_secret: "",

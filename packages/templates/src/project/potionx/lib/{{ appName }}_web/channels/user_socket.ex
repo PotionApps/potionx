@@ -1,6 +1,5 @@
 defmodule <%= webNamespace %>.UserSocket do
   use Phoenix.Socket
-  use Potionx.Socket
 
   ## Channels
   # channel "room:*", <%= webNamespace %>.RoomChannel

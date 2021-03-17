@@ -59,11 +59,10 @@ config :<%= appName %>, <%= endpointModule %>,
     ]
   ]
 
-config :<%= appName %>, :pow_assent,
-  callback_origin: "http://localhost:" <> to_string(port),
-  providers: [
+config :potionx,
+  strategies: [
     dev: [
-      strategy: Potionx.Pow.Provider.Dev
+      strategy: Potionx.Auth.Provider.Dev
     ]
   ]
 

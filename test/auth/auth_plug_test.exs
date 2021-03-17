@@ -11,7 +11,7 @@ defmodule Potionx.Plug.Auth.Test do
       }}
     end
 
-    test "Should allow a signed in user access", %{secret_key_base: secret_key_base} do
+    test "Should allow a signed in user access and redirect to home page when trying to access login", %{secret_key_base: secret_key_base} do
       %PotionxTest.User{
         email: TestProvider.email()
       }
@@ -47,11 +47,47 @@ defmodule Potionx.Plug.Auth.Test do
         |> RouterAuthRequired.call(Router.init([]))
       assert {_, _, "ok"} = sent_resp(conn3)
       assert %{user: %{id: _}} = conn3.assigns.context
+
+      conn4 = conn(:get, "/login")
+      conn4 = Plug.Test.recycle_cookies(conn4, conn3)
+
+      conn4 =
+        conn4
+        |> Map.replace(:secret_key_base, secret_key_base)
+        |> RouterAuthRequired.call(Router.init([]))
+      assert %{status: 302} = conn4
+    end
+
+    test "Should allow access to login even without a user" do
+      assert %{status: 200} =
+        conn(:get, "/login")
+        |> RouterAuthRequired.call(Router.init([]))
+    end
+
+    test "Should allow access to public hosts without user" do
+      assert %{status: 200} =
+        conn(:get, "http://www.potionapps.com/")
+        |> RouterAuthRequired.call(Router.init([]))
+    end
+
+    test "Should block access to non-public hosts without user" do
+      assert %{status: 302} =
+        conn(:get, "http://bad.potionapps.com/test")
+        |> RouterAuthRequired.call(Router.init([]))
+      assert %{status: 401} =
+        conn(:post, "http://bad.potionapps.com/test")
+        |> RouterAuthRequired.call(Router.init([]))
     end
 
     test "Should block an unknown user" do
       assert %{halted: true, status: 401} =
         conn(:post, "/test")
+        |> RouterAuthRequired.call(Router.init([]))
+    end
+
+    test "Should redirect to login" do
+      assert %{status: 302} =
+        conn(:get, "/test")
         |> RouterAuthRequired.call(Router.init([]))
     end
   end

@@ -1,7 +1,7 @@
 defmodule Potionx.Plug.MaybeDisableIntrospection do
   @behaviour Plug
-  @moduledoc false
   alias Plug.Conn
+  alias Potionx.Context.Service
 
   @doc false
   def init(config) do
@@ -15,7 +15,6 @@ defmodule Potionx.Plug.MaybeDisableIntrospection do
   def call(%Plug.Conn{params: %{"query" => q}} = conn, config) do
     if (String.contains?(q, "__schema")) do
       conn
-      |> Pow.Plug.current_user()
       |> maybe_refuse(conn, config)
     else
       conn
@@ -31,10 +30,10 @@ defmodule Potionx.Plug.MaybeDisableIntrospection do
     |> Conn.halt
   end
 
-  def maybe_refuse(user, conn, %{roles: roles}) do
-    (roles || [])
+  def maybe_refuse(%{assigns: %{context: %Service{roles: roles}}} = conn, %{roles_allowed: roles_allowed}) when is_list(roles) do
+    (roles_allowed || [])
     |> Enum.any?(fn role ->
-      Enum.member?(user.roles, role)
+      Enum.member?(roles, role)
     end)
     |> if do
       conn
@@ -43,5 +42,10 @@ defmodule Potionx.Plug.MaybeDisableIntrospection do
       |> Conn.put_status(:forbidden)
       |> Conn.halt
     end
+  end
+  def maybe_refuse(conn, _) do
+    conn
+    |> Conn.put_status(:forbidden)
+    |> Conn.halt
   end
 end

@@ -18,7 +18,12 @@ defmodule <%= appModule %>.Users.UserService do
       nil -> {:error, "not_found"}
       entry ->
         entry
-        |> Repo.delete
+        |> User.changeset(%{})
+        |> put_change(
+          :deleted_at, 
+          NaiveDateTime.truncate(NaiveDateTime.utc_now, :second)
+        )
+        |> Repo.update
     end
   end
 

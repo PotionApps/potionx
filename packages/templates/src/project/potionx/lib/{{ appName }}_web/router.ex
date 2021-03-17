@@ -11,13 +11,7 @@ defmodule <%= webNamespace %>.Router do
       login_path: "/login",
       public_hosts: [], # www.example.com for example
       session_optional: false,
-      session_service: <%= appModule %>.SessionService,
-      user_required: true
-    # plug Potionx.Plug.ApiAuth, otp_app: :<%= appName %>
-    # plug Potionx.Plug.MaybeRequireAuth, [
-    #   login_path: "/login",
-    #   public_urls: []
-    # ]
+      session_service: <%= appModule %>.SessionService
   end
 
   pipeline :graphql do
@@ -38,10 +32,7 @@ defmodule <%= webNamespace %>.Router do
       session_service: <%= appModule %>.SessionService
   end
 
-  pipeline :api_protected do
-    plug Pow.Plug.RequireAuthenticated, error_handler: Potionx.Plug.ApiAuthErrorHandler
-  end
-
+  #
   # Enables LiveDashboard only for development
   #
   # If you want to use the LiveDashboard in production, you should put
