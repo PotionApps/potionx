@@ -20,7 +20,7 @@ defmodule <%= appModule %>.Application do
     ] ++
       if Application.get_env(:<%= appName %>, :env) == :prod do
         [
-          {Redix, {Application.get_env(:<%= appName %>, :redix)[:url], [name: :redix]}}
+          {Redix, {Application.get_env(:redix, :url), [name: :redix]}}
         ]
       else
         []
