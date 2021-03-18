@@ -55,6 +55,7 @@ integration-test:
     RUN npm install
     WORKDIR /src
     COPY --dir config packages lib test priv /src
+    ENV DATABASE_URL="ecto://postgres:postgres@localhost/potionx_test"
     RUN MIX_ENV="test" mix compile
     RUN ls -al _build
     WORKDIR /src/integration_test
