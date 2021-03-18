@@ -126,7 +126,7 @@ defmodule Potionx.Auth.Assent do
     )
   end
   def create_user_session(err, _, _), do: err
-  
+
   def init(opts), do: opts
 
   defp handle_user_identity_params({user_identity_params, user_params}, other_params, provider) do
@@ -261,7 +261,7 @@ defmodule Potionx.Auth.Assent do
       raise "Potionx.Auth.Assent resolve function requires a session_service"
     end
 
-    fn _parent, %{provider: provider}, %{context: %Service{redirect_url: redirect_url}} ->
+    fn _parent, %{provider: provider}, %{context: %Service{redirect_url: redirect_url} = ctx} ->
       strategies = Keyword.get(opts, :strategies) || @auth[:strategies]
 
       strategies
@@ -279,6 +279,7 @@ defmodule Potionx.Auth.Assent do
                 %Service{
                   changes: %{
                     data: params,
+                    ip: ctx.ip,
                     sign_in_provider: provider,
                     ttl_access_seconds: Potionx.Auth.token_config().sign_in_token.ttl_seconds,
                     uuid_access: Ecto.UUID.generate()
