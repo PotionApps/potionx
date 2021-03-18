@@ -36,7 +36,7 @@ defmodule <%= appModule %>.MixProject do
       {:absinthe, "~> 1.6.0", override: true},
       {:absinthe_phoenix, "~> 2.0.0"},
       {:absinthe_plug, "~> 1.5"},
-      {:absinthe_relay, "~> 1.5.0"},
+      {:absinthe_relay, "~> 1.5.1"},
       {:castore, "~> 0.1.0"},
       {:dataloader, "~> 1.0.0"},
       {:decimal, "~> 2.0", override: true},

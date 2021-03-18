@@ -11,9 +11,9 @@ defmodule Potionx.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:absinthe, "~> 1.6.0", override: true},
+      {:absinthe, "~> 1.6.0"},
       {:absinthe_plug, "~> 1.5.4"},
-      {:absinthe_relay, "~> 1.5.0"},
+      {:absinthe_relay, "~> 1.5.1"},
       {:assent, "~> 0.1.23", only: :test},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.0"},
@@ -46,7 +46,7 @@ defmodule Potionx.MixProject do
   def project do
     [
       app: :potionx,
-      version: "0.3.0",
+      version: "0.4.0",
       elixir: "~> 1.11",
       elixirc_paths: elixirc_paths(Mix.env()),
       package: package(),
