@@ -26,16 +26,17 @@ defmodule <%= appModule %>GraphQl.Schema do
       middleware Potionx.Middleware.Me
       resolve &Elixir.<%= appModule %>GraphQl.Resolver.User.one/2
     end
-
     import_fields :user_queries
   end
+
   mutation do
-
     import_fields :user_mutations
+    import_fields :auth_mutations
   end
-  subscription do
 
+  subscription do
   end
+  import_types <%= appModule %>GraphQl.Schema.AuthMutations
   import_types <%= appModule %>GraphQl.Schema.UserIdentityTypes
   import_types <%= appModule %>GraphQl.Schema.UserMutations
   import_types <%= appModule %>GraphQl.Schema.UserQueries

@@ -1,10 +1,14 @@
 defmodule <%= appModule %>.UserIdentities.UserIdentity do
   use Ecto.Schema
-  use PowAssent.Ecto.UserIdentities.Schema, user: <%= appModule %>.Users.User
-
   schema "user_identities" do
-    pow_assent_user_identity_fields()
+    field :provider, :string
+    field :uid, :string
+    belongs_to :user, <%= appModule %>.Users.User
 
     timestamps()
+  end
+
+  def changeset(struct, params) do
+    Potionx.Auth.Identity.changeset(struct, params)
   end
 end

@@ -1,4 +1,4 @@
-defmodule <%= appModule %>.Session do
+defmodule <%= appModule %>.Sessions.Session do
   @derive Jason.Encoder
   use Ecto.Schema
   alias __MODULE__
@@ -13,7 +13,7 @@ defmodule <%= appModule %>.Session do
     field :ttl_renewal_seconds, :integer
     field :uuid_access, Ecto.UUID
     field :uuid_renewal, Ecto.UUID
-    belongs_to :user, PotionxTest.User
+    belongs_to :user, <%= appModule %>.Users.User
 
     timestamps()
   end

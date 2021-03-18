@@ -32,6 +32,7 @@ defmodule Potionx.Schema do
       def middleware(middleware, _field, %{identifier: :mutation}) do
         Enum.concat([
           [
+            {Potionx.Middleware.UserRequired, %{exceptions: [:sign_in_provider]}},
             Potionx.Middleware.ServiceContext,
             Potionx.Middleware.Scope
           ],
@@ -39,13 +40,12 @@ defmodule Potionx.Schema do
           [
               Potionx.Middleware.ChangesetErrors,
               Potionx.Middleware.Mutation
-              # Potionx.Middleware.Error
           ]
         ])
       end
       def middleware(middleware, _field, %{identifier: :query}) do
-        # middleware ++ [Potionx.Error]
         [
+          Potionx.Middleware.UserRequired,
           Potionx.Middleware.ServiceContext,
           Potionx.Middleware.Scope
         ] ++ middleware
@@ -54,6 +54,8 @@ defmodule Potionx.Schema do
       def middleware(middleware, _field, _object) do
         middleware
       end
+
+      defoverridable([middleware: 3])
     end
   end
 end

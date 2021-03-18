@@ -1,9 +1,0 @@
-{
-  "dependencies": {},
-  "optionalDependencies": {
-    "@pulumi/cloudflare": "^2.13.1",
-    "@pulumi/digitalocean": "^3.5.1",
-    "@pulumi/kubernetes": "^2.8.2",
-    "@pulumi/pulumi": "^2.21.2"
-  }
-}

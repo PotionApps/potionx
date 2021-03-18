@@ -16,7 +16,7 @@ test:
     RUN apk add --no-progress --update docker docker-compose
     RUN apk add postgresql-client inotify-tools
     RUN MIX_ENV=test mix deps.compile
-    COPY --dir config installer lib priv test ./
+    COPY --dir config lib priv test ./
     COPY ./docker-compose.yml ./docker-compose.yml
     ENV DATABASE_URL="ecto://postgres:postgres@localhost/potionx_test"
 
@@ -38,7 +38,7 @@ all-integration-test:
     BUILD --build-arg ELIXIR=1.11.3 --build-arg OTP=23.2.5 +integration-test
 
 integration-test:
-    FROM +setup-base
+    FROM +setup-test
 
     RUN apk add --no-progress --update docker docker-compose
 
@@ -54,7 +54,10 @@ integration-test:
     WORKDIR packages/templates
     RUN npm install
     WORKDIR /src
-    COPY --dir config installer packages lib test priv /src
+    COPY --dir config packages lib test priv /src
+    ENV DATABASE_URL="ecto://postgres:postgres@localhost/potionx_test"
+    RUN MIX_ENV="test" mix compile
+    RUN ls -al _build
     WORKDIR /src/integration_test
 
     # Compile phoenix
@@ -62,7 +65,7 @@ integration-test:
     # Compiling here improves caching, but slows down GHA speed
     # Removing until this feature exists https://github.com/earthly/earthly/issues/574
     # RUN MIX_ENV=test mix deps.compile
-    RUN npm install '/src/packages/templates'
+    # RUN npm install '/src/packages/templates'
 
     WITH DOCKER
         # Start docker compose
@@ -72,7 +75,7 @@ integration-test:
         RUN docker-compose up -d & \
             while ! pg_isready --host=localhost --port=5432 --quiet; do sleep 1; done; \
             npx @potionapps/templates project --appName=alpha --localDbPassword=postgres --localDbUser=postgres \
-            --email=vince@potionapps.com --installDeps --runMigrations && \
+            --email=vince@potionapps.com --installDeps --runMigrations --potionxDep='path: "../.."' && \
             cd alpha && \
             ls priv/repo/migrations && \
             mix test && \

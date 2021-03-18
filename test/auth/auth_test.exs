@@ -1,7 +1,7 @@
 defmodule Potionx.Auth.Test do
   use Potionx.ConnCase
   alias PotionxTest.Router
-  alias PotionxTest.TestProvider
+  alias Potionx.Auth.Provider
 
   describe "Authentication test" do
     setup do
@@ -10,7 +10,23 @@ defmodule Potionx.Auth.Test do
       }}
     end
 
-    test "Should return a redirect_uri", %{secret_key_base: secret_key_base} do
+    test "Blocks introspection" do
+      query = """
+      {
+        __schema {
+          types {
+            name
+          }
+        }
+      }
+      """
+
+      assert %{status: 403, halted: true} =
+        conn(:post, "/graphql", %{variables: %{}, query: query})
+        |> Router.call(Router.init([]))
+    end
+
+    test "Should return a redirect_url", %{secret_key_base: secret_key_base} do
       query = """
         mutation {
           signInProvider (provider: "test") {
@@ -19,7 +35,7 @@ defmodule Potionx.Auth.Test do
           }
         }
       """
-      url = TestProvider.url()
+      url = Provider.Test.url()
       conn1 =
         conn(:post, "/graphql", %{variables: %{}, query: query})
         |> Map.replace(:secret_key_base, secret_key_base)
@@ -53,7 +69,7 @@ defmodule Potionx.Auth.Test do
 
     test "Should sign a user in and sign them out", %{secret_key_base: secret_key_base} do
       %PotionxTest.User{
-        email: TestProvider.email()
+        email: Provider.Test.email()
       }
       |> Ecto.Changeset.cast(%{}, [])
       |> PotionxTest.Repo.insert
@@ -124,7 +140,7 @@ defmodule Potionx.Auth.Test do
 
     test "Should sign a user in with an existing identity", %{secret_key_base: _secret_key_base} do
       user = %PotionxTest.User{
-        email: TestProvider.email()
+        email: Provider.Test.email()
       }
       |> Ecto.Changeset.cast(%{}, [])
       |> PotionxTest.Repo.insert!
@@ -192,7 +208,7 @@ defmodule Potionx.Auth.Test do
 
     test "Sign in should fail for a user trying to sign in with a different provider", %{secret_key_base: _secret_key_base} do
       user = %PotionxTest.User{
-        email: TestProvider.email()
+        email: Provider.Test.email()
       }
       |> Ecto.Changeset.cast(%{}, [])
       |> PotionxTest.Repo.insert!
@@ -231,7 +247,7 @@ defmodule Potionx.Auth.Test do
 
     test "Should renew access", %{secret_key_base: secret_key_base} do
       %PotionxTest.User{
-        email: TestProvider.email()
+        email: Provider.Test.email()
       }
       |> Ecto.Changeset.cast(%{}, [])
       |> PotionxTest.Repo.insert

@@ -10,7 +10,7 @@ defmodule Potionx.Context.Service do
     field :ip, :string
     field :organization, struct()
     field :pagination, Potionx.Repo.Pagination.t(), default: %Potionx.Repo.Pagination{}
-    field :redirect_uri, String.t()
+    field :redirect_url, String.t()
     field :roles, [String.t()], default: []
     field :session, struct()
     field :user, struct()

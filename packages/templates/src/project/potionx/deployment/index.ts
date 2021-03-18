@@ -5,6 +5,11 @@ import * as k8s from "@pulumi/kubernetes";
 import * as pulumi from "@pulumi/pulumi";
 
 interface AuthProviders {
+  azureAd: {
+    clientId: string
+    clientSecret: string
+    tenantId: string
+  },
   google: {
     clientId: string
     clientSecret: string
@@ -114,6 +119,10 @@ const certManagerIssuer = new k8s.yaml.ConfigFile(
  * Secrets for Postgres and Redis
  * ================================
 */
+let passwordDbEncoded = pulumi.all([passwordDb]).
+    apply(([passwordDb]) => encodeURIComponent(passwordDb));
+let passwordRedisEncoded = pulumi.all([passwordRedis]).
+    apply(([passwordRedis]) => encodeURIComponent(passwordRedis));
 const dbSecrets = new k8s.core.v1.Secret(
     'db-secrets',
     {
@@ -125,8 +134,8 @@ const dbSecrets = new k8s.core.v1.Secret(
             'postgresql-password': passwordDb,
             'postgresql-replication-password': passwordDb,
             'postgresql-ldap-password': passwordDb,
-            'DATABASE_URL': pulumi.interpolate `ecto://postgres:${passwordDb}@postgresql-headless/${dbName}`,
-            "REDIS_URL": pulumi.interpolate `redis://:${passwordRedis}@redis-headless`,
+            'DATABASE_URL': pulumi.interpolate `ecto://postgres:${passwordDbEncoded}@postgresql-headless/${dbName}`,
+            "REDIS_URL": pulumi.interpolate `redis://:${passwordRedisEncoded}@redis-headless`,
         },
         type: 'opaque'
     },
@@ -250,7 +259,7 @@ const app = new k8s.apps.v1.Deployment(appNamespace("main-app"), {
                                 port: 4000
                             },
                             periodSeconds: 10,
-                            failureThreshold: 1
+                            failureThreshold: 10
                         },
                         ports: [
                             {
@@ -265,7 +274,7 @@ const app = new k8s.apps.v1.Deployment(appNamespace("main-app"), {
                                 port: 4000
                             },
                             periodSeconds: 10,
-                            failureThreshold: 1
+                            failureThreshold: 3
                         },
                         startupProbe: {
                             httpGet: {

@@ -1,42 +1,45 @@
 defmodule <%= webNamespace %>.Router do
   use <%= webNamespace %>, :router
 
+  get "/_k8s/*path", Potionx.Plug.Health, health_module: <%= appModule %>.Health
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug Potionx.Plug.ApiAuth, otp_app: :<%= appName %>
-    plug Potionx.Plug.MaybeRequireAuth, [
+    plug Potionx.Plug.ServiceContext
+    plug Potionx.Plug.Auth,
       login_path: "/login",
-      public_urls: []
-    ]
+      public_hosts: [], # www.example.com for example
+      session_optional: false,
+      session_service: <%= appModule %>.Sessions.SessionService
   end
 
   pipeline :graphql do
     plug :accepts, ["json"]
-    plug Potionx.Plug.ApiAuth, otp_app: :<%= appName %>
     plug Potionx.Plug.ServiceContext
-    if Mix.env() in [:prod] do
+    plug Potionx.Plug.Auth,
+      session_optional: true,
+      session_service: <%= appModule %>.Sessions.SessionService,
+      user_optional: true
+    if Mix.env() in [:prod, :test] do
       plug Potionx.Plug.MaybeDisableIntrospection, [roles: [:admin]]
     end
+    plug Potionx.Plug.Absinthe
   end
 
-  pipeline :api do
+  pipeline :auth_callback do
     plug :accepts, ["json"]
-    plug Potionx.Plug.ApiAuth, otp_app: :<%= appName %>
+    plug Potionx.Plug.ServiceContext
+    plug Potionx.Plug.Auth,
+      session_optional: false,
+      session_service: <%= appModule %>.Sessions.SessionService,
+      user_optional: true
   end
 
-  pipeline :api_protected do
-    plug Pow.Plug.RequireAuthenticated, error_handler: Potionx.Plug.ApiAuthErrorHandler
-  end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", <%= webNamespace %> do
-  #   pipe_through :api
-  # end
-
+  #
   # Enables LiveDashboard only for development
   #
   # If you want to use the LiveDashboard in production, you should put
@@ -57,18 +60,18 @@ defmodule <%= webNamespace %>.Router do
     pipe_through :graphql
 
     forward "/", Absinthe.Plug,
+      before_send: {Potionx.Auth.Assent, :before_send},
       schema: <%= graphqlNamespace %>.Schema
   end
 
 
-  scope "/api/v1", <%= webNamespace %>, as: :api_v1 do
-    pipe_through :api
-
-    get "/auth/:provider/new", AuthorizationController, :new
-    get "/auth/:provider/callback", AuthorizationController, :callback
-    post "/auth/:provider/callback", AuthorizationController, :callback
-    get "/session/delete", AuthController, :delete
-    post "/session/renew", AuthController, :renew
+  scope "/api/v1", as: :api_v1 do
+    pipe_through :auth_callback
+    post "/auth/:provider/callback",
+      Potionx.Auth.Assent,
+      [
+        session_service: <%= appModule %>.Sessions.SessionService
+      ]
   end
 
   scope "/", <%= webNamespace %> do

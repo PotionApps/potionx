@@ -19,9 +19,8 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  config :<%= appName %>, :pow_assent,
-    callback_origin: System.get_env("AUTH_CALLBACK_ORIGIN"),
-    providers: [
+  config :potionx,
+    strategies: [
       azure_ad: [
         client_id: System.get_env("ASSENT_AZURE_CLIENT_ID"),
         client_secret: System.get_env("ASSENT_AZURE_CLIENT_SECRET"),
@@ -40,6 +39,16 @@ if config_env() == :prod do
       ]
     ]
 
+  database_url =
+    System.get_env("DATABASE_URL") ||
+      raise """
+      environment variable DATABASE_URL is missing.
+      For example: ecto://USER:PASS@HOST/DATABASE
+      """
+
+  config :<%= appName %>, <%= appModule %>.Repo,
+    url: database_url,
+    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
   config :<%= appName %>, <%= endpointModule %>,
     http: [
@@ -71,7 +80,7 @@ if config_env() == :prod do
     REDIS_URL environment variable is missing.
     """
   config :redix,
-    url: System.get_env("REDIS_URL")
+    url: redis_url
 
   #
   # Then you can assemble a release by calling `mix release`.
