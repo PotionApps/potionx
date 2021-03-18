@@ -12,7 +12,7 @@ defmodule <%= webNamespace %>.LayoutView do
       )
       |> Jason.decode!
       |> case do
-        %{"main.js" => %{"file" => file}} ->
+        %{"src/main.ts" => %{"file" => file}} ->
           ["/" <> file]
         _ -> []
       end
@@ -31,8 +31,10 @@ defmodule <%= webNamespace %>.LayoutView do
       )
       |> Jason.decode!
       |> case do
-        %{"main.css" => %{"file" => file}} ->
-          ["/" <> file]
+        %{"src/main.ts" => %{"css" => css}} ->
+          Enum.map(css, fn file ->
+            "/" <> file
+          end)
         _ -> []
       end
     else
