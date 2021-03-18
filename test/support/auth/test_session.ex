@@ -23,6 +23,7 @@ defmodule PotionxTest.Session do
       s
       |> Map.from_struct()
       |> Map.drop([:__meta__])
+      |> Map.put(:ip, to_string(s.ip))
       |> Jason.Encode.map(opts)
     end
   end
