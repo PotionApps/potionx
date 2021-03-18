@@ -18,11 +18,7 @@ defmodule Potionx.Plug.ServiceContext do
       # roles: Map.get((user || %{}), :roles, []),
       ip: get_ip(conn),
       organization: nil,
-      redirect_url: to_string(%URI{
-        host: conn.host,
-        scheme: to_string(conn.scheme),
-        port: conn.port
-      })
+      request_url: Plug.Conn.request_url(conn)
     }
 
     ctx

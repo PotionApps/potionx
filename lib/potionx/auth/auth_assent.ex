@@ -24,6 +24,7 @@ defmodule Potionx.Auth.Assent do
       config = Potionx.Auth.token_config()[key]
       if (Map.get(session, config.uuid_key)) do
         Potionx.Auth.set_cookie(acc, %{
+          same_site: Map.get(config, :same_site),
           name: config.name,
           token: Map.get(session, config.uuid_key),
           ttl_seconds: Map.get(session, config.ttl_key)
@@ -69,10 +70,11 @@ defmodule Potionx.Auth.Assent do
 
     conn
     |> verify_providers_match(session)
-    |> process_callback(opts)
+    |> process_callback(conn, opts)
     |> parse_callback_response(session.sign_in_provider)
     |> create_user_session(session, session_service)
     |> handle_user_session_cookies(conn)
+    |> IO.inspect(label: "res")
     |> case do
       %Plug.Conn{} = conn ->
         url =
@@ -216,17 +218,29 @@ defmodule Potionx.Auth.Assent do
   end
   defp parse_callback_response({:error, error}, _provider), do: {:error, error}
 
-  def process_callback(session), do: process_callback(session, [])
-  def process_callback(%{data: data, sign_in_provider: provider}, opts) do
+  def process_callback(session, conn), do: process_callback(session, conn, [])
+  def process_callback(%{data: data, sign_in_provider: provider}, conn, opts) do
     strategies = Keyword.get(opts, :strategies) || auth_config()[:strategies]
     strategy_config = Keyword.fetch!(strategies, String.to_existing_atom(provider))
+    redirect_uri =
+      URI.parse(Plug.Conn.request_url(conn))
+      |> Map.replace!(:fragment, nil)
+      |> Map.replace!(:query, nil)
 
     Keyword.fetch!(strategy_config, :strategy).callback(
-      strategy_config,
-      data
+      Keyword.put(
+        strategy_config,
+        :session_params,
+        data
+      )
+      |> Keyword.put(
+        :redirect_uri,
+        redirect_uri
+      ),
+      conn.query_params
     )
   end
-  def process_callback(err, _opts) do
+  def process_callback(err, _conn, _opts) do
     err
   end
 
@@ -264,10 +278,14 @@ defmodule Potionx.Auth.Assent do
       raise "Potionx.Auth.Assent resolve function requires a session_service"
     end
 
-    fn _parent, %{provider: provider}, %{context: %Service{redirect_url: redirect_url} = ctx} ->
+    fn _parent, %{provider: provider}, %{context: %Service{request_url: url} = ctx} ->
       strategies = Keyword.get(opts, :strategies) || auth_config()[:strategies]
 
-      IO.inspect(auth_config(), label: "heyya")
+      redirect_uri =
+        URI.parse(url)
+        |> Map.replace!(:path, "/api/v1/auth/#{provider}/callback")
+        |> Map.replace!(:fragment, nil)
+        |> Map.replace!(:query, nil)
 
       strategies
       |> Keyword.fetch(String.to_existing_atom(provider))
@@ -276,7 +294,7 @@ defmodule Potionx.Auth.Assent do
           strategy = Keyword.fetch!(config, :strategy)
           config
           |> Keyword.delete(:strategy)
-          |> Keyword.put(:redirect_uri, redirect_url)
+          |> Keyword.put(:redirect_uri, redirect_uri)
           |> strategy.authorize_url()
           |> case do
             {:ok, %{session_params: params, url: url}} ->

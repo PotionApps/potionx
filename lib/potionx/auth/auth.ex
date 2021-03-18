@@ -15,7 +15,7 @@ defmodule Potionx.Auth do
     conn
     |> Plug.Conn.delete_resp_cookie(
       name,
-      Potionx.Auth.cookie_options(
+      cookie_options(
         conn,
         [sign: true],
         ttl_seconds
@@ -24,14 +24,17 @@ defmodule Potionx.Auth do
   end
 
   @spec set_cookie(Plug.Conn.t(), %{id: String.t(), ttl_ms: integer}) :: Plug.Conn.t()
-  def set_cookie(conn, %{name: name, token: token, ttl_seconds: ttl_seconds}) do
+  def set_cookie(conn, %{name: name, token: token, ttl_seconds: ttl_seconds} = config) do
     conn
     |> Plug.Conn.put_resp_cookie(
       name,
       token,
-      Potionx.Auth.cookie_options(
+      cookie_options(
         conn,
-        [sign: true],
+        [
+          same_site: Map.get(config, :same_site) || "strict",
+          sign: true
+        ],
         ttl_seconds
       )
     )
@@ -60,6 +63,7 @@ defmodule Potionx.Auth do
         },
         sign_in_token: %{
           name: "a_app",
+          same_site: "lax",
           ttl_key: :ttl_access_seconds,
           ttl_seconds: 60 * 5, # 5 minutes
           uuid_key: :uuid_access
