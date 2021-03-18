@@ -41,7 +41,6 @@ backend-test:
       # Check for DB to be up x 3
       # Run the database tests
       RUN docker-compose up -d & \
-          MIX_ENV=test DATABASE_URL="-" mix deps.compile && \
           while ! pg_isready --host=localhost --port=5432 --quiet; do sleep 1; done; \
           DATABASE_URL="ecto://postgres:postgres@localhost/test" mix test
   END
