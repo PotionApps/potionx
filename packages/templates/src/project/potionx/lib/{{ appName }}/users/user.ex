@@ -1,7 +1,6 @@
 defmodule <%= appModule %>.Users.User do
   import Ecto.Changeset
   use Ecto.Schema
-  use Potionx.Users.User
 
   schema "users" do
     field :deleted_at, :utc_datetime
