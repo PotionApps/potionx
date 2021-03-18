@@ -35,8 +35,16 @@ export type Error = {
 
 export type RootMutationType = {
   __typename?: 'RootMutationType';
+  sessionRenew?: Maybe<SignInProviderResult>;
+  signInProvider?: Maybe<SignInProviderResult>;
+  signOut?: Maybe<SignInProviderResult>;
   userDelete?: Maybe<UserMutationResult>;
   userMutation?: Maybe<UserMutationResult>;
+};
+
+
+export type RootMutationTypeSignInProviderArgs = {
+  provider: Scalars['String'];
 };
 
 
@@ -88,6 +96,12 @@ export type RootQueryTypeUserCollectionArgs = {
 
 export type RootQueryTypeUserSingleArgs = {
   filters?: Maybe<UserFiltersSingle>;
+};
+
+export type SignInProviderResult = {
+  __typename?: 'SignInProviderResult';
+  error?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
 };
 
 export enum SortOrder {

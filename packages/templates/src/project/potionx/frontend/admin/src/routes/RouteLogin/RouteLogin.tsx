@@ -1,7 +1,9 @@
 import { defineComponent } from "vue";
 import { faGoogle, faMicrosoft } from "@fortawesome/free-brands-svg-icons"
+import { RootMutationType } from "shared/types";
+import { useMutation } from "@urql/vue";
 import BtnLogin from 'components/Btn/BtnLogin'
-import signIn from 'shared/signIn'
+import signInMutation from 'shared/signInMutation.gql'
 
 export default defineComponent({
   setup () {
@@ -37,10 +39,20 @@ export default defineComponent({
       }
     }
 
+    const { executeMutation } = useMutation<RootMutationType>(signInMutation)
+    const signIn = (provider: string) => {
+      executeMutation({ provider })
+        .then(res => {
+          if (res.data?.signInProvider?.url) {
+            window.location.href = res.data?.signInProvider?.url
+          }
+        })
+    }
+
     const loginOptions = [
       {
         click: () => {
-          signIn({provider: 'google'})
+          signIn('google')
         },
         label: "Google",
         icon: faGoogle,
@@ -48,7 +60,7 @@ export default defineComponent({
       },
       {
         click: () => {
-          signIn({provider: 'azure_ad'})
+          signIn('azure_ad')
         },
         label: "Microsoft",
         icon: faMicrosoft,

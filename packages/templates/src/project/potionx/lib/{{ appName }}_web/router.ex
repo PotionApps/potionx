@@ -67,6 +67,11 @@ defmodule <%= webNamespace %>.Router do
 
   scope "/api/v1", as: :api_v1 do
     pipe_through :auth_callback
+    get "/auth/:provider/callback",
+      Potionx.Auth.Assent,
+      [
+        session_service: <%= appModule %>.Sessions.SessionService
+      ]
     post "/auth/:provider/callback",
       Potionx.Auth.Assent,
       [

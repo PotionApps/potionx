@@ -1,6 +1,20 @@
 export default async () => {
   await fetch(
-    `/api/v1/session/delete`
+    `/graphql/v1`, 
+    {
+      body: JSON.stringify({
+        query: `mutation {
+          signOut {
+            error
+          }
+        }`
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "same-origin",
+      method: "POST"
+    }
   )
   window.location.href = "/login";
 }

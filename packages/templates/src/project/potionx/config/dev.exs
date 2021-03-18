@@ -60,11 +60,13 @@ config :<%= appName %>, <%= endpointModule %>,
   ]
 
 config :potionx,
-  strategies: [
-    dev: [
-      strategy: Potionx.Auth.Provider.Dev
+  auth: %{
+    strategies: [
+      dev: [
+        strategy: Potionx.Auth.Provider.Dev
+      ]
     ]
-  ]
+  }
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

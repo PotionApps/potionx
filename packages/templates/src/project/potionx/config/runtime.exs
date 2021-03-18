@@ -20,24 +20,26 @@ if config_env() == :prod do
       """
 
   config :potionx,
-    strategies: [
-      azure_ad: [
-        client_id: System.get_env("ASSENT_AZURE_CLIENT_ID"),
-        client_secret: System.get_env("ASSENT_AZURE_CLIENT_SECRET"),
-        id_token_signed_response_alg: "RS256",
-        strategy: Assent.Strategy.AzureAD,
-        tenant_id: System.get_env("ASSENT_AZURE_TENANT_ID")
-      ],
-      google: [
-        strategy: Assent.Strategy.Google,
-        client_id: System.get_env("ASSENT_GOOGLE_CLIENT_ID"),
-        client_secret: System.get_env("ASSENT_GOOGLE_CLIENT_ID"),
-        authorization_params: [
-          access_type: "offline",
-          scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+    auth: %{
+      strategies: [
+        azure_ad: [
+          client_id: System.get_env("ASSENT_AZURE_CLIENT_ID"),
+          client_secret: System.get_env("ASSENT_AZURE_CLIENT_SECRET"),
+          id_token_signed_response_alg: "RS256",
+          strategy: Assent.Strategy.AzureAD,
+          tenant_id: System.get_env("ASSENT_AZURE_TENANT_ID")
+        ],
+        google: [
+          strategy: Assent.Strategy.Google,
+          client_id: System.get_env("ASSENT_GOOGLE_CLIENT_ID"),
+          client_secret: System.get_env("ASSENT_GOOGLE_CLIENT_ID"),
+          authorization_params: [
+            access_type: "offline",
+            scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+          ]
         ]
       ]
-    ]
+    }
 
   database_url =
     System.get_env("DATABASE_URL") ||

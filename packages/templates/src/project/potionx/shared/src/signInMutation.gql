@@ -1,0 +1,6 @@
+mutation signInProvider($provider: String!) {
+  signInProvider(provider: $provider) {
+    error
+    url
+  }
+}
