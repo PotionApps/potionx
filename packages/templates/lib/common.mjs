@@ -25,6 +25,7 @@ export const copyToDestination = (context, name) => {
           src.includes('.stories.') ||
           src.includes(path.sep + 'config.json') ||
           src.split(path.sep).pop() ==='index.html' ||
+          src.includes('template.config.mjs') ||
           (src.includes('node_modules') && !src.includes("@potionapps")) ||
           src.includes('.dev.') ||
           src.includes('__') ||
