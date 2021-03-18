@@ -1,6 +1,8 @@
 defmodule <%= webNamespace %>.Router do
   use <%= webNamespace %>, :router
 
+  get "/_k8s/*path", Potionx.Plug.Health, health_module: <%= appModule %>.Health
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session

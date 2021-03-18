@@ -1,3 +1,3 @@
-name: <%= appModule %>
+name: <%= appName %>
 runtime: nodejs
 description: Provision a DigitalOcean Kubernetes cluster and deploy to it

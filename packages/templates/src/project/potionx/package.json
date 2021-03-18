@@ -1,5 +1,7 @@
 {
-  "dependencies": {},
+  "dependencies": {
+    "typescript": "^4.2.2"
+  },
   "optionalDependencies": {
     "@pulumi/cloudflare": "^2.13.1",
     "@pulumi/digitalocean": "^3.5.1",
