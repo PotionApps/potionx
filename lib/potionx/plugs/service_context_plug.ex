@@ -12,14 +12,16 @@ defmodule Potionx.Plug.ServiceContext do
   end
 
   def build_context(conn) do
-    # user = Pow.Plug.current_user(conn)
 
     ctx = %Potionx.Context.Service{
       changes: Map.get(conn.body_params, :changes, %{}),
       filters: Map.get(conn.body_params, :filters, %{}),
       # roles: Map.get((user || %{}), :roles, []),
-      organization: nil
-      # user: user
+      organization: nil,
+      redirect_url: to_string(%URI{
+        host: conn.host,
+        scheme: to_string(conn.scheme)
+      })
     }
 
     ctx

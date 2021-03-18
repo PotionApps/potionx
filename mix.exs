@@ -14,10 +14,9 @@ defmodule Potionx.MixProject do
       {:absinthe, "~> 1.6.0", override: true},
       {:absinthe_plug, "~> 1.5.4"},
       {:absinthe_relay, "~> 1.5.0"},
+      {:assent, "~> 0.1.23", only: :test},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.0"},
-      {:pow, "~> 1.0.22"},
-      {:pow_assent, "~> 0.4.10"},
       {:redix, "~> 1.0.0"},
       {:typed_struct, "~> 0.2.1"},
       # {:dep_from_hexpm, "~> 0.3.0"},
@@ -25,6 +24,7 @@ defmodule Potionx.MixProject do
       {:ecto_network, "~> 1.3.0", only: :test},
       {:ecto_sql, "~> 3.5", only: :test},
       {:ex_doc, "~> 0.22", only: :dev, runtime: false},
+      {:phoenix, "~> 1.5.8", only: :test},
       {:postgrex, ">= 0.0.0", only: :test}
     ]
   end

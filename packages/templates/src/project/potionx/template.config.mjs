@@ -118,6 +118,7 @@ export const getValues = async (context, prompt, initialValues) => {
   const timestamp2 = new Date(timestamp.getTime() + 1000)
   const timestamp3 = new Date(timestamp2.getTime() + 1000)
   return {
+    potionxDep: `"~> ${potionx_version}"`,
     ...initialValues,
     ...collected,
     adapterApp: "postgrex",
@@ -127,7 +128,6 @@ export const getValues = async (context, prompt, initialValues) => {
     graphqlNamespace: appNameModuleCase + "GraphQl",
     libWebName: appName + "_web",
     lvSigningSalt: crypto.randomBytes(8).toString('hex'),
-    potionxDep: `"~> ${potionx_version}"`,
     secretKeyBase: crypto.randomBytes(64).toString('hex'),
     signingSalt: crypto.randomBytes(8).toString('hex'),
     timestamp: dateToTimestamp(timestamp),

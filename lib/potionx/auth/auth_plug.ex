@@ -2,46 +2,16 @@ defmodule Potionx.Plug.Auth do
   @behaviour Plug
   alias Potionx.Context.Service
 
-  def call(%{assigns: %{context: %Service{} = ctx}} = conn, opts) do
+  def call(%{assigns: %{context: %Service{}}} = conn, opts) do
     conn
     |> Plug.Conn.fetch_cookies(
       signed: Enum.map(Map.values(Potionx.Auth.token_config()), &(&1.name))
     )
     |> fetch_session_from_conn(opts)
-    |> case do
-      %{id: _} = session ->
-        conn
-        |> Plug.Conn.assign(
-          :context, %{
-            ctx |
-              roles: (Map.get(session, :user) || %{roles: nil}).roles,
-              session: session,
-              user: session.user
-          }
-        )
-      _ ->
-        if (opts.session_optional) do
-          conn
-        else
-          conn
-          |> Plug.Conn.put_status(401)
-          |> Plug.Conn.halt
-        end
-    end
-    |> case do
-      %{assigns: %{context: %{session: %{user: nil}}}} = conn ->
-        if opts.user_required do
-          conn
-          |> Plug.Conn.put_status(401)
-          |> Plug.Conn.halt
-        else
-          conn
-        end
-      conn -> conn
-    end
+    |> maybe_allow(opts)
   end
 
-  def fetch_session_from_conn(conn, %{session_service: session_service, uuid_key: key}) do
+  def fetch_session_from_conn(%{assigns: %{context: ctx}} = conn, %{session_service: session_service, uuid_key: key}) do
     %{name: cookie_name} =
       Enum.find(
         Map.values(Potionx.Auth.token_config()),
@@ -58,6 +28,20 @@ defmodule Potionx.Plug.Auth do
       _ ->
         {:error, "no_cookie"}
     end
+    |> case do
+      %{id: _} = session ->
+        conn
+        |> Plug.Conn.assign(
+          :context, %{
+            ctx |
+              roles: (Map.get(session, :user) || %{roles: nil}).roles,
+              session: session,
+              user: session.user
+          }
+        )
+      _ ->
+        conn
+    end
   end
 
   def init(opts) do
@@ -66,12 +50,47 @@ defmodule Potionx.Plug.Auth do
     end
     Keyword.merge(
       [
+        login_path: "/login",
+        public_hosts: [],
         session_optional: false,
+        session_service: false,
         uuid_key: :uuid_access,
-        user_required: false
+        user_optional: false
       ],
       opts
     )
     |> Enum.into(%{})
   end
+
+  def maybe_allow(%{assigns: %{context: %{session: %{user: %{id: id}}}}} = conn, opts) when not is_nil(id) do
+    cond do
+      conn.request_path === opts.login_path ->
+        Phoenix.Controller.redirect(conn, to: "/")
+        |> Plug.Conn.halt  
+      true -> 
+        conn
+    end
+  end
+  def maybe_allow(%{assigns: %{context: %{session: %{id: id}}}} = conn, %{user_optional: true}) when not is_nil(id) do
+    conn
+  end
+
+  def maybe_allow(%Plug.Conn{host: host, method: method, request_path: path} = conn, opts) do
+    cond do
+      Enum.member?(opts.public_hosts, host) ->
+        conn
+      path === opts.login_path ->
+        conn
+      opts.session_optional and opts.user_optional ->
+        conn
+      method === "GET" ->
+        Phoenix.Controller.redirect(conn, to: opts.login_path)
+        |> Plug.Conn.halt
+      true ->
+        conn
+        |> Plug.Conn.put_status(401)
+        |> Plug.Conn.halt
+    end
+  end
+
 end

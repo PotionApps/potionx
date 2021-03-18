@@ -1,4 +1,4 @@
-defmodule <%= appModule %>.SessionService do
+defmodule <%= appModule %>.Sessions.SessionService do
   use Potionx.Auth.SessionService, [
     identity_service: <%= appModule %>.UserIdentities.UserIdentityService,
     repo: <%= appModule %>.Repo,

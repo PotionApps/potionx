@@ -12,3 +12,12 @@ config :logger, level: :warn
 if System.get_env("DATABASE_URL") === nil do
   import_config "test.secret.exs"
 end
+
+config :potionx,
+  auth: %{
+    strategies: [
+      test: [
+        strategy: Potionx.Auth.Provider.Test
+      ]
+    ]
+  }

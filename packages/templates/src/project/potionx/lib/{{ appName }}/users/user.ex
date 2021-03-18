@@ -14,7 +14,28 @@ defmodule <%= appModule %>.Users.User do
     timestamps()
   end
 
+  def assent_attrs_to_changes(attrs) do
+    [
+      {"family_name", :name_last},
+      {"given_name", :name_first},
+      {"locale", :locale},
+      {"name", :name_first}
+    ]
+    |> Enum.reduce(attrs, fn {key_from, key_to}, acc ->
+      if Map.has_key?(acc, key_from) do
+        Map.put(
+          acc,
+          to_string(key_to),
+          Map.get(acc, key_from)
+        )
+      else
+        acc
+      end
+    end)
+  end
+
   def changeset(user_or_changeset, attrs) do
+    attrs = assent_attrs_to_changes(attrs)
     user_or_changeset
     |> cast(attrs, [
       :email,
@@ -27,5 +48,11 @@ defmodule <%= appModule %>.Users.User do
       Ecto.Enum.values(__MODULE__, :roles)
     )
     |> validate_required([:email])
+  end
+
+  def title(entry) do
+    [entry.name_first, entry.name_last]
+    |> Enum.filter(fn e -> e end)
+    |> Enum.join(" ")
   end
 end

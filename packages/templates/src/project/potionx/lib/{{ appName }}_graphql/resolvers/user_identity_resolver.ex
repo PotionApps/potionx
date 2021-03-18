@@ -71,10 +71,6 @@ defmodule <%= appModule %>GraphQl.Resolver.UserIdentity do
     end
   end
 
-  def mutation(_, %{context: %Service{} = ctx}) do
-    UserIdentityService.mutation(ctx)
-  end
-
   def one(_, %{context: %Service{} = ctx}) do
     {:ok, UserIdentityService.one(ctx)}
   end

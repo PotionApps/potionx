@@ -20,9 +20,6 @@ config :<%= appName %>, <%= endpointModule %>,
   pubsub_server: <%= appModule %>.PubSub,
   live_view: [signing_salt: "<%= lvSigningSalt %>"]
 
-config :<%= appName %>, :pow_assent,
-  http_adapter: Assent.HTTPAdapter.Mint
-
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
@@ -31,9 +28,6 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-config :<%= appName %>, :pow,
-  user: <%= appModule %>.Users.User,
-  repo: <%= appModule %>.Repo
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
