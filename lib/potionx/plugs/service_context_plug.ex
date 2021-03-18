@@ -20,7 +20,8 @@ defmodule Potionx.Plug.ServiceContext do
       organization: nil,
       redirect_url: to_string(%URI{
         host: conn.host,
-        scheme: to_string(conn.scheme)
+        scheme: to_string(conn.scheme),
+        port: conn.port
       })
     }
 
