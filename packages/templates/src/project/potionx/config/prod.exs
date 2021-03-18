@@ -10,7 +10,7 @@ import Config
 # which you should run after static files are built and
 # before starting your production server.
 config :<%= appName %>,
-  admin_email: "<%= email %>""
+  admin_email: "<%= email %>"
 
 config :<%= webAppName %>, <%= endpointModule %>,
   url: [host: "example.com", port: 80]
