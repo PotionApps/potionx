@@ -1,5 +1,3 @@
-Code.require_file "../../installer/test/mix_helper.exs", __DIR__
-
 defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
   use ExUnit.Case
   import MixHelper

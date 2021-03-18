@@ -23,7 +23,7 @@ defmodule PotionxTest.Mutations do
           res |
             context: %{
               context |
-                redirect_uri: Potionx.Auth.Provider.Test.redirect_uri()
+                redirect_url: Potionx.Auth.Provider.Test.redirect_url()
             }
         }
       end

@@ -19,14 +19,14 @@ defmodule Potionx.Auth.Test do
           }
         }
       }
-      ""
+      """
 
       assert %{status: 403, halted: true} =
         conn(:post, "/graphql", %{variables: %{}, query: query})
         |> Router.call(Router.init([]))
     end
 
-    test "Should return a redirect_uri", %{secret_key_base: secret_key_base} do
+    test "Should return a redirect_url", %{secret_key_base: secret_key_base} do
       query = """
         mutation {
           signInProvider (provider: "test") {

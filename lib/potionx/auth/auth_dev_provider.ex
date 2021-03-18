@@ -2,7 +2,6 @@ defmodule Potionx.Auth.Provider.Dev do
   @moduledoc false
   @behaviour Assent.Strategy
 
-  @impl true
   def authorize_url(config) do
     case config[:error] do
       nil   -> {
@@ -15,7 +14,6 @@ defmodule Potionx.Auth.Provider.Dev do
     end
   end
 
-  @impl true
   def callback(_config, %{"email" => email}) do
     {
       :ok,
