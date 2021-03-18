@@ -1,6 +1,9 @@
 defmodule Potionx.Auth.Assent do
-  @auth Application.get_env(:potionx, :auth)
   alias Potionx.Context.Service
+
+  def auth_config() do
+    Application.get_env(:potionx, :auth)
+  end
 
   @spec before_send(Plug.Conn.t(), Absinthe.Blueprint.t()) :: any
   def before_send(
@@ -215,7 +218,7 @@ defmodule Potionx.Auth.Assent do
 
   def process_callback(session), do: process_callback(session, [])
   def process_callback(%{data: data, sign_in_provider: provider}, opts) do
-    strategies = Keyword.get(opts, :strategies) || @auth[:strategies]
+    strategies = Keyword.get(opts, :strategies) || auth_config()[:strategies]
     strategy_config = Keyword.fetch!(strategies, String.to_existing_atom(provider))
 
     Keyword.fetch!(strategy_config, :strategy).callback(
@@ -262,7 +265,9 @@ defmodule Potionx.Auth.Assent do
     end
 
     fn _parent, %{provider: provider}, %{context: %Service{redirect_url: redirect_url} = ctx} ->
-      strategies = Keyword.get(opts, :strategies) || @auth[:strategies]
+      strategies = Keyword.get(opts, :strategies) || auth_config()[:strategies]
+
+      IO.inspect(auth_config(), label: "heyya")
 
       strategies
       |> Keyword.fetch(String.to_existing_atom(provider))
@@ -271,7 +276,7 @@ defmodule Potionx.Auth.Assent do
           strategy = Keyword.fetch!(config, :strategy)
           config
           |> Keyword.delete(:strategy)
-          |> Keyword.put(:redirect_url, redirect_url)
+          |> Keyword.put(:redirect_uri, redirect_url)
           |> strategy.authorize_url()
           |> case do
             {:ok, %{session_params: params, url: url}} ->
