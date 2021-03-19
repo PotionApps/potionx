@@ -57,7 +57,6 @@ integration-test:
     COPY --dir config packages lib test priv /src
     ENV DATABASE_URL="ecto://postgres:postgres@localhost/potionx_test"
     RUN MIX_ENV="test" mix compile
-    RUN ls -al _build
     WORKDIR /src/integration_test
 
     # Compile phoenix
@@ -74,10 +73,11 @@ integration-test:
         # Run the database tests
         RUN docker-compose up -d & \
             while ! pg_isready --host=localhost --port=5432 --quiet; do sleep 1; done; \
-            npx @potionapps/templates project --appName=alpha --localDbPassword=postgres --localDbUser=postgres \
+            node ../packages/templates/cli/cli.mjs project --appName=alpha --localDbPassword=postgres --localDbUser=postgres \
             --email=vince@potionapps.com --installDeps --runMigrations --potionxDep='path: "../.."' && \
             cd alpha && \
-            ls priv/repo/migrations && \
+            cat mix.exs && \
+            cat test/auth/auth_plug_test.exs && \
             mix test && \
             cd ./frontend/admin && \
             npm run build

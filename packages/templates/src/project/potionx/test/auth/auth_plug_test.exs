@@ -19,7 +19,7 @@ defmodule <%= webNamespace %>.AuthPlugTest do
     """
     conn1 = post(conn, "/graphql/v1", %{variables: %{}, query: query})
 
-    conn2 = recycle(conn1) |> post("/api/v1/auth/test/callback")
+    conn2 = recycle(conn1) |> post("/api/v1/auth/test/callback", %{"a" => "1"})
     conn3 = get(recycle(conn2), "/")
     assert {200, _, _} = sent_resp(conn3)
     assert %{user: %{id: _}} = conn3.assigns.context

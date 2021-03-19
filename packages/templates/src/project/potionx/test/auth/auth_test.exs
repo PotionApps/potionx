@@ -74,7 +74,7 @@ defmodule <%= webNamespace %>.Auth.Test do
 
       conn2 = recycle(conn1)
       conn2 =
-        post(conn2, "/api/v1/auth/test/callback?a=1")
+        post(conn2, "/api/v1/auth/test/callback", %{"a" => "1"})
 
       conn2
       |> (fn res ->
@@ -139,7 +139,7 @@ defmodule <%= webNamespace %>.Auth.Test do
         post(conn, "/graphql/v1", %{variables: %{}, query: query})
 
       recycle(conn1)
-      |> post("/api/v1/auth/test/callback?a=1")
+      |> post("/api/v1/auth/test/callback", %{"a" => "1"})
       |> (fn res ->
         assert html_response(res, 200) =~ "refresh"
         assert res.resp_cookies[Potionx.Auth.token_config().access_token.name].max_age === 60 * 30 # 30 minutes
@@ -159,7 +159,7 @@ defmodule <%= webNamespace %>.Auth.Test do
       conn1 = post(conn, "/graphql/v1", %{variables: %{}, query: query})
 
       recycle(conn1)
-      |> post("/api/v1/auth/test/callback?a=1")
+      |> post("/api/v1/auth/test/callback", %{"a" => "1"})
       |> (fn res ->
         assert res.assigns.potionx_auth_error === "user_not_found"
       end).()
@@ -190,7 +190,7 @@ defmodule <%= webNamespace %>.Auth.Test do
         post(conn, "/graphql/v1", %{variables: %{}, query: query})
 
       recycle(conn1)
-      |> post("/api/v1/auth/test/callback?a=1")
+      |> post("/api/v1/auth/test/callback", %{"a" => "1"})
       |> (fn res ->
         assert res.assigns.potionx_auth_error === "invalid_provider"
       end).()
@@ -211,7 +211,7 @@ defmodule <%= webNamespace %>.Auth.Test do
       }
     """
     conn1 = post(conn, "/graphql/v1", %{variables: %{}, query: query})
-    conn2 = recycle(conn1) |> post("/api/v1/auth/test/callback?a=1")
+    conn2 = recycle(conn1) |> post("/api/v1/auth/test/callback", %{"a" => "1"})
 
     query = """
       mutation {
