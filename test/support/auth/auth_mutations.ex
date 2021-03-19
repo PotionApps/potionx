@@ -18,15 +18,6 @@ defmodule PotionxTest.Mutations do
     field :sign_in_provider, type: :sign_in_provider_result do
       arg :provider, non_null(:string)
       
-      middleware fn %{context: context} = res, _ ->
-        %{
-          res |
-            context: %{
-              context |
-                redirect_url: Potionx.Auth.Provider.Test.redirect_url()
-            }
-        }
-      end
       resolve Potionx.Auth.Assent.resolve_sign_in([
         session_service: PotionxTest.SessionService,
         strategies: [

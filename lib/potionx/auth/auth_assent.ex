@@ -74,7 +74,6 @@ defmodule Potionx.Auth.Assent do
     |> parse_callback_response(session.sign_in_provider)
     |> create_user_session(session, session_service)
     |> handle_user_session_cookies(conn)
-    |> IO.inspect(label: "res")
     |> case do
       %Plug.Conn{} = conn ->
         url =
@@ -237,7 +236,7 @@ defmodule Potionx.Auth.Assent do
         :redirect_uri,
         redirect_uri
       ),
-      conn.query_params
+      conn.params
     )
   end
   def process_callback(err, _conn, _opts) do

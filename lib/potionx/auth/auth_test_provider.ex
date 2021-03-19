@@ -10,8 +10,10 @@ defmodule Potionx.Auth.Provider.Test do
   end
 
   @impl true
-  def callback(_config, %{"a" => 1}), do: {:ok, %{user: %{"sub" => 1, "name" => "name", "email" => email()}, token: %{"access_token" => "access_token"}}}
-  def callback(_config, _params), do: {:error, "Invalid params"}
+  def callback(_config, %{"a" => "1"}), do: {:ok, %{user: %{"sub" => 1, "name" => "name", "email" => email()}, token: %{"access_token" => "access_token"}}}
+  def callback(_config, _params) do
+    {:error, "Invalid params"}
+  end
 
   def email, do: "test@example.com"
 

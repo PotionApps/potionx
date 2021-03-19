@@ -87,7 +87,7 @@ defmodule Potionx.Auth.Test do
         |> Router.call(Router.init([]))
 
       conn2 =
-        conn(:post, "/auth/test/callback")
+        conn(:post, "/auth/test/callback?a=1")
         |> Map.replace(:secret_key_base, secret_key_base)
       conn2 = Plug.Test.recycle_cookies(conn2, conn1)
       conn2 =
@@ -166,7 +166,7 @@ defmodule Potionx.Auth.Test do
         |> Router.call(Router.init([]))
 
       conn2 =
-        conn(:post, "/auth/test/callback")
+        conn(:post, "/auth/test/callback?a=1")
         |> Map.replace(:secret_key_base, secret_key_base)
       conn2 = Plug.Test.recycle_cookies(conn2, conn1)
 
@@ -195,7 +195,7 @@ defmodule Potionx.Auth.Test do
         |> Router.call(Router.init([]))
 
       conn2 =
-        conn(:post, "/auth/test/callback")
+        conn(:post, "/auth/test/callback?a=1")
         |> Map.replace(:secret_key_base, secret_key_base)
       conn2 = Plug.Test.recycle_cookies(conn2, conn1)
 
@@ -234,7 +234,7 @@ defmodule Potionx.Auth.Test do
         |> Router.call(Router.init([]))
 
       conn2 =
-        conn(:post, "/auth/test/callback")
+        conn(:post, "/auth/test/callback?a=1")
         |> Map.replace(:secret_key_base, secret_key_base)
       conn2 = Plug.Test.recycle_cookies(conn2, conn1)
 
@@ -265,7 +265,7 @@ defmodule Potionx.Auth.Test do
         |> Router.call(Router.init([]))
 
       conn2 =
-        conn(:post, "/auth/test/callback")
+        conn(:post, "/auth/test/callback?a=1")
         |> Map.replace(:secret_key_base, secret_key_base)
       conn2 = Plug.Test.recycle_cookies(conn2, conn1)
 
