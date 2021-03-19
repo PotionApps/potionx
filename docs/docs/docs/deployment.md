@@ -51,7 +51,7 @@ The following prerequisites are required:
 
 > Don't forget to change the commands with the appropriate information as marked, including the Digital Ocean and Cloudflare tokens
 
-```sh
+```bash
 pulumi login # enter your access token from Pulumi step #4 when asked
 pulumi stack # Create a new stack when asked in the format organization-name/stack, where organization-name is your username by default
 pulumi config set domain YOUR-DOMAIN --secret # the domain you added to Cloudflare
