@@ -11,21 +11,15 @@ export default defineComponent({
     if (import.meta.env.DEV) {
       devLogIn = async (e: Event) => {
         e.preventDefault()
-        const email = new FormData(e.target as HTMLFormElement).get('email')
         const {
-          data: {
-            session_params: state,
-            url
-          }
-        } = await fetch(
-            `/api/v1/auth/dev/new`
-          )
-          .then(res => res.json())
+          data
+        } = await executeMutation({ provider: 'dev' })
+        const email = new FormData(e.target as HTMLFormElement).get('email')
 
         await fetch(
-          url,
+          data!.signInProvider!.url!,
           {
-            body: JSON.stringify({ code: "valid", email, state }),
+            body: JSON.stringify({ code: "valid", email }),
             credentials: "same-origin", 
             headers: {
               'Content-Type': 'application/json'

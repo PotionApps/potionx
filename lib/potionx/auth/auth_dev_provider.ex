@@ -23,5 +23,7 @@ defmodule Potionx.Auth.Provider.Dev do
       }
     }
   end
-  def callback(_config, _params), do: {:error, "Invalid params"}
+  def callback(_config, _params) do
+    {:error, "Invalid params"}
+  end
 end

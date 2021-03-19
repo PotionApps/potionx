@@ -20,7 +20,7 @@ if config_env() == :prod do
       """
 
   config :potionx,
-    auth: %{
+    auth: [
       strategies: [
         azure_ad: [
           client_id: System.get_env("ASSENT_AZURE_CLIENT_ID"),
@@ -39,7 +39,7 @@ if config_env() == :prod do
           ]
         ]
       ]
-    }
+    ]
 
   database_url =
     System.get_env("DATABASE_URL") ||

@@ -2,13 +2,15 @@ defmodule Potionx.Auth do
   use TypedStruct
 
   def cookie_options(%Plug.Conn{} = conn, config, max_age) do
-    [
-      http_only: true,
-      domain: conn.host,
-      max_age: max_age,
-      secure: conn.scheme === :https,
-      same_site: "strict" # strict prevents CSRF
-    ] ++ (config || [])
+    Keyword.merge(
+      [
+        http_only: true,
+        domain: conn.host,
+        max_age: max_age,
+        secure: conn.scheme === :https
+      ],
+      (config || [])
+    )
   end
 
   def delete_cookie(conn, %{name: name, ttl_seconds: ttl_seconds}) do
@@ -63,7 +65,6 @@ defmodule Potionx.Auth do
         },
         sign_in_token: %{
           name: "a_app",
-          same_site: "lax",
           ttl_key: :ttl_access_seconds,
           ttl_seconds: 60 * 5, # 5 minutes
           uuid_key: :uuid_access

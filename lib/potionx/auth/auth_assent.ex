@@ -13,7 +13,7 @@ defmodule Potionx.Auth.Assent do
         context: %{
           assigns: %{
             tokens_to_cookies: true
-          },
+          } = assigns,
           session: session
         }
       }
@@ -24,7 +24,7 @@ defmodule Potionx.Auth.Assent do
       config = Potionx.Auth.token_config()[key]
       if (Map.get(session, config.uuid_key)) do
         Potionx.Auth.set_cookie(acc, %{
-          same_site: Map.get(config, :same_site),
+          same_site: Map.get(assigns, :same_site, "strict"),
           name: config.name,
           token: Map.get(session, config.uuid_key),
           ttl_seconds: Map.get(session, config.ttl_key)
@@ -178,7 +178,7 @@ defmodule Potionx.Auth.Assent do
       res |
         context: %{
           ctx |
-            assigns: %{tokens_to_cookies: true},
+            assigns: %{tokens_to_cookies: true, same_site: "lax"},
             session: Map.get(value, :session)
         },
         value: Map.delete(value, :session)
