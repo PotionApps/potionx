@@ -42,7 +42,7 @@ backend-test:
       # Run the database tests
       RUN docker-compose up -d & \
           while ! pg_isready --host=localhost --port=5432 --quiet; do sleep 1; done; \
-          DATABASE_URL="ecto://postgres:postgres@localhost/test" mix test
+          DATABASE_URL="ecto://postgres:postgres@localhost/test" REDIS_URL="redis://localhost:6379/" mix test
   END
 
 frontend-deps:

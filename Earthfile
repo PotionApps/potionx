@@ -78,7 +78,7 @@ integration-test:
             cd alpha && \
             cat mix.exs && \
             cat test/auth/auth_plug_test.exs && \
-            mix test && \
+            REDIS_URL="redis://localhost:6379/" mix test && \
             cd ./frontend/admin && \
             npm run build
     END
