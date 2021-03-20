@@ -130,7 +130,7 @@ const dbSecrets = new k8s.core.v1.Secret(
             name: 'db-secrets'
         },
         stringData: {
-            'redis-password': passwordRedis,
+            'redis-password': passwordRedisEncoded,
             'postgresql-password': passwordDb,
             'postgresql-replication-password': passwordDb,
             'postgresql-ldap-password': passwordDb,
@@ -313,6 +313,8 @@ const appIngress = new k8s.networking.v1.Ingress(appNamespace("ingress"), {
     metadata: {
         annotations: {
         // add an annotation indicating the issuer to use.
+            "ingress.kubernetes.io/force-ssl-redirect": "false",
+            "ingress.kubernetes.io/ssl-redirect": "false",
             "kubernetes.io/ingress.class": "nginx",
             "cert-manager.io/cluster-issuer": 'letsencrypt-prod'
         }
