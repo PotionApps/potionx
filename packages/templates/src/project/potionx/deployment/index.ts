@@ -135,7 +135,7 @@ const dbSecrets = new k8s.core.v1.Secret(
             'postgresql-replication-password': passwordDb,
             'postgresql-ldap-password': passwordDb,
             'DATABASE_URL': pulumi.interpolate `ecto://postgres:${passwordDbEncoded}@postgresql-headless/${dbName}`,
-            "REDIS_URL": pulumi.interpolate `redis://:${passwordRedisEncoded}@redis-headless`,
+            "REDIS_URL": pulumi.interpolate `redis://:${passwordRedisEncoded}@redis-master`,
         },
         type: 'opaque'
     },
@@ -313,8 +313,6 @@ const appIngress = new k8s.networking.v1.Ingress(appNamespace("ingress"), {
     metadata: {
         annotations: {
         // add an annotation indicating the issuer to use.
-            "ingress.kubernetes.io/force-ssl-redirect": "false",
-            "ingress.kubernetes.io/ssl-redirect": "false",
             "kubernetes.io/ingress.class": "nginx",
             "cert-manager.io/cluster-issuer": 'letsencrypt-prod'
         }
@@ -355,7 +353,14 @@ const nginxIngress = new k8s.helm.v3.Chart("ingress-nginx",
     {
         chart: "ingress-nginx",
         fetchOpts: {repo: "https://kubernetes.github.io/ingress-nginx"},
-        values: {controller: {publishService: {enabled: true}}}
+        values: {
+            controller: {
+                config: {
+                    "use-forwarded-headers": true
+                },
+                publishService: {enabled: true}
+            }
+        }
     },
     { provider }
 );
