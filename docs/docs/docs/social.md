@@ -22,6 +22,7 @@ Google's instructions can be found [here](https://developers.google.com/identity
   - Choose a name
   - Authorized Javascript origins: `http://localhost:4000`
   - Authorized redirect URIs: `http://localhost:4000/api/v1/auth/google/callback`
+  - Authorized redirect URIs: `YOUR_DOMAIN_URL/api/v1/auth/google/callback`
 1. In your Potionx project, navigate to the `dev.secret.exs` file and fill in the missing `google` fields:
   - client_id
   - client_secret

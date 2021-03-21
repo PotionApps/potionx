@@ -17,9 +17,11 @@ The following prerequisites are required:
 ### Cloudflare
 1. Sign up for Cloudflare if you do not have an account
 2. Add a domain that you already own (we recommend [DNSimple](https://dnsimple.com/) or [Hover](https://www.hover.com/) if you need to purchase one)
-3. Navigate to [https://dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens)
-4. Create a token that has `Edit zone DNS` permissions
-5. Save the token somewhere, you'll need it later
+3. If your planned `www`, you will need to remove it from the DNS management section
+4. Copy the `Custom Nameserves` to your domain provider under `custom DNS`
+5. Navigate to [https://dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens)
+6. Create a token that has `Edit zone DNS` permissions
+7. Save the token somewhere, you'll need it later
 
 ### Digital Ocean
 1. Sign up to [DigitalOcean](https://digitalocean.com) (you'll need a credit card)
