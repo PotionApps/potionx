@@ -1,6 +1,7 @@
 defmodule <%= appModule %>.Users.User do
   import Ecto.Changeset
   use Ecto.Schema
+  alias __MODULE__
 
   schema "users" do
     field :deleted_at, :utc_datetime
@@ -11,6 +12,15 @@ defmodule <%= appModule %>.Users.User do
 
     has_many :user_identities, <%= appModule %>.UserIdentities.UserIdentity
     timestamps()
+  end
+
+  defimpl Jason.Encoder, for: User do
+    def encode(s, opts) do
+      s
+      |> Map.from_struct()
+      |> Map.drop([:__meta__, :user_identities])
+      |> Jason.Encode.map(opts)
+    end
   end
 
   def assent_attrs_to_changes(attrs) do

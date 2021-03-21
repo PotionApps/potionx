@@ -15,10 +15,10 @@ defmodule Potionx.Redis do
     )
   end
 
-  def put(key, value, ttl_ms) do
+  def put(key, value, ttl_s) do
     Redix.command(
       @redix_instance_name,
-      ["SET", key, value, "PX", ttl_ms]
+      ["SET", key, value, "PX", ttl_s * 1000]
     )
   end
 end

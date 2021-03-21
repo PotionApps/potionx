@@ -18,7 +18,7 @@ defmodule <%= appModule %>.Application do
       # Start a worker by calling: <%= appModule %>.Worker.start_link(arg)
       # {<%= appModule %>.Worker, arg}
     ] ++
-      if Application.get_env(:<%= appName %>, :env) == :prod do
+      if Application.get_env(:redis, :url) do
         [
           {Redix, {Application.get_env(:redix, :url), [name: :redix]}}
         ]
