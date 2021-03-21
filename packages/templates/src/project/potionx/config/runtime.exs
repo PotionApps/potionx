@@ -32,7 +32,7 @@ if config_env() == :prod do
         google: [
           strategy: Assent.Strategy.Google,
           client_id: System.get_env("ASSENT_GOOGLE_CLIENT_ID"),
-          client_secret: System.get_env("ASSENT_GOOGLE_CLIENT_ID"),
+          client_secret: System.get_env("ASSENT_GOOGLE_CLIENT_SECRET"),
           authorization_params: [
             access_type: "offline",
             scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
