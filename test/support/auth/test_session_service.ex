@@ -3,6 +3,7 @@ defmodule PotionxTest.SessionService do
     identity_service: PotionxTest.IdentityService,
     repo: PotionxTest.Repo,
     session_schema: PotionxTest.Session,
+    user_schema: PotionxTest.User,
     user_service: PotionxTest.UserService
   ]
 end

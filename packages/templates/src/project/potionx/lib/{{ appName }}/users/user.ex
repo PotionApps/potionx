@@ -2,6 +2,7 @@ defmodule <%= appModule %>.Users.User do
   import Ecto.Changeset
   use Ecto.Schema
   alias __MODULE__
+  @behavior Potionx.Auth.User
 
   schema "users" do
     field :deleted_at, :utc_datetime
@@ -57,6 +58,19 @@ defmodule <%= appModule %>.Users.User do
       Ecto.Enum.values(__MODULE__, :roles)
     )
     |> validate_required([:email])
+  end
+
+  def from_json(%{id: _} = user) do
+    user
+  end
+  def from_json(%{"roles" => roles} = user) do
+    params =
+      Map.new(user, fn
+        {k, v} ->
+          {String.to_existing_atom(k), v}
+      end)
+      |> Map.put(:roles, Enum.map(roles, &(String.to_existing_atom(&1))))
+    struct(User, params)
   end
 
   def title(entry) do

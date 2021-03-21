@@ -40,6 +40,7 @@ defmodule <%= appModule %>.MixProject do
       {:castore, "~> 0.1.0"},
       {:dataloader, "~> 1.0.0"},
       {:decimal, "~> 2.0", override: true},
+      {:mint, "~> 1.0"},
       {:phoenix, "~> 1.5.7"},
       {:phoenix_ecto, "~> 4.1"},
       {:potionx, <%- potionxDep %>},

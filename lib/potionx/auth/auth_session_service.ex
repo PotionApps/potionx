@@ -19,6 +19,9 @@ defmodule Potionx.Auth.SessionService do
     if !Keyword.get(opts, :session_schema) do
       raise "Potionx.Auth.SessionService requires a session schema"
     end
+    if !Keyword.get(opts, :user_schema) do
+      raise "Potionx.Auth.SessionService requires a user schema"
+    end
     if !Keyword.get(opts, :user_service) do
       raise "Potionx.Auth.SessionService requires a user service"
     end
@@ -28,6 +31,7 @@ defmodule Potionx.Auth.SessionService do
       @repo unquote(opts[:repo])
       @identity_service unquote(opts[:identity_service])
       @session_schema unquote(opts[:session_schema])
+      @user_schema unquote(opts[:user_schema])
       @user_service unquote(opts[:user_service])
       import Ecto.Query
 
@@ -275,9 +279,7 @@ defmodule Potionx.Auth.SessionService do
           %{user: %{"id" => _} = user} = session ->
             %{
               session |
-                user: Map.new(user, fn {k, v} ->
-                  {String.to_existing_atom(k), v}
-                end)
+                user: @user_schema.from_json(user)
             }
           session -> session
         end

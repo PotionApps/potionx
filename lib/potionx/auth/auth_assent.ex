@@ -67,6 +67,7 @@ defmodule Potionx.Auth.Assent do
 
   def callback(%{assigns: %{context: %Service{session: %{id: _} = session}}} = conn, opts) do
     session_service = Keyword.fetch!(opts, :session_service)
+    redirect_path = Keyword.get(opts, :redirect_path) || "/login"
 
     conn
     |> verify_providers_match(session)
@@ -103,13 +104,16 @@ defmodule Potionx.Auth.Assent do
         |> Plug.Conn.put_resp_content_type("text/html")
         |> Plug.Conn.put_status(401)
         |> Plug.Conn.assign(:potionx_auth_error, msg)
+        |> Phoenix.Controller.redirect(to: Enum.join([redirect_path, "?msg=", msg], ""))
       res -> res
     end
   end
-  def callback(conn, _) do
+  def callback(conn, opts) do
+    redirect_path = Keyword.get(opts, :redirect_path, "/login")
     conn
     |> Plug.Conn.put_status(401)
     |> Plug.Conn.assign(:potionx_auth_error, "missing_session")
+    |> Phoenix.Controller.redirect(to: redirect_path <> "?msg=" <> "missing_session")
   end
 
   def create_user_session({:ok, user_identity_params, user_params}, previous_session, session_service) do
@@ -132,7 +136,6 @@ defmodule Potionx.Auth.Assent do
   end
   def create_user_session(err, _, _), do: err
 
-  def init(opts), do: opts
 
   defp handle_user_identity_params({user_identity_params, user_params}, other_params, provider) do
     user_identity_params = Map.put(user_identity_params, "provider", provider)
@@ -161,6 +164,8 @@ defmodule Potionx.Auth.Assent do
   end
   def handle_user_session_cookies(err, _conn), do: err
 
+  def init(opts), do: opts
+  
   def middleware_renew(%{context: ctx, value: value} = res, _) when is_map(value) do
     %{
       res |
@@ -232,6 +237,10 @@ defmodule Potionx.Auth.Assent do
         strategy_config,
         :session_params,
         data
+      )
+      |> Keyword.put(
+        :http_adapter,
+        Assent.HTTPAdapter.Mint
       )
       |> Keyword.put(
         :redirect_uri,
