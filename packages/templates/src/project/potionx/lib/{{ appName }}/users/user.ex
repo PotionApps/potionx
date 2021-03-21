@@ -64,6 +64,7 @@ defmodule <%= appModule %>.Users.User do
     user
   end
   def from_json(%{"roles" => roles} = user) do
+    roles = roles || []
     params =
       Map.new(user, fn
         {k, v} ->

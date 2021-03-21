@@ -32,7 +32,7 @@ defmodule PotionxTest.User do
         {k, v} ->
           {String.to_existing_atom(k), v}
       end)
-      |> Map.put(:roles, Enum.map(roles, &(String.to_existing_atom(&1))))
+      |> Map.put(:roles, Enum.map((roles || []), &(String.to_existing_atom(&1))))
     struct(User, params)
   end
 end
