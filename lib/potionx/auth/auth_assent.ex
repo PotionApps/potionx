@@ -99,16 +99,21 @@ defmodule Potionx.Auth.Assent do
     end
     |> case do
       {:error, msg} ->
+        IO.inspect(msg, label: "SIGN IN ERROR")
         conn
+        |> Plug.Conn.put_resp_content_type("text/html")
         |> Plug.Conn.put_status(401)
         |> Plug.Conn.assign(:potionx_auth_error, msg)
+        |> Plug.Conn.send_resp("Callback error")
       res -> res
     end
   end
   def callback(conn, _) do
+    IO.inspect("MISSING SESSION")
     conn
     |> Plug.Conn.put_status(401)
     |> Plug.Conn.assign(:potionx_auth_error, "missing_session")
+    |> Plug.Conn.send_resp("Sign in error")
   end
 
   def create_user_session({:ok, user_identity_params, user_params}, previous_session, session_service) do
