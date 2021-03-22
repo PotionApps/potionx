@@ -310,6 +310,8 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
 
   def maybe_convert_type(type) do
     case type do
+      :binary -> :string
+      :binary_id -> :string
       :utc_datetime -> :datetime
       _ -> type
     end
