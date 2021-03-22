@@ -2,7 +2,7 @@ defmodule PotionxTest.User do
   @derive Jason.Encoder
   use Ecto.Schema
   alias __MODULE__
-  @behavior Potionx.Auth.User
+  @behaviour Potionx.Auth.User
 
   schema "users" do
     field :deleted_at, :utc_datetime

@@ -202,10 +202,8 @@ defmodule Potionx.Auth.Test do
       conn2
       |> Router.call(Router.init([]))
       |> (fn res ->
-        assert Enum.find(res.resp_headers, fn {k, _} -> 
-          k === "location"
-        end) |> elem(1) === "/login?msg=user_not_found"
         assert res.assigns.potionx_auth_error === "user_not_found"
+        assert elem(sent_resp(res), 2) =~ "login?msg=user_not_found"
       end).()
     end
 
