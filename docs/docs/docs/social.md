@@ -37,18 +37,16 @@ Microsoft's instructions can be found [here](https://docs.microsoft.com/en-us/az
 1. [Log in or create an account](https://portal.azure.com/)
 2. Follow the steps to [register an application](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application)
   - Select a name
-  - Under `Redirect URIs` add `Web` with the URL of `http://localhost:4000`
   - Once it is created, in the left menu select `Authentication` and click `Add platform` and add:
-    - `http://localhost:4000/api/v1/auth/google/callback`
-    - `https://YOUR_DOMAIN_URL/api/v1/auth/google/callback`
+    - `http://localhost:4000/api/v1/auth/azure_ad/callback`
+    - `https://YOUR_DOMAIN_URL/api/v1/auth/azure_ad/callback`
     > Don't forget to edit your domain name in the URL provided
-3. Follow the steps to [Add a client secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
-4. In your Potionx project, navigate to the `dev.secret.exs` file and fill in the missing `azure_ad` fields:
+3. In your Potionx project, navigate to the `dev.secret.exs` file and fill in the missing `azure_ad` fields:
   - `client_id` is found in your app under `Application (client) ID`
-  - `client_secret` is found in Certificates & Secrets under `Client secrets` > `Value`
   - `tenant_id` is found in your app under `Directory (tenant) ID`
-- Save and refire `mix phx.server`
-
-<!-- - [Apple instructions](https://developer.apple.com/documentation/authenticationservices) -->
-<!-- - [Github instructions](https://docs.github.com/en/developers/apps/authorizing-oauth-apps) -->
-<!-- - [Twitter instructions](https://developer.twitter.com/en/docs/authentication/guides) -->
+3. Follow the steps to [Add a client secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
+4. In your Potionx project, navigate to the `dev.secret.exs` file and add the secret you just created (`Client secrets` > `Value`)
+5. Back in the home dashboard, select `Subscriptions` and select your current subscription (You'll need to set one up if you do not currently have one on your live account)
+6. In the left menu, scroll down to `Resource providers` and search for `Microsoft.AzureActiveDirectory`. Select it and press `Register` above the list (Microsoft [instructions](https://docs.microsoft.com/en-us/azure/active-directory-b2c/tutorial-create-tenant))
+7. In the left menu, scroll down to `Resources` and click `Create resource`. Search and select `Azure Active Directory B2C`, and then click `Create`.
+8. Select `Create a new Azure AD B2C Tenant` and fill out the fields. Click `Create and review` and then `Create`. It should take a few minutes to confirm in your notifications.
