@@ -516,7 +516,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
   def run_npx_generator(%GqlForModel{no_frontend: true} = state), do: state
   def run_npx_generator(%GqlForModel{} = state) do
     Mix.shell().cmd(
-      "npx templates model #{state.context_name} #{state.model_name} --destination=./frontend/admin"
+      "npx @potionapps/templates@latest model #{state.context_name} #{state.model_name} --destination=./frontend/admin"
     )
     state
   end
