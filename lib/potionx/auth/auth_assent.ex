@@ -100,20 +100,36 @@ defmodule Potionx.Auth.Assent do
     end
     |> case do
       {:error, msg} ->
+        url = Enum.join([redirect_path, "?msg=", msg], "")
         conn
         |> Plug.Conn.put_resp_content_type("text/html")
-        |> Plug.Conn.put_status(401)
         |> Plug.Conn.assign(:potionx_auth_error, msg)
-        |> Phoenix.Controller.redirect(to: Enum.join([redirect_path, "?msg=", msg], ""))
+        |> Plug.Conn.send_resp(
+          401,
+          """
+          <html>
+            <head><meta http-equiv="refresh" content="0;URL='#{url}'"/></head>
+            <body></body>
+          </html>
+          """
+        )
       res -> res
     end
   end
   def callback(conn, opts) do
     redirect_path = Keyword.get(opts, :redirect_path, "/login")
+    url = Enum.join([redirect_path, "?msg=missing_session"], "")
     conn
-    |> Plug.Conn.put_status(401)
     |> Plug.Conn.assign(:potionx_auth_error, "missing_session")
-    |> Phoenix.Controller.redirect(to: redirect_path <> "?msg=" <> "missing_session")
+    |> Plug.Conn.send_resp(
+      401,
+      """
+      <html>
+        <head><meta http-equiv="refresh" content="0;URL='#{url}'"/></head>
+        <body></body>
+      </html>
+      """
+    )
   end
 
   def create_user_session({:ok, user_identity_params, user_params}, previous_session, session_service) do
@@ -165,7 +181,7 @@ defmodule Potionx.Auth.Assent do
   def handle_user_session_cookies(err, _conn), do: err
 
   def init(opts), do: opts
-  
+
   def middleware_renew(%{context: ctx, value: value} = res, _) when is_map(value) do
     %{
       res |
@@ -184,7 +200,7 @@ defmodule Potionx.Auth.Assent do
       res |
         context: %{
           ctx |
-            assigns: %{tokens_to_cookies: true, same_site: "lax"},
+            assigns: %{tokens_to_cookies: true, same_site: "none"},
             session: Map.get(value, :session)
         },
         value: Map.delete(value, :session)
@@ -304,6 +320,10 @@ defmodule Potionx.Auth.Assent do
           config
           |> Keyword.delete(:strategy)
           |> Keyword.put(:redirect_uri, redirect_uri)
+          |> Keyword.put(
+            :http_adapter,
+            Assent.HTTPAdapter.Mint
+          )
           |> strategy.authorize_url()
           |> case do
             {:ok, %{session_params: params, url: url}} ->
