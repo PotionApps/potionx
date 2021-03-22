@@ -43,7 +43,6 @@ Microsoft's instructions can be found [here](https://docs.microsoft.com/en-us/az
     > Don't forget to edit your domain name in the URL provided
 3. In your Potionx project, navigate to the `dev.secret.exs` file and fill in the missing `azure_ad` fields:
   - `client_id` is found in your app under `Application (client) ID`
-  - `tenant_id` is found in your app under `Directory (tenant) ID`
 3. Follow the steps to [Add a client secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
 4. In your Potionx project, navigate to the `dev.secret.exs` file and add the secret you just created (`Client secrets` > `Value`)
 5. Back in the home dashboard, select `Subscriptions` and select your current subscription (You'll need to set one up if you do not currently have one on your live account)

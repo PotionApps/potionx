@@ -65,7 +65,6 @@ pulumi config set passwordRedis A-STRONG-PASSWORD --secret # Choose a very stron
 pulumi config set secretKeyBase A-STRONG-PASSWORD --secret # Choose a very strong password for your Redis user, mix phx.gen.secret can help
 pulumi config set --path "authProviders.azureAd.clientId" YOUR-AZURE-SOCIAL-LOGIN-CLIENT-ID --secret
 pulumi config set --path "authProviders.azureAd.clientSecret" YOUR-AZURE-SOCIAL-LOGIN-CLIENT-SECRET --secret
-pulumi config set --path "authProviders.azureAd.tenantId" YOUR-AZURE-SOCIAL-LOGIN-TENANT-ID --secret
 pulumi config set --path "authProviders.google.clientId" YOUR-GOOGLE-SOCIAL-LOGIN-CLIENT-ID --secret
 pulumi config set --path "authProviders.google.clientSecret" YOUR-GOOGLE-SOCIAL-LOGIN-CLIENT-SECRET --secret
 ```

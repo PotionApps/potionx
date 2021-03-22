@@ -12,7 +12,7 @@ config :<%= appName %>, <%= appModule %>.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
-  
+
 config :potionx,
   auth: [
     strategies: [
@@ -20,8 +20,7 @@ config :potionx,
         client_id: "",
         client_secret: "",
         id_token_signed_response_alg: "RS256",
-        strategy: Assent.Strategy.AzureAD,
-        tenant_id: ""
+        strategy: Potionx.Auth.Assent.AzureADCommonStrategy
       ],
       google: [
         strategy: Assent.Strategy.Google,

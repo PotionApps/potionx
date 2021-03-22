@@ -8,7 +8,6 @@ interface AuthProviders {
   azureAd: {
     clientId: string
     clientSecret: string
-    tenantId: string
   },
   google: {
     clientId: string
@@ -218,7 +217,6 @@ const appSecrets = new k8s.core.v1.Secret(
             "ASSENT_GOOGLE_CLIENT_SECRET": authProviders.google.clientSecret,
             "ASSENT_AZURE_CLIENT_ID": authProviders.azureAd.clientId, 
             "ASSENT_AZURE_CLIENT_SECRET": authProviders.azureAd.clientSecret, 
-            "ASSENT_AZURE_TENANT_ID": authProviders.azureAd.tenantId, 
             "SECRET_KEY_BASE": secretKeyBase
         },
         type: 'opaque'
