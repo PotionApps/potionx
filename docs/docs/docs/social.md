@@ -12,21 +12,22 @@ Google's instructions can be found [here](https://developers.google.com/identity
 
 **Steps:**
 1. [Log in or create an account](https://console.developers.google.com)
-1. Search for "create a project"
-1. Create a project
-1. Return to the [main page](https://console.developers.google.com) and select `Credentials` from the left menu
-1. Select `Create credentials` and choose `OAuth client id`
-1. (If this is your first time, it will ask your to fill in the `OAuth consent screen` first. Select the user type (External) and click `create`, then repeat the previous step
-1. Fill out the OAuth form and click create:
-  - Select type
-  - Choose a name
-  - Authorized Javascript origins: `http://localhost:4000`
-  - Authorized redirect URIs: `http://localhost:4000/api/v1/auth/google/callback`
-  - Authorized redirect URIs: `YOUR_DOMAIN_URL/api/v1/auth/google/callback`
-1. In your Potionx project, navigate to the `dev.secret.exs` file and fill in the missing `google` fields:
-  - client_id
-  - client_secret
-1. Save and refire `mix phx.server`
+2. Search for "create a project"
+3. Create a project
+4. Return to the [main page](https://console.developers.google.com) and select `Credentials` from the left menu
+5. Select `Create credentials` and choose `OAuth client id`
+6. (If this is your first time, it will ask your to fill in the `OAuth consent screen` first. Select the user type (External) and click `create`, then repeat the previous step
+7. Fill out the OAuth form and click create:
+    - Select type
+    - Choose a name
+    - Authorized Javascript origins: `http://localhost:4000`
+    - Authorized redirect URIs: `http://localhost:4000/api/v1/auth/google/callback`
+    - Authorized redirect URIs: `https://YOUR_DOMAIN_URL/api/v1/auth/google/callback` \
+    > Don't forget to edit your domain name in the URL provided
+8. In your Potionx project, navigate to the `dev.secret.exs` file and fill in the missing `google` fields:
+    - client_id
+    - client_secret
+9. Save and refire `mix phx.server`
 
 ## Microsoft
 
@@ -34,9 +35,15 @@ Microsoft's instructions can be found [here](https://docs.microsoft.com/en-us/az
 
 **Steps:**
 1. [Log in or create an account](https://portal.azure.com/)
-1. Follow the steps to [register an application](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application)
-1. Follow the steps to [Add a client secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
-1. In your Potionx project, navigate to the `dev.secret.exs` file and fill in the missing `azure_ad` fields:
+2. Follow the steps to [register an application](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application)
+  - Select a name
+  - Under `Redirect URIs` add `Web` with the URL of `http://localhost:4000`
+  - Once it is created, in the left menu select `Authentication` and click `Add platform` and add:
+    - `http://localhost:4000/api/v1/auth/google/callback`
+    - `https://YOUR_DOMAIN_URL/api/v1/auth/google/callback`
+    > Don't forget to edit your domain name in the URL provided
+3. Follow the steps to [Add a client secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
+4. In your Potionx project, navigate to the `dev.secret.exs` file and fill in the missing `azure_ad` fields:
   - `client_id` is found in your app under `Application (client) ID`
   - `client_secret` is found in Certificates & Secrets under `Client secrets` > `Value`
   - `tenant_id` is found in your app under `Directory (tenant) ID`
