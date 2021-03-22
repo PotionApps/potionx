@@ -70,6 +70,7 @@ export default defineComponent({
 
     const { data, fetching, error } = useQuery<RootQueryType>({
       query: collection,
+      requestPolicy: 'cache-and-network',
       variables: computed(() => {
         return variables.value
       })
