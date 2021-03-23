@@ -6,7 +6,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, 'lib/index.ts'),
-      name: '@potionapps/ui'
+      name: '@potionapps/utils'
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
