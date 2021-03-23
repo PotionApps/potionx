@@ -6,6 +6,7 @@ defmodule Potionx.Schema do
       import_types Absinthe.Plug.Types
       import_types Absinthe.Type.Custom
       import_types Potionx.Types
+      import_types Potionx.Types.JSON
 
       scalar :global_id do
         parse fn

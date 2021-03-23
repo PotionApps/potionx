@@ -310,8 +310,13 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
 
   def maybe_convert_type(type) do
     case type do
+      Ecto.UUID -> :id
       :binary -> :string
       :binary_id -> :string
+      :datetime -> :naive_datetime
+      :map -> :json
+      :naive_datetime_usec -> :naive_datetime
+      :utc_datetime_usec -> :datetime
       :utc_datetime -> :datetime
       _ -> type
     end
@@ -516,7 +521,6 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
 
   def run_npx_generator(%GqlForModel{no_frontend: true} = state), do: state
   def run_npx_generator(%GqlForModel{} = state) do
-    IO.inspect(state, label: "weird")
     Mix.shell().cmd(
       "npx @potionapps/templates@latest model #{state.context_name} #{state.model_name} --destination=./frontend/admin"
     )
