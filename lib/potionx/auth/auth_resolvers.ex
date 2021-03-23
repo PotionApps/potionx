@@ -1,4 +1,4 @@
-defmodule Potionx.Auth.Assent do
+defmodule Potionx.Auth.Resolvers do
   alias Potionx.Context.Service
 
   def auth_config() do
@@ -42,6 +42,10 @@ defmodule Potionx.Auth.Assent do
     |> Potionx.Auth.delete_cookie(%{
       name: Potionx.Auth.token_config().renewal_token.name,
       ttl_seconds: session.ttl_renewal_seconds
+    })
+    |> Potionx.Auth.delete_cookie(%{
+      name: Potionx.Auth.token_config().frontend.name,
+      ttl_seconds: session.ttl_access_seconds
     })
   end
   def before_send(conn, _) do
@@ -252,7 +256,7 @@ defmodule Potionx.Auth.Assent do
   def resolve_renew(opts) do
     session_service = Keyword.get(opts, :session_service)
     if !session_service do
-      raise "Potionx.Auth.Assent resolve function requires a session_service"
+      raise "Potionx.Auth.Resolvers requires a session_service"
     end
 
     fn
@@ -283,7 +287,7 @@ defmodule Potionx.Auth.Assent do
   def resolve_sign_in(opts \\ []) do
     session_service = Keyword.get(opts, :session_service)
     if !session_service do
-      raise "Potionx.Auth.Assent resolve function requires a session_service"
+      raise "Potionx.Auth.Resolvers requires a session_service"
     end
 
     fn _parent, %{provider: provider}, %{context: %Service{request_url: url} = ctx} ->
