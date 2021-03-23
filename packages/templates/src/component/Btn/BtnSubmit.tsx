@@ -6,11 +6,12 @@ export default defineComponent({
   name: "BtnSubmit",
   setup (_, ctx) {
     const {
+      formNumberOfChanges,
       formSubmitStatus
     } = useFormButton()
 
     const disabled = computed(() => {
-     return formSubmitStatus?.value === FormSubmitStatus.loading
+      return formSubmitStatus?.value === FormSubmitStatus.loading || !formNumberOfChanges?.value
     })
 
     return () => {
