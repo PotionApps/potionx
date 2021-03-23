@@ -16,13 +16,13 @@ defmodule PotionxTest.Router do
 
   forward "/graphql",
     init_opts: [
-      before_send: {Potionx.Auth.Assent, :before_send},
+      before_send: {Potionx.Auth.Resolvers, :before_send},
       schema: PotionxTest.Schema
     ],
     to: Absinthe.Plug
 
   post "/auth/:provider/callback" do
-    Potionx.Auth.Assent.callback(conn, [
+    Potionx.Auth.Resolvers.callback(conn, [
       session_service: PotionxTest.SessionService,
       strategies: [
         test: [
