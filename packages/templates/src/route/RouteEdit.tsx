@@ -100,13 +100,16 @@ export default defineComponent({
         <AdminHeader
           v-slots={{
             btns: () => <div class="flex">
-              <AdminHeaderBtnWrap>
-                <BtnSmallSecondary
-                  click={deleteEntry}
-                  icon={faTrash}
-                  label="Delete __model__"
-                />
-              </AdminHeaderBtnWrap>
+               {
+                route.params.id !== 'new' &&
+                <AdminHeaderBtnWrap>
+                  <BtnSmallSecondary
+                    click={deleteEntry}
+                    icon={faTrash}
+                    label="Delete __model__"
+                  />
+                </AdminHeaderBtnWrap>
+              }
               <AdminHeaderBtnWrap hidden={true}>
                 <BtnSmallPrimary
                   label="New __model__"
@@ -176,7 +179,9 @@ export default defineComponent({
               </div>
             })
           }
-          <BtnSubmit class="mt-6" />
+          <BtnSubmit class="mt-6">
+            {route.params.id === "new" ? "Create" : "Save"}
+          </BtnSubmit>
         </AdminForm>
         </AdminBody>
         <AdminFooter>
