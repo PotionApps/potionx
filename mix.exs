@@ -46,7 +46,7 @@ defmodule Potionx.MixProject do
   def project do
     [
       app: :potionx,
-      version: "0.4.9",
+      version: "0.4.10",
       elixir: "~> 1.11",
       elixirc_paths: elixirc_paths(Mix.env()),
       package: package(),
