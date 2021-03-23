@@ -13,6 +13,7 @@ import { authExchange } from '@urql/exchange-auth'
 import { cacheExchange } from '@urql/exchange-graphcache';
 import { dedupExchange, fetchExchange } from '@urql/core';
 import urql from '@urql/vue';
+import sessionRenew from 'shared/sessionRenew'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -36,18 +37,15 @@ app.use(
             typeof document !== 'undefined' && !document.cookie.includes('frontend') &&
             router.currentRoute.value.name
           ) {
-            await fetch(
-              '/api/v1/session/renew', 
-              {
-                credentials: 'same-origin',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                method: "POST"
-              }
-            )
+            const res = await sessionRenew()
+            if (res.data?.sessionRenew?.error) {
+              window.location.href = "/login"
+            }
           }
           return null;
+        },
+        willAuthError: () => {
+          return typeof document !== 'undefined' && !document.cookie.includes('frontend')
         }
       }),
       fetchExchange

@@ -255,25 +255,28 @@ defmodule Potionx.Auth.Assent do
       raise "Potionx.Auth.Assent resolve function requires a session_service"
     end
 
-    fn _parent, _, %{context: %Service{session: %{id: id}}} ->
-      session_service.patch(
-        %Service{
-          changes: %{
-            ttl_access_seconds: Potionx.Auth.token_config().access_token.ttl_seconds,
-            uuid_access: Ecto.UUID.generate(),
-            uuid_renewal: Ecto.UUID.generate(),
-            ttl_renewal_seconds: Potionx.Auth.token_config().renewal_token.ttl_seconds
-          },
-          filters: %{
-            id: id
+    fn
+      _parent, _, %{context: %Service{session: %{id: id}}} ->
+        session_service.patch(
+          %Service{
+            changes: %{
+              ttl_access_seconds: Potionx.Auth.token_config().access_token.ttl_seconds,
+              uuid_access: Ecto.UUID.generate(),
+              uuid_renewal: Ecto.UUID.generate(),
+              ttl_renewal_seconds: Potionx.Auth.token_config().renewal_token.ttl_seconds
+            },
+            filters: %{
+              id: id
+            }
           }
-        }
-      )
-      |> case do
-        {:ok, %{session_patch: session}} ->
-          {:ok, %{session: session}}
-        err -> err
-       end
+        )
+        |> case do
+          {:ok, %{session_patch: session}} ->
+            {:ok, %{session: session}}
+          err -> err
+        end
+      _parent, _, _ ->
+        {:ok, %{error: "missing_session"}}
     end
   end
 
