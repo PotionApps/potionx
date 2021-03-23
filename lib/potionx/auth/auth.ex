@@ -25,7 +25,40 @@ defmodule Potionx.Auth do
     )
   end
 
-  @spec set_cookie(Plug.Conn.t(), %{id: String.t(), ttl_ms: integer}) :: Plug.Conn.t()
+  @doc """
+  Handles setting sign up cookies used only during social login and general setting cookies.
+  """
+  @spec handle_user_session_cookies(any, any) :: any
+  def handle_user_session_cookies(%{uuid_renewal: nil, uuid_access: uuid_access} = session, conn) when not is_nil(uuid_access) do
+    conn
+    |> Potionx.Auth.set_cookie(%{
+      name: Potionx.Auth.token_config().access_token.name,
+      same_site: "none",
+      token: uuid_access,
+      ttl_seconds: session.ttl_access_seconds
+    })
+  end
+  def handle_user_session_cookies(%{uuid_renewal: renewal} = session, conn) when not is_nil(renewal) do
+    conn
+    |> Potionx.Auth.set_cookie(%{
+      http_only: false,
+      name: Potionx.Auth.token_config().frontend.name,
+      token: "1",
+      ttl_seconds: session.ttl_access_seconds
+    })
+    |> Potionx.Auth.set_cookie(%{
+      name: Potionx.Auth.token_config().access_token.name,
+      token: session.uuid_access,
+      ttl_seconds: session.ttl_access_seconds
+    })
+    |> Potionx.Auth.set_cookie(%{
+      name: Potionx.Auth.token_config().renewal_token.name,
+      token: session.uuid_renewal,
+      ttl_seconds: session.ttl_renewal_seconds
+    })
+  end
+  def handle_user_session_cookies(err, _conn), do: err
+
   def set_cookie(conn, %{name: name, token: token, ttl_seconds: ttl_seconds} = config) do
     conn
     |> Plug.Conn.put_resp_cookie(
@@ -34,6 +67,7 @@ defmodule Potionx.Auth do
       cookie_options(
         conn,
         [
+          http_only:  Map.get(config, :http_only) || true,
           same_site: Map.get(config, :same_site) || "strict",
           sign: true
         ],

@@ -3,7 +3,7 @@ defmodule <%= webNamespace %>.AuthPlugTest do
   use Plug.Test
   alias Potionx.Auth.Provider
 
-  test "Should allow a signed in user access and redirect to home page when trying to access login", %{conn: conn} do
+  test "Should allow a signed in user access, renew access and redirect to home page when trying to access login", %{conn: conn} do
     %<%= appModule %>.Users.User{
       email: Provider.Test.email()
     }
@@ -26,6 +26,25 @@ defmodule <%= webNamespace %>.AuthPlugTest do
 
     conn4 = get(recycle(conn3), "/login")
     assert %{status: 302} = conn4
+
+    # Test renewal
+    conn5 = recycle(conn4)
+    conn5 =
+      conn5
+      |> Map.put(
+        :req_headers,
+        Enum.reject(
+          conn4.req_headers,
+          fn {_, v} ->
+            v =~ Potionx.Auth.token_config().access_token.name
+          end
+        )
+      )
+      |> get("/")
+
+    assert Map.get(conn5.resp_cookies, Potionx.Auth.token_config().access_token.name)
+    refute conn5.req_cookies["r_app"] === conn5.resp_cookies["r_app"]
+    refute conn5.req_cookies["a_app"] === conn5.resp_cookies["a_app"]
   end
 
   test "Should allow access to login even without a user", %{conn: conn} do

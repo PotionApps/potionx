@@ -11,7 +11,7 @@ defmodule Potionx.Plug.Auth.Test do
       }}
     end
 
-    test "Should allow a signed in user access and redirect to home page when trying to access login", %{secret_key_base: secret_key_base} do
+    test "Should allow a signed in user access, renew when access token is expired and redirect to home page when trying to access login", %{secret_key_base: secret_key_base} do
       %PotionxTest.User{
         email: Provider.Test.email()
       }
@@ -45,6 +45,7 @@ defmodule Potionx.Plug.Auth.Test do
         conn3
         |> Map.replace(:secret_key_base, secret_key_base)
         |> RouterAuthRequired.call(Router.init([]))
+
       assert {_, _, "ok"} = sent_resp(conn3)
       assert %{user: %{id: _}} = conn3.assigns.context
 
@@ -56,6 +57,28 @@ defmodule Potionx.Plug.Auth.Test do
         |> Map.replace(:secret_key_base, secret_key_base)
         |> RouterAuthRequired.call(Router.init([]))
       assert %{status: 302} = conn4
+
+      conn5 = conn(:get, "/")
+      conn5 = Plug.Test.recycle_cookies(conn5, conn4)
+      conn5 =
+        conn5
+        |> Map.put(
+          :req_headers,
+          Enum.reject(
+            conn5.req_headers,
+            fn {_, v} ->
+              v =~ Potionx.Auth.token_config().access_token.name
+            end
+          )
+        )
+
+      conn5 =
+        conn5
+        |> Map.replace(:secret_key_base, secret_key_base)
+        |> RouterAuthRequired.call(Router.init([]))
+      assert Map.get(conn5.resp_cookies, Potionx.Auth.token_config().access_token.name)
+      refute conn5.req_cookies["r_app"] === conn5.resp_cookies["r_app"]
+      refute conn5.req_cookies["a_app"] === conn5.resp_cookies["a_app"]
     end
 
     test "Should allow access to login even without a user" do

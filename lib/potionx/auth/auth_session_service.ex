@@ -187,10 +187,10 @@ defmodule Potionx.Auth.SessionService do
         end
       end
 
-      def patch(%Service{filters: %{id: id}} = ctx) when not is_nil(id) do
+      def patch(%Service{filters: filters} = ctx) do
         Multi.new
         |> Multi.run(:session_old, fn _, _ ->
-          from(s in @session_schema, where: s.id == ^id)
+          query(ctx)
           |> preload([s], [:user])
           |> @repo.one
           |> case do

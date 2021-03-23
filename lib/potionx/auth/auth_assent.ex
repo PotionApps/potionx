@@ -13,26 +13,13 @@ defmodule Potionx.Auth.Assent do
         context: %{
           assigns: %{
             tokens_to_cookies: true
-          } = assigns,
+          },
           session: session
         }
       }
     }
   ) when not is_nil(session) do
-    [:access_token, :renewal_token]
-    |> Enum.reduce(conn, fn key, acc ->
-      config = Potionx.Auth.token_config()[key]
-      if (Map.get(session, config.uuid_key)) do
-        Potionx.Auth.set_cookie(acc, %{
-          same_site: Map.get(assigns, :same_site, "strict"),
-          name: config.name,
-          token: Map.get(session, config.uuid_key),
-          ttl_seconds: Map.get(session, config.ttl_key)
-        })
-      else
-        acc
-      end
-    end)
+    Potionx.Auth.handle_user_session_cookies(session, conn)
   end
   def before_send(
     conn,
@@ -74,7 +61,7 @@ defmodule Potionx.Auth.Assent do
     |> process_callback(conn, opts)
     |> parse_callback_response(session.sign_in_provider)
     |> create_user_session(session, session_service)
-    |> handle_user_session_cookies(conn)
+    |> Potionx.Auth.handle_user_session_cookies(conn)
     |> case do
       %Plug.Conn{} = conn ->
         url =
@@ -149,6 +136,10 @@ defmodule Potionx.Auth.Assent do
       },
       previous_session
     )
+    |> case do
+      {:ok, %{session: session}} -> session
+      err -> err
+    end
   end
   def create_user_session(err, _, _), do: err
 
@@ -164,21 +155,6 @@ defmodule Potionx.Auth.Assent do
 
     {:ok, user_identity_params, user_params}
   end
-
-  def handle_user_session_cookies({:ok, %{session: session}}, conn) do
-    conn
-    |> Potionx.Auth.set_cookie(%{
-      name: Potionx.Auth.token_config().access_token.name,
-      token: session.uuid_access,
-      ttl_seconds: session.ttl_access_seconds
-    })
-    |> Potionx.Auth.set_cookie(%{
-      name: Potionx.Auth.token_config().renewal_token.name,
-      token: session.uuid_renewal,
-      ttl_seconds: session.ttl_renewal_seconds
-    })
-  end
-  def handle_user_session_cookies(err, _conn), do: err
 
   def init(opts), do: opts
 
@@ -200,7 +176,7 @@ defmodule Potionx.Auth.Assent do
       res |
         context: %{
           ctx |
-            assigns: %{tokens_to_cookies: true, same_site: "none"},
+            assigns: %{tokens_to_cookies: true},
             session: Map.get(value, :session)
         },
         value: Map.delete(value, :session)
