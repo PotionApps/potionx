@@ -5,6 +5,11 @@ if config_env() == :test and System.get_env("DATABASE_URL") !== nil do
     pool: Ecto.Adapters.SQL.Sandbox,
     url: System.get_env("DATABASE_URL")
 end
+if config_env() == :test and System.get_env("REDIS_URL") !== nil do
+  config :redix,
+    url: System.get_env("REDIS_URL")
+end
+
 # config/runtime.exs is executed for all environments, including
 # during releases. It is executed after compilation and before the
 # system starts, so it typically used load production configuration
