@@ -247,6 +247,10 @@ defmodule Potionx.Auth.Assent do
       URI.parse(Plug.Conn.request_url(conn))
       |> Map.replace!(:fragment, nil)
       |> Map.replace!(:query, nil)
+      |> case do
+        %{host: "localhost"} = url -> url
+        url -> %{url | scheme: "https"}
+      end
 
     Keyword.fetch!(strategy_config, :strategy).callback(
       Keyword.put(
@@ -311,6 +315,10 @@ defmodule Potionx.Auth.Assent do
         |> Map.replace!(:path, "/api/v1/auth/#{provider}/callback")
         |> Map.replace!(:fragment, nil)
         |> Map.replace!(:query, nil)
+        |> case do
+          %{host: "localhost"} = url -> url
+          url -> %{url | scheme: "https"}
+        end
 
       strategies
       |> Keyword.fetch(String.to_existing_atom(provider))
