@@ -212,7 +212,6 @@ const appSecrets = new k8s.core.v1.Secret(
             name: 'app-secrets'
         },
         stringData: {
-            "AUTH_CALLBACK_ORIGIN": pulumi.interpolate`https://${hostname}`,
             "ASSENT_GOOGLE_CLIENT_ID": authProviders.google.clientId, 
             "ASSENT_GOOGLE_CLIENT_SECRET": authProviders.google.clientSecret,
             "ASSENT_AZURE_CLIENT_ID": authProviders.azureAd.clientId, 
