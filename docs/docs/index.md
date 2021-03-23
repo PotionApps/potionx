@@ -23,7 +23,7 @@ Potionx is a set of generators and modules that speeds up the process of setting
 - [Vue 3](https://vuejs.org/) frontend components with [JSX](https://github.com/vuejs/jsx-next), [Typescript](https://www.typescriptlang.org/) and [TailwindCSS](https://tailwindcss.com/)
 - Fast frontend development with [Vite](https://vitejs.dev/)
 - [@potionapps/forms](/forms/hooks), Vue 3 form helpers
-- [@potionapps/ui](/generators/ui), a collection of pre-made UI components that can be easily copied over to your project
+- [@potionapps/templates](/generators/ui), a collection of pre-made UI components that can be easily copied over to your project
 - Recipes for deployment with [Pulumi](https://www.pulumi.com/)
 
 ## Technologies

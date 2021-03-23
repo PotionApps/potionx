@@ -4,12 +4,12 @@
 
 The following command can be used to copy over a UI component to your project:
 ```bash
-npx potionapps-ui component <some-component-name> --destination=<some-destination>
+npx @potionapps/templates component <some-component-name> --destination=<some-destination>
 ```
 
 Example usage: 
 ```
-npx potionapps-ui component Btn --destination=./frontend/admin/src/components
+npx @potionapps/templates component Btn --destination=./frontend/admin/src/components
 ```
 This would move the ```Btn``` component to your project.
 
