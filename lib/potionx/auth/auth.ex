@@ -7,7 +7,7 @@ defmodule Potionx.Auth do
         http_only: true,
         domain: conn.host,
         max_age: max_age,
-        secure: conn.scheme === :https
+        secure: true
       ],
       (config || [])
     )
@@ -28,7 +28,7 @@ defmodule Potionx.Auth do
   @doc """
   Handles setting sign up cookies used only during social login and general setting cookies.
   """
-  @spec handle_user_session_cookies(any, any) :: any
+  @spec handle_user_session_cookies(struct(), Plug.Conn.t()) :: any
   def handle_user_session_cookies(%{uuid_renewal: nil, uuid_access: uuid_access} = session, conn) when not is_nil(uuid_access) do
     conn
     |> Potionx.Auth.set_cookie(%{
