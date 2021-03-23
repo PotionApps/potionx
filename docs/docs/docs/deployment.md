@@ -15,21 +15,21 @@ The recipe generates the following cloud architecture:
 The following prerequisites are required:
 
 ### Cloudflare
-1. Sign up for Cloudflare if you do not have an account
+1. Sign up/in to Cloudflare
 2. Add a domain that you already own (we recommend [DNSimple](https://dnsimple.com/) or [Hover](https://www.hover.com/) if you need to purchase one)
-3. If your planned `www`, you will need to remove it from the DNS management section
+3. If your subdomain will be `www`, remove the `www` type from the DNS management table
 4. Copy the `Custom Nameserves` to your domain provider under `custom DNS`
 5. Navigate to [https://dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens)
 6. Create a token that has `Edit zone DNS` permissions
 7. Save the token somewhere, you'll need it later
 
 ### Digital Ocean
-1. Sign up to [DigitalOcean](https://digitalocean.com) (you'll need a credit card)
+1. Sign up/in to [DigitalOcean](https://digitalocean.com) (You'll need a credit card)
 2. Create a token with read/write scope here: [https://cloud.digitalocean.com/account/api/tokens](https://cloud.digitalocean.com/account/api/tokens)
 3. Save the token somewhere, you'll need it later
 
 ### Github
-1. Sign up to Github
+1. Sign up/in to Github
 2. Set up a repository to push your code to
 3. Grab a personal access token here with `read/write` permissions for `packages`: [https://github.com/settings/tokens](https://github.com/settings/tokens)
 4. Save the token somewhere, you'll need it later
@@ -40,10 +40,10 @@ The following prerequisites are required:
 9. Enable `Improved container support`
 
 ### Pulumi
-1. Sign up to Pulumi
-2. Create a new project and select the Kubernetes option + typescript
-3. Install the Pulumi CLI: [https://www.pulumi.com/docs/get-started/install/](https://www.pulumi.com/docs/get-started/install/)
-4. Create a Pulumi access token: [https://app.pulumi.com/account/tokens](https://app.pulumi.com/account/tokens)
+1. Sign up/in to Pulumi
+2. Create a new project and select the Kubernetes + typescript options
+3. Install the Pulumi [CLI](https://www.pulumi.com/docs/get-started/install/)
+4. Create a Pulumi [access token](https://app.pulumi.com/account/tokens)
 5. Save the token somewhere, you'll need it later
 6. Back in Github, navigate to your project's actions secrets settings page https://github.com/USERNAME-OR-ORG/PROJECT-NAME/settings/secrets/actions
 7. Create a new repository secret called `PULUMI_TOKEN` and add your Pulumi secret token from step #4
@@ -68,7 +68,7 @@ pulumi config set --path "authProviders.azureAd.clientSecret" YOUR-AZURE-SOCIAL-
 pulumi config set --path "authProviders.google.clientId" YOUR-GOOGLE-SOCIAL-LOGIN-CLIENT-ID --secret
 pulumi config set --path "authProviders.google.clientSecret" YOUR-GOOGLE-SOCIAL-LOGIN-CLIENT-SECRET --secret
 ```
-2. Then, add a secret called `PULUMI_STACK` with the value of your Pulumi `stack to https://github.com/USERNAME-OR-ORG/PROJECT-NAME/settings/secrets/actions.
+2. Then, back in Github, add a secret called `PULUMI_STACK` with the value of your Pulumi stack to https://github.com/USERNAME-OR-ORG/PROJECT-NAME/settings/secrets/actions.
 
 > Remember to add the right callback URLs to your authentication providers
 
