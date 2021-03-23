@@ -10,8 +10,7 @@ mutation <%= model_name_graphql_case %>Delete(
       message
     }
     node {
-    <%= for field <- graphql_fields do %>
-      <%= field %>
+    <%= for field <- graphql_fields do %><%= field %>
     <% end %>
     }
   }

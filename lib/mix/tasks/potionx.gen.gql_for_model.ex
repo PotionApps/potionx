@@ -462,8 +462,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
   end
 
   @doc false
-  def run(args) do
-    model = Enum.find(args, fn a -> is_atom(a) end)
+  def run(args, model \\ nil) do
     args = Enum.filter(args, fn a -> not is_struct(a) end)
 
     if Mix.Project.umbrella? do
@@ -517,6 +516,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
 
   def run_npx_generator(%GqlForModel{no_frontend: true} = state), do: state
   def run_npx_generator(%GqlForModel{} = state) do
+    IO.inspect(state, label: "weird")
     Mix.shell().cmd(
       "npx @potionapps/templates@latest model #{state.context_name} #{state.model_name} --destination=./frontend/admin"
     )

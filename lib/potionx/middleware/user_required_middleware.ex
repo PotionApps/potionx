@@ -5,9 +5,9 @@ defmodule Potionx.Middleware.UserRequired do
     res
   end
   def call(res, opts) do
-    opts = opts || %{exceptions: []}
+    Keyword.merge(opts, [exceptions: []])
     Enum.member?(
-      opts.exceptions,
+      Keyword.get(opts, :exceptions),
       Absinthe.Resolution.path(res)
       |> Enum.at(0)
       |> Absinthe.Adapter.LanguageConventions.to_internal_name(nil)

@@ -72,8 +72,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
         end
         """
       )
-      Gen.GqlForModel.run(~w(Users User --no-frontend) ++ [Potionx.Users.User])
-
+      Gen.GqlForModel.run(~w(Users User --no-frontend), Potionx.Users.User)
       assert_file "lib/potionx_graphql/schema.ex", fn file ->
         assert file =~
           "|> Dataloader.add_source(PotionxGraphQl.Resolver.User, PotionxGraphQl.Resolver.User.data())"

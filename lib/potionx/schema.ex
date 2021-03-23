@@ -32,7 +32,7 @@ defmodule Potionx.Schema do
       def middleware(middleware, _field, %{identifier: :mutation}) do
         Enum.concat([
           [
-            {Potionx.Middleware.UserRequired, %{exceptions: [:sign_in_provider]}},
+            {Potionx.Middleware.UserRequired, [exceptions: [:sign_in_provider]]},
             Potionx.Middleware.ServiceContext,
             Potionx.Middleware.Scope
           ],
