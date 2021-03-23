@@ -76,8 +76,6 @@ integration-test:
             node ../packages/templates/cli/cli.mjs project --appName=alpha --localDbPassword=postgres --localDbUser=postgres \
             --email=vince@potionapps.com --installDeps --runMigrations --potionxDep='path: "../.."' && \
             cd alpha && \
-            cat mix.exs && \
-            cat test/auth/auth_plug_test.exs && \
             REDIS_URL="redis://localhost:6379/" mix test && \
             cd ./frontend/admin && \
             npm run build
