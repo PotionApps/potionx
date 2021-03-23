@@ -14,6 +14,7 @@ import { cacheExchange } from '@urql/exchange-graphcache';
 import { dedupExchange, fetchExchange } from '@urql/core';
 import urql from '@urql/vue';
 import sessionRenew from 'shared/sessionRenew'
+import { routeNames } from './routes/routeNames'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -34,6 +35,8 @@ app.use(
         addAuthToOperation: ({authState, operation}) => operation,
         getAuth: async ({ authState, mutate }) => {
           if (
+            router.currentRoute.value.name !== routeNames.login &&
+            router.currentRoute.value.name !== routeNames.loginError &&
             typeof document !== 'undefined' && !document.cookie.includes('frontend') &&
             router.currentRoute.value.name
           ) {

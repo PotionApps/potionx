@@ -60,7 +60,7 @@ defmodule <%= webNamespace %>.Router do
     pipe_through :graphql
 
     forward "/", Absinthe.Plug,
-      before_send: {Potionx.Auth.Assent, :before_send},
+      before_send: {Potionx.Auth.Resolvers, :before_send},
       schema: <%= graphqlNamespace %>.Schema
   end
 
@@ -68,12 +68,12 @@ defmodule <%= webNamespace %>.Router do
   scope "/api/v1", as: :api_v1 do
     pipe_through :auth_callback
     get "/auth/:provider/callback",
-      Potionx.Auth.Assent,
+      Potionx.Auth.Resolvers,
       [
         session_service: <%= appModule %>.Sessions.SessionService
       ]
     post "/auth/:provider/callback",
-      Potionx.Auth.Assent,
+      Potionx.Auth.Resolvers,
       [
         session_service: <%= appModule %>.Sessions.SessionService
       ]
