@@ -54,13 +54,19 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>MutationTest do
     end
 
     test "creates <%= model_name_snakecase %>", %{ctx: ctx} do
+      changes = Enum.map(ctx.changes, fn
+        {k, v} when v === %{} -> {k, Jason.encode!(%{})}
+        {k, v} -> {k, v}
+      end)
+      |> Enum.into(%{})
+
       Elixir.File.read!("shared/src/models/<%= context_name %>/<%= model_name %>/<%= model_name_graphql_case %>Mutation.gql")
       |> Absinthe.run(
         <%= module_name_graphql %>.Schema,
         [
           context: ctx,
           variables: %{
-            "changes" => Jason.decode!(Jason.encode!(ctx.changes))
+            "changes" => Jason.decode!(Jason.encode!(changes))
           }
         ]
       )
@@ -113,6 +119,13 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>MutationTest do
     test "patches <%= model_name_snakecase %>", %{ctx: ctx, entry: entry, required_field: required_field} do
       changes =
         required_field && Map.put(%{}, to_string(required_field), <%= model_name %>Mock.run_patch()[required_field]) || %{}
+
+      changes = Enum.map(changes, fn
+        {k, v} when v === %{} -> {k, Jason.encode!(%{})}
+        {k, v} -> {k, v}
+      end)
+      |> Enum.into(%{})
+
       Elixir.File.read!("shared/src/models/<%= context_name %>/<%= model_name %>/<%= model_name_graphql_case %>Mutation.gql")
       |> Absinthe.run(
         <%= module_name_graphql %>.Schema,

@@ -427,6 +427,10 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
       {_, {:assoc, _}} -> false
       _ -> true
     end)
+    |> Enum.map(fn
+      {k, Ecto.UUID} -> {k, :uuid}
+      {k, v} -> {k, v}
+    end)
     |> Mix.Phoenix.Schema.params(type)
     |> Enum.map(fn
       {:email, _} ->
