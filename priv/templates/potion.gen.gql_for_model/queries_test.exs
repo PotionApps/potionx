@@ -7,7 +7,14 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>QueryTest do
     setup do
       ctx = %Potionx.Context.Service{
           changes: <%= model_name %>Mock.run(),
-          roles: [:admin]
+          roles: [:admin],
+          session: %{
+            id: 1,
+            user: %{
+              id: 1,
+              roles: [:admin]
+            }
+          }
         }
       {:ok, entry} = <%= model_name %>Service.mutation(ctx)
       {:ok, ctx: ctx, entry: entry}

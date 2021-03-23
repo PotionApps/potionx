@@ -4,12 +4,25 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>MutationTest do
   alias <%= module_name_data %>.<%= context_name %>.<%= model_name %>Mock
   alias <%= module_name_data %>.<%= context_name %>.<%= model_name %>Service
 
+  def prepare_ctx(ctx) do
+    %{
+      ctx |
+        roles: [:admin],
+        session: %{
+          id: 1,
+          user: %{
+            id: 1,
+            roles: [:admin]
+          }
+        }
+    }
+  end
+
   describe "<%= model_name_snakecase %> delete" do
     setup do
       ctx = %Potionx.Context.Service{
           changes: <%= model_name %>Mock.run(),
-          roles: [:admin]
-        }
+        } |> prepare_ctx
       {:ok, entry} = <%= model_name %>Service.mutation(ctx)
       {:ok, ctx: ctx, entry: entry}
     end
@@ -35,9 +48,8 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>MutationTest do
     setup do
       ctx =
         %Potionx.Context.Service{
-          changes: <%= model_name %>Mock.run() |> Map.delete(:id),
-          roles: [:admin]
-        }
+          changes: <%= model_name %>Mock.run() |> Map.delete(:id)
+        } |> prepare_ctx
       {:ok, ctx: ctx}
     end
 
@@ -63,8 +75,7 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>MutationTest do
       ctx =
         %Potionx.Context.Service{
           changes: %{},
-          roles: [:admin]
-        }
+        } |> prepare_ctx
       {:ok, ctx: ctx}
     end
 
@@ -89,8 +100,7 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>MutationTest do
       ctx =
         %Potionx.Context.Service{
           changes: <%= model_name %>Mock.run(),
-          roles: [:admin]
-        }
+        } |> prepare_ctx
       required_field =
         <%= model_name %>.changeset(%<%= model_name %>{}, %{})
         |> Map.get(:errors)
