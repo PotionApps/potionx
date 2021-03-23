@@ -249,7 +249,7 @@ defmodule Potionx.Auth.Assent do
       |> Map.replace!(:query, nil)
       |> case do
         %{host: "localhost"} = url -> url
-        url -> %{url | scheme: "https"}
+        url -> %{url | port: 443, scheme: "https"}
       end
 
     Keyword.fetch!(strategy_config, :strategy).callback(
@@ -317,7 +317,7 @@ defmodule Potionx.Auth.Assent do
         |> Map.replace!(:query, nil)
         |> case do
           %{host: "localhost"} = url -> url
-          url -> %{url | scheme: "https"}
+          url -> %{url | port: 443, scheme: "https"}
         end
 
       strategies
