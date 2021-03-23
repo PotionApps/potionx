@@ -1,6 +1,4 @@
 # Social Login
-Potionx uses [Pow/Pow Assent](https://github.com/pow-auth/pow_assent) for authentication and authorization. 
-
 To set up the providers of your choice from [Assent](https://github.com/pow-auth/assent), you'll need to edit `config/dev.secret.exs` with the appropriate credentials. Included below are instructions for how to do this for the Google and Microsoft (Azure) platforms which are included are strategies by default.
 
 You'll have to remove the providers you don't plan on using from: 

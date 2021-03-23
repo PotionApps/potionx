@@ -61,13 +61,13 @@ Here's an overview of what a Potionx project looks like. It's what a project dir
 ├─ lib
 │  ├─ some_project_name # The main data layer
 │  │   ├─ user_identities
-│  │   │  ├─ user_identity.ex # user_identity model used by Pow Assent
+│  │   │  ├─ user_identity.ex # user_identity model used by Potinx Auth
 │  │   │  ├─ user_identity_mock.ex # mock of user_identity for testing purposes
 │  │   │  └─ user_identity_service.ex
 │  │   │  # the service used to create/query/edit user identities
 │  │   ├─ users
 │  │   │  ├─ user.ex
-│  │   │  │ # user model used by Pow, Pow Assent and used in the
+│  │   │  │ # user model used by Potionx Auth and used in the
 │  │   │  │ # admin theme by default
 │  │   │  ├─ user_mock.ex # mock of user for testing purposes
 │  │   │  └─ user_service.ex # the service used to create/query/edit users

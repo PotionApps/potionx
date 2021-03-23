@@ -18,8 +18,7 @@ Potionx is a set of generators and modules that speeds up the process of setting
 - [Opinionated defaults for naming and file structure](/conventions/overview)
 - [Phoenix](https://www.phoenixframework.org/) as the base Elixir framework with some opinionated defaults
 - GraphQL layer using [Absinthe](http://absinthe-graphql.org/)
-- Social logins enabled by [Pow and PowAssent](https://powauth.com/)
-- [Pow and PowAssent](https://powauth.com/) for authentication/authorization
+- Social logins enabled by [Assent](https://github.com/pow-auth/assent)
 - [Vue 3](https://vuejs.org/) frontend components with [JSX](https://github.com/vuejs/jsx-next), [Typescript](https://www.typescriptlang.org/) and [TailwindCSS](https://tailwindcss.com/)
 - Fast frontend development with [Vite](https://vitejs.dev/)
 - [@potionapps/forms](/forms/hooks), Vue 3 form helpers
@@ -33,7 +32,7 @@ Potionx is a set of generators and modules that speeds up the process of setting
 - [Phoenix](https://www.phoenixframework.org/)
 - [PostgreSQL](https://www.postgresql.org/)
 - [Redis](https://redis.io/)
-- [Pow and PowAssent](https://powauth.com/)
+- [Assent](https://github.com/pow-auth/assent)
 - [TailwindCSS](https://tailwindcss.com/)
 - [Typescript](https://www.typescriptlang.org/)
 - [URQL](https://formidable.com/open-source/urql/)

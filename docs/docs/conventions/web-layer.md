@@ -10,42 +10,47 @@ The following default routes and plugs are added:
 ```elixir
   pipeline :graphql do
     plug :accepts, ["json"]
-    plug Potionx.Plug.ApiAuth, otp_app: :installer_test_twelve
     plug Potionx.Plug.ServiceContext
-    plug Potionx.Plug.MaybeDisableIntrospection, [roles: [:admin]]
-    # disables GraphQL introspection if user does not have admin role
+    plug Potionx.Plug.Auth,
+      session_optional: true,
+      session_service: SomeProject.Sessions.SessionService,
+      user_optional: true
+    if Mix.env() in [:prod, :test] do
+      plug Potionx.Plug.MaybeDisableIntrospection, [roles: [:admin]]
+    end
+    plug Potionx.Plug.Absinthe
   end
 
-  pipeline :api do
+  pipeline :auth_callback do
     plug :accepts, ["json"]
-    plug Potionx.Plug.ApiAuth, otp_app: :installer_test_twelve
+    plug Potionx.Plug.ServiceContext
+    plug Potionx.Plug.Auth,
+      session_optional: false,
+      session_service: SomeProject.Sessions.SessionService,
+      user_optional: true
   end
 
-  pipeline :api_protected do
-    plug Pow.Plug.RequireAuthenticated, error_handler: Potionx.Plug.ApiAuthErrorHandler
-  end
-
-   scope "/graphql/v1" do
+  scope "/graphql/v1" do
     pipe_through :graphql
 
     forward "/", Absinthe.Plug,
+      before_send: {Potionx.Auth.Resolvers, :before_send},
       schema: SomeProjectGraphQl.Schema
   end
 
 
-  scope "/api/v1", SomeProjectWeb, as: :api_v1 do
-    pipe_through :api
-
-    get "/auth/:provider/new", AuthorizationController, :new
-    get "/auth/:provider/callback", AuthorizationController, :callback
-    post "/auth/:provider/callback", AuthorizationController, :callback
-    get "/session/delete", AuthController, :delete
-    post "/session/renew", AuthController, :renew
+  scope "/api/v1", as: :api_v1 do
+    pipe_through :auth_callback
+    get "/auth/:provider/callback",
+      Potionx.Auth.Resolvers,
+      [
+        session_service: SomeProject.Sessions.SessionService
+      ]
+    post "/auth/:provider/callback",
+      Potionx.Auth.Resolvers,
+      [
+        session_service: SomeProject.Sessions.SessionService
+      ]
   end
 
-  scope "/", SomeProjectWeb do
-    pipe_through :browser
-
-    get "/*path", AppController, :index
-  end
 ```
