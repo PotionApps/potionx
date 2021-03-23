@@ -24,6 +24,5 @@
     },
     "homepage": "https://github.com/PotionApps/potionx#readme",
     "dependencies": {
-        "@potionapps/ui": "file:packages/ui"
     }
 }
