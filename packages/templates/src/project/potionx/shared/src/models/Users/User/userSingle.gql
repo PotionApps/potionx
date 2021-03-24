@@ -4,6 +4,7 @@ query userSingle(
   userSingle(
     filters: $filters
   ) {
+    __typename
     deletedAt
     email
     id

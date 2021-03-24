@@ -44,7 +44,7 @@ export default defineComponent({
     })
 
     const model = computed(() => {
-      if (route.params.id === "new") return {}
+      if (route.params.id === "new") return null
       return data.value?.__model_graphql_case__Single
     })
 

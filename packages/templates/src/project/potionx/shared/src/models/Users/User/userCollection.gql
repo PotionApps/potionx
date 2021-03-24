@@ -22,6 +22,7 @@ query userCollection(
     countBefore
     edges {
       node {
+        __typename
         deletedAt
         email
         id

@@ -33,30 +33,30 @@ defmodule <%= appModule %>.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:absinthe, "~> 1.6.0", override: true},
       {:absinthe_phoenix, "~> 2.0.0"},
       {:absinthe_plug, "~> 1.5"},
       {:absinthe_relay, "~> 1.5.1"},
+      {:absinthe, "~> 1.6.0", override: true},
       {:castore, "~> 0.1.0"},
       {:dataloader, "~> 1.0.0"},
       {:decimal, "~> 2.0", override: true},
-      {:mint, "~> 1.0"},
-      {:phoenix, "~> 1.5.7"},
-      {:phoenix_ecto, "~> 4.1"},
-      {:potionx, <%- potionxDep %>},
-      {:redix, "~> 1.0.0"},
-      {:typed_struct, "~> 0.2.1"},
       {:ecto_network, "~> 1.3.0"},
       {:ecto_sql, "~> 3.5"},
-      {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 2.11"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_dashboard, "~> 0.4"},
-      {:telemetry_metrics, "~> 0.4"},
-      {:telemetry_poller, "~> 0.4"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
+      {:mint, "~> 1.0"},
+      {:phoenix_ecto, "~> 4.1"},
+      {:phoenix_html, "~> 2.11"},
+      {:phoenix_live_dashboard, "~> 0.4"},
+      {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:phoenix, "~> 1.5.7"},
       {:plug_cowboy, "~> 2.0"}
+      {:postgrex, ">= 0.0.0"},
+      {:potionx, <%- potionxDep %>},
+      {:redix, "~> 1.0.0"},
+      {:telemetry_metrics, "~> 0.4"},
+      {:telemetry_poller, "~> 0.4"},
+      {:typed_struct, "~> 0.2.1"},
     ]
   end
 

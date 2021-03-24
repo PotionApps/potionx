@@ -10,23 +10,15 @@ mutation userDelete(
       message
     }
     node {
-    
+      __typename
       deletedAt
-    
       email
-    
       id
-    
       insertedAt
-    
       nameFirst
-    
       nameLast
-    
       roles
-    
       title
-    
       updatedAt
     
     }
