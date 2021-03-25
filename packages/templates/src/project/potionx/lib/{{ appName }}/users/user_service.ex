@@ -20,8 +20,8 @@ defmodule <%= appModule %>.Users.UserService do
         entry
         |> User.changeset(%{})
         |> Ecto.Changeset.put_change(
-          :deleted_at, 
-          NaiveDateTime.truncate(NaiveDateTime.utc_now, :second)
+          :deleted_at,
+          DateTime.truncate(DateTime.utc_now, :second)
         )
         |> Repo.update
     end
