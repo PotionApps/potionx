@@ -15,6 +15,7 @@ defmodule Potionx.MixProject do
       {:absinthe_plug, "~> 1.5.4"},
       {:absinthe_relay, "~> 1.5.1"},
       {:assent, "~> 0.1.23"},
+      {:dataloader, "~> 1.0.0"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.0"},
       {:redix, "~> 1.0.0"},
