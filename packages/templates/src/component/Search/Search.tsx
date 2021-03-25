@@ -63,7 +63,11 @@ export default defineComponent({
       return (
         <div class={["relative", "w-full"]}>
           <div class={["absolute", "right-3", "top-2/4", "transform", "-translate-y-1/2", searchText.value && "cursor-pointer"]} onClick={clear}>
-            <FontAwesomeIcon class={["opacity-50", searchText.value ? "w-4" : "w-5"]} icon={searchText.value ? faTimes : faSearch} />
+            <FontAwesomeIcon
+              class={["opacity-50", props.val?.value ? "w-4" : "w-5"]}
+              icon={props.val?.value ? faTimes : faSearch}
+              key={props.val?.value ? "faTimes" : "faSearch"}
+            />
           </div>
           <input 
             class="bg-white border-1 border-gray-300 outline-none py-2 pl-3 pr-10 rounded-md transition w-full"
