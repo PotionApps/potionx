@@ -1,4 +1,4 @@
-defmodule Potionx.Auth.Test do
+defmodule Potionx.GraphQl.Middleware.ChangesetErrorsTest do
   use Potionx.ConnCase
   alias PotionxTest.Router
 
