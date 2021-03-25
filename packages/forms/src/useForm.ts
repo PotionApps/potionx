@@ -96,8 +96,6 @@ export default function useForm(args: UseFormArgs) {
 
   const isValid = computed(() => {
     return Object.values(errors as {[key: string]: string[]})
-      .every((e: string[]) => e.length === 0) &&
-      Object.values(serverErrors as {[key: string]: string[]})
       .every((e: string[]) => e.length === 0)
   })
 
@@ -146,7 +144,7 @@ export default function useForm(args: UseFormArgs) {
   const submit : FormSubmit = (e?: Event) => {
     if (e) e.preventDefault()
     hasSubmitted.value = true
-    if (!numberOfChanges.value || submitStatus.value === FormSubmitStatus.loading) return
+    if (!numberOfChanges.value || submitStatus.value === FormSubmitStatus.loading || !isValid.value) return
     submitStatus.value = FormSubmitStatus.loading
     args.onSubmit(toChangeset())
       .then((res: boolean) => {
