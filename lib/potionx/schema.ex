@@ -1,6 +1,13 @@
 defmodule Potionx.Schema do
-  defmacro __using__(_) do
+  defmacro __using__(opts) do
+    opts = Keyword.merge(
+      [
+        user_required_exceptions: []
+      ],
+      opts
+    )
     quote do
+      @user_required_exceptions unquote(opts[:user_required_exceptions])
       use Absinthe.Schema
       use Absinthe.Relay.Schema, :modern
       import_types Absinthe.Plug.Types
@@ -34,7 +41,10 @@ defmodule Potionx.Schema do
         Enum.concat([
           [
             {Potionx.Middleware.UserRequired, [
-              exceptions: [:session_renew, :sign_in_provider]
+              exceptions: @user_required_exceptions
+                ++ [
+                  :session_renew, :sign_in_provider
+                ]
             ]},
             Potionx.Middleware.ServiceContext,
             Potionx.Middleware.Scope
@@ -56,6 +66,10 @@ defmodule Potionx.Schema do
 
       def middleware(middleware, _field, _object) do
         middleware
+      end
+
+      def plugins do
+        [Absinthe.Middleware.Dataloader] ++ Absinthe.Plugin.defaults()
       end
 
       defoverridable([middleware: 3])
