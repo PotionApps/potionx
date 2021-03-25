@@ -8,6 +8,9 @@ defmodule Potionx.Middleware.ServiceContext do
           ctx |
             changes: Map.get(args, :changes, ctx.changes),
             filters: Map.get(args, :filters, ctx.filters),
+            order: Map.get(args, :order),
+            order_by: Map.get(args, :order_by),
+            search: Map.get(args, :search),
             pagination: %Potionx.Repo.Pagination{
               after: Map.get(args, :after),
               before: Map.get(args, :before),

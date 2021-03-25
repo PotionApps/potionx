@@ -3,15 +3,19 @@ defmodule Potionx.Context.Service do
   @behaviour Access
 
   typedstruct do
+    field :__absinthe_plug__, map()
     field :assigns, map()
     field :changes, map(), default: %{}
     field :files, [Plug.Upload.t()]
     field :filters, map(), default: %{}
-    field :ip, :string
+    field :ip, String.t()
+    field :order, atom()
+    field :order_by, String.t()
     field :organization, struct()
     field :pagination, Potionx.Repo.Pagination.t(), default: %Potionx.Repo.Pagination{}
     field :request_url, String.t()
     field :roles, [String.t()], default: []
+    field :search, String.t()
     field :session, struct()
     field :user, struct()
   end
