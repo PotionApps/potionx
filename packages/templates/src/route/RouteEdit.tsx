@@ -23,6 +23,7 @@ import FieldRadio from 'components/FieldRadio/FieldRadio';
 import FieldSelect from 'components/FieldSelect/FieldSelect';
 import FieldTextarea from 'components/FieldTextarea/FieldTextarea';
 import mutation from 'shared/models/__context__/__model__/__model_graphql_case__Mutation.gql'
+import mutationDelete from 'shared/models/__context__/__model__/__model_graphql_case__Delete.gql'
 import schema from 'shared/models/__context__/__model__/__model_graphql_case__.json'
 import single from 'shared/models/__context__/__model__/__model_graphql_case__Single.gql'
 
@@ -81,7 +82,7 @@ export default defineComponent({
               if (route.params.id === 'new') {
                 router.push({
                   name: route.name!,
-                  params: { id: res.data!.userMutation!.node!.id }
+                  params: { id: res.data!.__model_graphql_case__Mutation!.node!.id }
                 })
               }
               return true
