@@ -74,7 +74,7 @@ export default defineComponent({
     })
 
     const fieldsOrdered = computed<ModelTableProps['headingLabels']>(() => {
-      return columnOrder.value.reduce((acc: HeadingLabel[], key) => {
+      return columnOrder.value.reduce((acc: HeadingLabelProps[], key) => {
         const field = fields.value!.find(field => field.key === key)
         if (field) {
           acc.push(field)
@@ -89,7 +89,7 @@ export default defineComponent({
             {
               fieldsOrdered.value!.map(({ key, label }) => {
                 if (key === "image") return <th class="border-gray-300 border-b-1 border-t-1"></th>
-                return <th class="border-gray-300 border-b-1 border-t-1 font-normal px-3 py-3 s750:first:pl-8 s750:last:pr-8 text-gray-500 text-left text-sm uppercase s750m:hidden">
+                return <th class="border-gray-300 border-b-1 border-t-1 font-normal px-3 py-3 s750:first:pl-8 s750:last:pr-8 text-gray-500 text-left text-sm uppercase s750m:hidden whitespace-nowrap">
                   {label}
                 </th>
               })
@@ -104,7 +104,7 @@ export default defineComponent({
                 >
                   {
                     fieldsOrdered.value!.map((field) => {
-                      const key = field.key as keyof ModelRow
+                      const key = field.key as keyof ModelRowProps
                       let rowData : any
                       switch (key) {
                         case "icon":
