@@ -6,6 +6,7 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>Queries do
     connection field :<%= model_name_snakecase %>_collection, node_type: :<%= model_name_snakecase %> do
       arg :filters, :<%= model_name_snakecase %>_filters
       arg :order, type: :sort_order, default_value: :asc
+      arg :search, :string
       middleware Potionx.Middleware.RolesAuthorization, [roles: [:admin]]
       resolve &<%= module_name_graphql %>.Resolver.<%= model_name %>.collection/2
     end

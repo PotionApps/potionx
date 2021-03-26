@@ -12,6 +12,7 @@ mutation userMutation(
       message
     }
     node {
+      __typename
       deletedAt
       email
       id

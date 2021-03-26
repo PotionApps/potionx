@@ -159,14 +159,16 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
             $before: String,
             $first: Int,
             $last: Int,
-            $filters: UserFilters
+            $filters: UserFilters,
+            $search: String
           ) {
             userCollection(
               after: $after,
               before: $before,
               first: $first,
               filters: $filters,
-              last: $last
+              last: $last,
+              search: $search
             ) {
               pageInfo {
                 endCursor
@@ -178,6 +180,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
               countBefore
               edges {
                 node {
+                  __typename
                   deletedAt
                   email
                   id
@@ -211,6 +214,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
                 message
               }
               node {
+                __typename
                 deletedAt
                 email
                 id
@@ -234,6 +238,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
             userSingle(
               filters: $filters
             ) {
+              __typename
               deletedAt
               email
               id
@@ -368,6 +373,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
               connection field :user_collection, node_type: :user do
                 arg :filters, :user_filters
                 arg :order, type: :sort_order, default_value: :asc
+                arg :search, :string
                 middleware Potionx.Middleware.RolesAuthorization, [roles: [:admin]]
                 resolve &PotionxGraphQl.Resolver.User.collection/2
               end

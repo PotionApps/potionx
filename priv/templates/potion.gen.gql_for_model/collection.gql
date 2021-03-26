@@ -3,14 +3,16 @@ query <%= model_name_graphql_case %>Collection(
   $before: String,
   $first: Int,
   $last: Int,
-  $filters: <%= model_name %>Filters
+  $filters: <%= model_name %>Filters,
+  $search: String
 ) {
   <%= model_name_graphql_case %>Collection(
     after: $after,
     before: $before,
     first: $first,
     filters: $filters,
-    last: $last
+    last: $last,
+    search: $search
   ) {
     pageInfo {
       endCursor

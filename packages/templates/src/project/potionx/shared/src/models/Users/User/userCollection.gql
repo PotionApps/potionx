@@ -3,14 +3,16 @@ query userCollection(
   $before: String,
   $first: Int,
   $last: Int,
-  $filters: UserFilters
+  $filters: UserFilters,
+  $search: String
 ) {
   userCollection(
     after: $after,
     before: $before,
     first: $first,
     filters: $filters,
-    last: $last
+    last: $last,
+    search: $search
   ) {
     pageInfo {
       endCursor
