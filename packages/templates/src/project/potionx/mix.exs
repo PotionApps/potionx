@@ -50,7 +50,7 @@ defmodule <%= appModule %>.MixProject do
       {:phoenix_live_dashboard, "~> 0.4"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix, "~> 1.5.7"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},
       {:potionx, <%- potionxDep %>},
       {:redix, "~> 1.0.0"},
