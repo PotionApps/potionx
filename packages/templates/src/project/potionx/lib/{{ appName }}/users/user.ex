@@ -58,6 +58,7 @@ defmodule <%= appModule %>.Users.User do
       Ecto.Enum.values(__MODULE__, :roles)
     )
     |> validate_required([:email])
+    |> unique_constraint(:email)
   end
 
   def from_json(%{id: _} = user) do

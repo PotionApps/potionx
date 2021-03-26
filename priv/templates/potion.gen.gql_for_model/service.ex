@@ -45,6 +45,7 @@ defmodule <%= module_name_data %>.<%= context_name %>.<%= model_name %>Service d
 
   def query(%Service{} = ctx) do
     <%= model_name %>
+    |> search(ctx)
     |> where(
       ^(
         ctx.filters
@@ -54,4 +55,26 @@ defmodule <%= module_name_data %>.<%= context_name %>.<%= model_name %>Service d
     |> order_by([desc: :id])
   end
   def query(q, _args), do: q
+
+  @doc """
+  A search function that searches all string columns by default.
+  """
+  def search(query, %Service{search: nil}), do: query
+  def search(query, %Service{search: ""}), do: query
+  def search(query, %Service{search: s}) do
+    clauses =
+      <%= model_name %>.__schema__(:fields)
+      |> Enum.reduce(nil, fn field_name, query ->
+        if (<%= model_name %>.__schema__(:type, field_name) === :string) do
+          if (query === nil) do
+            dynamic([p], ilike(field(p, ^field_name), ^"%#{s}%"))
+          else
+            dynamic([p], ilike(field(p, ^field_name), ^"%#{s}%") or ^query)
+          end
+        else
+          query
+        end
+      end)
+    from(query, where: ^clauses)
+  end
 end
