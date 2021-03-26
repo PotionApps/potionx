@@ -813,7 +813,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
           else
             model = ass.related |> to_string() |> String.split(".") |> Enum.at(-1) |> Macro.underscore()
             result_type = ass.cardinality === :many && "list_of(:#{model})" || model
-            acc ++ ["field :#{to_string(k)}, #{result_type}, resolve: dataloader(#{state.module_name_graphql}.Resolver.#{state.model_name})"]
+            acc ++ ["field :#{to_string(k)}, :#{result_type}, resolve: dataloader(#{state.module_name_graphql}.Resolver.#{state.model_name})"]
           end
         {:id, _}, acc ->
           acc
