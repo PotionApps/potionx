@@ -56,6 +56,7 @@ function getDocsSidebar() {
             text: 'Docs',
             children: [
                 { text: 'Introduction', link: '/' },
+                { text: 'Tutorials', link: '/docs/tutorials' },
                 { text: 'Getting Started', link: '/docs/getting-started' },
                 { text: 'Social Logins', link: '/docs/social' },
                 { text: 'Generators', link: '/docs/generators' },
