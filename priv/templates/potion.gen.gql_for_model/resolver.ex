@@ -73,6 +73,11 @@ defmodule <%= module_name_graphql %>.Resolver.<%= model_name %> do
 
   def mutation(_, %{context: %Service{} = ctx}) do
     <%= model_name %>Service.mutation(ctx)
+    |> case do
+      {:ok, %{<%= model_name_atom %>: res}} -> {:ok, res}
+      {:error, _, err, _} -> {:error, err}
+      res -> res
+    end
   end
 
   def one(_, %{context: %Service{} = ctx}) do
