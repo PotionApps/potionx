@@ -34,8 +34,6 @@ defmodule <%= appModule %>GraphQl.Schema do
     import_fields :auth_mutations
   end
 
-  subscription do
-  end
   import_types <%= appModule %>GraphQl.Schema.AuthMutations
   import_types <%= appModule %>GraphQl.Schema.UserIdentityTypes
   import_types <%= appModule %>GraphQl.Schema.UserMutations
