@@ -26,40 +26,40 @@ The result of this command would add the following to your project:
 │     ├─ public 
 │     ├─ src
 │     │   ├─ routes
-│     │   │  ├─ <b>RouteSomeModelEdit</b>
-│     │   │  ├─ <b>RouteUserList</b>
+│     │   │  ├─ RouteSomeModelEdit
+│     │   │  ├─ RouteUserList
 ├─ lib
 │  │   ├─ some_context
-│  │   │  └─ <b>some_model_service.ex</b>
+│  │   │  └─ some_model_service.ex
 │  ├─ some_project_name_graphql
 │  │   ├─ resolvers 
-│  │   │  └─ <b>some_model_resolver.ex</b>
+│  │   │  └─ some_model_resolver.ex
 │  │   ├─ schemas
 │  │   │  ├─ user
-│  │   │  │  ├─ <b>some_model_mutations.ex</b>
-│  │   │  │  ├─ <b>some_model_queries.ex</b>
-│  │   │  │  └─ <b>some_model_types.ex</b>
+│  │   │  │  ├─ some_model_mutations.ex
+│  │   │  │  ├─ some_model_queries.ex
+│  │   │  │  └─ some_model_types.ex
 ├─ shared # shared frontend/backend code
 │  ├─ src
 │  │  ├─ models
 │  │  │  ├─ Users
-│  │  │  │  └ User
-│  │  │  │    ├ <b>someModel.json </b>
-│  │  │  │    ├ <b>someModel.mock.json </b>
-│  │  │  │    ├ <b>someModelCollection.gql </b>
-│  │  │  │    ├ <b>someModelCollection.gql.ts</b>
-│  │  │  │    ├ <b>someModelDelete.gql </b>
-│  │  │  │    ├ <b>someModelDelete.gql.ts </b>
-│  │  │  │    ├ <b>someModelMutation.gql </b>
-│  │  │  │    ├ <b>someModelMutation.gql.ts</b>
-│  │  │  │    ├ <b>someModelSingle.gql </b>
-│  │  │  │    └ <b>someModelSingle.gql.ts</b>
+│  │  │  │  └─ User
+│  │  │  │     ├─ someModel.json 
+│  │  │  │     ├─ someModel.mock.json 
+│  │  │  │     ├─ someModelCollection.gql 
+│  │  │  │     ├─ someModelCollection.gql.ts
+│  │  │  │     ├─ someModelDelete.gql 
+│  │  │  │     ├─ someModelDelete.gql.ts 
+│  │  │  │     ├─ someModelMutation.gql 
+│  │  │  │     ├─ someModelMutation.gql.ts
+│  │  │  │     ├─ someModelSingle.gql 
+│  │  │  │     └─ someModelSingle.gql.ts
 ├─ test
 │  ├─ some_project_graphql
 │  │  ├─ mutations
-│  │  │   └─ <b>some_model_mutations_test.exs</b>
+│  │  │   └─ some_model_mutations_test.exs
 │  │  └─ queries
-│  │      └─ <b>some_model_queries_test.exs</b>
+│  │      └─ some_model_queries_test.exs
 ```
 
 It will also modify the following files to make your model accessible and editable in the admin area
