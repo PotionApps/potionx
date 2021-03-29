@@ -3,3 +3,8 @@ generates:
   ./src/types.d.ts:
     plugins:
       - typescript
+  ./src/introspection.json:
+    plugins:
+      - introspection
+    config:
+      minify: true

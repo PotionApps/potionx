@@ -7,7 +7,8 @@
   "dependencies": {
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^1.20.1",
+    "@graphql-codegen/cli": "^1.21.1",
+    "@graphql-codegen/introspection": "^1.18.1",
     "@graphql-codegen/typescript": "^1.20.2",
     "graphql": "^15.5.0"
   }
