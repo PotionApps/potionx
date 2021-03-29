@@ -4,6 +4,7 @@ defmodule <%= module_name_graphql %>.Schema.<%= model_name %>Queries do
 
   object :<%= model_name_snakecase %>_queries do
     connection field :<%= model_name_snakecase %>_collection, node_type: :<%= model_name_snakecase %> do
+      # :after, :before, :first, :last added by connection
       arg :filters, :<%= model_name_snakecase %>_filters
       arg :order, type: :sort_order, default_value: :asc
       arg :search, :string

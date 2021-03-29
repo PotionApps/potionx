@@ -1,5 +1,5 @@
-import { ref, watch, ComputedRef } from "vue"
-import { useRouter } from "vue-router"
+import { ComputedRef, onMounted } from "vue"
+import { QueryArgs } from "./useQueryArgs"
 
 export interface UsePaginationArgs {
   limit: number
@@ -7,85 +7,56 @@ export interface UsePaginationArgs {
     endCursor?: string | null
     startCursor?: string | null
   } | null | undefined>
-  routeMode?: boolean
-}
-
-type Variables = {
-  after?: string | null,
-  before?: string | null,
-  first?: number,
-  last?: number
+  updateQueryArgs: (args: Partial<QueryArgs>) => void
 }
 
 export default (opts: UsePaginationArgs) => {
-  const keys : (keyof Variables)[] = ['after', 'before', 'first', 'last']
-  const router = useRouter()
-  const variables = ref<Variables>({
-    first: opts.limit
-  })
-
-  const clearKeys = () => {
-    keys.forEach(k => delete variables.value[k])
+  const goToFirst = (args?: Partial<QueryArgs>) => {
+    return opts.updateQueryArgs({
+      after: undefined,
+      before: undefined,
+      first: opts.limit,
+      last: undefined,
+      ...(args || {})
+    })
   }
 
-  const goToFirst = () => {
-    clearKeys()
-    variables.value.first = opts.limit
-  }
-
-  const goToLast = () => {
-    clearKeys()
-    variables.value.last = opts.limit
+  const goToLast =  (args?: Partial<QueryArgs>) => {
+    return opts.updateQueryArgs({
+      after: undefined,
+      before: undefined,
+      first: undefined,
+      last: opts.limit,
+      ...(args || {})
+    })
   }
 
   const next = () => {
-    clearKeys()
-    variables.value.after = opts.pageInfo?.value?.endCursor
-    variables.value.first = opts.limit
+    return opts.updateQueryArgs({
+      after: opts.pageInfo?.value?.endCursor || undefined,
+      before: undefined,
+      first: opts.limit,
+      last: undefined
+    })
   }
 
   const prev = () => {
-    clearKeys()
-    variables.value.before = opts.pageInfo?.value?.startCursor
-    variables.value.last = opts.limit
-  }
-
-  if (opts.routeMode) {
-    watch(
-      variables,
-      (nextVariables) => {
-        const query = {...router.currentRoute.value.query}
-        keys.forEach(key => {
-          if (nextVariables[key] !== undefined)  {
-            query[key] = nextVariables[key]! + ''
-          } else {
-            delete query[key]
-          }
-        })
-        router.push({
-          query
-        })
-      }, {
-        deep: true
-      }
-    )
-    const query = router.currentRoute.value.query
-    keys.forEach(key => {
-      if (query[key] === undefined)  return
-
-      if(key == "first" || key == "last") {
-        variables.value[key] = parseInt((query[key] as string))
-      } else {
-        variables.value[key] = query[key] as string
-      }
+    return opts.updateQueryArgs({
+      after: undefined,
+      before: opts.pageInfo?.value?.startCursor || undefined,
+      first: undefined,
+      last: opts.limit
     })
   }
+
+  onMounted(() => {
+    goToFirst()
+  })
 
   return {
     goToFirst,
     goToLast,
     next, 
-    prev,
-    variables
+    prev
   }
 }
