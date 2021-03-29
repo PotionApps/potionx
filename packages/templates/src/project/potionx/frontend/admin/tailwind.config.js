@@ -1,7 +1,7 @@
 module.exports = {
     darkMode: false, // or 'media' or 'class'
     plugins: [
-        require('windicss/plugin/forms')
+        require('@tailwindcss/forms')
     ],
     theme: {
         borderWidth: {
