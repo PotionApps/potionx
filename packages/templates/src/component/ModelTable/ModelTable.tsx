@@ -83,7 +83,7 @@ export default defineComponent({
       }, [])
     })
     return () => {
-      return <div class="s750:overflow-x-auto">
+      return <div class="s750:overflow-x-auto max-w-full">
         <table class="table-auto w-full">
           <thead class="bg-gray-100">
             {
@@ -129,7 +129,7 @@ export default defineComponent({
                           if (Array.isArray(val)) {
                             rowData = val.join(", ")
                           } else {
-                            rowData = val
+                            rowData = val === null ? "-" : JSON.stringify(val)
                           }
                       }
                       return <td class="s750m:last:border-b-1 s750m:last:border-gray-300  s750:border-b-1 s750:border-gray-300 s750m:flex s750m:items-start px-4 py-1 s750m:last:pb-6 s750m:first:pt-6 s750:first:pl-8 s750:last:pr-8 s750:py-4">
