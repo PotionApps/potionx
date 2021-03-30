@@ -18,7 +18,7 @@ import { routeNames } from './routes/routeNames'
 
 const router = createRouter({
   history: createWebHistory(),
-  routes, // short for `routes: routes`
+  routes
 })
 
 const app = createApp(App)

@@ -164,7 +164,7 @@ export default defineComponent({
                       name={s.name}
                     />
                     break;
-                case "select":
+                case "textarea":
                   component =
                     <FieldTextarea
                       label={s.label || s.name}
