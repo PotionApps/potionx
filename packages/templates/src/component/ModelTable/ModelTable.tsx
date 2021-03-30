@@ -1,10 +1,10 @@
 import { defineComponent, PropType, computed } from "vue";
 
+type CheckboxClick = (row: ModelRowProps) => void
 type HeadingLabelProps = {
   name: string, 
   label: string
 }
-
 export interface ModelRowProps {
   id: string | null
   description?: string | null
@@ -17,7 +17,7 @@ export interface ModelRowProps {
 }
 
 export interface ModelTableProps {
-  checkboxClick?: (row: ModelRowProps) => void,
+  checkboxClick?: CheckboxClick,
   columnOrder?: string[]
   excludeTimestamps?: boolean
   headingLabels?: HeadingLabelProps[]
@@ -27,7 +27,7 @@ export interface ModelTableProps {
 export default defineComponent({
   name: "ModelTable",
   props: {
-    checkboxClick: Function as PropType<ModelTableProps['checkboxClick']>,
+    checkboxClick: Function as PropType<CheckboxClick>,
     columnOrder: Array as PropType<ModelTableProps['columnOrder']>,
     excludeTimestamps: Boolean,
     headingLabels: Array as PropType<ModelTableProps['headingLabels']>,
