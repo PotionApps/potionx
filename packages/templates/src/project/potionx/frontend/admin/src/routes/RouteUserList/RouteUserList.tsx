@@ -22,7 +22,7 @@ export default defineComponent({
   setup () {
     const headingLabels =
       schema.map((s: any) => ({
-        key: s.name,
+        name: s.name,
         label: s.label || s.name
       }))
     const limit = 100

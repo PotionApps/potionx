@@ -1,7 +1,7 @@
 import { defineComponent, PropType, computed } from "vue";
 
 type HeadingLabelProps = {
-  key: string, 
+  name: string, 
   label: string
 }
 
