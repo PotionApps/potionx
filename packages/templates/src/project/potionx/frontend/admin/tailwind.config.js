@@ -28,7 +28,7 @@ module.exports = {
         },
         flex: {
             '1': '1 1 0%',
-            'auto': 'flex: 1 1 auto',
+            'auto': '1 1 auto',
             'fit': '0 0 auto',
             'full': '1 1 auto',
             'half': '0 0 50%',
