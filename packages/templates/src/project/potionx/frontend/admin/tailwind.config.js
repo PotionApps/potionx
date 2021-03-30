@@ -3,6 +3,9 @@ module.exports = {
     plugins: [
         require('@tailwindcss/forms')
     ],
+    purge: [
+        './src/**/*.{js,jsx,ts,tsx,vue}'
+    ],
     theme: {
         borderWidth: {
             '1': '1px',

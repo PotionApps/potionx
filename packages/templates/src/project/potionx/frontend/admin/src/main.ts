@@ -7,7 +7,7 @@ import "@fontsource/inter/400.css"
 import "@fontsource/inter/700.css"
 import "@fontsource/inter/variable.css"
 import './main.css'
-import 'windi.css'
+import "tailwindcss/tailwind.css"
 
 import { authExchange } from '@urql/exchange-auth'
 import { cacheExchange } from '@urql/exchange-graphcache';
