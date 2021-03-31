@@ -67,7 +67,7 @@ defmodule Potionx.Auth do
       cookie_options(
         conn,
         [
-          http_only:  Map.get(config, :http_only) || true,
+          http_only:  Map.get(config, :http_only, true),
           same_site: Map.get(config, :same_site) || "strict",
           sign: true
         ],
