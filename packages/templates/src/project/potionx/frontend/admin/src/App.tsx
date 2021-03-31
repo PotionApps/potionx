@@ -32,7 +32,7 @@ export default defineComponent({
             <nav>
               {
                 adminNavPrimary.value.map(nav => {
-                  return <SidebarNavItem {...nav} />
+                  return <SidebarNavItem {...nav} key={nav.label} />
                 })
               }
             </nav>
@@ -40,7 +40,7 @@ export default defineComponent({
           <nav>
             {
               adminNavSecondary.value.map(nav => {
-                return <SidebarNavItem {...nav} />
+                return <SidebarNavItem {...nav} key={nav.label} />
               })
             }
           </nav>
@@ -52,12 +52,12 @@ export default defineComponent({
           <nav>
             {
               adminNavPrimary.value.map(nav => {
-                return <SidebarNavItem {...nav} />
+                return <SidebarNavItem {...nav} key={nav.label} />
               })
             }
             {
               adminNavSecondary.value.map(nav => {
-                return <SidebarNavItem {...nav} />
+                return <SidebarNavItem {...nav} key={nav.label} />
               })
             }
           </nav>
