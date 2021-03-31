@@ -6,6 +6,7 @@ defmodule <%= appModule %>GraphQl.Schema.UserQueries do
     connection field :user_collection, node_type: :user do
       arg :filters, :user_filters
       arg :order, type: :sort_order, default_value: :asc
+      arg :search, :string
       middleware Potionx.Middleware.RolesAuthorization, [roles: [:admin]]
       resolve &<%= appModule %>GraphQl.Resolver.User.collection/2
     end

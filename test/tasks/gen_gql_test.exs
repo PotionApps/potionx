@@ -329,6 +329,11 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
 
             def mutation(_, %{context: %Service{} = ctx}) do
               UserService.mutation(ctx)
+              |> case do
+                {:ok, %{user: res}} -> {:ok, res}
+                {:error, _, err, _} -> {:error, err}
+                res -> res
+              end
             end
 
             def one(_, %{context: %Service{} = ctx}) do
@@ -371,6 +376,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
 
             object :user_queries do
               connection field :user_collection, node_type: :user do
+                # :after, :before, :first, :last added by connection
                 arg :filters, :user_filters
                 arg :order, type: :sort_order, default_value: :asc
                 arg :search, :string
