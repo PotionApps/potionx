@@ -1,11 +1,12 @@
-import RouteUserList from './RouteUserList/RouteUserList'
-import RouteUserEdit from './RouteUserEdit/RouteUserEdit'
+import { resolveComponent, h } from 'vue'
 import { routeNames } from './routeNames'
 import { RouteRecordRaw } from 'vue-router'
 import RouteError from './RouteError/RouteError'
 import RouteHome from './RouteHome/RouteHome'
 import RouteLogin from './RouteLogin/RouteLogin'
 import RouteLoginError from './RouteLoginError/RouteLoginError'
+import RouteUserEdit from './RouteUserEdit/RouteUserEdit'
+import RouteUserList from './RouteUserList/RouteUserList'
 
 
 const routes : RouteRecordRaw[] = [
@@ -34,16 +35,21 @@ export default routes
 
 routes.push(
   {
-    name: routeNames.userEdit,
-    path: '/user-list/:id',
-    component: RouteUserEdit
-  }
-)
-
-routes.push(
-  {
-    name: routeNames.userList,
+    component: {
+      render: () => h(resolveComponent('RouterView'))
+    },
     path: '/user-list',
-    component: RouteUserList
+    children: [
+      {
+        name: routeNames.userList,
+        path: '',
+        component: RouteUserList
+      },
+      {
+        name: routeNames.userEdit,
+        path: ':id',
+        component: RouteUserEdit
+      }
+    ]
   }
 )

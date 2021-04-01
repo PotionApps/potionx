@@ -1,4 +1,3 @@
-import { checkDirectoryExists, copyToDestination, interpolateFilesAndPaths } from './common.mjs'
 import { fileURLToPath } from 'url';
 import fs from 'fs-extra'
 import path from 'path'
@@ -9,25 +8,34 @@ const __dirname = path.dirname(__filename);
 const addToRoutes = (context) => {
   const pathToRoutes = path.join(context.destination, "src", "routes", "index.ts")
   let routes = fs.readFileSync(pathToRoutes, { encoding: 'utf-8' })
-  routes = ['Edit', 'List'].reduce((acc, key) => {
-    if (!routes.includes(`Route${context.model}${key}`)) {
-      acc =
-        `import Route${context.model}${key} from './Route${context.model}${key}/Route${context.model}${key}'\r\n`
-        + acc
-      acc += "\r\n\r\n"
-      acc +=
+  if (!routes.includes(`/${camelToDashCase(context.modelGraphqlCase)}-list`)) {
+    routes = `import Route${context.model}Edit from './Route${context.model}Edit/Route${context.model}Edit'\r\n` + routes
+    routes = `import Route${context.model}List from './Route${context.model}List/Route${context.model}List'\r\n` + routes
+    routes += "\r\n\r\n"
+    routes +=
       [
-        `routes.push(`,
+       `routes.push(`,
         `  {`,
-        `    name: routeNames.${context.modelGraphqlCase}${key},`,
-        `    path: '/${camelToDashCase(context.modelGraphqlCase)}-list${key === "Edit" && '/:id' || ''}',`,
-        `    component: Route${context.model}${key}`,
+        `   component: {`,
+        `     render: () => h(resolveComponent('RouterView'))`,
+        `   },`,
+        `   path: '/${camelToDashCase(context.modelGraphqlCase)}-list',`,
+        `   children: [`,
+        `     {`,
+        `       name: routeNames.${context.modelGraphqlCase}List,`,
+        `       path: '',`,
+        `       component: Route${context.model}List`,
+        `     },`,
+        `     {`,
+        `       name: routeNames.${context.modelGraphqlCase}Edit,`,
+        `       path: ':id',`,
+        `       component: Route${context.model}Edit`,
+        `     }`,
+        `   ]`,
         `  }`,
         `)`
       ].join('\r\n')
     }
-    return acc
-  }, routes)
   fs.writeFileSync(pathToRoutes, routes)
 }
 

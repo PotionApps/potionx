@@ -2,7 +2,7 @@ const fs = require('fs-extra')
 const { spawnSync } = require('child_process')
 
 afterEach(() => {
-  // fs.removeSync('./test/tmpRoutes')
+  fs.removeSync('./test/tmpRoutes')
 });
 
 test('Generates a CRUD Route in the target directory', () => {
@@ -25,12 +25,12 @@ test('Generates a CRUD Route in the target directory', () => {
   // routes
   // routeNames
 
-  spawnSync('node', ['./cli/cli.mjs', 'model', 'Users', 'User', '--destination=./test/tmpRoutes'], {
+  spawnSync('node', ['./cli/cli.mjs', 'model', 'Records', 'Record', '--destination=./test/tmpRoutes'], {
     encoding: "utf-8"
   })
   ;[
-    'RouteUserEdit',
-    'RouteUserList'
+    'RouteRecordEdit',
+    'RouteRecordList'
   ].forEach(f => {
     expect(fs.existsSync(`${dest}${f}`)).toEqual(false)
 
@@ -46,9 +46,9 @@ test('Generates a CRUD Route in the target directory', () => {
       `
       nav.value.push(
         {
-          label: "Users",
+          label: "Records",
           to: {
-            name: routeNames.userList
+            name: routeNames.recordList
           }
         }
       )
@@ -64,24 +64,28 @@ test('Generates a CRUD Route in the target directory', () => {
     `
     routes.push(
       {
-        name: routeNames.userEdit,
-        path: '/user-list/:id',
-        component: RouteUserEdit
+        component: {
+          render: () => h(resolveComponent('RouterView'))
+        },
+        path: '/record-list',
+        children: [
+          {
+            name: routeNames.recordList,
+            path: '',
+            component: RouteRecordList
+          },
+          {
+            name: routeNames.recordEdit,
+            path: ':id',
+            component: RouteRecordEdit
+          }
+        ]
       }
     )
     `,
     `
-    routes.push(
-      {
-        name: routeNames.userList,
-        path: '/user-list',
-        component: RouteUserList
-      }
-    )
-    `,
-    `
-    import RouteUserList from './RouteUserList/RouteUserList'
-    import RouteUserEdit from './RouteUserEdit/RouteUserEdit'
+    import RouteRecordList from './RouteRecordList/RouteRecordList'
+    import RouteRecordEdit from './RouteRecordEdit/RouteRecordEdit'
     `
   ].forEach(excerpt => {
     expect(
@@ -94,8 +98,8 @@ test('Generates a CRUD Route in the target directory', () => {
     .replace(/\s|\r|\n/g, '')
     .includes(
       `
-      userList = "userList",
-      userEdit = "userEdit"
+      recordList = "recordList",
+      recordEdit = "recordEdit"
       `.replace(/\s|\r|\n/g, '')
     )
   ).toEqual(true)
