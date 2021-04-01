@@ -29,7 +29,18 @@ import single from 'shared/models/__context__/__model__/__model_graphql_case__Si
 
 export default defineComponent({
   setup () {
-    const deleteEntry = () => {
+    const deleteEntry = async () => {
+      if (fetchingDelete.value) return
+      const res = await executeDeleteMutation({
+        filters: {
+          id: route.params.id as string
+        }
+      })
+      if (res.data?.__model_graphql_case__Delete?.node?.id) {
+        router.push({
+          name: routeNames.__model_graphql_case__List
+        })
+      }
     }
 
     const route = useRoute()
@@ -57,6 +68,7 @@ export default defineComponent({
     }
 
     const { executeMutation } = useMutation<RootMutationType>(mutation)
+    const { executeMutation: executeDeleteMutation, fetching: fetchingDelete } = useMutation<RootMutationType>(mutationDelete)
     const form = useForm({
       data: model,
       fields: schema,
