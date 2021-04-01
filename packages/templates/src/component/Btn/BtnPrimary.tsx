@@ -8,7 +8,7 @@ export default defineComponent({
     return () => { 
       return (
         <Btn 
-          class="bg-gray-600 focus:bg-gray-700 hover:bg-blue-700 font-semibold py-2 px-2 s550:px-3 rounded text-sm s550:text-base text-gray-100 focus:text-white hover:text-white"
+          class="bg-gray-600 focus:bg-gray-700 hover:bg-blue-700 font-semibold py-2 px-2 s550:px-3 rounded text-sm s550:text-base text-gray-100 focus:text-white hover:text-white transition"
           {...props}
         >{ctx.slots.default && ctx.slots.default()}</Btn>
       )
