@@ -9,15 +9,12 @@ export interface AdminFooterProps {
 
 export default defineComponent({
   name: "AdminFooter",
-  props: {
-    hidden: Boolean
-  },
   setup (props: AdminFooterProps, ctx) {
     const router = useRouter()
 
     return () => {
       return (
-        <div class={["bg-gray-900 bottom-0 fixed flex h-14 justify-end left-0 pl-2 py-2 shadow w-full z-99", !props.hidden && "s1050:hidden"]}>
+        <div class="bg-gray-900 bottom-0 fixed flex h-14 justify-end left-0 pl-2 py-2 shadow w-full z-99">
           {ctx.slots.default && ctx.slots.default()}
           {
             !props.hidden && <Btn

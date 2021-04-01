@@ -15,7 +15,7 @@ export default defineComponent({
   setup (props: AdminFormProps, ctx) {
     return () => {
       return (
-        <form class="m-auto max-w-500 s750:pt-6 w-full" onSubmit={props.submit}>
+        <form class="w-full" onSubmit={props.submit}>
           {ctx.slots.default && ctx.slots.default()}
         </form>
       )

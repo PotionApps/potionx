@@ -111,7 +111,7 @@ export default defineComponent({
                   />
                 </AdminHeaderBtnWrap>
               }
-              <AdminHeaderBtnWrap hidden={true}>
+              <AdminHeaderBtnWrap>
                 <BtnSmallPrimary
                   label="New __model__"
                   icon={faPlus}
@@ -133,7 +133,7 @@ export default defineComponent({
           </div>
         </AdminHeader>
         <AdminBody>
-          <AdminForm submit={form.submit}>
+          <AdminForm class="m-auto max-w-500 s750:pt-6" submit={form.submit}>
           {
             schema.map((s: Field) => {
               let component
