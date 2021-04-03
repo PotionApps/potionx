@@ -56,7 +56,7 @@ defmodule Potionx.Auth.Resolvers do
     callback(conn, opts)
   end
 
-  def callback(%{assigns: %{context: %Service{session: %{id: _} = session}}} = conn, opts) do
+  def callback(%{assigns: %{context: %Service{session: %{id: _} = session} = ctx}} = conn, opts) do
     session_service = Keyword.fetch!(opts, :session_service)
     redirect_path = Keyword.get(opts, :redirect_path) || "/login"
 
@@ -64,7 +64,7 @@ defmodule Potionx.Auth.Resolvers do
     |> verify_providers_match(session)
     |> process_callback(conn, opts)
     |> parse_callback_response(session.sign_in_provider)
-    |> create_user_session(session, session_service)
+    |> create_user_session(session, session_service, ctx)
     |> Potionx.Auth.handle_user_session_cookies(conn)
     |> case do
       %Plug.Conn{} = conn ->
@@ -123,12 +123,13 @@ defmodule Potionx.Auth.Resolvers do
     )
   end
 
-  def create_user_session({:ok, user_identity_params, user_params}, previous_session, session_service) do
+  def create_user_session({:ok, user_identity_params, user_params}, previous_session, session_service, %Service{ip: ip}) do
     session_service.create(
       %Service{
         changes: %{
           identity: %{user_identity_params | "uid" => to_string(user_identity_params["uid"])},
           session: %{
+            ip: ip,
             sign_in_provider: previous_session.sign_in_provider,
             ttl_access_seconds: Potionx.Auth.token_config().access_token.ttl_seconds,
             uuid_access: Ecto.UUID.generate(),
@@ -145,7 +146,7 @@ defmodule Potionx.Auth.Resolvers do
       err -> err
     end
   end
-  def create_user_session(err, _, _), do: err
+  def create_user_session(err, _, _, _), do: err
 
 
   defp handle_user_identity_params({user_identity_params, user_params}, other_params, provider) do
