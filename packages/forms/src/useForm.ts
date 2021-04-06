@@ -137,7 +137,10 @@ export default function useForm(args: UseFormArgs) {
     Object.assign(errors, validator(consolidated.value, args.fields))
     if (!isMounted) return
     Object.keys(errors).forEach(key => {
-      if (!document.querySelector(`[name=${key}], [data-name=${key}]`)) {
+      if (
+        errors[key].length &&
+        !document.querySelector(`[name=${key}], [data-name=${key}]`)
+      ) {
         fieldsNotInDomWithErrors.value.push(key)
       }
     })
