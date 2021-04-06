@@ -27,6 +27,7 @@ defmodule <%= webNamespace %>.Router do
     if Mix.env() in [:prod, :test] do
       plug Potionx.Plug.MaybeDisableIntrospection, [roles: [:admin]]
     end
+    plug Potionx.Plug.UrqlUpload
     plug Potionx.Plug.Absinthe
   end
 
