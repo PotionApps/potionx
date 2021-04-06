@@ -1,4 +1,4 @@
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import { faArrowLeft, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Field, useForm } from '@potionapps/forms'
 import { RootQueryType, RootMutationType__model__MutationArgs, RootMutationType } from "shared/types";
@@ -29,6 +29,8 @@ import single from 'shared/models/__context__/__model__/__model_graphql_case__Si
 
 export default defineComponent({
   setup () {
+    const serverError = ref('')
+
     const deleteEntry = async () => {
       if (fetchingDelete.value) return
       const res = await executeDeleteMutation({
@@ -73,6 +75,7 @@ export default defineComponent({
       data: model,
       fields: schema,
       onSubmit: (cs) => {
+        serverError.value = ''
         const params : RootMutationType__model__MutationArgs = {
           changes: {
             ...cs.changes
@@ -89,6 +92,7 @@ export default defineComponent({
                   form.setServerError(err?.field, err?.message)
                 })
               }
+              if (res.error) serverError.value = res.error.message
               return false
             } else {
               if (route.params.id === 'new') {
@@ -195,6 +199,19 @@ export default defineComponent({
           <BtnSubmit class="mt-6">
             {route.params.id === "new" ? "Create" : "Save"}
           </BtnSubmit>
+          {
+            form.fieldsNotInDomWithErrors.value.map(key => {
+              return <p class='border border-red-600 bg-red-100 px-4 py-3 rounded text-red-800 text-sm mt-4' key={name}>
+                <strong class="font-bold">Error "{key}" field:</strong> {form.errors[key].join(', ')}
+              </p>
+            })
+          }
+          {
+            serverError.value &&
+            <p class='border border-red-600 bg-red-100 px-4 py-3 rounded text-red-800 text-sm mt-4'>
+              <strong class="font-bold">Error:</strong> {serverError.value}
+            </p>
+          }
         </AdminForm>
         </AdminBody>
         <AdminFooter>
