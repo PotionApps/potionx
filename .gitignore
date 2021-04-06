@@ -32,3 +32,5 @@ node_modules
 .tmp*
 
 /config/*.secret.exs
+
+.DS_Store

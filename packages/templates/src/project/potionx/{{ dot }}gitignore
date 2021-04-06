@@ -34,3 +34,5 @@ release
 
 # Eartly build files
 .tmp* 
+
+.DS_Store
