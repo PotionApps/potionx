@@ -46,16 +46,16 @@ export default defineComponent({
     const columnOrder = computed(() => {
       return props.columnOrder ||
        defaults.filter(field => {
-        return !!fields.value!.find(({ key }) => key === field)
+        return !!fields.value!.find(({ name }: HeadingLabelProps) => name === field)
       })
       .concat(
-        fields.value!.reduce((acc: string[], field) => {
-          if (defaults.concat(times).includes(field.key)) {
+        fields.value!.reduce((acc: string[], field: HeadingLabelProps) => {
+          if (defaults.concat(times).includes(field.name)) {
             return acc
-          } else if (field.key.includes("__")) {
+          } else if (field.name.includes("__")) {
             return acc
           } else {
-            return acc.concat([field.key])
+            return acc.concat([field.name])
           }
         }, [])
       )
@@ -65,17 +65,17 @@ export default defineComponent({
     })
     const fields = computed<ModelTableProps['headingLabels']>(() => {
       return props.headingLabels ||
-        Object.keys(props.rows?.[0] || {}).map(key => {
+        Object.keys(props.rows?.[0] || {}).map(name => {
           return {
-            key,
-            label: key
+            name,
+            label: name
           }
         })
     })
 
-    const fieldsOrdered = computed<ModelTableProps['headingLabels']>(() => {
-      return columnOrder.value.reduce((acc: HeadingLabelProps[], key) => {
-        const field = fields.value!.find(field => field.key === key)
+    const fieldsOrdered = computed<HeadingLabelProps[]>(() => {
+      return columnOrder.value.reduce((acc: HeadingLabelProps[], key: string) => {
+        const field = fields.value!.find((field: HeadingLabelProps) => field.name === key)
         if (field) {
           acc.push(field)
         }
@@ -87,8 +87,8 @@ export default defineComponent({
         <table class="table-auto w-full">
           <thead class="bg-gray-100">
             {
-              fieldsOrdered.value!.map(({ key, label }) => {
-                if (key === "image") return <th class="border-gray-300 border-b-1 border-t-1"></th>
+              fieldsOrdered.value!.map(({ name, label }) => {
+                if (name === "image") return <th class="border-gray-300 border-b-1 border-t-1"></th>
                 return <th class="border-gray-300 border-b-1 border-t-1 font-normal px-3 py-3 s750:first:pl-8 s750:last:pr-8 text-gray-500 text-left text-sm capitalize s750m:hidden whitespace-nowrap">
                   {label}
                 </th>
@@ -104,7 +104,7 @@ export default defineComponent({
                 >
                   {
                     fieldsOrdered.value!.map((field) => {
-                      const key = field.key as keyof ModelRowProps
+                      const key = field.name as keyof ModelRowProps
                       let rowData : any
                       switch (key) {
                         case "icon":

@@ -13,19 +13,15 @@ import BtnSmallPrimary from "components/Btn/BtnSmallPrimary";
 import collection from 'shared/models/__context__/__model__/__model_graphql_case__Collection.gql'
 import ModelTable, { ModelTableProps } from 'components/ModelTable/ModelTable'
 import Pagination from "components/Pagination/Pagination";
-import schema from 'shared/models/__context__/__model__/__model_graphql_case__.json'
 import StateEmpty from 'components/StateEmpty/StateEmpty'
 import StateLoading from 'components/StateLoading/StateLoading'
+import useModelIntrospection from "root/hooks/useModelIntrospection";
 import usePagination from "root/hooks/usePagination";
 import useQueryArgs from "root/hooks/useQueryArgs";
 
 export default defineComponent({
   setup () {
-    const headingLabels =
-      schema.map((s: any) => ({
-        name: s.name,
-        label: s.label || s.name
-      }))
+    const { fields } = useModelIntrospection('__model__')
     const limit = 100
 
     const modelTableProps = computed<ModelTableProps>(() => {
@@ -38,7 +34,7 @@ export default defineComponent({
             }
           })
         },
-        headingLabels,
+        headingLabels: fields.value,
         rows:
           data.value?.__model_graphql_case__Collection?.edges?.map((edge) => edge!.node!)
             .filter(n => n)
@@ -121,7 +117,7 @@ export default defineComponent({
             prev={prev}
           />
         }
-        <AdminFooter>
+        <AdminFooter class="s1050:hidden">
           <BtnMobileMenu
             label="New __model__"
             to={newEntryLink}
