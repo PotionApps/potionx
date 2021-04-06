@@ -14,11 +14,15 @@ import { cacheExchange } from '@urql/exchange-graphcache';
 import { dedupExchange, fetchExchange } from '@urql/core';
 import urql from '@urql/vue';
 import sessionRenew from 'shared/sessionRenew'
+import { parse, stringify } from 'qs'
 import { routeNames } from './routes/routeNames'
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  // @ts-ignore
+  parseQuery: parse,
+  routes, 
+  stringifyQuery: stringify
 })
 
 const app = createApp(App)
