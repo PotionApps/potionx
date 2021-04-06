@@ -111,7 +111,7 @@ export const getValues = async (context, prompt, initialValues) => {
   }
 
   const collected = await prompt(toCollect);
-  const potionx_version = "0.4.16";
+  const potionx_version = "0.5.0";
 
 
   const timestamp = new Date()
