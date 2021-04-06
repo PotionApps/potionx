@@ -314,6 +314,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
       :binary -> :string
       :binary_id -> :string
       :datetime -> :naive_datetime
+      :id -> :global_id
       :map -> :json
       :naive_datetime_usec -> :naive_datetime
       :utc_datetime_usec -> :datetime
