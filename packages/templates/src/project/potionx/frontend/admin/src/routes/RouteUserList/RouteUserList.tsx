@@ -16,7 +16,8 @@ import Pagination from "components/Pagination/Pagination";
 import schema from 'shared/models/Users/User/user.json'
 import StateEmpty from 'components/StateEmpty/StateEmpty'
 import StateLoading from 'components/StateLoading/StateLoading'
-import usePagination from "hooks/usePagination";
+import usePagination from "root/hooks/usePagination";
+import useQueryArgs from "root/hooks/useQueryArgs";
 
 export default defineComponent({
   setup () {
@@ -57,23 +58,25 @@ export default defineComponent({
     const router = useRouter()
 
     const {
+      updateQueryArgs,
+      variables
+    } = useQueryArgs({ routeMode: true })
+
+    const {
       goToFirst,
       goToLast,
       next, 
-      prev,
-      variables
+      prev
     } = usePagination({
       limit,
       pageInfo,
-      routeMode: false
+      updateQueryArgs
     })
 
     const { data, fetching, error } = useQuery<RootQueryType>({
       query: collection,
       requestPolicy: 'cache-and-network',
-      variables: computed(() => {
-        return variables.value
-      })
+      variables
     })
 
     return () => {
