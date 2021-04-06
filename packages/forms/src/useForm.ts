@@ -1,5 +1,5 @@
 import { isEqual } from 'lodash'
-import { reactive, computed, ref, Ref, watch, provide, ComputedRef } from "vue";
+import { reactive, computed, ref, Ref, watch, provide, ComputedRef, onMounted } from "vue";
 import { Field } from './Field';
 import { Validator } from './validators/Validator';
 import validatorEcto from './validators/validatorEcto/validatorEcto';
@@ -37,6 +37,8 @@ export default function useForm(args: UseFormArgs) {
   let blurred = reactive<FormBlurred>({})
   let changes = reactive<any>({})
   let errors = reactive<{[key: string]: string[]}>({})
+  let isMounted = false
+  const fieldsNotInDomWithErrors = ref<string[]>([])
   const hasSubmitted = ref(false)
   let serverErrors = reactive<Partial<{[key: string]: string[]}>>({})
   const submitStatus = ref<FormSubmitStatus>(FormSubmitStatus.empty)
@@ -60,7 +62,8 @@ export default function useForm(args: UseFormArgs) {
 
   const clearErrors = () => {
     for (const prop of Object.getOwnPropertyNames(errors)) {
-      delete errors[prop];
+      delete errors[prop]
+      fieldsNotInDomWithErrors.value = []
     }
   }
 
@@ -121,6 +124,7 @@ export default function useForm(args: UseFormArgs) {
       delete serverErrors[prop];
     }
     hasSubmitted.value = false
+    runValidation()
   }
 
   const resetField = (key: string) => {
@@ -131,6 +135,12 @@ export default function useForm(args: UseFormArgs) {
   const runValidation = () => {
     clearErrors()
     Object.assign(errors, validator(consolidated.value, args.fields))
+    if (!isMounted) return
+    Object.keys(errors).forEach(key => {
+      if (!document.querySelector(`[name=${key}], [data-name=${key}]`)) {
+        fieldsNotInDomWithErrors.value.push(key)
+      }
+    })
   }
 
   const setError = (key: string, value: string) => {
@@ -140,6 +150,11 @@ export default function useForm(args: UseFormArgs) {
     if (!key || !value) return
     serverErrors[key] = (serverErrors[key] || []).concat([value])
   }
+
+  onMounted(() => {
+    isMounted = true
+    runValidation()
+  })
 
   const submit : FormSubmit = (e?: Event) => {
     if (e) e.preventDefault()
@@ -190,6 +205,7 @@ export default function useForm(args: UseFormArgs) {
     consolidatedErrors,
     data,
     errors,
+    fieldsNotInDomWithErrors,
     hasSubmitted,
     isValid,
     numberOfChanges,

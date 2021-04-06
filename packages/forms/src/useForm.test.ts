@@ -1,8 +1,12 @@
-import { computed, defineComponent } from 'vue';
+import { computed, createApp, defineComponent, h, onMounted, nextTick } from 'vue';
 import useForm, { FormSubmitStatus } from './useForm'
 
+beforeEach(() => {
+  document.body.innerHTML = "<div id='app'></div>"
+})
+
 test('Properly tracks changes made to form with existing data', () => {
-  defineComponent({
+  const comp = defineComponent({
     setup () {
       const data = computed(() => {
         return {
@@ -15,62 +19,89 @@ test('Properly tracks changes made to form with existing data', () => {
         fields: [],
         onSubmit: (cs) => Promise.resolve(true)
       })
-      formHooks.change('name', 'updatedName')
-      formHooks.change('noChange', 'noChange')
-      expect(formHooks.consolidated.value.name).toEqual("updatedName")
-      expect(formHooks.numberOfChanges.value).toEqual(1)
-      formHooks.submit()
-      expect(formHooks.numberOfChanges.value).toEqual(0)
-      expect(formHooks.submitStatus.value).toEqual(FormSubmitStatus.success)
-      formHooks.change('name', 'updatedName')
-      expect(formHooks.submitStatus.value).toEqual(FormSubmitStatus.empty)
+     
+      onMounted(() => {
+        nextTick(() => {
+          expect(formHooks.fieldsNotInDomWithErrors.value).toEqual(["name"])
+          formHooks.change('name', 'updatedName')
+          formHooks.change('noChange', 'noChange')
+          expect(formHooks.consolidated.value.name).toEqual("updatedName")
+          expect(formHooks.numberOfChanges.value).toEqual(1)
+          expect(formHooks.submitStatus.value).toEqual(FormSubmitStatus.empty)
+          formHooks.submit()
+          expect(formHooks.submitStatus.value).toEqual(FormSubmitStatus.success)
+          expect(formHooks.numberOfChanges.value).toEqual(0)
+        })
+      })
+
+      return () => h('div')
     }
   })
+  createApp({
+    render () {
+      return h(comp)
+    }
+  }).mount("#app")
 });
 
 test('Properly updates errors and serverErrors', () => {
-  defineComponent({
-    setup () {
-      const formHooks = useForm({
-        fields: [{
-          name: "name",
-          type: "text",
-          validations: [{
-            name: "required"
-          }]
-        }],
-        onSubmit: (cs) => Promise.resolve(false)
-      })
-      formHooks.setError('error', 'error')
-      formHooks.setServerError('error', 'server error')
-      expect(formHooks.consolidatedErrors.value.error).toEqual(["error", "server error"])
-      expect(formHooks.consolidatedErrors.value.name).toEqual(["This field is required22"])
-      expect(formHooks.isValid.value).toEqual(false)
-      formHooks.reset()
-      expect(formHooks.consolidatedErrors.value).toEqual({})
-      expect(formHooks.isValid.value).toEqual(true)
-      formHooks.submit()
-      expect(formHooks.submitStatus.value).toEqual(FormSubmitStatus.error)
+  const comp = 
+    defineComponent({
+      setup () {
+        const formHooks = useForm({
+          fields: [{
+            name: "name",
+            type: "text",
+            validations: [{
+              name: "required"
+            }]
+          }],
+          onSubmit: (cs) => Promise.resolve(false)
+        })
+        onMounted(() => {
+          formHooks.setError('error', 'error')
+          formHooks.setServerError('error', 'server error')
+          expect(formHooks.consolidatedErrors.value.error).toEqual(["error", "server error"])
+          expect(formHooks.consolidatedErrors.value.name).toEqual(["This field is required"])
+          expect(formHooks.isValid.value).toEqual(false)
+          formHooks.reset()
+          expect(formHooks.consolidatedErrors.value.name).toEqual(["This field is required"])
+        })
+
+        return () => h('div')
+      }
+    })
+  createApp({
+    render () {
+      return h(comp)
     }
-  })
+  }).mount("#app")
 });
 
 test('Properly updates submitStatus', () => {
-  defineComponent({
+  const comp = defineComponent({
     setup () {
       let result = false
       const formHooks = useForm({
         fields: [],
         onSubmit: (cs) => Promise.resolve(result)
       })
-      formHooks.change('name', 'updatedName')
-      formHooks.submit()
-      expect(formHooks.submitStatus.value).toEqual(FormSubmitStatus.error)
-      result = true
-      formHooks.submit()
-      expect(formHooks.submitStatus.value).toEqual(FormSubmitStatus.success)
-      formHooks.change('name', 'updatedName2')
-      expect(formHooks.submitStatus.value).toEqual(FormSubmitStatus.empty)
+      onMounted(() => {
+        formHooks.submit()
+        nextTick(() => {
+          expect(formHooks.submitStatus.value).toEqual(FormSubmitStatus.success)
+          formHooks.change('name', 'updatedName2')
+          expect(formHooks.submitStatus.value).toEqual(FormSubmitStatus.empty)
+        })
+      })
+
+      return () => h('div')
     }
   })
+
+  createApp({
+    render () {
+      return h(comp)
+    }
+  }).mount("#app")
 })

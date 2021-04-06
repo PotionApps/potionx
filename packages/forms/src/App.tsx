@@ -41,6 +41,14 @@ export default defineComponent({
               name: "required"
             }
           ]
+        },
+        {
+          name: 'hidden',
+          validations: [
+            {
+              name: "required"
+            }
+          ]
         }
       ],
       onSubmit: (cs) => {
