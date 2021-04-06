@@ -1,21 +1,24 @@
+
 import 'vite/dynamic-import-polyfill'
-import { createApp } from 'vue'
-import { createRouter, createWebHistory } from 'vue-router'
-import App from './App'
-import routes from './routes'
 import "@fontsource/inter/400.css"
 import "@fontsource/inter/700.css"
 import "@fontsource/inter/variable.css"
-import './main.css'
 import "tailwindcss/tailwind.css"
-
+import './main.css'
 import { authExchange } from '@urql/exchange-auth'
-import { cacheExchange } from '@urql/exchange-graphcache';
-import { dedupExchange, fetchExchange } from '@urql/core';
-import urql from '@urql/vue';
-import sessionRenew from 'shared/sessionRenew'
+import { createApp } from 'vue'
+import { createRouter, createWebHistory } from 'vue-router'
+import { dedupExchange } from '@urql/core';
+import { multipartFetchExchange } from '@urql/exchange-multipart-fetch';
 import { parse, stringify } from 'qs'
 import { routeNames } from './routes/routeNames'
+import App from './App'
+import cacheExchange from './cacheExchange'
+import routes from './routes'
+import schema from 'shared/introspection.json'
+import sessionRenew from 'shared/sessionRenew'
+import urql from '@urql/vue';
+
 
 const router = createRouter({
   history: createWebHistory(),
@@ -26,7 +29,6 @@ const router = createRouter({
 })
 
 const app = createApp(App)
-const cache = cacheExchange()
 app.use(router)
 app.use(
   urql,
@@ -34,7 +36,7 @@ app.use(
     url: '/graphql/v1',
     exchanges: [
       dedupExchange,
-      cache,
+      cacheExchange(schema),
       authExchange({
         addAuthToOperation: ({authState, operation}) => operation,
         getAuth: async ({ authState, mutate }) => {
@@ -55,7 +57,7 @@ app.use(
           return typeof document !== 'undefined' && !document.cookie.includes('frontend')
         }
       }),
-      fetchExchange
+      multipartFetchExchange
     ],
   }
 )

@@ -30,6 +30,13 @@ const topLevelKeys: (keyof QueryArgs)[] = [
 export default (opts: UseQueryArgs) => {
   const router = useRouter()
 
+  opts = {
+    defaults: {
+      first: 100
+    },
+    ...opts
+  }
+
   const ensureRelayParamsAreValid = (vars: QueryArgs) => {
     if (!vars.first && !vars.last) {
       vars.first = opts.limit || 100
