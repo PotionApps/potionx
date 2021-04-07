@@ -4,11 +4,10 @@ import "@fontsource/inter/400.css"
 import "@fontsource/inter/700.css"
 import "@fontsource/inter/variable.css"
 import "tailwindcss/tailwind.css"
-import './main.css'
 import { authExchange } from '@urql/exchange-auth'
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import { dedupExchange } from '@urql/core';
+import { dedupExchange, errorExchange, CombinedError, Operation } from '@urql/core';
 import { multipartFetchExchange } from '@urql/exchange-multipart-fetch';
 import { parse, stringify } from 'qs'
 import { routeNames } from './routes/routeNames'
@@ -37,6 +36,11 @@ app.use(
     exchanges: [
       dedupExchange,
       cacheExchange(schema),
+      errorExchange({
+        onError: (error: CombinedError, operation: Operation) => {
+          console.error(error.message, operation)
+        },
+      }),
       authExchange({
         addAuthToOperation: ({authState, operation}) => operation,
         getAuth: async ({ authState, mutate }) => {
