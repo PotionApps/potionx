@@ -1,6 +1,6 @@
 # Deployment
 Potionx includes a `deployment` folder which contains the recipe for a [Pulumi](https://www.pulumi.com/) deployment to Digital Ocean's Kubernetes service.
-Recipes for the other major Kubernestes platforms are planned and the current recipe can be easily adapted to other providers.
+Recipes for the other major Kubernetes platforms are planned and the current recipe can be easily adapted to other providers.
 
 The recipe is deployed and created updated on every push to Github.
 

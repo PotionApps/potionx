@@ -27,7 +27,7 @@ The result of this command would add the following to your project:
 │     ├─ src
 │     │   ├─ routes
 │     │   │  ├─ RouteSomeModelEdit
-│     │   │  ├─ RouteUserList
+│     │   │  ├─ RouteSomeModelList
 ├─ lib
 │  │   ├─ some_context
 │  │   │  └─ some_model_service.ex
@@ -47,13 +47,9 @@ The result of this command would add the following to your project:
 │  │  │  │     ├─ someModel.json 
 │  │  │  │     ├─ someModel.mock.json 
 │  │  │  │     ├─ someModelCollection.gql 
-│  │  │  │     ├─ someModelCollection.gql.ts
 │  │  │  │     ├─ someModelDelete.gql 
-│  │  │  │     ├─ someModelDelete.gql.ts 
 │  │  │  │     ├─ someModelMutation.gql 
-│  │  │  │     ├─ someModelMutation.gql.ts
 │  │  │  │     ├─ someModelSingle.gql 
-│  │  │  │     └─ someModelSingle.gql.ts
 ├─ test
 │  ├─ some_project_graphql
 │  │  ├─ mutations
@@ -76,4 +72,4 @@ npm install
 npm run types
 ```
 
-You should now have up to date type definitions in your ```/shared/types.d.ts``` file.
+You should now have up to date type definitions in your ```/shared/types.d.ts``` file and an up to date schema introspection in `/shared/introspection.json`.

@@ -4,8 +4,6 @@
 
 Potionx is a set of generators and modules that speeds up the process of setting up and deploying a full-stack application that uses Elixir with GraphQL for the server-side component and Vue for the frontend component.
 
-> **Warning:** Still in early stages of development. Not suitable for production use.
-
 ## Prerequisites
 - [Node](https://nodejs.org/en/) version 12 or above
 - [Elixir](https://elixir-lang.org/install.html) version 1.11 or above

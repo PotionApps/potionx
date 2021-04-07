@@ -7,7 +7,7 @@ Here's a general overview of the architecture Potionx uses:
 Details about each layer can be found in the other sections in this area.
 
 ## File Structure
-Here's an overview of what a Potionx project looks like. It's what a project directory contains after running the Potionx project generator with `mix potionx.new some_project_name`.
+Here's an overview of what a Potionx project looks like. It's what a project directory contains after running the Potionx project generator with `npx @potionapps/templates project`.
 
 ```bash
 .
@@ -61,7 +61,7 @@ Here's an overview of what a Potionx project looks like. It's what a project dir
 ├─ lib
 │  ├─ some_project_name # The main data layer
 │  │   ├─ user_identities
-│  │   │  ├─ user_identity.ex # user_identity model used by Potinx Auth
+│  │   │  ├─ user_identity.ex # user_identity model used by Potionx Auth
 │  │   │  ├─ user_identity_mock.ex # mock of user_identity for testing purposes
 │  │   │  └─ user_identity_service.ex
 │  │   │  # the service used to create/query/edit user identities
@@ -95,26 +95,16 @@ Here's an overview of what a Potionx project looks like. It's what a project dir
 │  │       └─ user_socket.ex # the main websocket config file
 │  │   ├─ controllers
 │  │   │  ├─ app_controller.ex # Serves the based frontend code
-│  │   │  ├─ auth_controller.ex
-│  │   │  │ # Deletes and renews authentication tokens for users
-│  │   │  │ # Note: the create function in here is not used.
-│  │   │  ├─ authorization_controller.ex
-│  │   │  │ # handles initial creation of access tokens (logging in) via
-│  │   │  │ # third parties like Google, Microsoft..
 │  │   │  └─ page_controller.ex # serves HTML, not currently used
 │  │   ├─ templates
 │  │   │  ├─ app
 │  │   │  │  └─ index.html.eex # Base app markup needed by the frontend apps
-│  │   │  ├─ authorization
-│  │   │  │  └─ refresh.html.eex
-│  │   │  │  # used to refresh the page after a user logs so cookies are properly set
 │  │   │  ├─ layout
 │  │   │  │  └─ app.html.eex # markup for general app layout (head, body)
 │  │   │  └─ page
 │  │   │     └─ index.html.eex # not used
 │  │   ├─ views # used to set convenience or computed functions for use in templates
 │  │   │  ├─ app_view.ex
-│  │   │  ├─ authorization_view.ex
 │  │   │  ├─ error_helpers.ex
 │  │   │  ├─ error_view.ex
 │  │   │  ├─ layout_view.ex
@@ -194,8 +184,6 @@ Here's an overview of what a Potionx project looks like. It's what a project dir
 │  │  └─ data_case.ex
 │  └─ test_helper.exs # starts modules needed for tests like ExUnit
 ├─ .gitignore
-├─ build.sh # build script for Render.com
-├─ Dockerfile # Dockerfile that will eventually be used for Kubernetes recipes
 ├─ mix.exs # App Elixir dependencies
 ├─ package.json # App Javascript dependencies
 └─ README.md

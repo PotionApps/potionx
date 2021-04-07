@@ -36,6 +36,9 @@ gets converted to:
 ### Potionx.Middleware.Scope
 This middleware uses the data layer's `repo.ex` to set variables required for user/organization multitenancy based on the ideas from [Ecto's Multi tenancy with foreign keys](https://hexdocs.pm/ecto/multi-tenancy-with-foreign-keys.html)
 
+### Potionx.Middleware.UserRequired
+Requires that a user be in the context unless the query is added as an exception.
+
 ## Default Types
 Potionx adds the following types by default which are used by the [generators](/docs/generators.html#generating-backend-and-frontend-scaffold-code-for-data-models-ecto-schemas):
 
