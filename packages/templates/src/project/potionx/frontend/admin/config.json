@@ -1,6 +1,7 @@
 {
     "component": [
         "AdminBody",
+        "AdminCollectionWrap",
         "AdminForm",
         "AdminHeader",
         "AdminHeaderBtnWrap",

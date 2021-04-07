@@ -3,6 +3,7 @@ import { RootQueryType } from "shared/types";
 import { routeNames } from 'root/routes/routeNames'
 import { useQuery } from "@urql/vue";
 import { useRouter } from "vue-router";
+import AdminCollectionWrap from 'components/AdminCollectionWrap/AdminCollectionWrap'
 import AdminFooter from 'components/AdminFooter/AdminFooter'
 import AdminHeader from 'components/AdminHeader/AdminHeader'
 import AdminHeaderBtnWrap from "components/AdminHeaderBtnWrap/AdminHeaderBtnWrap";
@@ -91,32 +92,34 @@ export default defineComponent({
         >
           <AdminHeaderTitle>User Management</AdminHeaderTitle>
         </AdminHeader>
-        <div>
+        <AdminCollectionWrap>
+          <div>
+            {
+              (error.value || data.value?.userCollection?.count! === 0) &&
+                <StateEmpty class="pb-2 pt-4" label="No Results" />
+            }
+            {
+              fetching.value && !data.value &&
+                <StateLoading class="pb-2 pt-4"/>
+            }
+            {
+              !!data.value?.userCollection?.edges?.length &&
+              <ModelTable {...modelTableProps.value} />
+            }
+          </div>
           {
-            (error.value || data.value?.userCollection?.count! === 0) &&
-              <StateEmpty class="pb-2 pt-4" label="No Results" />
+            pageInfo.value && data.value?.userCollection?.count &&
+            <Pagination
+              count={data.value?.userCollection?.count}
+              countBefore={data.value?.userCollection?.countBefore}
+              goToFirst={goToFirst}
+              goToLast={goToLast}
+              limit={limit}
+              next={next}
+              prev={prev}
+            />
           }
-          {
-            fetching.value && !data.value &&
-              <StateLoading class="pb-2 pt-4"/>
-          }
-          {
-            !!data.value?.userCollection?.edges?.length &&
-            <ModelTable {...modelTableProps.value} />
-          }
-        </div>
-        {
-          pageInfo.value && data.value?.userCollection?.count &&
-          <Pagination
-            count={data.value?.userCollection?.count}
-            countBefore={data.value?.userCollection?.countBefore}
-            goToFirst={goToFirst}
-            goToLast={goToLast}
-            limit={limit}
-            next={next}
-            prev={prev}
-          />
-        }
+        </AdminCollectionWrap>
         <AdminFooter class="s1050:hidden">
           <BtnMobileMenu
             label="New User"
