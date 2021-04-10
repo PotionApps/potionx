@@ -76,7 +76,7 @@ integration-test:
             node ../packages/templates/cli/cli.mjs project --appName=alpha --localDbPassword=postgres --localDbUser=postgres \
             --email=vince@potionapps.com --installDeps --runMigrations --potionxDep='path: "../.."' && \
             cd alpha && \
-            mix phx.gen.context Files File files name:string data:map date:utc_datetime test:uuid is_deleted:boolean && \
+            mix phx.gen.schema Files.File files name:string data:map date:utc_datetime test:uuid is_deleted:boolean && \
             mix potionx.gen.gql_for_model Files File --no-frontend && \
             REDIS_URL="redis://localhost:6379/" mix test && \
             cd ./frontend/admin && \
