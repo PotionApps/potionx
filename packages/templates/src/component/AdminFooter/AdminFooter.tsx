@@ -14,7 +14,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class="bg-gray-900 bottom-0 fixed flex h-14 justify-end left-0 pl-2 py-2 shadow w-full z-99">
+        <div class="bg-gray-900 bottom-0 fixed flex h-14 justify-end left-0 pl-2 py-2 s1050:hidden shadow w-full z-99">
           {ctx.slots.default && ctx.slots.default()}
           {
             !props.hidden && <Btn

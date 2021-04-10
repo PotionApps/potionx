@@ -120,7 +120,7 @@ export default defineComponent({
             />
           }
         </AdminCollectionWrap>
-        <AdminFooter class="s1050:hidden">
+        <AdminFooter>
           <BtnMobileMenu
             label="New User"
             to={newEntryLink}
