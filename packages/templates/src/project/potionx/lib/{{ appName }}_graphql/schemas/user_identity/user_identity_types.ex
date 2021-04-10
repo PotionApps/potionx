@@ -1,7 +1,6 @@
 defmodule <%= appModule %>GraphQl.Schema.UserIdentityTypes do
   use Absinthe.Schema.Notation
   use Absinthe.Relay.Schema.Notation, :modern
-  import Absinthe.Resolution.Helpers
 
   node object :user_identity do
     field :inserted_at, :naive_datetime

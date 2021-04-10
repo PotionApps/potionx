@@ -16,7 +16,7 @@ export default defineComponent({
     const route = useRoute()
 
     const showMenu = computed(() => {
-      return route.query.menu === "1"
+      return route.query?.menu === "1"
     })
 
     const showSidebar = computed(() => {
