@@ -399,7 +399,6 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
           defmodule PotionxGraphQl.Schema.UserTypes do
             use Absinthe.Schema.Notation
             use Absinthe.Relay.Schema.Notation, :modern
-            import Absinthe.Resolution.Helpers
 
             node object :user do
               field :deleted_at, :datetime
