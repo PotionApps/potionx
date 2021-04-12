@@ -46,8 +46,7 @@ defmodule Potionx.Schema do
                   :session_renew, :sign_in_provider
                 ]
             ]},
-            Potionx.Middleware.ServiceContext,
-            Potionx.Middleware.Scope
+            Potionx.Middleware.ServiceContext
           ],
           middleware,
           [
@@ -59,8 +58,7 @@ defmodule Potionx.Schema do
       def middleware(middleware, _field, %{identifier: :query}) do
         [
           Potionx.Middleware.UserRequired,
-          Potionx.Middleware.ServiceContext,
-          Potionx.Middleware.Scope
+          Potionx.Middleware.ServiceContext
         ] ++ middleware
       end
 
