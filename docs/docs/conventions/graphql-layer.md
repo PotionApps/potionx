@@ -33,7 +33,7 @@ gets converted to:
 }
 ```
 
-### Potionx.Middleware.Scope
+### Potionx.Middleware.ScopeOrganization and Potionx.Middleware.ScopeUser
 This middleware uses the data layer's `repo.ex` to set variables required for user/organization multitenancy based on the ideas from [Ecto's Multi tenancy with foreign keys](https://hexdocs.pm/ecto/multi-tenancy-with-foreign-keys.html)
 
 ### Potionx.Middleware.UserRequired
