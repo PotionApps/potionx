@@ -36,13 +36,19 @@ defmodule Potionx.Repo do
               {:organization_id, @scoped_by_organization}
             ]
             |> Enum.reduce({query, opts}, fn {key, list}, {q, opts} ->
-              if Enum.member?(list, model) do
-                {
-                  q |> Ecto.Query.where(^[{key, opts[key]}]),
-                  opts
-                }
-              else
-                {q, opts}
+              cond do
+                Enum.member?(list, model) ->
+                  {
+                    q |> Ecto.Query.where(^[{key, opts[key]}]),
+                    opts
+                  }
+                not is_nil(opts[key]) ->
+                  {
+                    q |> Ecto.Query.where(^[{key, opts[key]}]),
+                    opts
+                  }
+                true ->
+                  {q, opts}
               end
             end)
           true ->
