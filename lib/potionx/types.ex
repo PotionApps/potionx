@@ -14,6 +14,31 @@ defmodule Potionx.Types do
     field :error, :string
     field :url, :string
   end
+
+  scalar :string_bool do
+    parse fn
+      %{value: v} ->
+        case v do
+          nil ->
+            {:ok, false}
+          true ->
+            {:ok, true}
+          false ->
+            {:ok, false}
+          0 ->
+            {:ok, false}
+          1 ->
+            {:ok, true}
+          "0" ->
+            {:ok, false}
+          "1" ->
+            {:ok, true}
+          "all" ->
+            {:ok, "all"}
+        end
+      _ ->
+        {:ok, nil}
+    end
 end
 
 defmodule Potionx.Types.JSON do
