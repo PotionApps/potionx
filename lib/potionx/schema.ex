@@ -57,7 +57,6 @@ defmodule Potionx.Schema do
       end
       def middleware(middleware, _field, %{identifier: :query}) do
         [
-          Potionx.Middleware.UserRequired,
           Potionx.Middleware.ServiceContext
         ] ++ middleware
       end
