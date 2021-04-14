@@ -39,6 +39,7 @@ defmodule Potionx.Types do
       _ ->
         {:ok, nil}
     end
+  end
 end
 
 defmodule Potionx.Types.JSON do
