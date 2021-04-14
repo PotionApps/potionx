@@ -50,6 +50,7 @@ defmodule Potionx.Plug.Auth do
       [
         login_path: "/login",
         public_hosts: [],
+        public_paths: [],
         session_optional: false,
         session_service: false,
         user_optional: false
@@ -76,6 +77,8 @@ defmodule Potionx.Plug.Auth do
   def maybe_allow(%Plug.Conn{host: host, method: method, request_path: path} = conn, opts) do
     cond do
       Enum.member?(opts.public_hosts, host) ->
+        conn
+      Enum.any?(opts.public_paths, fn p -> String.starts_with?(path, p) end) ->
         conn
       path === opts.login_path ->
         conn
