@@ -35,7 +35,7 @@ defmodule <%= webNamespace %>.Router do
     plug :accepts, ["json"]
     plug Potionx.Plug.ServiceContext
     plug Potionx.Plug.Auth,
-      session_service: <%= appModule %>.Sessions.SessionService,
+      session_service: <%= appModule %>.Sessions.SessionService
   end
 
   pipeline :require_auth do
