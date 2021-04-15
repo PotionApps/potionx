@@ -9,7 +9,6 @@ defmodule Potionx.Plug.Auth do
     )
     |> maybe_renew(opts)
     |> fetch_session_from_conn(opts)
-    |> maybe_allow(opts)
   end
 
   def fetch_session_from_conn(%{halted: true} = conn, _), do: conn
@@ -48,51 +47,13 @@ defmodule Potionx.Plug.Auth do
     end
     Keyword.merge(
       [
-        login_path: "/login",
-        public_hosts: [],
-        public_paths: [],
-        session_optional: false,
-        session_service: false,
-        user_optional: false
+        session_service: false
       ],
       opts
     )
     |> Enum.into(%{})
   end
 
-  def maybe_allow(%{halted: true} = conn, _), do: conn
-  def maybe_allow(%{assigns: %{context: %{session: %{user: %{id: id}}}}} = conn, opts) when not is_nil(id) do
-    cond do
-      conn.request_path === opts.login_path ->
-        Phoenix.Controller.redirect(conn, to: "/")
-        |> Plug.Conn.halt
-      true ->
-        conn
-    end
-  end
-  def maybe_allow(%{assigns: %{context: %{session: %{id: id}}}} = conn, %{user_optional: true}) when not is_nil(id) do
-    conn
-  end
-
-  def maybe_allow(%Plug.Conn{host: host, method: method, request_path: path} = conn, opts) do
-    cond do
-      Enum.member?(opts.public_hosts, host) ->
-        conn
-      Enum.any?(opts.public_paths, fn p -> String.starts_with?(path, p) end) ->
-        conn
-      path === opts.login_path ->
-        conn
-      opts.session_optional and opts.user_optional ->
-        conn
-      method === "GET" ->
-        Phoenix.Controller.redirect(conn, to: opts.login_path)
-        |> Plug.Conn.halt
-      true ->
-        conn
-        |> Plug.Conn.put_status(401)
-        |> Plug.Conn.halt
-    end
-  end
 
   def maybe_renew(conn, opts) do
     cookie_name_access = Potionx.Auth.token_config.access_token.name

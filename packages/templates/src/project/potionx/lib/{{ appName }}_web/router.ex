@@ -35,9 +35,11 @@ defmodule <%= webNamespace %>.Router do
     plug :accepts, ["json"]
     plug Potionx.Plug.ServiceContext
     plug Potionx.Plug.Auth,
-      session_optional: false,
       session_service: <%= appModule %>.Sessions.SessionService,
-      user_optional: true
+  end
+
+  pipeline :require_auth do
+    plug Potionx.Plug.RequireAuth
   end
 
   #
@@ -81,7 +83,7 @@ defmodule <%= webNamespace %>.Router do
   end
 
   scope "/", <%= webNamespace %> do
-    pipe_through :browser
+    pipe_through [:browser, :require_auth]
 
     get "/*path", AppController, :index
   end

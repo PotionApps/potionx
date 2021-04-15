@@ -2,7 +2,7 @@ import Btn, { btnProps, BtnProps } from './Btn'
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "BtnSecondary",
+  name: "BtnWhite",
   props: btnProps,
   setup (props: BtnProps, ctx) {
     return () => { 

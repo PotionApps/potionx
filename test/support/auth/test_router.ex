@@ -6,9 +6,7 @@ defmodule PotionxTest.Router do
     json_decoder: Jason
   plug Potionx.Plug.ServiceContext
   plug Potionx.Plug.Auth,
-    session_optional: true,
-    session_service: PotionxTest.SessionService,
-    user_optional: true
+    session_service: PotionxTest.SessionService
   plug Potionx.Plug.MaybeDisableIntrospection, [roles: [:admin]]
   plug Potionx.Plug.Absinthe
   plug :match
@@ -41,9 +39,8 @@ defmodule PotionxTest.RouterAuthRequired do
     json_decoder: Jason
   plug Potionx.Plug.ServiceContext
   plug Potionx.Plug.Auth,
-    public_hosts: ["www.potionapps.com"],
-    session_optional: false,
     session_service: PotionxTest.SessionService
+  plug Potionx.Plug.RequireAuth
   plug Potionx.Plug.Absinthe
   plug :match
   plug :dispatch

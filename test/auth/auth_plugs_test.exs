@@ -87,12 +87,6 @@ defmodule Potionx.Plug.Auth.Test do
         |> RouterAuthRequired.call(Router.init([]))
     end
 
-    test "Should allow access to public hosts without user" do
-      assert %{status: 200} =
-        conn(:get, "http://www.potionapps.com/")
-        |> RouterAuthRequired.call(Router.init([]))
-    end
-
     test "Should block access to non-public hosts without user" do
       assert %{status: 302} =
         conn(:get, "http://bad.potionapps.com/test")
