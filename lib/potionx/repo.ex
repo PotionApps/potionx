@@ -55,6 +55,10 @@ defmodule Potionx.Repo do
             raise "expected org_id or skip_org_id to be set"
         end
       end
+      def prepare_query(_operation, q, opts) do
+        {q, opts}
+      end
+      defoverridable([prepare_query: 3])
     end
   end
 
