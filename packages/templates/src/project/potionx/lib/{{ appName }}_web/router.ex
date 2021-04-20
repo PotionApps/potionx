@@ -13,7 +13,6 @@ defmodule <%= webNamespace %>.Router do
     plug Potionx.Plug.Auth,
       login_path: "/login",
       public_hosts: [], # www.example.com for example
-      session_optional: false,
       session_service: <%= appModule %>.Sessions.SessionService
   end
 
@@ -21,7 +20,7 @@ defmodule <%= webNamespace %>.Router do
     plug :accepts, ["json"]
     plug Potionx.Plug.ServiceContext
     plug Potionx.Plug.Auth,
-      session_service: <%= appModule %>.Sessions.SessionService,
+      session_service: <%= appModule %>.Sessions.SessionService
     if Mix.env() in [:prod, :test] do
       plug Potionx.Plug.MaybeDisableIntrospection, [roles: [:admin]]
     end
