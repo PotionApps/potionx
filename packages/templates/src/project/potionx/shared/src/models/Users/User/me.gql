@@ -1,0 +1,13 @@
+query me {
+  me {
+    __typename
+    email
+    id
+    insertedAt
+    nameFirst
+    nameLast
+    roles
+    title
+    updatedAt
+  }
+}

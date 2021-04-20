@@ -16,5 +16,9 @@ defmodule <%= appModule %>GraphQl.Schema.UserQueries do
       middleware Potionx.Middleware.RolesAuthorization, [roles: [:admin]]
       resolve &<%= appModule %>GraphQl.Resolver.User.one/2
     end
+
+    field :me, type: :user do
+      resolve &LireGraphQl.Resolver.User.me/2
+    end
   end
 end

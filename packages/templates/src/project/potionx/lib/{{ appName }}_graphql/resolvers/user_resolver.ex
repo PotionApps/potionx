@@ -71,6 +71,13 @@ defmodule <%= appModule %>GraphQl.Resolver.User do
     end
   end
 
+  def me(_, %{context: %Service{user: user}}) do
+    {:ok, user}
+  end
+  def me(_, _) do
+    {:ok, nil}
+  end
+
   def mutation(_, %{context: %Service{} = ctx}) do
     UserService.mutation(ctx)
     |> case do
