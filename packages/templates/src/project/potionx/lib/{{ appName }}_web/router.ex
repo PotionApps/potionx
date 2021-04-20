@@ -21,9 +21,7 @@ defmodule <%= webNamespace %>.Router do
     plug :accepts, ["json"]
     plug Potionx.Plug.ServiceContext
     plug Potionx.Plug.Auth,
-      session_optional: true,
       session_service: <%= appModule %>.Sessions.SessionService,
-      user_optional: true
     if Mix.env() in [:prod, :test] do
       plug Potionx.Plug.MaybeDisableIntrospection, [roles: [:admin]]
     end
@@ -41,6 +39,11 @@ defmodule <%= webNamespace %>.Router do
   pipeline :require_auth do
     plug Potionx.Plug.RequireAuth
   end
+
+  pipeline :require_unauth do
+    plug Potionx.Plug.RequireUnauth
+  end
+
 
   #
   # Enables LiveDashboard only for development
@@ -80,6 +83,12 @@ defmodule <%= webNamespace %>.Router do
       [
         session_service: <%= appModule %>.Sessions.SessionService
       ]
+  end
+
+
+  scope "/login", <%= webNamespace %> do
+    pipe_through [:browser, :require_unauth]
+    get "/", AppController, :index
   end
 
   scope "/", <%= webNamespace %> do

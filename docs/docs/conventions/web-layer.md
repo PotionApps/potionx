@@ -13,8 +13,7 @@ The following default routes and plugs are added:
     plug Potionx.Plug.ServiceContext
     plug Potionx.Plug.Auth,
       session_optional: true,
-      session_service: SomeProject.Sessions.SessionService,
-      user_optional: true
+      session_service: SomeProject.Sessions.SessionService
     if Mix.env() in [:prod, :test] do
       plug Potionx.Plug.MaybeDisableIntrospection, [roles: [:admin]]
     end
@@ -25,9 +24,7 @@ The following default routes and plugs are added:
     plug :accepts, ["json"]
     plug Potionx.Plug.ServiceContext
     plug Potionx.Plug.Auth,
-      session_optional: false,
-      session_service: SomeProject.Sessions.SessionService,
-      user_optional: true
+      session_service: SomeProject.Sessions.SessionService
   end
 
   scope "/graphql/v1" do
