@@ -308,13 +308,13 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
     end
   end
 
-  def maybe_convert_type(type) do
+  def maybe_convert_type(type, is_input \\ false) do
     case type do
       Ecto.UUID -> :id
       :binary -> :string
       :binary_id -> :string
       :datetime -> :naive_datetime
-      :id -> :global_id
+      :id -> is_input && :global_id || :id
       :map -> :json
       :naive_datetime_usec -> :naive_datetime
       :utc_datetime_usec -> :datetime
@@ -817,9 +817,13 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
             acc ++ ["field :#{to_string(k)}, :#{result_type}, resolve: dataloader(#{state.module_name_graphql}.Resolver.#{state.model_name})"]
           end
         {:id, _}, acc ->
-          acc
+          if String.starts_with?(line, "input_object") do
+            acc
+          else
+            acc ++ ["field :internal_id, :id, resolve: fn parent, _, _ -> {:ok, Map.get(parent || %{}, :id)} end"]
+          end
         {k, v}, acc ->
-          acc ++ ["field :#{k}, :#{to_string(maybe_convert_type(v))}"]
+          acc ++ ["field :#{k}, :#{to_string(maybe_convert_type(v, String.starts_with?(line, "input_object")))}"]
       end)
       |> (fn lines ->
         common_fields()

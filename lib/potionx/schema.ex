@@ -17,16 +17,21 @@ defmodule Potionx.Schema do
 
       scalar :global_id do
         parse fn
-          %{value: v}, ctx ->
-            case v do
-              s when is_binary(s) ->
-                Absinthe.Relay.Node.from_global_id(s, __MODULE__)
+          %{value: nil}, ctx ->
+            {:ok, nil}
+          %{value: v}, ctx when is_integer(v) ->
+            {:ok, v}
+          %{value: v}, ctx when is_binary(v) ->
+            Integer.parse(v)
+            |> case do
+              :error ->
+                Absinthe.Relay.Node.from_global_id(v, __MODULE__)
                 |> case do
                   {:ok, %{id: id}} -> {:ok, id}
                   err -> err
                 end
-              default ->
-                {:ok, default}
+              {res, _} ->
+                {:ok, res}
             end
           _, _ ->
             {:ok, nil}
