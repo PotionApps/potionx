@@ -168,13 +168,19 @@ const postgres = new k8s.helm.v3.Chart("postgresql", {
  */
 const redis = new k8s.helm.v3.Chart("redis", {
     chart: "redis",
+    version: "13.0.1",
     fetchOpts: {
       repo: 'https://charts.bitnami.com/bitnami'
     },
     values: {
         existingSecret: dbSecrets.metadata.name,
         existingSecretPasswordKey: 'redis-password',
-        'image.tag': '12.8.1' 
+        // replica: {
+        //     replicaCount: 2
+        // },
+        image: {
+            tag: '6.2.1-debian-10-r36'
+        }
     },
   }, { provider })
 
