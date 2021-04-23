@@ -91,9 +91,10 @@ defmodule Potionx.Plug.Auth do
         )
       _err ->
         conn
-        |> Plug.Conn.assign(:potionx_auth_error, "session_renew_error")
-        |> Plug.Conn.put_status(401)
-        |> Plug.Conn.halt
+        |> Potionx.Auth.delete_cookie(%{
+          name: Potionx.Auth.token_config().renewal_token.name,
+          ttl_seconds: Potionx.Auth.token_config().renewal_token.ttl_seconds
+        })
      end
   end
 end
