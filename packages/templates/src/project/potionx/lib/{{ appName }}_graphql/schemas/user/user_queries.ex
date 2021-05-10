@@ -18,7 +18,7 @@ defmodule <%= appModule %>GraphQl.Schema.UserQueries do
     end
 
     field :me, type: :user do
-      resolve &LireGraphQl.Resolver.User.me/2
+      resolve &PotionxGraphQl.Resolver.User.me/2
     end
   end
 end

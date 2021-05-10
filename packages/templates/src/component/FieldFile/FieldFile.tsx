@@ -2,9 +2,9 @@ import { computed, defineComponent, ref, PropType, onMounted, onBeforeUnmount } 
 import { useField } from "@potionapps/forms";
 import FieldError from "../FieldError/FieldError";
 import FieldLabel from "../FieldLabel/FieldLabel";
-import BtnSmallSecondary from "../Btn/BtnSmallSecondary";
+import BtnSmallSecondary from "components/Btn/BtnSmallSecondary";
 import { FontAwesomeIcon } from "@potionapps/utils";
-import { faFileAlt } from "@fortawesome/free-solid-svg-icons";
+import { faFileAlt } from "@fortawesome/pro-solid-svg-icons";
 import FieldFileChosen from "./FieldFileChosen";
 
 export interface FieldFile {
@@ -37,6 +37,13 @@ export default defineComponent({
     const defaultIcon = faFileAlt
     const isDraggedOver = ref(false)
 
+    const chosenFile = computed(() => {
+      if (!props.multiple && Array.isArray(val.value)) {
+        return val.value[0]
+      } else {
+        return val.value
+      }
+    })
     const clear = () => {
       change?.(
         props.name,
@@ -104,7 +111,7 @@ export default defineComponent({
       if (files.length) {
         change?.(
           props.name,
-          props.multiple ? files : files
+          props.multiple ? files : files[0]
         )
         fileInput.value!.value = ''
       }
@@ -152,12 +159,12 @@ export default defineComponent({
         >
           {
             !props.multiple &&
-            val.value &&
+            chosenFile.value &&
             <FieldFileChosen
               class="mb-3"
               icon={icon.value}
               remove={clear}
-              title={val.value?.name}
+              title={chosenFile.value?.name}
             />
           }
           <BtnSmallSecondary class="s550:px-8" >
