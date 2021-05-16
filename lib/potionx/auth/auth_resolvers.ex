@@ -136,7 +136,15 @@ defmodule Potionx.Auth.Resolvers do
             uuid_renewal: Ecto.UUID.generate(),
             ttl_renewal_seconds: Potionx.Auth.token_config().renewal_token.ttl_seconds
           },
-          user: user_params
+          user: %{
+            email: user_params["email"],
+            email_verified: user_params["email_verified"],
+            file_url: user_params["picture"],
+            name_first: user_params["given_name"],
+            name_last: user_params["family_name"],
+            locale: user_params["locale"],
+            name: user_params["name"]
+          }
         }
       },
       previous_session

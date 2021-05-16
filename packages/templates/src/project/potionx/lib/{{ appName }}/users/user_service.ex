@@ -60,4 +60,8 @@ defmodule <%= appModule %>.Users.UserService do
     |> where([u], is_nil(u.deleted_at))
   end
   def query(q, _args), do: q
+
+  def sign_in(%Service{} = ctx) do
+    one(ctx)
+  end
 end

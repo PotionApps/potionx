@@ -27,15 +27,16 @@ defmodule Potionx.Auth.SessionService do
     end
 
     quote do
+      @allow_new_users unquote(opts[:allow_new_users])
       @behaviour Potionx.Auth.SessionService
-      @repo unquote(opts[:repo])
       @identity_service unquote(opts[:identity_service])
+      @repo unquote(opts[:repo])
       @session_schema unquote(opts[:session_schema])
       @user_schema unquote(opts[:user_schema])
       @user_service unquote(opts[:user_service])
       import Ecto.Query
 
-      def create(%Service{changes: %{session: _} = changes, filters: filters}, previous_session) do
+      def create(%Service{changes: %{session: _} = changes, filters: filters} = ctx, previous_session) do
         Multi.new
         |> Multi.run(:session_delete, fn _, _ ->
           if previous_session do
@@ -51,11 +52,13 @@ defmodule Potionx.Auth.SessionService do
         end)
         |> Multi.run(:user, fn _, _ ->
           case changes do
-            %{user: %{"email" => email}} ->
-              @user_service.one(%Service{filters: %{email: email}})
+            %{user: %{email: email}} ->
+              @user_service.sign_in(%Service{changes: changes.user, filters: %{email: email}})
               |> case do
                 nil -> {:error, "user_not_found"}
-                user -> {:ok, user}
+                {:ok, %{user: user}} -> {:ok, user}
+                {:ok, _} = res -> res
+                %{id: _} = user -> {:ok, user}
               end
             _ ->
               {:ok, nil}
