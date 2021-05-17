@@ -15,4 +15,8 @@ defmodule PotionxTest.UserService do
     |> order_by([desc: :id])
   end
   def query(q, _args), do: q
+
+  def sign_in(ctx) do
+    one(ctx)
+  end
 end
