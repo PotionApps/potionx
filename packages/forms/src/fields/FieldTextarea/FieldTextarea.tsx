@@ -24,6 +24,7 @@ export default defineComponent({
     const {
       change,
       errors,
+      formSubmit,
       onBlur,
       showErrors,
       val
@@ -33,9 +34,11 @@ export default defineComponent({
     
     const {
       internalValue,
-      onInput
+      onInput,
+      onKeydown
     } = useFieldTextarea({
       change,
+      formSubmit,
       name: props.name,
       showErrors,
       val
@@ -55,6 +58,7 @@ export default defineComponent({
         class={classes.value}
         onBlur={onBlur}
         onInput={onInput}
+        onKeydown={onKeydown}
         name={props.name}
         {...ctx.attrs}
       >

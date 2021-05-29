@@ -12,6 +12,7 @@ export default function useField (args: UseFieldArgs) {
   const formChange = inject<FormChange>('formChange')
   const formData = inject<FormData>('formData')
   const formErrors = inject<FormErrors>('formErrors')
+  const formSubmit = inject<(e?: Event) => Promise<boolean>>('formSubmit')
   const formSubmitted = inject<Ref<boolean>>('formSubmitted')
 
   const errors = computed(() => {
@@ -27,6 +28,7 @@ export default function useField (args: UseFieldArgs) {
     change: formChange,
     errors,
     focused,
+    formSubmit,
     hasBlurred,
     hasSubmitted: formSubmitted!,
     onBlur: (e: Event) => {
