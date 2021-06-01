@@ -79,7 +79,7 @@ defmodule Potionx.Auth.Resolvers do
           200,
           """
           <html>
-            <head><meta http-equiv="refresh" content="0;URL='#{url}'"/></head>
+            <head><meta http-equiv="refresh" content="1;URL='#{url}'"/></head>
             <body></body>
           </html>
           """
@@ -116,7 +116,7 @@ defmodule Potionx.Auth.Resolvers do
       401,
       """
       <html>
-        <head><meta http-equiv="refresh" content="0;URL='#{url}'"/></head>
+        <head><meta http-equiv="refresh" content="1;URL='#{url}'"/></head>
         <body></body>
       </html>
       """
