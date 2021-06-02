@@ -57,8 +57,10 @@ defmodule Potionx.Auth.Resolvers do
   end
 
   def callback(%{assigns: %{context: %Service{session: %{id: _} = session} = ctx}} = conn, opts) do
-    session_service = Keyword.fetch!(opts, :session_service)
+    after_login_path = Keyword.get(opts, :after_login_path) || "/"
     redirect_path = Keyword.get(opts, :redirect_path) || "/login"
+    scheme = Keyword.get(opts, :scheme) || "https"
+    session_service = Keyword.fetch!(opts, :session_service)
 
     conn
     |> verify_providers_match(session)
@@ -71,15 +73,22 @@ defmodule Potionx.Auth.Resolvers do
         url =
           URI.parse(Plug.Conn.request_url(conn))
           |> Map.put(:query, nil)
-          |> Map.put(:path, "/")
+          |> Map.put(:path, after_login_path)
+          |> Map.put(:port, scheme === "https" && 443 || 80)
+          |> Map.put(:scheme, scheme)
           |> to_string
+        IO.inspect(
+          URI.parse(Plug.Conn.request_url(conn))
+        )
+        IO.inspect("HELOOO")
+        IO.inspect(url)
         conn
         |> Plug.Conn.put_resp_content_type("text/html")
         |> Plug.Conn.send_resp(
           200,
           """
           <html>
-            <head><meta http-equiv="refresh" content="1;URL='#{url}'"/></head>
+            <head><meta http-equiv="refresh" content="0;URL='#{url}'"/></head>
             <body></body>
           </html>
           """
