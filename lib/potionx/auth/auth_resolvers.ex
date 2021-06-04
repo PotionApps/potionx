@@ -77,11 +77,6 @@ defmodule Potionx.Auth.Resolvers do
           |> Map.put(:port, scheme === "https" && 443 || 80)
           |> Map.put(:scheme, scheme)
           |> to_string
-        IO.inspect(
-          URI.parse(Plug.Conn.request_url(conn))
-        )
-        IO.inspect("HELOOO")
-        IO.inspect(url)
         conn
         |> Plug.Conn.put_resp_content_type("text/html")
         |> Plug.Conn.send_resp(
