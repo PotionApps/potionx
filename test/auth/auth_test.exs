@@ -75,7 +75,7 @@ defmodule Potionx.Auth.Test do
       |> PotionxTest.Repo.insert
       query = """
         mutation {
-          signInProvider (provider: "test") {
+          signInProvider (provider: "test", redirect_url: "https://potionapps.com/test?buy=1") {
             error
             url
           }
@@ -96,10 +96,12 @@ defmodule Potionx.Auth.Test do
       conn2
       |> (fn res ->
         assert elem(sent_resp(res), 2) =~ "refresh"
+        assert elem(sent_resp(res), 2) =~ "URL='https://www.example.com/test?buy=1'"
         assert res.resp_cookies[Potionx.Auth.token_config().frontend.name].http_only === false
         assert res.resp_cookies[Potionx.Auth.token_config().access_token.name].max_age === 60 * 30 # 30 minutes
         assert res.resp_cookies[Potionx.Auth.token_config().renewal_token.name].max_age === 60 * 60 * 24 * 30 # 30 days
       end).()
+
 
       query = """
         mutation {

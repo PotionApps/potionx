@@ -135,21 +135,11 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
       end
 
       assert_file "shared/src/models/Users/User/user.mock.json", fn file ->
-        assert file =~ """
-        "email": "test@example.com",
-        """
-        assert file =~ """
-        "id": "some id",
-        """
-        assert file =~ """
-        "nameFirst": "some name_first",
-        """
-        assert file =~ """
-        "nameLast": "some name_last",
-        """
-        assert file =~ """
-        "roles": [],
-        """
+        assert file =~ "\"email\": \"test@example.com\""
+        assert file =~ "\"id\": \"some id\""
+        assert file =~ "\"nameFirst\": \"some name_first\""
+        assert file =~ "\"nameLast\": \"some name_last\""
+        assert file =~ "\"roles\": []"
       end
       assert_file "shared/src/models/Users/User/userCollection.gql", fn file ->
         assert String.replace(file, ~r(\n|\r|\s), "") =~
