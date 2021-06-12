@@ -62,7 +62,6 @@ defmodule Potionx.Auth.Resolvers do
     scheme = Keyword.get(opts, :scheme) || "https"
     session_service = Keyword.fetch!(opts, :session_service)
     redirect_url = get_redirect_url(conn, Map.get(session.data, "redirect_url") || after_login_path, scheme)
-    IO.inspect(redirect_url, label: "REDIRECT")
 
     conn
     |> verify_providers_match(session)
