@@ -29,7 +29,7 @@ export interface UseFormArgs {
   clearAfterSuccess?: boolean
   data?: ComputedRef<any>
   fields: Field[]
-  onChange: (args : {key: string, value: any}) => void
+  onChange?: (args : {key: string, value: any}) => void
   onSubmit: (cs: Changeset<any>) => Promise<boolean>
   validator?: Validator
 }
