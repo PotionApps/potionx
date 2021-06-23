@@ -29,6 +29,7 @@ export interface UseFormArgs {
   clearAfterSuccess?: boolean
   data?: ComputedRef<any>
   fields: Field[]
+  onChange: (args : {key: string, value: any}) => void
   onSubmit: (cs: Changeset<any>) => Promise<boolean>
   validator?: Validator
 }
@@ -50,6 +51,12 @@ export default function useForm(args: UseFormArgs) {
 
   const change : FormChange = (key: string, value: any) => {
     submitStatus.value = FormSubmitStatus.empty
+    if (args.onChange) {
+      args.onChange({
+        key,
+        value
+      })
+    }
     changes[key] = value
     return changes
   }
