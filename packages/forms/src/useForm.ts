@@ -5,7 +5,7 @@ import { Validator } from './validators/Validator';
 import validatorEcto from './validators/validatorEcto/validatorEcto';
 
 export interface Changeset<Model extends object = {}> {
-  changes: Partial<{[k in keyof Model]: string[]}>,
+  changes: Partial<{[k in keyof Model]: any}>,
   data: Partial<Model>
   errors: {[key: string]: string[]},
   isValid: boolean,
