@@ -58,7 +58,7 @@ defmodule Potionx.Repo do
       def prepare_query(_operation, q, opts) do
         {q, opts}
       end
-      defoverridable([prepare_query: 3])
+      defoverridable([default_options: 1, prepare_query: 3])
     end
   end
 
