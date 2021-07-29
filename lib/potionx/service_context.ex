@@ -4,6 +4,7 @@ defmodule Potionx.Context.Service do
 
   typedstruct do
     field :__absinthe_plug__, map()
+    field :arguments, map()
     field :assigns, map()
     field :changes, map(), default: %{}
     field :files, [Plug.Upload.t()]
