@@ -59,6 +59,7 @@ defmodule Potionx.Auth.SessionService do
                 {:ok, %{user: user}} -> {:ok, user}
                 {:ok, _} = res -> res
                 %{id: _} = user -> {:ok, user}
+                err -> err
               end
             _ ->
               {:ok, nil}
