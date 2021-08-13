@@ -51,13 +51,13 @@ export default function useForm(args: UseFormArgs) {
 
   const change : FormChange = (key: string, value: any) => {
     submitStatus.value = FormSubmitStatus.empty
+    changes[key] = value
     if (args.onChange) {
       args.onChange({
         key,
         value
       })
     }
-    changes[key] = value
     return changes
   }
 
