@@ -3,6 +3,7 @@ query me {
     __typename
     email
     id
+    initials
     insertedAt
     nameFirst
     nameLast

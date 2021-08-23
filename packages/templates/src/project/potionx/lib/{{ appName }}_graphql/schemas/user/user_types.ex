@@ -6,6 +6,19 @@ defmodule <%= appModule %>GraphQl.Schema.UserTypes do
   node object :user do
     field :deleted_at, :datetime
     field :email, :string
+    field :initials, :string do
+      resolve fn
+        %{name_first: "", name_last: ""} = el, _, _ ->
+          {:ok, String.slice(el.email, 0..3)}
+        %{name_first: f, name_last: l} = el, _, _ when not is_nil(f) and not is_nil(l) ->
+          {
+            :ok,
+            String.slice(el.name_first, 0..0) <> String.slice(el.name_last, 0..0)
+          }
+        el, _, _ ->
+          {:ok, String.slice(el.email, 0..3)}
+      end
+    end
     field :inserted_at, :naive_datetime
     field :name_first, :string
     field :name_last, :string
