@@ -67,7 +67,7 @@ defmodule Potionx.Auth.Resolvers do
     |> verify_providers_match(session)
     |> process_callback(conn, opts)
     |> parse_callback_response(session.sign_in_provider)
-    |> create_user_session(session, session_service, ctx)
+    |> create_user_session(session, session_service, %{ctx | changes: Map.put(ctx.changes, :redirect_url, redirect_url)})
     |> Potionx.Auth.handle_user_session_cookies(conn)
     |> case do
       %Plug.Conn{} = conn ->
@@ -121,7 +121,12 @@ defmodule Potionx.Auth.Resolvers do
     )
   end
 
-  def create_user_session({:ok, user_identity_params, user_params}, previous_session, session_service, %Service{ip: ip}) do
+  def create_user_session(
+    {:ok, user_identity_params, user_params},
+    previous_session,
+    session_service,
+    %Service{changes: %{redirect_url: redirect_url}, ip: ip}
+  ) do
     session_service.create(
       %Service{
         changes: %{
@@ -141,7 +146,8 @@ defmodule Potionx.Auth.Resolvers do
             name_first: user_params["given_name"],
             name_last: user_params["family_name"],
             locale: user_params["locale"],
-            name: user_params["name"]
+            name: user_params["name"],
+            redirect_url: redirect_url
           }
         }
       },

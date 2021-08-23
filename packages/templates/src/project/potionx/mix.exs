@@ -38,7 +38,7 @@ defmodule <%= appModule %>.MixProject do
       {:absinthe_relay, "~> 1.5.1"},
       {:absinthe, "~> 1.6.0", override: true},
       {:castore, "~> 0.1.0"},
-      {:dataloader, "~> 1.0.0"},
+      {:dataloader, "~> 1.0.8"},
       {:decimal, "~> 2.0", override: true},
       {:ecto_network, "~> 1.3.0"},
       {:ecto_sql, "~> 3.5"},
