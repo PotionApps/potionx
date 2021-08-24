@@ -25,6 +25,7 @@ query <%= model_name_graphql_case %>Collection(
     edges {
       node {
         __typename
+        internalId
         <%= for field <- graphql_fields do %><%= field %>
         <% end %>
       }
