@@ -13,6 +13,7 @@ mutation <%= model_name_graphql_case %>Mutation(
     }
     node {
       __typename
+      internalId
       <%= for field <- graphql_fields do %><%= field %>
       <% end %>
     }
