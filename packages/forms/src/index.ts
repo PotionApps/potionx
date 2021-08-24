@@ -2,7 +2,7 @@ import { Field } from './Field'
 import { Validation, ValidationFn, ValidationFnCustom } from './Validation'
 import { Validator } from './validators/Validator'
 import useField from './useField'
-import useForm, { FormSubmitStatus } from './useForm'
+import useForm, { Changeset, FormSubmitStatus } from './useForm'
 import useFormButton from './useFormButton'
 import useFieldCheckbox from './fields/FieldCheckbox/useFieldCheckbox'
 import useFieldInput from './fields/FieldInput/useFieldInput'
@@ -11,6 +11,7 @@ import useFieldTextarea from './fields/FieldTextarea/useFieldTextarea'
 import useFieldSelect from './fields/FieldSelect/useFieldSelect'
 
 export type {
+  Changeset,
   Field,
   Validation,
   ValidationFn,
