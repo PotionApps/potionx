@@ -44,7 +44,7 @@ defmodule <%= appModule %>.MixProject do
       {:ecto_sql, "~> 3.5"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:mint, "~> 1.0"},
+      {:mint, "~> 1.3.0"},
       {:phoenix_ecto, "~> 4.1"},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_dashboard, "~> 0.4"},
