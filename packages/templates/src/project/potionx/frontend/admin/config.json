@@ -21,6 +21,7 @@
         "FieldRadio",
         "FieldSelect",
         "FieldTextarea",
+        "Link",
         "LoginError",
         "Menu",
         "ModelTable",
