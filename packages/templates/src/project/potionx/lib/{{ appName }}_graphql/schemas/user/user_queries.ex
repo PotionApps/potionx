@@ -18,6 +18,7 @@ defmodule <%= appModule %>GraphQl.Schema.UserQueries do
     end
 
     field :me, type: :user do
+      middleware Potionx.Middleware.Me
       resolve &<%= appModule %>GraphQl.Resolver.User.me/2
     end
   end
