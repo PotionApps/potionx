@@ -35,6 +35,11 @@ defmodule <%= module_name_graphql %>.Resolver.<%= model_name %> do
 
   def delete(_, %{context: %Service{} = ctx}) do
     <%= model_name %>Service.delete(ctx)
+    |> case do
+      {:ok, %{<%= model_name_atom %>: res}} -> {:ok, res}
+      {:error, _, err, _} -> {:error, err}
+      res -> res
+    end
   end
 
   def ensure_first_page_is_full(args) do
