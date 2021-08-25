@@ -28,7 +28,7 @@ defmodule Potionx.Schema do
                 Absinthe.Relay.Node.from_global_id(v, __MODULE__)
                 |> case do
                   {:ok, %{id: id}} -> {:ok, id}
-                  err -> err
+                  err -> {:ok, nil}
                 end
               {res, _} ->
                 {:ok, res}
