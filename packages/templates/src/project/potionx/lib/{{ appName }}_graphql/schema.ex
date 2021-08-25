@@ -22,10 +22,6 @@ defmodule <%= appModule %>GraphQl.Schema do
   end
 
   query do
-    field :me, type: :user do
-      middleware Potionx.Middleware.Me
-      resolve &Elixir.<%= appModule %>GraphQl.Resolver.User.one/2
-    end
     import_fields :user_queries
   end
 
