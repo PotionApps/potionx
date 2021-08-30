@@ -19,6 +19,7 @@ defmodule <%= appModule %>GraphQl.Schema.UserTypes do
           {:ok, String.slice(el.email, 0..3)}
       end
     end
+    field :internal_id, :id, resolve: fn parent, _, _ -> {:ok, Map.get(parent || %{}, :id)} end
     field :inserted_at, :naive_datetime
     field :name_first, :string
     field :name_last, :string

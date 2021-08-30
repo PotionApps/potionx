@@ -1,5 +1,5 @@
 import { ref, watch, ComputedRef, Ref } from "vue"
-import { isEqual } from 'lodash'
+import isEqual from "../../isEqual"
 
 export interface UseFieldCheckboxArgs {
   change?: (name: string, value: any) => void
