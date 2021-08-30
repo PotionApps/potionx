@@ -75,7 +75,7 @@ defmodule Potionx.Auth.Test do
       |> PotionxTest.Repo.insert
       query = """
         mutation {
-          signInProvider (provider: "test", redirect_url: "https://potionapps.com/test?buy=1") {
+          signInProvider (provider: "test", redirectUrl: "https://potionapps.com/test?buy=1") {
             error
             url
           }

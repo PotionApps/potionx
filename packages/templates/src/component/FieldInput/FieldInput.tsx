@@ -13,18 +13,24 @@ export interface FieldInputProps {
 export default defineComponent({
   name: "FieldInput",
   props: {
+    disabled: Boolean,
+    disableAutocomplete: Boolean,
+    focusOnMount: Boolean,
     label: String,
     name: {
       required: true,
       type: String
     },
+    placeholder: String,
+    small: Boolean,
+    showClearIcon: Boolean,
     type: {
       default: "text",
       type: String
     },
     unstyled: Boolean
   },
-  setup (props: FieldInputProps, ctx) {
+  setup (props, ctx) {
     const {
       change,
       errors,
@@ -61,6 +67,7 @@ export default defineComponent({
         onInput={onInput}
         name={props.name}
         {...ctx.attrs}
+        placeholder={props.placeholder}
         type={props.type}
         value={internalValue.value}
       />

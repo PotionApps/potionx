@@ -1,6 +1,6 @@
-import { isEqual } from 'lodash'
 import { reactive, computed, ref, Ref, watch, provide, ComputedRef, onMounted } from "vue";
 import { Field } from './Field';
+import isEqual from "./isEqual";
 import { Validator } from './validators/Validator';
 import validatorEcto from './validators/validatorEcto/validatorEcto';
 
@@ -17,7 +17,7 @@ export type FormBlurred = {[key: string]: boolean}
 export type FormChange = (key: string, value: any) => void
 export type FormData = Ref<{[key: string]: any}>
 export type FormErrors = Ref<{[key: string]: string[]}>
-export type FormSubmit = (e?: Event) => void
+export type FormSubmit = (e?: Event) => Promise<undefined>
 export enum FormSubmitStatus {
   empty = "empty",
   error = "error",
@@ -169,9 +169,11 @@ export default function useForm(args: UseFormArgs) {
   const submit : FormSubmit = (e?: Event) => {
     if (e) e.preventDefault()
     hasSubmitted.value = true
-    if (!numberOfChanges.value || submitStatus.value === FormSubmitStatus.loading || !isValid.value) return
+    if (!numberOfChanges.value || submitStatus.value === FormSubmitStatus.loading || !isValid.value) {
+      return Promise.resolve(undefined)
+    }
     submitStatus.value = FormSubmitStatus.loading
-    args.onSubmit(toChangeset())
+    return args.onSubmit(toChangeset())
       .then((res: boolean) => {
         if (res) {
           submitStatus.value = FormSubmitStatus.success
@@ -179,6 +181,7 @@ export default function useForm(args: UseFormArgs) {
         } else {
           submitStatus.value = FormSubmitStatus.error
         }
+        return undefined
       })
   }
 

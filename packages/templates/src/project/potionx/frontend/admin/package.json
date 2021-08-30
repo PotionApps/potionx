@@ -14,7 +14,7 @@
     "@fortawesome/pro-regular-svg-icons": "^5.15.4",
     "@fortawesome/pro-solid-svg-icons": "^5.15.4",
     "@fortawesome/vue-fontawesome": "^3.0.0-3",
-    "@potionapps/forms": "0.3.1",
+    "@potionapps/forms": "0.3.4",
     "@potionapps/utils": "0.0.1",
     "@tailwindcss/forms": "^0.2.1",
     "@tailwindcss/jit": "^0.1.18",
@@ -27,7 +27,7 @@
     "lodash-es": "^4.17.20",
     "qs": "^6.10.1",
     "tailwindcss": "2.2.4",
-    "vue": "^3.2.2",
+    "vue": "^3.2.6",
     "vue-router": "^4.0.11"
   },
   "devDependencies": {
