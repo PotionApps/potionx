@@ -1,4 +1,4 @@
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, onMounted, ref } from "vue";
 import { useField, useFieldInput } from "@potionapps/forms";
 import FieldError from "../FieldError/FieldError";
 import FieldLabel from "../FieldLabel/FieldLabel";
@@ -31,6 +31,7 @@ export default defineComponent({
     unstyled: Boolean
   },
   setup (props, ctx) {
+    const $el = ref<HTMLElement | null>(null)
     const {
       change,
       errors,
@@ -56,6 +57,15 @@ export default defineComponent({
       return base + (showErrors?.value ? "border-red-300 text-red-800" : "border-gray-300")
     })
 
+    onMounted(() => {
+      if (props.focusOnMount) {
+        $el.value?.focus()
+      }
+      if (($el.value as HTMLInputElement)?.value) {
+        change(props.name, ($el.value as HTMLInputElement).value)
+      }
+    })
+
     return () => <>
       {
         props.label &&
@@ -68,6 +78,7 @@ export default defineComponent({
         name={props.name}
         {...ctx.attrs}
         placeholder={props.placeholder}
+        ref={$el}
         type={props.type}
         value={internalValue.value}
       />

@@ -1,4 +1,4 @@
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, onMounted, ref } from "vue";
 import FieldError from "../FieldError/FieldError";
 import FieldLabel from "../FieldLabel/FieldLabel";
 import { useField, useFieldTextarea } from "@potionapps/forms";
@@ -20,6 +20,7 @@ export default defineComponent({
     unstyled: Boolean
   },
   setup (props: FieldTextareaProps, ctx) {
+    const $el = ref<HTMLElement | null>(null)
     const {
       change,
       errors,
@@ -48,6 +49,12 @@ export default defineComponent({
       return base + (showErrors?.value ? "border-red-300 text-red-800" : "border-gray-300")
     })
 
+    onMounted(() => {
+      if (($el.value as HTMLTextAreaElement)?.value) {
+        change(props.name, ($el.value as HTMLTextAreaElement).value)
+      }
+    })
+
     return () => <>
       {
         props.label &&
@@ -59,6 +66,7 @@ export default defineComponent({
         onInput={onInput}
         onKeydown={onKeydown}
         name={props.name}
+        ref={$el}
         {...ctx.attrs}
       >
         {internalValue.value}
