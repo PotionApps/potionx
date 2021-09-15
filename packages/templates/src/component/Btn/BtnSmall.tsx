@@ -1,10 +1,10 @@
-import Btn, { btnProps, BtnProps } from './Btn'
+import Btn, { btnProps } from './Btn'
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "BtnSmall",
   props: btnProps,
-  setup (props: BtnProps, ctx) {
+  setup (propsprops, ctx) {
     return () => { 
       return (
         <Btn 

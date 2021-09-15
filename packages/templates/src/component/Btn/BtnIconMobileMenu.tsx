@@ -1,10 +1,10 @@
-import Btn, { btnProps, BtnProps } from './Btn'
+import Btn, { btnProps } from './Btn'
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "BtnIconMobileMenu",
   props: btnProps,
-  setup (props: BtnProps) {
+  setup (propsprops) {
     return () => { 
       return (
       <Btn 
