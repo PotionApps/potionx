@@ -17,6 +17,7 @@ defmodule PotionxTest.Mutations do
     end
     field :sign_in_provider, type: :sign_in_provider_result do
       arg :provider, non_null(:string)
+      arg :redirect_url, :string
 
       resolve Potionx.Auth.Resolvers.resolve_sign_in([
         session_service: PotionxTest.SessionService,

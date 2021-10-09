@@ -6,6 +6,7 @@ defmodule Potionx.Middleware.ServiceContext do
       res |
         context: %{
           ctx |
+            arguments: args,
             changes: Map.get(args, :changes, ctx.changes),
             filters: Map.get(args, :filters, ctx.filters),
             order: Map.get(args, :order),

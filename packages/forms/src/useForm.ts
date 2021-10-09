@@ -5,7 +5,7 @@ import { Validator } from './validators/Validator';
 import validatorEcto from './validators/validatorEcto/validatorEcto';
 
 export interface Changeset<Model extends object = {}> {
-  changes: Partial<{[k in keyof Model]: string[]}>,
+  changes: Partial<{[k in keyof Model]: any}>,
   data: Partial<Model>
   errors: {[key: string]: string[]},
   isValid: boolean,
@@ -29,6 +29,7 @@ export interface UseFormArgs {
   clearAfterSuccess?: boolean
   data?: ComputedRef<any>
   fields: Field[]
+  onChange?: (args : {key: string, value: any}) => void
   onSubmit: (cs: Changeset<any>) => Promise<boolean>
   validator?: Validator
 }
@@ -51,6 +52,12 @@ export default function useForm(args: UseFormArgs) {
   const change : FormChange = (key: string, value: any) => {
     submitStatus.value = FormSubmitStatus.empty
     changes[key] = value
+    if (args.onChange) {
+      args.onChange({
+        key,
+        value
+      })
+    }
     return changes
   }
 

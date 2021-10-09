@@ -19,7 +19,12 @@ defmodule Potionx.Auth.Provider.Dev do
       :ok,
       %{
         token: %{"access_token" => "access_token"},
-        user: %{"sub" => email, "name" => "name", "email" => email}
+        user: %{
+          "sub" => email,
+          "given_name" => String.split(email, "@") |> Enum.at(0),
+          "email" => email,
+          "family_name" => String.split(email, "@") |> Enum.at(1)
+        }
       }
     }
   end

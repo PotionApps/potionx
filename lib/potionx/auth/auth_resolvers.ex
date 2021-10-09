@@ -57,8 +57,11 @@ defmodule Potionx.Auth.Resolvers do
   end
 
   def callback(%{assigns: %{context: %Service{session: %{id: _} = session} = ctx}} = conn, opts) do
-    session_service = Keyword.fetch!(opts, :session_service)
+    after_login_path = Keyword.get(opts, :after_login_path) || "/"
     redirect_path = Keyword.get(opts, :redirect_path) || "/login"
+    scheme = Keyword.get(opts, :scheme) || "https"
+    session_service = Keyword.fetch!(opts, :session_service)
+    redirect_url = get_redirect_url(conn, Map.get(session.data, "redirect_url") || after_login_path, scheme)
 
     conn
     |> verify_providers_match(session)
@@ -68,18 +71,13 @@ defmodule Potionx.Auth.Resolvers do
     |> Potionx.Auth.handle_user_session_cookies(conn)
     |> case do
       %Plug.Conn{} = conn ->
-        url =
-          URI.parse(Plug.Conn.request_url(conn))
-          |> Map.put(:query, nil)
-          |> Map.put(:path, "/")
-          |> to_string
         conn
         |> Plug.Conn.put_resp_content_type("text/html")
         |> Plug.Conn.send_resp(
           200,
           """
           <html>
-            <head><meta http-equiv="refresh" content="0;URL='#{url}'"/></head>
+            <head><meta http-equiv="refresh" content="0;URL='#{redirect_url}'"/></head>
             <body></body>
           </html>
           """
@@ -116,7 +114,7 @@ defmodule Potionx.Auth.Resolvers do
       401,
       """
       <html>
-        <head><meta http-equiv="refresh" content="0;URL='#{url}'"/></head>
+        <head><meta http-equiv="refresh" content="1;URL='#{url}'"/></head>
         <body></body>
       </html>
       """
@@ -156,6 +154,18 @@ defmodule Potionx.Auth.Resolvers do
   end
   def create_user_session(err, _, _, _), do: err
 
+  @doc """
+  Prepare redirect_url, ensure redirect can only lead back to log in domain
+  """
+  def get_redirect_url(conn, redirect_url, scheme) do
+    redirect_uri = URI.parse(redirect_url)
+    URI.parse(Plug.Conn.request_url(conn))
+    |> Map.put(:query, redirect_uri.query)
+    |> Map.put(:path, redirect_uri.path)
+    |> Map.put(:port, scheme === "https" && 443 || conn.port)
+    |> Map.put(:scheme, scheme)
+    |> to_string
+  end
 
   defp handle_user_identity_params({user_identity_params, user_params}, other_params, provider) do
     user_identity_params = Map.put(user_identity_params, "provider", provider)
@@ -299,7 +309,7 @@ defmodule Potionx.Auth.Resolvers do
       raise "Potionx.Auth.Resolvers requires a session_service"
     end
 
-    fn _parent, %{provider: provider}, %{context: %Service{request_url: url} = ctx} ->
+    fn _parent, %{provider: provider} = args, %{context: %Service{request_url: url} = ctx} ->
       strategies = Keyword.get(opts, :strategies) || auth_config()[:strategies]
 
       redirect_uri =
@@ -330,7 +340,7 @@ defmodule Potionx.Auth.Resolvers do
               session_service.create(
                 %Service{
                   changes: %{
-                    data: params,
+                    data: Map.merge(args, params),
                     ip: ctx.ip,
                     sign_in_provider: provider,
                     ttl_access_seconds: Potionx.Auth.token_config().sign_in_token.ttl_seconds,
