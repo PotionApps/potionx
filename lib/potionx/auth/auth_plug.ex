@@ -83,18 +83,11 @@ defmodule Potionx.Plug.Auth do
         }
       }
     )
-    |> case do
-      {:ok, %{session_patch: session}} ->
+    |> then(fn {:ok, %{session_patch: session}} ->
         Potionx.Auth.handle_user_session_cookies(
           session,
           conn
         )
-      _err ->
-        conn
-        |> Potionx.Auth.delete_cookie(%{
-          name: Potionx.Auth.token_config().renewal_token.name,
-          ttl_seconds: Potionx.Auth.token_config().renewal_token.ttl_seconds
-        })
-     end
+     end)
   end
 end
