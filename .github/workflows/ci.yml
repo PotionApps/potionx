@@ -15,8 +15,8 @@ jobs:
       max-parallel: 1
       matrix:
         include:
-          - elixir: 1.11.3
-            otp: 23.1.1
+          - elixir: 1.12.2
+            otp: 24.0.3
     steps:
       - uses: actions/checkout@v2
       - name: Download released earth
@@ -32,8 +32,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - elixir: 1.11.1
-            otp: 23.1.1
+          - elixir: 1.12.1
+            otp: 24.0.3
     steps:
       - uses: actions/checkout@v2
       - name: Download released earth
