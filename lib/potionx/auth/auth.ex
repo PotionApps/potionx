@@ -1,7 +1,7 @@
 defmodule Potionx.Auth do
   use TypedStruct
 
-  def cookie_options(%Plug.Conn{} = conn, config, max_age) do
+  def cookie_options(%Plug.Conn{}, config, max_age) do
     Keyword.merge(
       [
         http_only: true,
@@ -10,13 +10,6 @@ defmodule Potionx.Auth do
       ],
       (config || [])
     )
-    |> then(fn config ->
-      if conn.host === "localhost" do
-        Keyword.put(config, :domain, conn.host)
-      else
-        config
-      end
-    end)
   end
 
   def delete_cookie(conn, %{name: name, ttl_seconds: ttl_seconds}) do
