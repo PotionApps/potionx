@@ -5,12 +5,18 @@ defmodule Potionx.Auth do
     Keyword.merge(
       [
         http_only: true,
-        domain: conn.host,
         max_age: max_age,
         secure: true
       ],
       (config || [])
     )
+    |> then(fn config ->
+      if conn.host === "localhost" do
+        Keyword.put(config, :domain, conn.host)
+      else
+        config
+      end
+    end)
   end
 
   def delete_cookie(conn, %{name: name, ttl_seconds: ttl_seconds}) do
