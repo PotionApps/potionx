@@ -67,7 +67,7 @@ defmodule Potionx.Auth do
         conn,
         [
           http_only:  Map.get(config, :http_only, true),
-          same_site: Map.get(config, :same_site) || "strict",
+          same_site: Map.get(config, :same_site) || "lax",
           sign: true
         ],
         ttl_seconds
