@@ -1,16 +1,11 @@
 {
     "name": "@potionapps/forms",
-    "version": "0.3.5",
+    "version": "0.3.6",
     "files": [
         "dist"
     ],
-    "main": "./dist/potion-forms.esm.js",
+    "main": "dist/index.js",
     "module": "./dist/potion-forms.esm.js",
-    "exports": {
-        ".": {
-            "import": "./dist/potion-forms.esm.js"
-        }
-    },
     "typings": "dist/index.d.ts",
     "scripts": {
         "dev": "vite",

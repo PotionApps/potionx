@@ -1,17 +1,12 @@
 {
     "name": "@potionapps/utils",
-    "version": "0.0.1",
+    "version": "0.0.4",
     "files": [
         "dist",
         "src"
     ],
-    "main": "./dist/potionapps-utils.esm.js",
+    "main": "dist/index.js",
     "module": "./dist/potionapps-utils.esm.js",
-    "exports": {
-        ".": {
-            "import": "./dist/potionapps-utils.esm.js"
-        }
-    },
     "typings": "dist/index.d.ts",
     "scripts": {
         "dev": "vite",
