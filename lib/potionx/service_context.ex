@@ -10,6 +10,8 @@ defmodule Potionx.Context.Service do
     field :files, [Plug.Upload.t()]
     field :filters, map(), default: %{}
     field :ip, String.t()
+    field :locale, atom()
+    field :locale_default, atom()
     field :order, atom()
     field :order_by, String.t()
     field :organization, struct()
