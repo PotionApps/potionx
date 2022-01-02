@@ -11,21 +11,21 @@ defmodule Potionx.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:absinthe, "~> 1.6.0"},
-      {:absinthe_plug, "~> 1.5.4"},
-      {:absinthe_relay, "~> 1.5.1"},
-      {:assent, "~> 0.1.23"},
-      {:dataloader, "~> 1.0.0"},
-      {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.0"},
-      {:redix, "~> 1.0.0"},
+      {:absinthe, ">= 1.6.0"},
+      {:absinthe_plug, ">= 1.5.4"},
+      {:absinthe_relay, ">= 1.5.1"},
+      {:assent, ">= 0.1.23"},
+      {:dataloader, ">= 1.0.9"},
+      {:jason, ">= 1.3.0"},
+      {:plug_cowboy, ">= 2.0.0"},
+      {:redix, ">= 1.1.0"},
       {:typed_struct, "~> 0.2.1"},
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
-      {:ecto_network, "~> 1.3.0", only: :test},
-      {:ecto_sql, "~> 3.5"},
+      {:ecto_network, ">= 1.3.0", only: :test},
+      {:ecto_sql, ">= 3.5.0"},
       {:ex_doc, "~> 0.22", only: :dev, runtime: false},
-      {:phoenix, "~> 1.5.8"},
+      {:phoenix, ">= 1.6.0"},
       {:postgrex, ">= 0.0.0", only: :test}
     ]
   end
@@ -47,7 +47,7 @@ defmodule Potionx.MixProject do
   def project do
     [
       app: :potionx,
-      version: "0.8.11",
+      version: "0.8.13",
       elixir: "~> 1.11",
       elixirc_paths: elixirc_paths(Mix.env()),
       package: package(),
