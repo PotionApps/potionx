@@ -311,6 +311,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
   def maybe_convert_type(type, is_input \\ false) do
     case type do
       Ecto.UUID -> :id
+      {_, Ecto.Enum, _} -> :string
       :binary -> :string
       :binary_id -> :string
       :datetime -> :naive_datetime
@@ -701,9 +702,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModel do
       |> Map.put(
         :type,
         Absinthe.Adapter.LanguageConventions.to_external_name(
-          to_string(
-            field.type
-          ),
+          to_string(maybe_convert_type(field.type)),
           nil
         )
       )
