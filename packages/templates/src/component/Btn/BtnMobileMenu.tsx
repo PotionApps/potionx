@@ -4,7 +4,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "BtnMobileMenu",
   props: btnProps,
-  setup (propsprops) {
+  setup (props) {
     return () => { 
       return (
       <Btn 

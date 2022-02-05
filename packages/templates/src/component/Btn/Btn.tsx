@@ -30,7 +30,7 @@ export interface BtnProps {
 export default defineComponent({
   name: "Btn",
   props: btnProps,
-  setup (propsprops, ctx) {
+  setup (props, ctx) {
     const classes = computed(() => [
       "flex items-center justify-center transition",
       props.disabled && "opacity-50 pointer-events-none"
