@@ -32,7 +32,7 @@ export const callback = async (context, prompt, values) => {
     const jsRes = spawnSync('npm', ['install'], { cwd: path.join(context.destination, values.appName, "frontend", "admin"), shell: true, encoding: 'utf-8'})
     if (jsRes.status !== 0) {
       console.log("JS deps fetching failed. Log:")
-      console.log(migrationRes.stdout)
+      console.log(jsRes.stdout)
     }
   }
   if (values.runMigrations === undefined) {
