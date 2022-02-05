@@ -28,6 +28,9 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
     end
   end
 
+  defp elixir_format(content, formatter_opts \\ []) do
+    IO.iodata_to_binary([Code.format_string!(content, formatter_opts), ?\n])
+  end
 
   setup do
     Mix.Task.clear()
@@ -88,7 +91,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
         [
           {
             "name": "deletedAt",
-            "type": "utcDatetime",
+            "type": "datetime",
             "validations": []
           },
           {
@@ -171,6 +174,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
               edges {
                 node {
                   __typename
+                  internalId
                   deletedAt
                   email
                   id
@@ -205,6 +209,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
               }
               node {
                 __typename
+                internalId
                 deletedAt
                 email
                 id
@@ -229,6 +234,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
               filters: $filters
             ) {
               __typename
+              internalId
               deletedAt
               email
               id
@@ -242,7 +248,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
           """ |> String.replace(~r(\n|\r|\s), "")
       end
       assert_file "lib/potionx_graphql/resolvers/user_resolver.ex", fn file ->
-        assert String.replace(file, ~r(\n|\r|\s), "") =~
+        assert elixir_format(file) =~
           """
           defmodule PotionxGraphQl.Resolver.User do
             alias Potionx.Context.Service
@@ -281,6 +287,11 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
 
             def delete(_, %{context: %Service{} = ctx}) do
               UserService.delete(ctx)
+              |> case do
+                {:ok, %{user: res}} -> {:ok, res}
+                {:error, _, err, _} -> {:error, err}
+                res -> res
+              end
             end
 
             def ensure_first_page_is_full(args) do
@@ -331,7 +342,7 @@ defmodule Mix.Tasks.Potionx.Gen.GqlForModelTest do
             end
           end
 
-          """ |> String.replace(~r(\n|\r|\s), "")
+          """ |> elixir_format
       end
       assert_file "lib/potionx_graphql/schemas/user/user_mutations.ex", fn file ->
         assert String.replace(file, ~r(\n|\r|\s), "") =~
