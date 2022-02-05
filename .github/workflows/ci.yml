@@ -13,10 +13,6 @@ jobs:
     strategy:
       fail-fast: false
       max-parallel: 1
-      matrix:
-        include:
-          - elixir: 1.12.2
-            otp: 24.0.3
     steps:
       - uses: actions/checkout@v2
       - name: Download latest earthly
@@ -30,16 +26,12 @@ jobs:
     
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - elixir: 1.12.1
-            otp: 24.0.3
     steps:
       - uses: actions/checkout@v2
       - name: Download released earth
         run: "sudo /bin/sh -c 'wget https://github.com/earthly/earthly/releases/download/v0.4.1/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'"
       - name: Execute tests
-        run: earthly -P --ci --build-arg ELIXIR=${{ matrix.elixir }}  --build-arg OTP=${{ matrix.otp }} +integration-test
+        run: earthly -P --ci +integration-test
   test_frontend:
     name: test_frontend
     runs-on: ubuntu-latest

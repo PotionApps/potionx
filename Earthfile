@@ -9,7 +9,7 @@ all-frontend:
     BUILD +test-templates
 
 all-test:
-    BUILD --build-arg ELIXIR=1.12.2 --build-arg OTP=24.0.3 -P +test
+    BUILD -P +test
 
 test:
     FROM +setup-test
@@ -35,7 +35,7 @@ test:
 
 
 all-integration-test:
-    BUILD --build-arg ELIXIR=1.12.2 --build-arg OTP=24.0.3 +integration-test
+    BUILD +integration-test
 
 integration-test:
     FROM +setup-test
@@ -117,9 +117,9 @@ test-ui:
     RUN npm test
 
 setup-base:
-   ARG ELIXIR=1.12.2
-   ARG OTP=24.0.3
-   FROM hexpm/elixir:$ELIXIR-erlang-$OTP-alpine-3.13.3
+   ARG ELIXIR=1.13.2
+   ARG OTP=24.2.1
+   FROM hexpm/elixir:$ELIXIR-erlang-$OTP-alpine-3.15.0
    RUN apk add --no-progress --update bash git build-base npm nodejs
    ENV ELIXIR_ASSERT_TIMEOUT=10000
    WORKDIR /src
