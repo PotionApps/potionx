@@ -25,7 +25,7 @@ defmodule Potionx.MixProject do
       {:ecto_network, ">= 1.3.0", only: :test},
       {:ecto_sql, ">= 3.5.0"},
       {:ex_doc, "~> 0.22", only: :dev, runtime: false},
-      {:phoenix, ">= 1.6.0"},
+      {:phoenix, ">= 1.6.6"},
       {:postgrex, ">= 0.0.0", only: :test}
     ]
   end
