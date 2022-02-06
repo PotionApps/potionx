@@ -1,5 +1,6 @@
 defmodule <%= webNamespace %>.LayoutView do
   use <%= webNamespace %>, :view
+  @cdn_url Application.compile_env(:<%= appName %>, <%= webNamespace %>.Endpoint)[:cdn_url]
 
   def metas do
     []
@@ -13,7 +14,7 @@ defmodule <%= webNamespace %>.LayoutView do
       |> Jason.decode!
       |> case do
         %{"src/main.ts" => %{"file" => file}} ->
-          ["/" <> file]
+          [@cdn_url <> file]
         _ -> []
       end
     else

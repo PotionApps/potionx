@@ -14,6 +14,7 @@ config :<%= appName %>,
 
 # Configures the endpoint
 config :<%= appName %>, <%= endpointModule %>,
+  cdn_url: "/",
   url: [host: "localhost"],
   secret_key_base: "<%= secretKeyBase %>",
   render_errors: [view: <%= webNamespace %>.ErrorView, accepts: ~w(html json), layout: false],
