@@ -7,9 +7,15 @@ defmodule <%= webNamespace %>.AppController do
     |> assign(:meta_desc, "<%= appModule %>")
   end
 
+  def add_subdomain(%Plug.Conn{} = conn)
+    conn
+    |> assign(:subdomain, Potionx.Utils.Uri.subdomain(conn)
+  end
+
   def index(conn, _params) do
     conn
     |> add_default_meta
+    |> add_subdomain
     |> render("index.html")
   end
 end
