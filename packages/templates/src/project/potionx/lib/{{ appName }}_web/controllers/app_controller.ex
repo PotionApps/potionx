@@ -9,7 +9,7 @@ defmodule <%= webNamespace %>.AppController do
 
   def add_subdomain(%Plug.Conn{} = conn)
     conn
-    |> assign(:subdomain, Potionx.Utils.Uri.subdomain(conn)
+    |> assign(:subdomain, Potionx.Utils.Uri.subdomain(conn))
   end
 
   def index(conn, _params) do
